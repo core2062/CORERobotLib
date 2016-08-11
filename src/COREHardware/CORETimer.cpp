@@ -1,4 +1,4 @@
-#include "../../Robotics/COREHardware/CORETimer.h"
+#include "CORETimer.h"
 
 using namespace CORE::COREHardware;
 

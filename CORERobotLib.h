@@ -2,6 +2,6 @@
  * By CORE 2062
  */
 
-#include "Robotics/COREPID.h"
-#include "Robotics/CORESubsystemsManager.h"
-#include "Robotics/COREHardware.h"
+#include "src/COREPID.h"
+#include "src/CORESubsystemsManager.h"
+#include "src/COREHardware.h"
