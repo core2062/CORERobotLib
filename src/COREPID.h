@@ -6,7 +6,6 @@
 #include "COREHardware/CORETimer.h"
 
 namespace CORE {
-using namespace CORE::COREHardware;
 class COREAHRS;
 class COREPID {
 private:

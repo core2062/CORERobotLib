@@ -1,6 +1,6 @@
 #include "COREMotor.h"
 
-using namespace CORE::COREHardware;
+using namespace CORE;
 
 template<class T>
 double COREMotor<T>::getEncoderValue() {

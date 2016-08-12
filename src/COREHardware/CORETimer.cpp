@@ -1,6 +1,6 @@
 #include "CORETimer.h"
 
-using namespace CORE::COREHardware;
+using namespace CORE;
 
 double CORETimer::Get() {
 	if(started && !stopped) {

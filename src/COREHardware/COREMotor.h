@@ -11,7 +11,6 @@
 #endif
 
 namespace CORE {
-namespace COREHardware {
 class CANTalon{};
 class Jaguar{};
 class Victor{};

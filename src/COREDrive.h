@@ -5,8 +5,6 @@
 #include "COREHardware.h"
 
 namespace CORE {
-namespace COREDrive {
-using namespace CORE::COREHardware;
 class TankDrive {
 public:
 	//TankDrive(COREMotor * frontLeft, COREMotor * backLeft, COREMotor * frontRight, COREMotor * backRight);
@@ -37,6 +35,5 @@ public:
 	AetherDrive();
 	
 };
-}
 }
 #endif

@@ -8,7 +8,7 @@
 #include <chrono>
 
 namespace CORE {
-namespace COREHardware {
+
 class CORETimer {
 private:
 	std::chrono::high_resolution_clock::time_point startTime, stopTime;
@@ -21,6 +21,5 @@ public:
 	void Start();
 };
 
-}
 }
 #endif
