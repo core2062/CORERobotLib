@@ -6,16 +6,15 @@
 
 #include "../CORESubsystemsManager.h"
 
+class CANTalon {};
+class Jaguar {};
+class Victor {};
+
 #ifndef SIMULATION1
 //#include "WPILib.h"
 #endif
 
 namespace CORE {
-class CANTalon{};
-class Jaguar{};
-class Victor{};
-using namespace CORE;
-
 	enum controlMode {
 		VOLTAGE,
 		PERCENTAGE,
@@ -24,49 +23,26 @@ using namespace CORE;
 		POSPID
 	};
 
-template <class T>
-class COREMotor : private CORETask {
 	enum controllerType {
 		CANTALON,
 		JAGUAR,
 		VICTOR
 	};
+
+class COREMotor : public CORETask {
 public:
-	std::shared_ptr<T> motor;
+	std::shared_ptr<CANTalon> CANTalonController;
+	std::shared_ptr<Jaguar> JaguarController;
+	std::shared_ptr<Victor> VictorController;
 	std::shared_ptr<COREPID> PIDController;
-	COREMotor(int port, controlMode controlMethod = controlMode::Voltage, double pProfile1Value = 0, double iProfile1Value = 0, double dProfile1Value = 0, double pProfile2Value = 0, double iProfile2Value = 0, double dProfile2Value = 0, int integralAccuracy = 1):
-        motorControlMode(controlMethod)
-    {
-        if(!(pProfile1Value == 0 && iProfile1Value == 0 && dProfile1Value == 0 && pProfile2Value == 0 && iProfile2Value == 0 && dProfile2Value == 0) || controlMethod == VelPID || controlMethod == PosPID) {
-            COREPID::PIDType PIDControllerType = motorControlMode == VelPID ? COREPID::PIDType::Vel : COREPID::PIDType::Pos;
-            std::shared_ptr<COREPID> pointer(new COREPID(PIDControllerType, pProfile1Value, iProfile1Value, dProfile1Value, pProfile2Value, iProfile2Value, dProfile2Value, integralAccuracy));
-            PIDController = pointer;
-        }
-    #ifdef NSIMULATION
-        motor = new T(port);
-    #else
-
-    #endif
-    }
-
-	void Set(double speed) {
-        if(motorControlMode <= Current) {
-            motorSpeed = speed;
-        }
-        else {
-        }
-    }
-
-	double Get() {
-        return motorSpeed;
-    }
-
 	COREMotor(int port, controllerType controller = CANTALON, controlMode controlMethod = VOLTAGE, double pProfile1Value = 0, double iProfile1Value = 0, double dProfile1Value = 0, double pProfile2Value = 0, double iProfile2Value = 0, double dProfile2Value = 0, int integralAccuracy = 1);
+	void Set(double speed);
+	double Get();
 	double getEncoderValue();
 	void setControlMode(controlMode controlMethod);
 	controlMode getControlMode();
 	void addSlave(COREMotor *slaveMotor);
-	//void postTeleopTask();
+	void postTeleopTask();
 private:
 	double motorSpeed = 0;
 	double lastTrapizodalSum = 0;
@@ -74,6 +50,5 @@ private:
 	std::vector<COREMotor*> slaveMotors;
 };
 
-}
 }
 #endif
