@@ -17,15 +17,20 @@ class Victor{};
 using namespace CORE;
 
 	enum controlMode {
-		Voltage,
-		Percentage,
-		Current,
-		VelPID,
-		PosPID
+		VOLTAGE,
+		PERCENTAGE,
+		CURRENT,
+		VELPID,
+		POSPID
 	};
 
 template <class T>
 class COREMotor : private CORETask {
+	enum controllerType {
+		CANTALON,
+		JAGUAR,
+		VICTOR
+	};
 public:
 	std::shared_ptr<T> motor;
 	std::shared_ptr<COREPID> PIDController;
@@ -56,6 +61,7 @@ public:
         return motorSpeed;
     }
 
+	COREMotor(int port, controllerType controller = CANTALON, controlMode controlMethod = VOLTAGE, double pProfile1Value = 0, double iProfile1Value = 0, double dProfile1Value = 0, double pProfile2Value = 0, double iProfile2Value = 0, double dProfile2Value = 0, int integralAccuracy = 1);
 	double getEncoderValue();
 	void setControlMode(controlMode controlMethod);
 	controlMode getControlMode();
