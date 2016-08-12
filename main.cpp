@@ -3,10 +3,8 @@
 #include <map>
 
 using namespace CORE;
-using namespace COREHardware;
 using namespace std;
-class DriveSubsystem : public CORE::CORESubsystem
-{
+class DriveSubsystem : public CORE::CORESubsystem {
 public:
     COREMotor<CANTalon> testMotor;
     DriveSubsystem():
@@ -28,26 +26,13 @@ public:
     }
 };
 
-template<class T>
-class robot : {
-public:
-    robot()
-    {
+class robot : public CORERobot {
 
-    }
 };
-
-
 
 int main()
 {
-    robot * Robot = new robot();
-    std::shared_ptr<CORESubsystem> pointer(new DriveSubsystem());
-    Robot->subsystemMap[0] = pointer;
-    Robot->subsystemMap[0]->teleopInit();
-    //robot * Robot = new robot();
-    CORESubsystemsManager::robotInit();
-    //delete CORESubsystemsManager;
+    
     cout << "End!" << endl;
     return 0;
 }
