@@ -13,7 +13,7 @@ double CORETimer::Get() {
 	return -1;
 }
 void CORETimer::Reset() {
-	started = false;
+	started = true;
 	startTime = std::chrono::high_resolution_clock::now();
 }
 void CORETimer::Stop() {
