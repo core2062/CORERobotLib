@@ -17,7 +17,7 @@ COREPID::PIDProfile *COREPID::getProfile(int profile) {
 		return &PID2;
 		break;
 	default:
-		return &PID1;
+		return getProfile(defaultProfile);
 		break;
 	}
 }
@@ -39,16 +39,19 @@ COREPID::COREPID(PIDType PIDControllerType, double pProfile1Value, double iProfi
 	PID2.P = pProfile2Value;
 	PID2.I = iProfile2Value;
 	PID2.D = dProfile2Value;
+	for(int i = 1; i <= 2; i++) {
+		getProfile(i)->mistake.resize(integralAccuracy);
+		getProfile(i)->mistake[0] = 0;
+		getProfile(i)->lastOutput = 0;
+		getProfile(i)->proportional = 0;
+		getProfile(i)->integral = 0;
+		getProfile(i)->derivative = 0;
+	}
 	ControllerType = PIDControllerType;
 	if(integralAccuracy < 1) {
 		integralAccuracy = 1;
 	}
-	PID1.mistake.reserve(integralAccuracy);
-	PID1.mistake[1] = 0;
-	PID2.mistake.reserve(integralAccuracy);
-	PID2.mistake[1] = 0;
 	inputDevice = inputDeviceType::NoInput;
-	outputDevice = outputDeviceType::NoOutput;
 	timer.Reset();
 	timer.Start();
 }
@@ -60,64 +63,75 @@ COREPID::COREPID(PIDType PIDControllerType, double pProfile1Value, double iProfi
  */
 double COREPID::calculate(int profile) {
 	PIDProfile *currentProfile = getProfile(profile);
-	switch(inputDevice) {
-	case inputDeviceType::AHRSInput:
-		//actualPosition = inputGyro->GetAngle();
-		break;
-	default:
-		break;
+	double sum = 0;
+	for(auto value : currentProfile->mistake) {
+		sum += value;
 	}
-	if (ControllerType == Pos) {
-		currentProfile->porportional = (setPointValue - actualPosition) * currentProfile->P;
-		currentProfile->mistake.insert(currentProfile->mistake.begin(), currentProfile->porportional);
-		double sum = 0;
-		for(int i = 1; i < (int) currentProfile->mistake.size(); i++) {
-			sum += currentProfile->mistake[i];
-		}
-		double time = timer.Get();
-		if(time == 0) {
-			currentProfile->output = actualPosition;
-			return 0;
-		}
-		else {
-			currentProfile->integral += (sum * time) * currentProfile->I; //Technically an approximation of Integral
-			currentProfile->derivative = ((currentProfile->mistake[0] - currentProfile->mistake[1]) / time) * currentProfile->D;
-			timer.Reset();
-			timer.Start();
-			currentProfile->output = currentProfile->porportional + currentProfile->integral + currentProfile->derivative;
-			return currentProfile->output;
-		}
+	double time = timer.Get();
+	if(time == 0) {
+		currentProfile->output = actualPosition;
+		return 0;
 	}
 	else {
-		return -1;
-	}
-}
+		timer.Reset();
+		if(ControllerType == POS) {
+			currentProfile->proportional = (setPosition - actualPosition) * currentProfile->P;
+			currentProfile->mistake.insert(currentProfile->mistake.begin(), currentProfile->proportional);
+			currentProfile->integral += (sum * time) * currentProfile->I; //Technically an approximation of Integral
+			currentProfile->derivative = ((currentProfile->mistake[0] - currentProfile->mistake[1]) / time) * currentProfile->D;
+			currentProfile->output = currentProfile->proportional + currentProfile->integral + currentProfile->derivative;
+		}
+		else if(ControllerType == VEL) {
+			currentProfile->proportional = (setVelocity - actualVelocity) * currentProfile->P;
+			currentProfile->mistake.insert(currentProfile->mistake.begin(), currentProfile->proportional);
+			currentProfile->integral += (sum * time) * currentProfile->I; //Technically an approximation of Integral
+			currentProfile->derivative = ((currentProfile->mistake[0] - currentProfile->mistake[1]) / time) * currentProfile->D;
+			currentProfile->output = currentProfile->lastOutput + currentProfile->proportional + currentProfile->integral + currentProfile->derivative;
+		}
+		else {
 
-/**
- * Calculate the output of the PID loop
- * @param newSetpoint The new set point of the PID loop
- * @param profile The profile number to use
- * @return The output of the PID loop
- */
-double COREPID::calculate(double newSetpoint, int profile) {
-	actualPosition = newSetpoint;
-	return calculate(profile);
+		}
+	}
+	currentProfile->lastOutput = currentProfile->output;
+	return currentProfile->output;
 }
 
 /**
  * Where you want the PID loop to target in its calculations
  * @param setPoint The new set point of the PID loop
  */
-void COREPID::setPoint(double setPoint) {
-	setPointValue = setPoint;
+void COREPID::setPos(double setPointValue) {
+	setPosition = setPointValue;
+}
+
+void COREPID::setVel(double setVelocityValue) {
+	setVelocity = setVelocityValue;
+}
+
+/**
+* Get the position which this PID loop was set to
+*/
+double COREPID::getPos() {
+	return setPosition;
+}
+
+/**
+* Get the velocity which this PID loop was set to
+*/
+double COREPID::getVel () {
+	return setVelocity;
 }
 
 /**
  * The position of the mechanism controlled by the PID loop
  * @param actualPosition The actual position of the mechanism
  */
-void COREPID::setActualPosition(double actualPositionValue) {
+void COREPID::setActualPos(double actualPositionValue) {
 	actualPosition = actualPositionValue;
+}
+
+void COREPID::setActualVel(double actualVelocityValue) {
+	actualVelocity = actualVelocityValue;
 }
 
 ///**
@@ -128,13 +142,6 @@ void COREPID::setActualPosition(double actualPositionValue) {
 //	inputDevice = inputDeviceType::AHRSInput;
 //	inputGyro = NAVX;
 //}
-
-/**
- * Get the position which this PID loop was set to
- */
-double COREPID::getSetPoint() {
-	return setPointValue;
-}
 
 /**
  * Get the P value of this PID loop
@@ -155,6 +162,10 @@ double COREPID::getI(int profile) {
  */
 double COREPID::getD(int profile) {
 	return getProfile(profile)->D;
+}
+
+void COREPID::setDefaultProfile(int profile) {
+	defaultProfile = profile;
 }
 
 /**
@@ -188,9 +199,8 @@ double COREPID::getOutput(int profile) {
 /**
  * Get the proportional term of this PID loop
  */
-double COREPID::getPorportional(int profile) {
-	return getProfile(profile)->porportional;
-}
+double COREPID::getProportional(int profile) {
+	return getProfile(profile)->proportional;}
 
 /**
  * Get the integral term of this PID loop
@@ -204,4 +214,26 @@ double COREPID::getIntegral(int profile) {
  */
 double COREPID::getDerivative(int profile) {
 	return getProfile(profile)->derivative;
+}
+
+PIDType COREPID::getType() {
+	return ControllerType;
+}
+
+void COREPID::setType(PIDType type) {
+	ControllerType = type;
+}
+
+void COREPID::preTeleopTask() {
+	switch(inputDevice) {
+	case inputDeviceType::AHRSInput:
+		//actualPosition = inputGyro->GetAngle();
+		break;
+	default:
+		break;
+	}
+}
+
+void COREPID::postTeleopTask() {
+	calculate();
 }
