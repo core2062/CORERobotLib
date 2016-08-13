@@ -13,7 +13,9 @@ motorControlMode(controlMethod)
 #ifdef NSIMULATION
 	motor = new T(port);
 #else
-
+	trapSumTimer = new CORETimer();
+	trapSumTimer->Reset();
+	trapSumTimer->Start();
 #endif
 }
 
@@ -26,16 +28,7 @@ void COREMotor::Set(double speed) {
 }
 
 double COREMotor::Get() {
-	return motorSpeed;
-}
-
-double COREMotor::getEncoderValue() {
-#ifdef NSIMULATION
-	return motor->GetEncPosition();
-#else
-	//TODO:Do a trapezoidal sum
-#endif
-	return -1;
+	return motorValue;
 }
 
 void COREMotor::setControlMode(controlMode controlMethod) {
@@ -45,17 +38,35 @@ void COREMotor::setControlMode(controlMode controlMethod) {
 controlMode COREMotor::getControlMode() {
 	return motorControlMode;
 }
+
+void COREMotor::setDeadband(double range) {
+	setDeadband(-range, range);
+}
+
+void COREMotor::setDeadband(double min, double max) {
+	deadBandMin = min < -1 ? -1 : min;
+	deadBandMax = max > 1 ? 1 : max;
+}
+
 void COREMotor::addSlave(COREMotor *slaveMotor) {
 	slaveMotors.push_back(slaveMotor);
 }
 
 void CORE::COREMotor::postTeleopTask()
 {
+	motorValue = abs(motorValue) > 1 ? (motorValue > 1 ? 1 : -1) : motorValue;
+	motorValue = (motorValue < deadBandMax && motorValue > deadBandMin) ? 0 : motorValue;
 #ifdef NSIMULATION
 	for(auto motor : slaveMotors) {
 	motor->Set(motorSpeed);
 	}
 	motor->Set(motorSpeed);
+#else
+	cout << "Motor Value = " << motorValue << endl;
+	trapSum += 0.5 * trapSumTimer->Get() * (lastMotorValue + motorValue);
+	trapSumTimer->Reset();
+	lastMotorValue = motorValue;
+	cout << "Trap Value = " << trapSum << endl;
 #endif
 	motorSpeed = 0;
 }
@@ -94,3 +105,5 @@ void CORE::COREMotor::postTeleopTask()
 //}
 //}
 //}
+	motorUpdated = false;
+}

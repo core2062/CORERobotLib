@@ -41,12 +41,21 @@ public:
 	double getEncoderValue();
 	void setControlMode(controlMode controlMethod);
 	controlMode getControlMode();
+	void setDeadband(double range);
+	void setDeadband(double min, double max);
 	void addSlave(COREMotor *slaveMotor);
 	void postTeleopTask();
 private:
-	double motorSpeed = 0;
-	double lastTrapizodalSum = 0;
+	double motorValue = 0;
+	double lastMotorValue = 0;
+	double trapSum = 0;
+	double deadBandMin = 0;
+	double deadBandMax = 0;
+	bool motorUpdated = false;
 	controlMode motorControlMode;
+	controllerType motorControllerType;
+	CORETimer * trapSumTimer;
+	double lastSum;
 	std::vector<COREMotor*> slaveMotors;
 };
 
