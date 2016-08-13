@@ -19,8 +19,9 @@ namespace CORE {
 		VOLTAGE,
 		PERCENTAGE,
 		CURRENT,
+		POSPID,
 		VELPID,
-		POSPID
+		POSVELPID
 	};
 
 	enum controllerType {
@@ -29,16 +30,15 @@ namespace CORE {
 		VICTOR
 	};
 
-class COREMotor : public CORETask {
+class COREMotor : public COREPID {
 public:
 	std::shared_ptr<CANTalon> CANTalonController;
 	std::shared_ptr<Jaguar> JaguarController;
 	std::shared_ptr<Victor> VictorController;
-	std::shared_ptr<COREPID> PIDController;
+	//std::shared_ptr<COREEncoder>;
 	COREMotor(int port, controllerType controller = CANTALON, controlMode controlMethod = VOLTAGE, double pProfile1Value = 0, double iProfile1Value = 0, double dProfile1Value = 0, double pProfile2Value = 0, double iProfile2Value = 0, double dProfile2Value = 0, int integralAccuracy = 1);
-	void Set(double speed);
+	void Set(double motorSetValue);
 	double Get();
-	double getEncoderValue();
 	void setControlMode(controlMode controlMethod);
 	controlMode getControlMode();
 	void setDeadband(double range);

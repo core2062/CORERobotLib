@@ -1,17 +1,30 @@
 #include "COREMotor.h"
+#include <iostream>
+using namespace std;
 
 using namespace CORE;
 
-COREMotor::COREMotor(int port, controllerType controller, controlMode controlMethod, double pProfile1Value, double iProfile1Value, double dProfile1Value, double pProfile2Value, double iProfile2Value, double dProfile2Value, int integralAccuracy):
-motorControlMode(controlMethod)
+COREMotor::COREMotor(int port, controllerType controller, controlMode controlMethod, double pProfile1Value, double iProfile1Value, double dProfile1Value, double pProfile2Value, double iProfile2Value, double dProfile2Value, int integralAccuracy) :
+	motorControlMode(controlMethod),
+	COREPID(motorControlMode == VELPID ? PIDType::VEL : (motorControlMode == POSPID ? PIDType::POS : PIDType::POSVEL), pProfile1Value, iProfile1Value, dProfile1Value, pProfile2Value, iProfile2Value, dProfile2Value, integralAccuracy),
+	motorControllerType(controller)
 {
-	if(!(pProfile1Value == 0 && iProfile1Value == 0 && dProfile1Value == 0 && pProfile2Value == 0 && iProfile2Value == 0 && dProfile2Value == 0) || controlMethod == VelPID || controlMethod == PosPID) {
-		COREPID::PIDType PIDControllerType = motorControlMode == VelPID ? COREPID::PIDType::Vel : COREPID::PIDType::Pos;
-		std::shared_ptr<COREPID> pointer(new COREPID(PIDControllerType, pProfile1Value, iProfile1Value, dProfile1Value, pProfile2Value, iProfile2Value, dProfile2Value, integralAccuracy));
-		PIDController = pointer;
-	}
 #ifdef NSIMULATION
-	motor = new T(port);
+	switch(motorControllerType)
+	{
+	case CORE::CANTALON:
+		std::shared_ptr<CANTalon> pointer(new CANTalon(port));
+		CANTalonController = pointer;
+		break;
+	case CORE::JAGUAR:
+		std::shared_ptr<Jaguar> pointer(new Jaguar(port));
+		JaguarController = pointer;
+		break;
+	case CORE::VICTOR:
+		std::shared_ptr<Victor> pointer(new Victor(port));
+		VictorController = pointer;
+		break;
+	}
 #else
 	trapSumTimer = new CORETimer();
 	trapSumTimer->Reset();
@@ -19,12 +32,8 @@ motorControlMode(controlMethod)
 #endif
 }
 
-void COREMotor::Set(double speed) {
-	if(motorControlMode <= Current) {
-		motorSpeed = speed;
-	}
-	else {
-	}
+void COREMotor::Set(double motorSetValue) {
+	motorValue = motorSetValue;
 }
 
 double COREMotor::Get() {
@@ -33,6 +42,12 @@ double COREMotor::Get() {
 
 void COREMotor::setControlMode(controlMode controlMethod) {
 	motorControlMode = controlMethod;
+	if(motorControlMode == POSPID) {
+		setType(POS);
+	}
+	else if(motorControlMode == VELPID) {
+		setType(VEL);
+	}
 }
 
 controlMode COREMotor::getControlMode() {
@@ -52,15 +67,39 @@ void COREMotor::addSlave(COREMotor *slaveMotor) {
 	slaveMotors.push_back(slaveMotor);
 }
 
-void CORE::COREMotor::postTeleopTask()
-{
+void COREMotor::postTeleopTask() {
+	//setActualPos(getActualPos());
+	//setActualVel(getActualVel());
+	if(motorControlMode == POSPID) {
+		motorValue = calculate();
+		motorUpdated = true;
+	}
+	else if(motorControlMode == VELPID) {
+		motorValue = calculate();
+		motorUpdated = true;
+	}
+	if(!motorUpdated) {
+		motorValue = 0;
+		cout << "Motor not updated!" << endl;
+	}
 	motorValue = abs(motorValue) > 1 ? (motorValue > 1 ? 1 : -1) : motorValue;
 	motorValue = (motorValue < deadBandMax && motorValue > deadBandMin) ? 0 : motorValue;
 #ifdef NSIMULATION
 	for(auto motor : slaveMotors) {
-	motor->Set(motorSpeed);
+		motor->Set(motorValue);
 	}
-	motor->Set(motorSpeed);
+	switch(motorControllerType)
+	{
+	case CORE::CANTALON:
+		CANTalonController->Set(motorValue);
+		break;
+	case CORE::JAGUAR:
+		JaguarController->Set(motorValue);
+		break;
+	case CORE::VICTOR:
+		VictorController->Set(motorValue);
+		break;
+	}
 #else
 	cout << "Motor Value = " << motorValue << endl;
 	trapSum += 0.5 * trapSumTimer->Get() * (lastMotorValue + motorValue);
@@ -68,42 +107,5 @@ void CORE::COREMotor::postTeleopTask()
 	lastMotorValue = motorValue;
 	cout << "Trap Value = " << trapSum << endl;
 #endif
-	motorSpeed = 0;
-}
-//void postTeleopTask();
-
-//template<class T>
-//COREMotor<T>::controlMode COREMotor<T>::getControlMode() {
-//	return motorControlMode;
-//}
-
-//template<class T>
-//void COREMotor<T>::addSlave(COREMotor *slaveMotor) {
-//	slaveMotors.push_back(slaveMotor);
-//}
-//
-//template<>
-//void COREMotor<CANTalon>::postTeleopTask() {
-//#ifdef NSIMULATION
-//	for(auto motor : slaveMotors) {
-//		motor->Set(motorSpeed);
-//	}
-//	motor->Set(motorSpeed);
-//#endif
-//	motorSpeed = 0;
-//}
-//
-//template<>
-//void COREMotor<Jaguar>::postTeleopTask() {
-//#ifdef NSIMULATION
-//	for(auto motor : slaveMotors) {
-//		motor->Set(motorSpeed);
-//	}
-//	motor->Set(motorSpeed);
-//#endif
-//	motorSpeed = 0;
-//}
-//}
-//}
 	motorUpdated = false;
 }
