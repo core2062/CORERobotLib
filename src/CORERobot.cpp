@@ -12,16 +12,16 @@ void CORERobot::waitLoopTime() {
 		loopTimer.Start();
 		loopStarted = true;
 	}
-	double loopTime = loopTimer.Get()<.1 ? 0.1 - loopTimer.Get() : 0.0;
+	double loopTime = loopTimer.Get() < TARGETLOOPTIME ? TARGETLOOPTIME - loopTimer.Get() : 0.0;
 	//SmartDashboard::PutNumber("Timer", loopTimer.Get());
-	if(loopTimer.Get() >= .12) {
+	if(loopTimer.Get() >= TARGETLOOPTIME*1.2) {
 		//outLog.appendLog("[PROBLEM] Loop Time High! Timer at: ", loopTimer.Get());
 	}
-	loopTimer.Reset();
 #ifdef NSIMULATION
 	Wait(loopTime);
 #else
-	Sleep(loopTime);
+	Sleep(loopTime*1000);
 #endif
+	loopTimer.Reset();
 }
 

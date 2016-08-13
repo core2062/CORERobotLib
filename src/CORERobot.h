@@ -7,11 +7,11 @@
 
 using namespace CORE;
 
-class CORERobot : public CORESubsystem
-{
+class CORERobot : public CORESubsystem {
 private:
 	bool loopStarted;
 	CORETimer loopTimer;
+	const double TARGETLOOPTIME = 0.1;
 public:
 	CORERobot();
 	void waitLoopTime();
