@@ -23,13 +23,17 @@ public:
 };
 
 class CORETask {
+private:
+	bool disabled;
 public:
 	CORETask();
-	virtual void robotInitTask(){}
-	virtual void teleopInitTask(){}
-	virtual void preTeleopTask(){}
-	virtual void postTeleopTask(){}
-	virtual void teleopEndTask(){}
+	virtual void robotInitTask() {}
+	virtual void teleopInitTask() {}
+	virtual void preTeleopTask() {}
+	virtual void postTeleopTask() {}
+	virtual void teleopEndTask() {}
+	virtual void disableTasks(bool disable = true);
+	virtual bool isDisabled();
 	virtual ~CORETask(){}
 };
 
@@ -60,24 +64,28 @@ public:
 			subsystem->teleopInit();
 		}
 		for(auto task : tasks) {
-			task->teleopInitTask();
+			if(!task->isDisabled())
+				task->teleopInitTask();
 		}
 		//TODO: Log -> TeleopInit Complete
 	}
 	static void teleop() {
 		for(auto task : tasks) {
-			task->preTeleopTask();
+			if(!task->isDisabled())
+				task->preTeleopTask();
 		}
 		for(auto subsystem : subsystems) {
 			subsystem->teleop();
 		}
 		for(auto task : tasks) {
-			task->postTeleopTask();
+			if(!task->isDisabled())
+				task->postTeleopTask();
 		}
 	}
 	static void teleopEnd() {
 		for(auto task : tasks) {
-			task->teleopEndTask();
+			if(!task->isDisabled())
+				task->teleopEndTask();
 		}
 		for(auto subsystem : subsystems) {
 			subsystem->teleopEnd();
