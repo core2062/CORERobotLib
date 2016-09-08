@@ -5,7 +5,7 @@
  *      Author: Scott
  */
 
-#include "RegisterIO.h"
+#include <RegisterIO.h>
 #include "IMURegisters.h"
 
 RegisterIO::RegisterIO( IRegisterIO *io_provider,
@@ -16,6 +16,9 @@ RegisterIO::RegisterIO( IRegisterIO *io_provider,
     this->update_rate_hz        = update_rate_hz;
     this->board_capabilities    = board_capabilities;
     this->notify_sink           = notify_sink;
+    this->last_sensor_timestamp = 0;
+    this->update_count 			= 0;
+    this->byte_count			= 0;
 
     raw_data_update = {0};
     ahrs_update     = {0};
@@ -25,6 +28,7 @@ RegisterIO::RegisterIO( IRegisterIO *io_provider,
 }
 
 static const double IO_TIMEOUT_SECONDS = 1.0;
+static const double DELAY_OVERHEAD_MILLISECONDS = 4.0;
 
 RegisterIO::~RegisterIO() {
 }
@@ -65,13 +69,18 @@ void RegisterIO::Run() {
     SetUpdateRateHz(this->update_rate_hz);
     GetConfiguration();
 
+    double update_rate_ms = 1.0/(double)this->update_rate_hz;
+    if ( update_rate_ms > DELAY_OVERHEAD_MILLISECONDS) {
+    	update_rate_ms -= DELAY_OVERHEAD_MILLISECONDS;
+    }
+
     /* IO Loop */
     while (!stop) {
         if ( board_state.update_rate_hz != this->update_rate_hz ) {
             SetUpdateRateHz(this->update_rate_hz);
         }
         GetCurrentData();
-        delayMillis(1000.0/this->update_rate_hz);
+        delayMillis(update_rate_ms);
     }
 }
 
@@ -128,6 +137,10 @@ void RegisterIO::GetCurrentData() {
         timestamp_low = (long)IMURegisters::decodeProtocolUint16(curr_data + NAVX_REG_TIMESTAMP_L_L-first_address);
         timestamp_high = (long)IMURegisters::decodeProtocolUint16(curr_data + NAVX_REG_TIMESTAMP_H_L-first_address);
         sensor_timestamp               = (timestamp_high << 16) + timestamp_low;
+        if ( sensor_timestamp == last_sensor_timestamp ) {
+        	return;
+        }
+        last_sensor_timestamp = sensor_timestamp;
         ahrspos_update.op_status       = curr_data[NAVX_REG_OP_STATUS - first_address];
         ahrspos_update.selftest_status = curr_data[NAVX_REG_SELFTEST_STATUS - first_address];
         ahrspos_update.cal_status      = curr_data[NAVX_REG_CAL_STATUS];
@@ -154,7 +167,7 @@ void RegisterIO::GetCurrentData() {
             ahrspos_update.disp_x      = IMURegisters::decodeProtocol1616Float(curr_data + NAVX_REG_DISP_X_I_L-first_address);
             ahrspos_update.disp_y      = IMURegisters::decodeProtocol1616Float(curr_data + NAVX_REG_DISP_Y_I_L-first_address);
             ahrspos_update.disp_z      = IMURegisters::decodeProtocol1616Float(curr_data + NAVX_REG_DISP_Z_I_L-first_address);
-            notify_sink->SetAHRSPosData(ahrspos_update);
+            notify_sink->SetAHRSPosData(ahrspos_update, sensor_timestamp);
         } else {
             ahrs_update.op_status           = ahrspos_update.op_status;
             ahrs_update.selftest_status     = ahrspos_update.selftest_status;
@@ -171,7 +184,7 @@ void RegisterIO::GetCurrentData() {
             ahrs_update.altitude            = ahrspos_update.altitude;
             ahrs_update.barometric_pressure = ahrspos_update.barometric_pressure;
             ahrs_update.fused_heading       = ahrspos_update.fused_heading;
-            notify_sink->SetAHRSData( ahrs_update );
+            notify_sink->SetAHRSData( ahrs_update, sensor_timestamp );
         }
 
         board_state.cal_status      = curr_data[NAVX_REG_CAL_STATUS-first_address];
@@ -192,7 +205,7 @@ void RegisterIO::GetCurrentData() {
         raw_data_update.accel_z     = IMURegisters::decodeProtocolInt16(curr_data +  NAVX_REG_ACC_Z_L-first_address);
         raw_data_update.mag_x       = IMURegisters::decodeProtocolInt16(curr_data +  NAVX_REG_MAG_X_L-first_address);
         raw_data_update.temp_c      = ahrspos_update.mpu_temp;
-        notify_sink->SetRawData(raw_data_update);
+        notify_sink->SetRawData(raw_data_update, sensor_timestamp);
 
         this->last_update_time = Timer::GetFPGATimestamp();
         byte_count += buffer_len;

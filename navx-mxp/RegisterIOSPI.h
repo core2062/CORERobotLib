@@ -8,7 +8,7 @@
 #ifndef SRC_REGISTERIOSPI_H_
 #define SRC_REGISTERIOSPI_H_
 
-#include "RegisterIO.h"
+#include <RegisterIO.h>
 #include "WPILib.h"
 
 static const int MAX_SPI_MSG_LENGTH = 256;
@@ -25,6 +25,7 @@ private:
     SPI *port;
     uint32_t bitrate;
     uint8_t rx_buffer[MAX_SPI_MSG_LENGTH];
+    bool trace;
 };
 
 #endif /* SRC_REGISTERIOSPI_H_ */
