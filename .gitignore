@@ -161,4 +161,8 @@ MinGW/
 Simulate/
 sysProps.xml
 .settings/
-
+*.sln
+*.rc
+/MinGW_Debug/
+*.vcxproj
+*.filters
