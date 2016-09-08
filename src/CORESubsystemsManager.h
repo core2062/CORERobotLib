@@ -16,7 +16,7 @@ public:
 	virtual void robotInit() = 0;
 	virtual void teleopInit() = 0;
 	virtual void teleop() = 0;
-	virtual void teleopEnd() {
+	virtual void teleopEnd(){
 		//TODO: Log -> Teleop end not implemented for: NAME
 	}
 	virtual ~CORESubsystem(){}
@@ -91,6 +91,9 @@ public:
 			subsystem->teleopEnd();
 		}
 		//TODO: Log -> TeleopEnd Complete
+	}
+	static void test() {
+		//TODO: Do something
 	}
 };
 }

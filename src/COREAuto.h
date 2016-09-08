@@ -28,9 +28,9 @@ class COREAuto {
 private:
 	queue<std::shared_ptr<COREAutoAction>> sequentialActions;
 	queue<std::shared_ptr<COREAutoAction>> parallelActions;
-	//CORERobot * robot;
+	CORERobot * robot;
 public:
-	//COREAuto(CORERobot * robot);
+	COREAuto(CORERobot * robot);
 	void addSequential(std::shared_ptr<COREAutoAction> autoAction);
 	void addParallel(std::shared_ptr<COREAutoAction> autoAction);
 	void runAuto();

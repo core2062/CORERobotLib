@@ -4,11 +4,11 @@
 
 using namespace CORE;
 using namespace std;
-class DriveSubsystem : public CORE::CORESubsystem {
+class DriveSubsystem : public CORESubsystem {
 public:
     COREMotor testMotor;
     DriveSubsystem():
-        testMotor(0)
+        testMotor(13)
         {
             cout << "Subsystem Constructor" << endl;
         }
@@ -16,35 +16,33 @@ public:
         cout << "Robot Init!" << endl;
     }
     void teleopInit() {
-        cout << "Robot Init!" << endl;
-		testMotor.setP(0.01);
-		testMotor.setControlMode(VELPID);
-		testMotor.set(0.5);
-		testMotor.setDeadband(0.1);
+        cout << "Teleop Init!" << endl;
+//		testMotor.setP(0.01);
+//		testMotor.setControlMode(VELPID);
+//		testMotor.setVel(0.5);
+//		testMotor.setDeadband(0.1);
     }
     void teleop() {
-//		testMotor.Set(1);
+    	testMotor.setControlMode(controlMode::PERCENTAGE);
+		testMotor.Set(0.25);
     }
     void test() {
         cout << "Tested!" << endl;
     }
 };
 
-class robot : public CORERobot {
+class Robot : public CORERobot {
+public:
+	Robot() {
+		new DriveSubsystem();
+	}
 	void robotInit() {}
 	void teleopInit() {}
 	void teleop() {}
 };
 
-int main()
-{
-	robot * robot1 = new robot;
-	new DriveSubsystem;
-	CORESubsystemsManager::teleopInit();
-	while(true) {
-		CORESubsystemsManager::teleop();
-		robot1->waitLoopTime();
-	}
-    cout << "End!" << endl;
-    return 0;
-}
+#ifdef __arm__
+START_ROBOT_CLASS(Robot);
+#else
+START_SIMULATED_ROBOT_CLASS(Robot);
+#endif
