@@ -1,13 +1,15 @@
 #include "COREMotor.h"
 #include <iostream>
+#include <math.h>
 using namespace std;
 
 using namespace CORE;
 
 COREMotor::COREMotor(int port, controllerType controller, controlMode controlMethod, double pProfile1Value, double iProfile1Value, double dProfile1Value, double pProfile2Value, double iProfile2Value, double dProfile2Value, int integralAccuracy) :
-	motorControlMode(controlMethod),
 	COREPID(motorControlMode == VELPID ? PIDType::VEL : (motorControlMode == POSPID ? PIDType::POS : PIDType::POSVEL), pProfile1Value, iProfile1Value, dProfile1Value, pProfile2Value, iProfile2Value, dProfile2Value, integralAccuracy),
-	motorControllerType(controller)
+	motorControlMode(controlMethod),
+	motorControllerType(controller),
+	motorPort(port)
 {
 #ifdef NSIMULATION
 	switch(motorControllerType)
@@ -33,11 +35,19 @@ COREMotor::COREMotor(int port, controllerType controller, controlMode controlMet
 }
 
 void COREMotor::Set(double motorSetValue) {
-	motorValue = motorSetValue;
+	motorValue = (reversed ? -motorSetValue : motorSetValue);
 }
 
 double COREMotor::Get() {
 	return motorValue;
+}
+
+void COREMotor::setReversed(bool reverse) {
+	reversed = reverse;
+}
+
+bool COREMotor::getReversed() {
+	return reversed;
 }
 
 void COREMotor::setControlMode(controlMode controlMethod) {
@@ -52,6 +62,10 @@ void COREMotor::setControlMode(controlMode controlMethod) {
 
 controlMode COREMotor::getControlMode() {
 	return motorControlMode;
+}
+
+int COREMotor::getPort() {
+	return motorPort;
 }
 
 void COREMotor::setDeadband(double range) {
@@ -82,7 +96,7 @@ void COREMotor::postTeleopTask() {
 		motorValue = 0;
 		cout << "Motor not updated!" << endl;
 	}
-	motorValue = abs(motorValue) > 1 ? (motorValue > 1 ? 1 : -1) : motorValue;
+	motorValue = fabs(motorValue) > 1 ? (motorValue > 1 ? 1 : -1) : motorValue;
 	motorValue = (motorValue < deadBandMax && motorValue > deadBandMin) ? 0 : motorValue;
 #ifdef NSIMULATION
 	for(auto motor : slaveMotors) {
