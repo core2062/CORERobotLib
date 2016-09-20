@@ -1,6 +1,7 @@
 #include <iostream>
 #include "CORERobotLib.h"
 #include <map>
+//#include <WPILib.h>
 
 using namespace CORE;
 using namespace std;
@@ -8,7 +9,7 @@ class DriveSubsystem : public CORESubsystem {
 public:
     COREMotor testMotor;
     DriveSubsystem():
-        testMotor(13)
+        testMotor(11)
         {
             cout << "Subsystem Constructor" << endl;
         }
@@ -16,7 +17,7 @@ public:
         cout << "Robot Init!" << endl;
     }
     void teleopInit() {
-        cout << "Teleop Init!" << endl;
+        cout << "WARNING: Teleop Init!" << endl;
 //		testMotor.setP(0.01);
 //		testMotor.setControlMode(VELPID);
 //		testMotor.setVel(0.5);
@@ -24,7 +25,11 @@ public:
     }
     void teleop() {
     	testMotor.setControlMode(controlMode::PERCENTAGE);
-		testMotor.Set(0.25);
+    	testMotor.setP(0.01);
+    	testMotor.setControlMode(VELPID);
+    	testMotor.setVel(0.5);
+    	testMotor.setDeadband(0.1);
+		testMotor.Set(0.7);
     }
     void test() {
         cout << "Tested!" << endl;
@@ -33,8 +38,10 @@ public:
 
 class Robot : public CORERobot {
 public:
-	Robot() {
-		new DriveSubsystem();
+	DriveSubsystem driveSubsystem;
+	Robot():
+		driveSubsystem()
+	{
 	}
 	void robotInit() {}
 	void teleopInit() {}
