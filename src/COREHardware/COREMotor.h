@@ -39,11 +39,13 @@ public:
 	COREMotor(int port, controllerType controller = CANTALON, controlMode controlMethod = VOLTAGE, double pProfile1Value = 0, double iProfile1Value = 0, double dProfile1Value = 0, double pProfile2Value = 0, double iProfile2Value = 0, double dProfile2Value = 0, int integralAccuracy = 1);
 	void Set(double motorSetValue);
 	double Get();
-	void setReversed(bool reverse);
+	void setReversed(bool reverse = true);
 	bool getReversed();
 	void setControlMode(controlMode controlMethod);
 	controlMode getControlMode();
 	int getPort();
+	controllerType getControllerType();
+
 	void setDeadband(double range);
 	void setDeadband(double min, double max);
 	void addSlave(COREMotor *slaveMotor);

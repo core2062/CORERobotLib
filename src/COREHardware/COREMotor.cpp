@@ -11,21 +11,21 @@ COREMotor::COREMotor(int port, controllerType controller, controlMode controlMet
 	motorControllerType(controller),
 	motorPort(port)
 {
-#ifdef NSIMULATION
-	switch(motorControllerType)
-	{
-	case CORE::CANTALON:
+#ifdef __arm__
+	if(motorControllerType == CORE::CANTALON) {
 		std::shared_ptr<CANTalon> pointer(new CANTalon(port));
 		CANTalonController = pointer;
-		break;
-	case CORE::JAGUAR:
+	}
+	else if(motorControllerType == CORE::JAGUAR) {
 		std::shared_ptr<Jaguar> pointer(new Jaguar(port));
 		JaguarController = pointer;
-		break;
-	case CORE::VICTOR:
+	}
+	else if(motorControllerType == CORE::VICTOR) {
 		std::shared_ptr<Victor> pointer(new Victor(port));
 		VictorController = pointer;
-		break;
+	}
+	else {
+		//TODO: Throw error
 	}
 #else
 	trapSumTimer = new CORETimer();
@@ -36,6 +36,7 @@ COREMotor::COREMotor(int port, controllerType controller, controlMode controlMet
 
 void COREMotor::Set(double motorSetValue) {
 	motorValue = (reversed ? -motorSetValue : motorSetValue);
+	motorUpdated = true;
 }
 
 double COREMotor::Get() {
@@ -68,6 +69,10 @@ int COREMotor::getPort() {
 	return motorPort;
 }
 
+controllerType COREMotor::getControllerType() {
+	return motorControllerType;
+}
+
 void COREMotor::setDeadband(double range) {
 	setDeadband(-range, range);
 }
@@ -98,7 +103,7 @@ void COREMotor::postTeleopTask() {
 	}
 	motorValue = fabs(motorValue) > 1 ? (motorValue > 1 ? 1 : -1) : motorValue;
 	motorValue = (motorValue < deadBandMax && motorValue > deadBandMin) ? 0 : motorValue;
-#ifdef NSIMULATION
+#ifdef __arm__
 	for(auto motor : slaveMotors) {
 		motor->Set(motorValue);
 	}
@@ -116,7 +121,7 @@ void COREMotor::postTeleopTask() {
 	}
 #else
 	cout << "Motor Value = " << motorValue << endl;
-	trapSum += 0.5 * trapSumTimer->Get() * (lastMotorValue + motorValue);
+	trapSum -= 0.5 * trapSumTimer->Get() * (lastMotorValue + motorValue);
 	trapSumTimer->Reset();
 	lastMotorValue = motorValue;
 	cout << "Trap Value = " << trapSum << endl;
