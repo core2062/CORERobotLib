@@ -3,7 +3,6 @@
 	<name>CORERobotLib</name>
 	<comment></comment>
 	<projects>
-		<project>CORETestRobot</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
