@@ -164,6 +164,6 @@ sysProps.xml
 *.sln
 *.rc
 /MinGW_Debug/
+/Linux_Debug/
 *.vcxproj
 *.filters
-/Linux_Debug/

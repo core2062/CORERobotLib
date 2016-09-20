@@ -61,6 +61,18 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.1104744751.40517998.2079896400" name="/" resourcePath="navx-mxp">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.exe.debug.1566566488" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.exe.debug" unusedChildren="">
+							<option id="cdt.managedbuild.option.gnu.cross.prefix.1136490643.1417921820" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix.1136490643"/>
+							<option id="cdt.managedbuild.option.gnu.cross.path.1733632446.1474264411" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path.1733632446"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.388880506" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.580849699"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.845645299" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.522335928"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.381056870" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker.1058447642"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.387239284" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker.875108913"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.1339717826" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver.384486050"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.796110433" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.330466621"/>
+						</toolChain>
+					</folderInfo>
 					<sourceEntries>
 						<entry excluding="CORERobotLib|navx2.0" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
@@ -174,6 +186,7 @@
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
+			<storageModule moduleId="ilg.gnuarmeclipse.managedbuild.packs"/>
 		</cconfiguration>
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
