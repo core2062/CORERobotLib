@@ -4,7 +4,7 @@
 #include <queue>
 #include <string>
 #include <memory>
-#include "COREHardware\CORETimer.h"
+#include "COREHardware/CORETimer.h"
 #include "CORERobot.h"
 
 using namespace std;

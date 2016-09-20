@@ -8,7 +8,7 @@ class SampleRobot {};
 #endif
 
 #include "CORESubsystemsManager.h"
-#include "COREHardware\CORETimer.h"
+#include "COREHardware/CORETimer.h"
 
 #define START_SIMULATED_ROBOT_CLASS(_ClassName_)                             \
 	int main() {                                                             \
