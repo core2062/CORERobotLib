@@ -1,19 +1,15 @@
 #ifndef SRC_CORELIBRARY_COREHARDWARE_H_
 #define SRC_CORELIBRARY_COREHARDWARE_H_
 
-//#ifndef __arm__
-//#define SIMULATION
-//#endif
-
+#include <map>
 
 #include "COREHardware/CORETimer.h"
-#include <map>
 #include "COREHardware/COREMotor.h"
-#include "COREHardware/COREJoystick.h"
 
 using namespace CORE;
 using namespace std;
 
+namespace CORE {
 class COREHardware {
 private:
 	static std::map<int, std::shared_ptr<COREMotor>> motorMap;
@@ -40,4 +36,5 @@ public:
 		return motorMap[motorPort];
 	}
 };
+}
 #endif
