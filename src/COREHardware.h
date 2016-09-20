@@ -8,8 +8,8 @@
 
 #include "COREHardware/CORETimer.h"
 #include <map>
-//#include "COREHardware/COREJoystick.h"
 #include "COREHardware/COREMotor.h"
+#include "COREHardware/COREJoystick.h"
 
 using namespace CORE;
 using namespace std;

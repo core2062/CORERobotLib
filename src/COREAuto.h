@@ -4,7 +4,7 @@
 #include <queue>
 #include <string>
 #include <memory>
-#include "COREHardware\CORETimer.h"
+#include "COREHardware/CORETimer.h"
 #include "CORERobot.h"
 
 using namespace std;
@@ -22,6 +22,7 @@ public:
 	virtual void actionInit() {}
 	virtual void actionEnd() {}
 	virtual actionStatus action() = 0;
+	virtual ~COREAutoAction(){}
 };
 
 class COREAuto {

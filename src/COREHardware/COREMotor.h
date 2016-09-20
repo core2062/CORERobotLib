@@ -45,7 +45,6 @@ public:
 	controlMode getControlMode();
 	int getPort();
 	controllerType getControllerType();
-
 	void setDeadband(double range);
 	void setDeadband(double min, double max);
 	void addSlave(COREMotor *slaveMotor);
