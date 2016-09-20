@@ -5,7 +5,7 @@
  *      Author: Scott
  */
 
-#include <SerialIO.h>
+#include "SerialIO.h"
 
 static const double IO_TIMEOUT_SECONDS = 1.0;
 
