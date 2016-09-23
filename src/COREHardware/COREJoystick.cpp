@@ -1,11 +1,18 @@
 #include "COREJoystick.h"
+#include "../COREHardware.h"
+
+#ifdef __arm__
+#include "WPILib.h"
+#endif
 
 using namespace CORE;
 
-COREJoystick::COREJoystick(unsigned int joystickNumber) :
-	joystick(joystickNumber)
+COREJoystick::COREJoystick(unsigned int port) :
+	joystick(port),
+	joystickPort(port)
 {
-
+	std::shared_ptr<COREJoystick> pointer(this);
+	COREHardware::addJoystick(pointer);
 }
 
 void COREJoystick::registerAxis(JoystickAxis axis) {
@@ -18,7 +25,6 @@ void COREJoystick::registerButton(JoystickButton button) {
 
 double COREJoystick::getAxis(JoystickAxis axis) {
 	if(axisCache.find(axis) == axisCache.end()) {
-		//TODO: Error: axis not registered, regestering and returing 0
 		registerAxis(axis);
 		return joystick.GetRawAxis(axis);
 	}
@@ -29,7 +35,6 @@ double COREJoystick::getAxis(JoystickAxis axis) {
 
 bool COREJoystick::getButton(JoystickButton button) {
 	if(buttonCache.find(button) == buttonCache.end()) {
-		//TODO: Error: button not registered, regestering and returing state
 		registerButton(button);
 		return joystick.GetRawButton(button);
 	}
@@ -40,7 +45,7 @@ bool COREJoystick::getButton(JoystickButton button) {
 
 ButtonState COREJoystick::getButtonState(JoystickButton button) {
 	if(buttonCache.find(button) == buttonCache.end()) {
-		//TODO: Error: button not registered, regestering and returing state
+		//TODO: Error: button not registered, registering and returning state
 		registerButton(button);
 		return joystick.GetRawButton(button) ? ACTIVE : NORMAL;
 	}
@@ -49,24 +54,28 @@ ButtonState COREJoystick::getButtonState(JoystickButton button) {
 	}
 }
 
+int COREJoystick::getPort() {
+	return joystickPort;
+}
+
 void COREJoystick::preTeleopTask() {
 	lastButtonCache = buttonCache;
 	for(auto button : buttonCache) {
 		bool isActive = joystick.GetRawButton(button.first);
 		if(lastButtonCache[button.first] == RELEASED || lastButtonCache[button.first] == NORMAL) {
 			if(isActive)
-				button.second = PRESSED;
+				buttonCache[button.first] = PRESSED;
 			else
-				button.second = NORMAL;
+				buttonCache[button.first] = NORMAL;
 		}
 		else if (lastButtonCache[button.first] == PRESSED || lastButtonCache[button.first] == ACTIVE) {
 			if(isActive)
-				button.second = ACTIVE;
+				buttonCache[button.first] = ACTIVE;
 			else
-				button.second = RELEASED;
+				buttonCache[button.first] = RELEASED;
 		}
 	}
 	for(auto axis : axisCache) {
-		axis.second = joystick.GetRawAxis(axis.first);
+		axisCache[axis.first] = joystick.GetRawAxis(axis.first);
 	}
 }

@@ -5,7 +5,14 @@
 #include "../CORESubsystemsManager.h"
 
 
-#ifdef __arm__
+#ifndef __arm__
+class Joystick {
+public:
+	inline Joystick(int num) {}
+	inline double GetRawAxis(int num) { return -1; }
+	inline bool GetRawButton(int num) { return false; }
+};
+#else
 #include "WPILib.h"
 #endif
 
@@ -14,10 +21,10 @@ using namespace CORE;
 
 namespace CORE {
 enum JoystickAxis {
-	LEFTSTICKX,
-	LEFTSTICKY,
-	RIGHTSTICKX,
-	RIGHTSTICKY,
+	LEFTSTICKX = 0,
+	LEFTSTICKY = 1,
+	RIGHTSTICKX = 2,
+	RIGHTSTICKY = 3,
 	RIGHTTRIGGERAXIS,
 	LEFTTRIGGERAXIS
 };
@@ -37,8 +44,8 @@ enum JoystickButton {
 	STARTBUTTON,
 	YBUTTON,
 	BBUTTON,
-	ABUTTON,
-	XBUTTON,
+	ABUTTON = 2,
+	XBUTTON = 1,
 	LEFTBUTTON,
 	RIGHTBUTTON,
 	LEFTTRIGGER,
@@ -58,9 +65,11 @@ public:
 	double getAxis(JoystickAxis axis);
 	bool getButton(JoystickButton button);
 	ButtonState getButtonState(JoystickButton button);
+	int getPort();
 	void preTeleopTask();
 private:
 	Joystick joystick;
+	int joystickPort;
 	map<JoystickButton, ButtonState> lastButtonCache, buttonCache;
 	map<JoystickAxis, double> axisCache;
 };
