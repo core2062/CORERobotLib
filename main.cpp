@@ -1,35 +1,35 @@
 #include <iostream>
 #include "CORERobotLib.h"
+#include "src/COREHardware.h"
 #include <map>
 //#include <WPILib.h>
 
 using namespace CORE;
 using namespace std;
+
+enum portAssignments {
+	STEERMOTOR = 15,
+	DRIVEMOTOR = 16
+};
+
 class DriveSubsystem : public CORESubsystem {
 public:
-    COREMotor testMotor;
+    COREMotor driveMotor;
+    COREMotor steerMotor;
     DriveSubsystem():
-        testMotor(11)
+        driveMotor(DRIVEMOTOR),
+		steerMotor(STEERMOTOR)
         {
-            cout << "Subsystem Constructor" << endl;
+
         }
     void robotInit() {
-        cout << "Robot Init!" << endl;
     }
     void teleopInit() {
-        cout << "WARNING: Teleop Init!" << endl;
-//		testMotor.setP(0.01);
-//		testMotor.setControlMode(VELPID);
-//		testMotor.setVel(0.5);
-//		testMotor.setDeadband(0.1);
+
     }
     void teleop() {
-    	testMotor.setControlMode(controlMode::PERCENTAGE);
-    	testMotor.setP(0.01);
-    	testMotor.setControlMode(VELPID);
-    	testMotor.setVel(0.5);
-    	testMotor.setDeadband(0.1);
-		testMotor.Set(0.7);
+    	COREHardware::motor(DRIVEMOTOR)->Set(COREHardware::joystick(0)->getAxis(RIGHTSTICKY));
+    	COREHardware::motor(STEERMOTOR)->Set(COREHardware::joystick(0)->getAxis(LEFTSTICKX));
     }
     void test() {
         cout << "Tested!" << endl;
@@ -39,9 +39,12 @@ public:
 class Robot : public CORERobot {
 public:
 	DriveSubsystem driveSubsystem;
+    COREJoystick joystick1;
 	Robot():
-		driveSubsystem()
+		driveSubsystem(),
+		joystick1(0)
 	{
+
 	}
 	void robotInit() {}
 	void teleopInit() {}
