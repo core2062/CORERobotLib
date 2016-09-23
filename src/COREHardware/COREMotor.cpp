@@ -1,6 +1,8 @@
 #include "COREMotor.h"
 #include <iostream>
 #include <math.h>
+#include "../COREHardware.h"
+
 using namespace std;
 
 using namespace CORE;
@@ -32,6 +34,8 @@ COREMotor::COREMotor(int port, controllerType controller, controlMode controlMet
 	trapSumTimer->Reset();
 	trapSumTimer->Start();
 #endif
+	std::shared_ptr<COREMotor> pointer(this);
+	COREHardware::addMotor(pointer);
 }
 
 void COREMotor::Set(double motorSetValue) {
@@ -107,24 +111,24 @@ void COREMotor::postTeleopTask() {
 	for(auto motor : slaveMotors) {
 		motor->Set(motorValue);
 	}
-	switch(motorControllerType)
-	{
-	case CORE::CANTALON:
+	if(motorControllerType == CORE::CANTALON) {
 		CANTalonController->Set(motorValue);
-		break;
-	case CORE::JAGUAR:
+	}
+	else if(motorControllerType == CORE::JAGUAR) {
 		JaguarController->Set(motorValue);
-		break;
-	case CORE::VICTOR:
+	}
+	else if(motorControllerType == CORE::VICTOR) {
 		VictorController->Set(motorValue);
-		break;
+	}
+	else {
+		//TODO: Throw error
 	}
 #else
-	cout << "Motor Value = " << motorValue << endl;
+	cout << "Motor Port " << getPort() << " Value = " << motorValue << endl;
 	trapSum -= 0.5 * trapSumTimer->Get() * (lastMotorValue + motorValue);
 	trapSumTimer->Reset();
 	lastMotorValue = motorValue;
-	cout << "Trap Value = " << trapSum << endl;
+	cout << "Trap Port " << getPort() << " Value = " << trapSum << endl;
 #endif
 	motorUpdated = false;
 }
