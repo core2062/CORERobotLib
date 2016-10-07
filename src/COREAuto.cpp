@@ -9,16 +9,21 @@ COREAuto::COREAuto(CORERobot * robot):
 }
 
 void COREAuto::addParallel(std::shared_ptr<COREAutoAction> autoAction) {
-	sequentialActions.push(autoAction);
+
 }
 
 void COREAuto::addSequential(std::shared_ptr<COREAutoAction> autoAction) {
-	parallelActions.push(autoAction);
+	sequentialActions.push(autoAction);
 }
 
 void COREAuto::runAuto() {
-	while(!sequentialActions.empty() && !parallelActions.empty()) {// && IsAutonomous() && !IsDisabled()
-
-		robot->waitLoopTime();
-	}
+//	actionStatus lastSeqActionStatus = END;
+//	while(!sequentialActions.empty() && !parallelActions.empty() && IsAutonomous() && !IsDisabled()) {
+//		if(lastSeqActionStatus == END) {
+//			sequentialActions.front()->actionInit();
+//		}
+//		lastSeqActionStatus = sequentialActions.front()->action();
+//
+//		robot->waitLoopTime();
+//	}
 }

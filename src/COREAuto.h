@@ -1,11 +1,19 @@
 #ifndef SRC_CORELIBRARY_COREAUTO_H_
 #define SRC_CORELIBRARY_COREAUTO_H_
 #include <vector>
+#include <map>
 #include <queue>
 #include <string>
 #include <memory>
 #include "COREHardware/CORETimer.h"
 #include "CORERobot.h"
+
+#ifndef __arm__
+bool IsAutonomous() {return true;}
+bool IsDisabled() {return false;}
+#else
+#include "WPILib.h"
+#endif
 
 using namespace std;
 namespace CORE {
