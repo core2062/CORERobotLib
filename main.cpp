@@ -1,6 +1,5 @@
 #include <iostream>
 #include "CORERobotLib.h"
-#include "src/COREHardware.h"
 #include <map>
 //#include <WPILib.h>
 
@@ -14,37 +13,32 @@ enum portAssignments {
 
 class DriveSubsystem : public CORESubsystem {
 public:
-    COREMotor driveMotor;
-    COREMotor steerMotor;
-    DriveSubsystem():
-        driveMotor(DRIVEMOTOR),
-		steerMotor(STEERMOTOR)
-        {
-
-        }
+    DriveSubsystem() {
+    }
     void robotInit() {
+
     }
     void teleopInit() {
-
+    	cout << Robot::motor(0)->getPort();
     }
     void teleop() {
-    	COREHardware::motor(DRIVEMOTOR)->Set(COREHardware::joystick(0)->getAxis(RIGHTSTICKY));
-    	COREHardware::motor(STEERMOTOR)->Set(COREHardware::joystick(0)->getAxis(LEFTSTICKX));
+    	Robot::motor(0)->Set(Robot::joystick(0)->getAxis(RIGHTSTICKY));
     }
     void test() {
         cout << "Tested!" << endl;
     }
 };
 
-class Robot : public CORERobot {
+class offSeasonRobot : public CORERobot {
 public:
 	DriveSubsystem driveSubsystem;
     COREJoystick joystick1;
-	Robot():
+    COREMotor driveMotor;
+    offSeasonRobot():
 		driveSubsystem(),
-		joystick1(0)
+		joystick1(0),
+        driveMotor(1)
 	{
-
 	}
 	void robotInit() {}
 	void teleopInit() {}
@@ -52,7 +46,7 @@ public:
 };
 
 #ifdef __arm__
-START_ROBOT_CLASS(Robot);
+START_ROBOT_CLASS(offSeasonRobot);
 #else
-START_SIMULATED_ROBOT_CLASS(Robot);
+START_SIMULATED_ROBOT_CLASS(offSeasonRobot);
 #endif
