@@ -27,18 +27,22 @@ COREPID::PIDProfile *COREPID::getProfile(int profile) {
  * @param pProfile1Value The P constant for profile 1, Set to 0 to disable
  * @param iProfile1Value The I constant for profile 1, Set to 0 to disable
  * @param dProfile1Value The D constant for profile 1, Set to 0 to disable
+ * @param fProfile1Value The F constant for profile 1, Set to 1 or 0 to disable
  * @param pProfile2Value The P constant for profile 2, Set to 0 to disable. Disabled by default
  * @param iProfile2Value The I constant for profile 2, Set to 0 to disable. Disabled by default
  * @param dProfile2Value The D constant for profile 2, Set to 0 to disable. Disabled by default
+ * @param fProfile2Value The F constant for profile 2, Set to 1 or 0 to disable. Disabled by default
  * @param integralAccuracy The number of previous errors to use when calculating the Integral term. Set to 1 by default
  */
-COREPID::COREPID(PIDType PIDControllerType, double pProfile1Value, double iProfile1Value, double dProfile1Value, double pProfile2Value, double iProfile2Value, double dProfile2Value, int integralAccuracy) {
+COREPID::COREPID(PIDType PIDControllerType, double pProfile1Value, double iProfile1Value, double dProfile1Value, double fProfile1Value, double pProfile2Value, double iProfile2Value, double dProfile2Value, double fProfile2Value, int integralAccuracy) {
 	PID1.P = pProfile1Value;
 	PID1.I = iProfile1Value;
 	PID1.D = dProfile1Value;
+	PID1.F = fProfile1Value;
 	PID2.P = pProfile2Value;
 	PID2.I = iProfile2Value;
 	PID2.D = dProfile2Value;
+	PID2.F = fProfile2Value;
 	for(int i = 1; i <= 2; i++) {
 		getProfile(i)->mistake.resize(integralAccuracy);
 		getProfile(i)->mistake[0] = 0;
@@ -72,6 +76,9 @@ double COREPID::calculate(int profile) {
 		currentProfile->output = actualPosition;
 		return 0;
 	}
+	if(currentProfile->F == 1) {
+		currentProfile->F = 0;
+	}
 	else {
 		timer.Reset();
 		if(ControllerType == POS) {
@@ -79,14 +86,14 @@ double COREPID::calculate(int profile) {
 			currentProfile->mistake.insert(currentProfile->mistake.begin(), currentProfile->proportional);
 			currentProfile->integral += (sum * time) * currentProfile->I; //Technically an approximation of Integral
 			currentProfile->derivative = ((currentProfile->mistake[0] - currentProfile->mistake[1]) / time) * currentProfile->D;
-			currentProfile->output = currentProfile->proportional + currentProfile->integral + currentProfile->derivative;
+			currentProfile->output = currentProfile->F * (currentProfile->proportional + currentProfile->integral + currentProfile->derivative);
 		}
 		else if(ControllerType == VEL) {
 			currentProfile->proportional = (setVelocity - actualVelocity) * currentProfile->P;
 			currentProfile->mistake.insert(currentProfile->mistake.begin(), currentProfile->proportional);
 			currentProfile->integral += (sum * time) * currentProfile->I; //Technically an approximation of Integral
 			currentProfile->derivative = ((currentProfile->mistake[0] - currentProfile->mistake[1]) / time) * currentProfile->D;
-			currentProfile->output = currentProfile->lastOutput + currentProfile->proportional + currentProfile->integral + currentProfile->derivative;
+			currentProfile->output = currentProfile->F * (currentProfile->lastOutput + currentProfile->proportional + currentProfile->integral + currentProfile->derivative);
 		}
 		else {
 
@@ -134,15 +141,6 @@ void COREPID::setActualVel(double actualVelocityValue) {
 	actualVelocity = actualVelocityValue;
 }
 
-///**
-// * Bind the pointer to a NAVX as an input device to this PID loop
-// * @param NAVX A pointer to the NAVX
-// */
-//void COREPID::bindInputDevice(COREAHRS * NAVX) {
-//	inputDevice = inputDeviceType::AHRSInput;
-//	inputGyro = NAVX;
-//}
-
 /**
  * Get the P value of this PID loop
  */
@@ -164,6 +162,13 @@ double COREPID::getD(int profile) {
 	return getProfile(profile)->D;
 }
 
+/**
+ * Get the F value of this PID loop
+ */
+double COREPID::getF(int profile) {
+	return getProfile(profile)->F;
+}
+
 void COREPID::setDefaultProfile(int profile) {
 	defaultProfile = profile;
 }
@@ -183,10 +188,17 @@ void COREPID::setI(double value, int profile) {
 }
 
 /**
- * Get the D value of this PID loop
+ * Set the D value of this PID loop
  */
 void COREPID::setD(double value, int profile) {
 	getProfile(profile)->D = value;
+}
+
+/**
+ * Set the F value of this PID loop
+ */
+void COREPID::setF(double value, int profile) {
+	getProfile(profile)->F = value;
 }
 
 /**

@@ -17,7 +17,7 @@ enum PIDType {
 
 class COREPID : public CORETask {
 public:
-	COREPID(PIDType PIDControllerType, double pProfile1Value, double iProfile1Value, double dProfile1Value, double pProfile2Value = 0, double iProfile2Value = 0, double dProfile2Value = 0, int integralAccuracy = 1);
+	COREPID(PIDType PIDControllerType, double pProfile1Value, double iProfile1Value, double dProfile1Value, double fProfile1Value = 1, double pProfile2Value = 0, double iProfile2Value = 0, double dProfile2Value = 0, double fProfile2Value = 0, int integralAccuracy = 1);
 	double calculate(int profile = -1);
 	void setPos(double setPositionValue);
 	void setVel(double setVelocityValue);
@@ -30,9 +30,11 @@ public:
 	void setP(double value, int profile = -1);
 	void setI(double value, int profile = -1);
 	void setD(double value, int profile = -1);
+	void setF(double value, int profile = -1);
 	double getP(int profile = -1);
 	double getI(int profile = -1);
 	double getD(int profile = -1);
+	double getF(int profile = -1);
 	double getOutput(int profile = -1);
 	double getProportional(int profile = -1);
 	double getIntegral(int profile = -1);
@@ -49,7 +51,7 @@ protected:
 		AHRSInput
 	};
 	struct PIDProfile {
-		double P, I, D, proportional, integral, derivative, output, lastOutput;
+		double P, I, D, F, proportional, integral, derivative, output, lastOutput;
 		std::vector<double> mistake;
 	}PID1, PID2;
 	double setPosition = 0;
