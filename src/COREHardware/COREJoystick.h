@@ -3,6 +3,7 @@
 #include <vector>
 #include <map>
 #include "../CORESubsystemsManager.h"
+#include "../../sim/include/WPILib.h"
 
 
 #ifndef __arm__
@@ -11,6 +12,7 @@ public:
 	inline Joystick(int num) {}
 	inline double GetRawAxis(int num) { return -1; }
 	inline bool GetRawButton(int num) { return false; }
+	inline string GetJoystickName() { return "NULL"; }
 };
 #else
 #include "WPILib.h"
@@ -21,10 +23,10 @@ using namespace CORE;
 
 namespace CORE {
 enum JoystickAxis {
-	LEFTSTICKX = 0,
-	LEFTSTICKY = 1,
-	RIGHTSTICKX = 2,
-	RIGHTSTICKY = 3,
+	LEFTSTICKX,
+	LEFTSTICKY,
+	RIGHTSTICKX,
+	RIGHTSTICKY,
 	RIGHTTRIGGERAXIS,
 	LEFTTRIGGERAXIS
 };
@@ -44,8 +46,8 @@ enum JoystickButton {
 	STARTBUTTON,
 	YBUTTON,
 	BBUTTON,
-	ABUTTON = 2,
-	XBUTTON = 1,
+	ABUTTON,
+	XBUTTON,
 	LEFTBUTTON,
 	RIGHTBUTTON,
 	LEFTTRIGGER,
@@ -57,9 +59,12 @@ enum ButtonState {
 	RELEASED,
 	NORMAL
 };
+enum JoystickType {
+	F310
+};
 class COREJoystick : public CORETask {
 public:
-	COREJoystick(unsigned int joystickNumber);
+	COREJoystick(int joystickNumber);
 	void registerAxis(JoystickAxis axis);
 	void registerButton(JoystickButton button);
 	double getAxis(JoystickAxis axis);
@@ -72,6 +77,8 @@ private:
 	int joystickPort;
 	map<JoystickButton, ButtonState> lastButtonCache, buttonCache;
 	map<JoystickAxis, double> axisCache;
+	JoystickType expectedJoystickType;
+	std::shared_ptr<COREJoystick> instance;
 };
 
 }

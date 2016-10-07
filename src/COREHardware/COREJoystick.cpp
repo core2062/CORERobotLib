@@ -1,5 +1,6 @@
 #include "COREJoystick.h"
 #include "../COREHardware.h"
+#include <iostream>
 
 #ifdef __arm__
 #include "WPILib.h"
@@ -7,12 +8,12 @@
 
 using namespace CORE;
 
-COREJoystick::COREJoystick(unsigned int port) :
+COREJoystick::COREJoystick(int port) :
 	joystick(port),
-	joystickPort(port)
+	joystickPort(port),
+	instance(this)
 {
-	std::shared_ptr<COREJoystick> pointer(this);
-	COREHardware::addJoystick(pointer);
+	Robot::addJoystick(instance);
 }
 
 void COREJoystick::registerAxis(JoystickAxis axis) {

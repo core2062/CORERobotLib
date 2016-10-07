@@ -11,7 +11,8 @@ COREMotor::COREMotor(int port, controllerType controller, controlMode controlMet
 	COREPID(motorControlMode == VELPID ? PIDType::VEL : (motorControlMode == POSPID ? PIDType::POS : PIDType::POSVEL), pProfile1Value, iProfile1Value, dProfile1Value, pProfile2Value, iProfile2Value, dProfile2Value, integralAccuracy),
 	motorControlMode(controlMethod),
 	motorControllerType(controller),
-	motorPort(port)
+	motorPort(port),
+	instance(this)
 {
 #ifdef __arm__
 	if(motorControllerType == CORE::CANTALON) {
@@ -34,8 +35,7 @@ COREMotor::COREMotor(int port, controllerType controller, controlMode controlMet
 	trapSumTimer->Reset();
 	trapSumTimer->Start();
 #endif
-	std::shared_ptr<COREMotor> pointer(this);
-	COREHardware::addMotor(pointer);
+	Robot::addMotor(instance);
 }
 
 void COREMotor::Set(double motorSetValue) {
@@ -86,8 +86,12 @@ void COREMotor::setDeadband(double min, double max) {
 	deadBandMax = max > 1 ? 1 : max;
 }
 
-void COREMotor::addSlave(COREMotor *slaveMotor) {
-	slaveMotors.push_back(slaveMotor);
+void COREMotor::addSlave(std::shared_ptr<COREMotor> slaveMotor) {
+	slaveMotors.push_back(slaveMotor.get());
+}
+
+void COREMotor::motorSafety(bool disableMotorSafety) {
+	motorSafetyDisabled = disableMotorSafety;
 }
 
 void COREMotor::postTeleopTask() {
@@ -101,16 +105,24 @@ void COREMotor::postTeleopTask() {
 		motorValue = calculate();
 		motorUpdated = true;
 	}
-	if(!motorUpdated) {
-		motorValue = 0;
-		cout << "Motor not updated!" << endl;
+	if(!motorUpdated && !motorSafetyDisabled) {
+		if(motorSafetyCounter > 3) {
+			motorValue = 0;
+			cout << "Motor not updated!" << endl;
+		}
+		else {
+			motorSafetyCounter++;
+		}
+	}
+	else {
+		motorSafetyCounter = 0;
 	}
 	motorValue = fabs(motorValue) > 1 ? (motorValue > 1 ? 1 : -1) : motorValue;
 	motorValue = (motorValue < deadBandMax && motorValue > deadBandMin) ? 0 : motorValue;
-#ifdef __arm__
 	for(auto motor : slaveMotors) {
 		motor->Set(motorValue);
 	}
+#ifdef __arm__
 	if(motorControllerType == CORE::CANTALON) {
 		CANTalonController->Set(motorValue);
 	}

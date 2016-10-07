@@ -47,7 +47,8 @@ public:
 	controllerType getControllerType();
 	void setDeadband(double range);
 	void setDeadband(double min, double max);
-	void addSlave(COREMotor *slaveMotor);
+	void addSlave(std::shared_ptr<COREMotor> slaveMotor);
+	void motorSafety(bool disableMotorSafety = true);
 	void postTeleopTask();
 private:
 	double motorValue = 0;
@@ -62,8 +63,10 @@ private:
 	CORETimer * trapSumTimer;
 	double lastSum = 0;
 	int motorPort;
+	int motorSafetyCounter = 0;
+	bool motorSafetyDisabled = false;
 	std::vector<COREMotor*> slaveMotors;
+	shared_ptr<COREMotor> instance;
 };
-
 }
 #endif
