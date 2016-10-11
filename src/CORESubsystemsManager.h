@@ -19,6 +19,9 @@ public:
 	virtual void teleopEnd() {
 		//TODO: Log -> Teleop end not implemented for: NAME
 	}
+	virtual void test() {
+
+	}
 	virtual ~CORESubsystem(){}
 };
 

@@ -80,5 +80,8 @@ void CORESubsystemsManager::teleopEnd() {
 	//TODO: Log -> TeleopEnd Complete
 }
 void CORESubsystemsManager::test() {
+	for(auto subsystem : subsystems) {
+		subsystem->test();
+	}
 	//TODO: Do something
 }
