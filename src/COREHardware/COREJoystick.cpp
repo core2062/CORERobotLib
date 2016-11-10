@@ -8,7 +8,7 @@
 
 using namespace CORE;
 
-COREJoystick::COREJoystick(int port) :
+COREJoystick::COREJoystick(uint32_t port) :
 	joystick(port),
 	joystickPort(port),
 	instance(this)

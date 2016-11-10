@@ -3,7 +3,7 @@
 #include <vector>
 #include <map>
 #include "../CORESubsystemsManager.h"
-#include "../../sim/include/WPILib.h"
+#include "WPILib.h"
 
 
 #ifndef __arm__
@@ -15,7 +15,6 @@ public:
 	inline string GetJoystickName() { return "NULL"; }
 };
 #else
-#include "WPILib.h"
 #endif
 
 using namespace std;
@@ -64,7 +63,7 @@ enum JoystickType {
 };
 class COREJoystick : public CORETask {
 public:
-	COREJoystick(int joystickNumber);
+	COREJoystick(uint32_t joystickNumber);
 	void registerAxis(JoystickAxis axis);
 	void registerButton(JoystickButton button);
 	double getAxis(JoystickAxis axis);
@@ -74,7 +73,7 @@ public:
 	void preTeleopTask();
 private:
 	Joystick joystick;
-	int joystickPort;
+	uint32_t joystickPort;
 	map<JoystickButton, ButtonState> lastButtonCache, buttonCache;
 	map<JoystickAxis, double> axisCache;
 	JoystickType expectedJoystickType;

@@ -9,6 +9,7 @@
 
 #ifndef __arm__
 #else
+#include "WPILib.h"
 #endif
 
 using namespace std;

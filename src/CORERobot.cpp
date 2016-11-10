@@ -56,7 +56,7 @@ void CORERobot::Autonomous() {
 
 void CORERobot::OperatorControl() {
 	CORESubsystemsManager::teleopInit();
-#ifdef NSIMULATION
+#ifdef __arm__
 	while(IsOperatorControl() && IsEnabled()) {
 #else
 	while(true) {

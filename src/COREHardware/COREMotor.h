@@ -7,7 +7,11 @@
 #include "../CORESubsystemsManager.h"
 
 #ifndef __arm__
-class CANTalon {};
+class CANTalon {
+public:
+	CANTalon(int _) {};
+	inline void Set(double _) {};
+};
 class Jaguar {};
 class Victor {};
 #else
