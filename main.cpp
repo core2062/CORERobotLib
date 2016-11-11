@@ -1,14 +1,14 @@
 #include <iostream>
 #include "CORERobotLib.h"
 #include <map>
-//#include <WPILib.h>
+#include "WPILib.h"
 
 using namespace CORE;
 using namespace std;
 
 enum portAssignments {
-	STEERMOTOR = 15,
-	DRIVEMOTOR = 16
+	STEERMOTOR = 12,
+	DRIVEMOTOR = 13
 };
 
 class DriveSubsystem : public CORESubsystem {
@@ -19,10 +19,12 @@ public:
 
     }
     void teleopInit() {
-    	cout << Robot::motor(0)->getPort();
     }
     void teleop() {
-    	Robot::motor(0)->Set(Robot::joystick(0)->getAxis(RIGHTSTICKY));
+    	//cout << DriverStation::GetInstance().GetBatteryVoltage() << std::endl;
+    	Robot::motor(DRIVEMOTOR)->Set(Robot::joystick(0)->getAxis(RIGHTSTICKY));
+    	Robot::motor(STEERMOTOR)->Set(Robot::joystick(0)->getAxis(LEFTSTICKY));
+    	cout << "Steer Motor: " << endl;
     }
     void test() {
         cout << "Tested!" << endl;
@@ -34,10 +36,12 @@ public:
 	DriveSubsystem driveSubsystem;
     COREJoystick joystick1;
     COREMotor driveMotor;
+    COREMotor steerMotor;
     offSeasonRobot():
 		driveSubsystem(),
 		joystick1(0),
-        driveMotor(1)
+        driveMotor(DRIVEMOTOR),
+		steerMotor(STEERMOTOR)
 	{
 	}
 	void robotInit() {}
