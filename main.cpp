@@ -1,7 +1,7 @@
 #include <iostream>
 #include "CORERobotLib.h"
 #include <map>
-//#include "WPILib.h"
+
 
 using namespace CORE;
 using namespace std;
@@ -24,7 +24,7 @@ public:
     	//cout << DriverStation::GetInstance().GetBatteryVoltage() << std::endl;
     	Robot::motor(DRIVEMOTOR)->Set(Robot::joystick(0)->getAxis(RIGHTSTICKY));
     	Robot::motor(STEERMOTOR)->Set(Robot::joystick(0)->getAxis(LEFTSTICKY));
-    	cout << "Steer Motor: " << endl;
+    	cout << "Steer Motor: " << Robot::motor(STEERMOTOR)->Get() << endl;
     }
     void test() {
         cout << "Tested!" << endl;
@@ -50,7 +50,7 @@ public:
 };
 
 #ifdef __arm__
-START_ROBOT_CLASS(offSeasonRobot);
+START_ROBOT_CLASS(offSeasonRobot)
 #else
-START_SIMULATED_ROBOT_CLASS(offSeasonRobot);
+START_SIMULATED_ROBOT_CLASS(offSeasonRobot)
 #endif

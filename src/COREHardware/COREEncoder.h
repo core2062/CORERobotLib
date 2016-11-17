@@ -1,5 +1,4 @@
-#ifndef SRC_CORELIBRARY_COREHARDWARE_COREENCODER_H_
-#define SRC_CORELIBRARY_COREHARDWARE_COREENCODER_H_
+#pragma once
 
 namespace CORE {
 enum distanceUnit {
@@ -23,5 +22,3 @@ private:
 };
 
 }
-
-#endif

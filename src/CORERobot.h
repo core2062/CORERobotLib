@@ -1,11 +1,6 @@
-#ifndef SRC_CORELIBRARY_COREROBOT_H_
-#define SRC_CORELIBRARY_COREROBOT_H_
+#pragma once
 
-#ifndef __arm__
-class SampleRobot {};
-#else
 #include "WPILib.h"
-#endif
 
 #include "CORESubsystemsManager.h"
 #include "COREHardware/CORETimer.h"
@@ -37,4 +32,3 @@ public:
 	void Test();
 };
 }
-#endif

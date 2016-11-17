@@ -1,5 +1,4 @@
-#ifndef SRC_CORELIBRARY_COREHARDWARE_H_
-#define SRC_CORELIBRARY_COREHARDWARE_H_
+#pragma once
 
 #include <map>
 #include <memory>
@@ -24,4 +23,3 @@ public:
 	static void disableAllMotors();
 };
 }
-#endif

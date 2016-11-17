@@ -1,10 +1,7 @@
 #include "COREJoystick.h"
 #include "../COREHardware.h"
-#include <iostream>
 
-#ifdef __arm__
-#include "WPILib.h"
-#endif
+#include <iostream>
 
 using namespace CORE;
 

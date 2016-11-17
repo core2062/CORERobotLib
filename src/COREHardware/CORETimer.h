@@ -1,9 +1,4 @@
-#ifndef SRC_CORELIBRARY_COREHARDWARE_CORETIMER_H_
-#define SRC_CORELIBRARY_COREHARDWARE_CORETIMER_H_
-
-#ifndef SIMULATION1
-//#include "WPILib.h"
-#endif
+#pragma once
 
 #include <chrono>
 
@@ -22,4 +17,3 @@ public:
 };
 
 }
-#endif

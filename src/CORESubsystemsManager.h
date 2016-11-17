@@ -1,5 +1,4 @@
-#ifndef SRC_CORELIBRARY_CORESUBSYSTEMSMANAGER_H_
-#define SRC_CORELIBRARY_CORESUBSYSTEMSMANAGER_H_
+#pragma once
 
 #include <vector>
 #include <string>
@@ -11,7 +10,6 @@ namespace CORE {
 
 class CORESubsystem {
 public:
-	std::string name;
 	CORESubsystem();
 	virtual void robotInit() = 0;
 	virtual void teleopInit() = 0;
@@ -54,4 +52,3 @@ public:
 	static void test();
 };
 }
-#endif

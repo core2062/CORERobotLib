@@ -1,21 +1,10 @@
-#ifndef SRC_CORELIBRARY_COREHARDWARE_COREJOYSTICK_H_
-#define SRC_CORELIBRARY_COREHARDWARE_COREJOYSTICK_H_
+#pragma once
+
 #include <vector>
 #include <map>
 #include "../CORESubsystemsManager.h"
 
-
-#ifndef __arm__
-class Joystick {
-public:
-	inline Joystick(int num) {}
-	inline double GetRawAxis(int num) { return -1; }
-	inline bool GetRawButton(int num) { return false; }
-	inline string GetJoystickName() { return "NULL"; }
-};
-#else
 #include "WPILib.h"
-#endif
 
 using namespace std;
 using namespace CORE;
@@ -81,4 +70,3 @@ private:
 };
 
 }
-#endif

@@ -1,5 +1,5 @@
-#ifndef SRC_CORELIBRARY_COREPID_H_
-#define SRC_CORELIBRARY_COREPID_H_
+#pragma once
+
 #include <vector>
 #include <memory>
 
@@ -65,4 +65,3 @@ protected:
 	PIDProfile *getProfile(int profile);
 };
 }
-#endif

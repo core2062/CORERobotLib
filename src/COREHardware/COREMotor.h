@@ -1,22 +1,12 @@
-#ifndef SRC_CORELIBRARY_COREHARDWARE_COREMOTOR_H_
-#define SRC_CORELIBRARY_COREHARDWARE_COREMOTOR_H_
+#pragma once
+
 #include "../COREPID.h"
 #include <vector>
 #include <memory>
 
 #include "../CORESubsystemsManager.h"
 
-#ifndef __arm__
-class CANTalon {
-public:
-	CANTalon(int _) {};
-	inline void Set(double _) {};
-};
-class Jaguar {};
-class Victor {};
-#else
 #include "WPILib.h"
-#endif
 
 namespace CORE {
 	enum controlMode {
@@ -73,4 +63,3 @@ private:
 	shared_ptr<COREMotor> instance;
 };
 }
-#endif

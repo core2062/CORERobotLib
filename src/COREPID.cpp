@@ -1,5 +1,4 @@
 #include "COREPID.h"
-#include "COREHardware.h"
 
 using namespace CORE;
 
@@ -212,7 +211,8 @@ double COREPID::getOutput(int profile) {
  * Get the proportional term of this PID loop
  */
 double COREPID::getProportional(int profile) {
-	return getProfile(profile)->proportional;}
+	return getProfile(profile)->proportional;
+}
 
 /**
  * Get the integral term of this PID loop

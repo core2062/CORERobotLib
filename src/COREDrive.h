@@ -1,5 +1,5 @@
-#ifndef SRC_CORELIBRARY_COREDRIVE_H_
-#define SRC_CORELIBRARY_COREDRIVE_H_
+#pragma once
+
 #include <vector>
 
 #include "COREHardware.h"
@@ -36,4 +36,3 @@ public:
 	
 };
 }
-#endif

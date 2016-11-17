@@ -1,5 +1,5 @@
-#ifndef SRC_CORELIBRARY_CORELOG_H_
-#define SRC_CORELIBRARY_CORELOG_H_
+#pragma once
+
 #include <vector>
 #include <queue>
 #include <string>
@@ -7,10 +7,7 @@
 #include "COREHardware/CORETimer.h"
 #include "CORERobot.h"
 
-#ifndef __arm__
-#else
 #include "WPILib.h"
-#endif
 
 using namespace std;
 namespace CORE {
@@ -26,4 +23,3 @@ public:
 
 };
 }
-#endif
