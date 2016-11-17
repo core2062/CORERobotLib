@@ -3,7 +3,6 @@
 #include <vector>
 #include <map>
 #include "../CORESubsystemsManager.h"
-#include "WPILib.h"
 
 
 #ifndef __arm__
@@ -15,6 +14,7 @@ public:
 	inline string GetJoystickName() { return "NULL"; }
 };
 #else
+#include "WPILib.h"
 #endif
 
 using namespace std;

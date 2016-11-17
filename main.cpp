@@ -1,7 +1,7 @@
 #include <iostream>
 #include "CORERobotLib.h"
 #include <map>
-#include "WPILib.h"
+//#include "WPILib.h"
 
 using namespace CORE;
 using namespace std;
