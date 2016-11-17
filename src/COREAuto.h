@@ -29,15 +29,15 @@ public:
 };
 
 class COREAuto {
-private:
-	queue<std::shared_ptr<COREAutoAction>> sequentialActions;
-	queue<std::shared_ptr<COREAutoAction>> parallelActions;
-	CORERobot * robot;
 public:
 	COREAuto(CORERobot * robot);
 	void addSequential(std::shared_ptr<COREAutoAction> autoAction);
 	void addParallel(std::shared_ptr<COREAutoAction> autoAction);
 	void runAuto();
 
+private:
+    queue<std::shared_ptr<COREAutoAction>> m_sequentialActions;
+    queue<std::shared_ptr<COREAutoAction>> m_parallelActions;
+    CORERobot *m_robot;
 };
 }

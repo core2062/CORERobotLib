@@ -1,7 +1,5 @@
 #include <iostream>
 #include "CORERobotLib.h"
-#include <map>
-
 
 using namespace CORE;
 using namespace std;
@@ -22,8 +20,8 @@ public:
     }
     void teleop() {
     	//cout << DriverStation::GetInstance().GetBatteryVoltage() << std::endl;
-    	Robot::motor(DRIVEMOTOR)->Set(Robot::joystick(0)->getAxis(RIGHTSTICKY));
-    	Robot::motor(STEERMOTOR)->Set(Robot::joystick(0)->getAxis(LEFTSTICKY));
+		Robot::motor(DRIVEMOTOR)->Set(Robot::joystick(0)->getAxis(RIGHT_STICK_Y));
+		Robot::motor(STEERMOTOR)->Set(Robot::joystick(0)->getAxis(LEFT_STICK_Y));
     	cout << "Steer Motor: " << Robot::motor(STEERMOTOR)->Get() << endl;
     }
     void test() {

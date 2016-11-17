@@ -1,79 +1,72 @@
 #include "COREJoystick.h"
 #include "../COREHardware.h"
 
-#include <iostream>
-
 using namespace CORE;
 
 COREJoystick::COREJoystick(uint32_t port) :
-	joystick(port),
-	joystickPort(port),
-	instance(this)
-{
-	Robot::addJoystick(instance);
+        m_joystick(port),
+        m_joystickPort(port),
+        m_instance(this) {
+    Robot::addJoystick(m_instance);
 }
 
 void COREJoystick::registerAxis(JoystickAxis axis) {
-	axisCache[axis] = joystick.GetRawAxis(axis);
+    m_axisCache[axis] = m_joystick.GetRawAxis(axis);
 }
 
 void COREJoystick::registerButton(JoystickButton button) {
-	buttonCache[button] = joystick.GetRawButton(button)  ? ACTIVE : NORMAL;
+    m_buttonCache[button] = m_joystick.GetRawButton(button) ? ACTIVE : NORMAL;
 }
 
 double COREJoystick::getAxis(JoystickAxis axis) {
-	if(axisCache.find(axis) == axisCache.end()) {
-		registerAxis(axis);
-		return joystick.GetRawAxis(axis);
-	}
-	else {
-		return axisCache[axis];
-	}
+    if (m_axisCache.find(axis) == m_axisCache.end()) {
+        registerAxis(axis);
+        return m_joystick.GetRawAxis(axis);
+    } else {
+        return m_axisCache[axis];
+    }
 }
 
 bool COREJoystick::getButton(JoystickButton button) {
-	if(buttonCache.find(button) == buttonCache.end()) {
-		registerButton(button);
-		return joystick.GetRawButton(button);
-	}
-	else {
-		return (buttonCache[button] == PRESSED || buttonCache[button] == ACTIVE);
-	}
+    if (m_buttonCache.find(button) == m_buttonCache.end()) {
+        registerButton(button);
+        return m_joystick.GetRawButton(button);
+    } else {
+        return (m_buttonCache[button] == PRESSED || m_buttonCache[button] == ACTIVE);
+    }
 }
 
 ButtonState COREJoystick::getButtonState(JoystickButton button) {
-	if(buttonCache.find(button) == buttonCache.end()) {
-		//TODO: Error: button not registered, registering and returning state
-		registerButton(button);
-		return joystick.GetRawButton(button) ? ACTIVE : NORMAL;
-	}
-	else {
-		return buttonCache[button];
-	}
+    if (m_buttonCache.find(button) == m_buttonCache.end()) {
+        //TODO: Error: button not registered, registering and returning state
+        registerButton(button);
+        return m_joystick.GetRawButton(button) ? ACTIVE : NORMAL;
+    } else {
+        return m_buttonCache[button];
+    }
 }
 
 int COREJoystick::getPort() {
-	return joystickPort;
+    return m_joystickPort;
 }
 
 void COREJoystick::preTeleopTask() {
-	lastButtonCache = buttonCache;
-	for(auto button : buttonCache) {
-		bool isActive = joystick.GetRawButton(button.first);
-		if(lastButtonCache[button.first] == RELEASED || lastButtonCache[button.first] == NORMAL) {
-			if(isActive)
-				buttonCache[button.first] = PRESSED;
-			else
-				buttonCache[button.first] = NORMAL;
-		}
-		else if (lastButtonCache[button.first] == PRESSED || lastButtonCache[button.first] == ACTIVE) {
-			if(isActive)
-				buttonCache[button.first] = ACTIVE;
-			else
-				buttonCache[button.first] = RELEASED;
-		}
-	}
-	for(auto axis : axisCache) {
-		axisCache[axis.first] = joystick.GetRawAxis(axis.first);
-	}
+    m_lastButtonCache = m_buttonCache;
+    for (auto button : m_buttonCache) {
+        bool isActive = m_joystick.GetRawButton(button.first);
+        if (m_lastButtonCache[button.first] == RELEASED || m_lastButtonCache[button.first] == NORMAL) {
+            if (isActive)
+                m_buttonCache[button.first] = PRESSED;
+            else
+                m_buttonCache[button.first] = NORMAL;
+        } else if (m_lastButtonCache[button.first] == PRESSED || m_lastButtonCache[button.first] == ACTIVE) {
+            if (isActive)
+                m_buttonCache[button.first] = ACTIVE;
+            else
+                m_buttonCache[button.first] = RELEASED;
+        }
+    }
+    for (auto axis : m_axisCache) {
+        m_axisCache[axis.first] = m_joystick.GetRawAxis(axis.first);
+    }
 }

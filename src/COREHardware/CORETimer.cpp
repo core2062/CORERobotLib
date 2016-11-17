@@ -3,29 +3,29 @@
 using namespace CORE;
 
 double CORETimer::Get() {
-	if(started && !stopped) {
-		return std::chrono::duration_cast<std::chrono::duration<double>>(std::chrono::high_resolution_clock::now() - startTime).count();
+    if (m_started && !m_stopped) {
+        return std::chrono::duration_cast<std::chrono::duration<double>>(
+                std::chrono::high_resolution_clock::now() - m_startTime).count();
+    } else if (m_started && m_stopped) {
+        return std::chrono::duration_cast<std::chrono::duration<double>>(m_stopTime - m_startTime).count();
 	}
-	else if(started && stopped) {
-		return std::chrono::duration_cast<std::chrono::duration<double>>(stopTime - startTime).count();
-	}
-	//TODO: Log -> Error, timer has not started!
+    //TODO: Log -> Error, m_timer has not m_started!
 	return -1;
 }
 void CORETimer::Reset() {
-	started = false;
-	startTime = std::chrono::high_resolution_clock::now();
+    m_started = false;
+    m_startTime = std::chrono::high_resolution_clock::now();
 }
 void CORETimer::Stop() {
-	if(!started) {
-		//TODO: Log -> Error, timer stopped without starting!
+    if (!m_started) {
+        //TODO: Log -> Error, m_timer m_stopped without starting!
 	}
 	else {
-		stopped = true;
-		stopTime = std::chrono::high_resolution_clock::now();
+        m_stopped = true;
+        m_stopTime = std::chrono::high_resolution_clock::now();
 	}
 }
 void CORETimer::Start() {
-	started = true;
-	startTime = std::chrono::high_resolution_clock::now();
+    m_started = true;
+    m_startTime = std::chrono::high_resolution_clock::now();
 }

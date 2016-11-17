@@ -1,5 +1,4 @@
 #include "CORESubsystemsManager.h"
-#include <iostream>
 
 using namespace CORE;
 
@@ -8,19 +7,19 @@ CORESubsystem::CORESubsystem() {
 	CORESubsystemsManager::addSubsystem(pointer);
 }
 CORETask::CORETask():
-	disabled(false)
+		m_disabled(false)
 {
 	std::shared_ptr<CORETask> pointer(this);
 	CORESubsystemsManager::addTask(pointer);
 }
 
 void CORETask::disableTasks(bool disable) {
-	disabled = disable;
+	m_disabled = disable;
 }
 
 bool CORETask::isDisabled()
 {
-	return disabled;
+	return m_disabled;
 }
 
 vector<std::shared_ptr<CORESubsystem>> CORESubsystemsManager::subsystems;

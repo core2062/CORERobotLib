@@ -25,7 +25,7 @@ public:
 
 class CORETask {
 private:
-	bool disabled;
+	bool m_disabled;
 public:
 	CORETask();
 	virtual void robotInitTask() {}

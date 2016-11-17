@@ -18,7 +18,7 @@ public:
 	void Set();
 	void Reset();
 private:
-	double ticksToDistanceConversion[4];
+	double m_ticksToDistanceConversion[4];
 };
 
 }

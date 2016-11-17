@@ -3,51 +3,51 @@
 using namespace CORE;
 
 
-std::map<int, std::shared_ptr<COREMotor>> Robot::motorMap;
-std::map<int, std::shared_ptr<COREJoystick>> Robot::joystickMap;
+std::map<int, std::shared_ptr<COREMotor>> Robot::m_motorMap;
+std::map<int, std::shared_ptr<COREJoystick>> Robot::m_joystickMap;
 
 void Robot::addMotor(shared_ptr<COREMotor> motor) {
-	if(motorMap.count(motor->getPort()) == 1) {
+	if (m_motorMap.count(motor->getPort()) == 1) {
 		//TODO: Error: motor in port # already registered!
 		cout << "Motor in port: " << motor->getPort() << " already added!" << endl;
 	}
 	else {
-		motorMap[motor->getPort()] = motor;
+		m_motorMap[motor->getPort()] = motor;
 		cout << "Motor port: " << motor->getPort() << " added" << endl;
 	}
 }
 
 void Robot::addJoystick(shared_ptr<COREJoystick> joystick) {
-	if(joystickMap.count(joystick->getPort()) == 1) {
+	if (m_joystickMap.count(joystick->getPort()) == 1) {
 		//TODO: Error: joystick in port # already registered!
 	}
 	else {
-		joystickMap[joystick->getPort()] = joystick;
+		m_joystickMap[joystick->getPort()] = joystick;
 	}
 }
 
 shared_ptr<COREMotor> Robot::motor(int port) {
-	if(motorMap.count(port) == 1) {
+	if (m_motorMap.count(port) == 1) {
 		//TODO: Error: motor in port # not found!
-		return motorMap[port];
+		return m_motorMap[port];
 	}
 	else {
-		return motorMap[port];
+		return m_motorMap[port];
 	}
 }
 
 shared_ptr<COREJoystick> Robot::joystick(int port) {
-	if(joystickMap.count(port) == 1) {
+	if (m_joystickMap.count(port) == 1) {
 		//TODO: Error: joystick in port # not found!
-		return joystickMap[port];
+		return m_joystickMap[port];
 	}
 	else {
-		return joystickMap[port];
+		return m_joystickMap[port];
 	}
 }
 
 void Robot::disableAllMotors() {
-	for(auto motor : motorMap) {
+	for (auto motor : m_motorMap) {
 		motor.second->Set(0);
 	}
 }

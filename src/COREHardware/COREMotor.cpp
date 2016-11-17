@@ -1,5 +1,4 @@
 #include "COREMotor.h"
-#include <iostream>
 #include <math.h>
 #include "../COREHardware.h"
 
@@ -8,73 +7,75 @@ using namespace std;
 using namespace CORE;
 
 COREMotor::COREMotor(int port, controllerType controller, controlMode controlMethod, double pProfile1Value, double iProfile1Value, double dProfile1Value, double pProfile2Value, double iProfile2Value, double dProfile2Value, int integralAccuracy) :
-	COREPID(motorControlMode == VELPID ? PIDType::VEL : (motorControlMode == POSPID ? PIDType::POS : PIDType::POSVEL), pProfile1Value, iProfile1Value, dProfile1Value, pProfile2Value, iProfile2Value, dProfile2Value, integralAccuracy),
-	motorControlMode(controlMethod),
-	motorControllerType(controller),
-	motorPort(port),
-	instance(this)
+        COREPID(m_motorControlMode == VEL_PID ? PIDType::VEL : (m_motorControlMode == POS_PID ? PIDType::POS
+                                                                                              : PIDType::POS_VEL),
+                pProfile1Value, iProfile1Value, dProfile1Value, pProfile2Value, iProfile2Value, dProfile2Value,
+                integralAccuracy),
+        m_motorControlMode(controlMethod),
+        m_motorControllerType(controller),
+        m_motorPort(port),
+        m_instance(this)
 {
 #ifdef __arm__
-	if(motorControllerType == CORE::CANTALON) {
-		std::shared_ptr<CANTalon> pointer(new CANTalon(port));
-		CANTalonController = pointer;
-	}
-	else if(motorControllerType == CORE::JAGUAR) {
-		std::shared_ptr<Jaguar> pointer(new Jaguar(port));
-		JaguarController = pointer;
-	}
-	else if(motorControllerType == CORE::VICTOR) {
-		std::shared_ptr<Victor> pointer(new Victor(port));
-		VictorController = pointer;
-	}
-	else {
-		//TODO: Throw error
-	}
+    if(m_motorControllerType == CORE::CANTALON) {
+        std::shared_ptr<CANTalon> pointer(new CANTalon(port));
+        CANTalonController = pointer;
+    }
+    else if(m_motorControllerType == CORE::JAGUAR) {
+        std::shared_ptr<Jaguar> pointer(new Jaguar(port));
+        JaguarController = pointer;
+    }
+    else if(m_motorControllerType == CORE::VICTOR) {
+        std::shared_ptr<Victor> pointer(new Victor(port));
+        VictorController = pointer;
+    }
+    else {
+        //TODO: Throw error
+    }
 #else
-	trapSumTimer = new CORETimer();
-	trapSumTimer->Reset();
-	trapSumTimer->Start();
+    m_trapSumTimer = new CORETimer();
+    m_trapSumTimer->Reset();
+    m_trapSumTimer->Start();
 #endif
-	Robot::addMotor(instance);
+    Robot::addMotor(m_instance);
 }
 
 void COREMotor::Set(double motorSetValue) {
-	motorValue = (reversed ? -motorSetValue : motorSetValue);
-	motorUpdated = true;
+    m_motorValue = (m_reversed ? -motorSetValue : motorSetValue);
+    m_motorUpdated = true;
 }
 
 double COREMotor::Get() {
-	return motorValue;
+    return m_motorValue;
 }
 
 void COREMotor::setReversed(bool reverse) {
-	reversed = reverse;
+    m_reversed = reverse;
 }
 
 bool COREMotor::getReversed() {
-	return reversed;
+    return m_reversed;
 }
 
 void COREMotor::setControlMode(controlMode controlMethod) {
-	motorControlMode = controlMethod;
-	if(motorControlMode == POSPID) {
+    m_motorControlMode = controlMethod;
+    if (m_motorControlMode == POS_PID) {
 		setType(POS);
-	}
-	else if(motorControlMode == VELPID) {
+    } else if (m_motorControlMode == VEL_PID) {
 		setType(VEL);
 	}
 }
 
 controlMode COREMotor::getControlMode() {
-	return motorControlMode;
+    return m_motorControlMode;
 }
 
 int COREMotor::getPort() {
-	return motorPort;
+    return m_motorPort;
 }
 
 controllerType COREMotor::getControllerType() {
-	return motorControllerType;
+    return m_motorControllerType;
 }
 
 void COREMotor::setDeadband(double range) {
@@ -82,65 +83,64 @@ void COREMotor::setDeadband(double range) {
 }
 
 void COREMotor::setDeadband(double min, double max) {
-	deadBandMin = min < -1 ? -1 : min;
-	deadBandMax = max > 1 ? 1 : max;
+    m_deadBandMin = min < -1 ? -1 : min;
+    m_deadBandMax = max > 1 ? 1 : max;
 }
 
 void COREMotor::addSlave(std::shared_ptr<COREMotor> slaveMotor) {
-	slaveMotors.push_back(slaveMotor.get());
+    m_slaveMotors.push_back(slaveMotor.get());
 }
 
 void COREMotor::motorSafety(bool disableMotorSafety) {
-	motorSafetyDisabled = disableMotorSafety;
+    m_motorSafetyDisabled = disableMotorSafety;
 }
 
 void COREMotor::postTeleopTask() {
 	//setActualPos(getActualPos());
 	//setActualVel(getActualVel());
-	if(motorControlMode == POSPID) {
-		motorValue = calculate();
-		motorUpdated = true;
+    if (m_motorControlMode == POS_PID) {
+        m_motorValue = calculate();
+        m_motorUpdated = true;
+    } else if (m_motorControlMode == VEL_PID) {
+        m_motorValue = calculate();
+        m_motorUpdated = true;
 	}
-	else if(motorControlMode == VELPID) {
-		motorValue = calculate();
-		motorUpdated = true;
-	}
-	if(!motorUpdated && !motorSafetyDisabled) {
-		if(motorSafetyCounter > 3) {
-			motorValue = 0;
+    if (!m_motorUpdated && !m_motorSafetyDisabled) {
+        if (m_motorSafetyCounter > 3) {
+            m_motorValue = 0;
 			cout << "Motor not updated!" << endl;
 		}
 		else {
-			motorSafetyCounter++;
+            m_motorSafetyCounter++;
 		}
 	}
 	else {
-		motorSafetyCounter = 0;
+        m_motorSafetyCounter = 0;
 	}
-	motorValue = fabs(motorValue) > 1 ? (motorValue > 1 ? 1 : -1) : motorValue;
-	motorValue = (motorValue < deadBandMax && motorValue > deadBandMin) ? 0 : motorValue;
-	for(auto motor : slaveMotors) {
-		motor->Set(motorValue);
+    m_motorValue = fabs(m_motorValue) > 1 ? (m_motorValue > 1 ? 1 : -1) : m_motorValue;
+    m_motorValue = (m_motorValue < m_deadBandMax && m_motorValue > m_deadBandMin) ? 0 : m_motorValue;
+    for (auto motor : m_slaveMotors) {
+        motor->Set(m_motorValue);
 	}
 #ifdef __arm__
-	if(motorControllerType == CORE::CANTALON) {
-		CANTalonController->Set(motorValue);
-	}
-	else if(motorControllerType == CORE::JAGUAR) {
-		JaguarController->Set(motorValue);
-	}
-	else if(motorControllerType == CORE::VICTOR) {
-		VictorController->Set(motorValue);
-	}
-	else {
-		//TODO: Throw error
-	}
+    if(m_motorControllerType == CORE::CANTALON) {
+        CANTalonController->Set(m_motorValue);
+    }
+    else if(m_motorControllerType == CORE::JAGUAR) {
+        JaguarController->Set(m_motorValue);
+    }
+    else if(m_motorControllerType == CORE::VICTOR) {
+        VictorController->Set(m_motorValue);
+    }
+    else {
+        //TODO: Throw error
+    }
 #else
-	cout << "Motor Port " << getPort() << " Value = " << motorValue << endl;
-	trapSum -= 0.5 * trapSumTimer->Get() * (lastMotorValue + motorValue);
-	trapSumTimer->Reset();
-	lastMotorValue = motorValue;
-	cout << "Trap Port " << getPort() << " Value = " << trapSum << endl;
+    cout << "Motor Port " << getPort() << " Value = " << m_motorValue << endl;
+    m_trapSum -= 0.5 * m_trapSumTimer->Get() * (m_lastMotorValue + m_motorValue);
+    m_trapSumTimer->Reset();
+    m_lastMotorValue = m_motorValue;
+    cout << "Trap Port " << getPort() << " Value = " << m_trapSum << endl;
 #endif
-	motorUpdated = false;
+    m_motorUpdated = false;
 }

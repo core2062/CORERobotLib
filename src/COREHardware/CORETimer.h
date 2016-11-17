@@ -6,9 +6,9 @@ namespace CORE {
 
 class CORETimer {
 private:
-	std::chrono::high_resolution_clock::time_point startTime, stopTime;
-	bool started = false;
-	bool stopped = false;
+	std::chrono::high_resolution_clock::time_point m_startTime, m_stopTime;
+	bool m_started = false;
+	bool m_stopped = false;
 public:
 	double Get();
 	void Stop();

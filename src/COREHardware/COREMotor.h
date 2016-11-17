@@ -13,8 +13,8 @@ namespace CORE {
 		VOLTAGE,
 		PERCENTAGE,
 		CURRENT,
-		POSPID,
-		VELPID,
+        POS_PID,
+        VEL_PID,
 		POSVELPID
 	};
 
@@ -45,21 +45,21 @@ public:
 	void motorSafety(bool disableMotorSafety = true);
 	void postTeleopTask();
 private:
-	double motorValue = 0;
-	double lastMotorValue = 0;
-	bool reversed = false;
-	double trapSum = 0;
-	double deadBandMin = 0;
-	double deadBandMax = 0;
-	bool motorUpdated = false;
-	controlMode motorControlMode;
-	controllerType motorControllerType;
-	CORETimer * trapSumTimer;
-	double lastSum = 0;
-	int motorPort;
-	int motorSafetyCounter = 0;
-	bool motorSafetyDisabled = false;
-	std::vector<COREMotor*> slaveMotors;
-	shared_ptr<COREMotor> instance;
+    double m_motorValue = 0;
+    double m_lastMotorValue = 0;
+    bool m_reversed = false;
+    double m_trapSum = 0;
+    double m_deadBandMin = 0;
+    double m_deadBandMax = 0;
+    bool m_motorUpdated = false;
+    controlMode m_motorControlMode;
+    controllerType m_motorControllerType;
+    CORETimer *m_trapSumTimer;
+    double m_lastSum = 0;
+    int m_motorPort;
+    int m_motorSafetyCounter = 0;
+    bool m_motorSafetyDisabled = false;
+    std::vector<COREMotor *> m_slaveMotors;
+    shared_ptr<COREMotor> m_instance;
 };
 }

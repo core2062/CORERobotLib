@@ -3,7 +3,7 @@
 using namespace CORE;
 
 COREAuto::COREAuto(CORERobot * robot):
-	robot(robot)
+        m_robot(robot)
 {
 
 }
@@ -13,17 +13,17 @@ void COREAuto::addParallel(std::shared_ptr<COREAutoAction> autoAction) {
 }
 
 void COREAuto::addSequential(std::shared_ptr<COREAutoAction> autoAction) {
-	sequentialActions.push(autoAction);
+    m_sequentialActions.push(autoAction);
 }
 
 void COREAuto::runAuto() {
 	actionStatus lastSeqActionStatus = END;
-	while(!sequentialActions.empty() && !parallelActions.empty() /*&& IsAutonomous() && !IsDisabled()*/) {
+    while (!m_sequentialActions.empty() && !m_parallelActions.empty() /*&& IsAutonomous() && !IsDisabled()*/) {
 		if(lastSeqActionStatus == END) {
-			sequentialActions.front()->actionInit();
+            m_sequentialActions.front()->actionInit();
 		}
-		lastSeqActionStatus = sequentialActions.front()->action();
+        lastSeqActionStatus = m_sequentialActions.front()->action();
 
-		robot->waitLoopTime();
+        m_robot->waitLoopTime();
 	}
 }

@@ -12,7 +12,7 @@ class COREAHRS;
 enum PIDType {
 	POS,
 	VEL,
-	POSVEL
+	POS_VEL
 };
 
 class COREPID : public CORETask {
@@ -44,24 +44,24 @@ public:
 	void preTeleopTask();
 	void postTeleopTask();
 protected:
-	PIDType ControllerType;
+	PIDType m_controllerType;
 	enum inputDeviceType {
-		NoInput,
-		CANTalonInput,
-		AHRSInput
+		NO_INPUT,
+		CANTALON_INPUT,
+		AHRS_INPUT
 	};
 	struct PIDProfile {
 		double P, I, D, F, proportional, integral, derivative, output, lastOutput;
 		std::vector<double> mistake;
-	}PID1, PID2;
-	double setPosition = 0;
-	double setVelocity = 0;
-	double actualPosition = 0;
-	double actualVelocity = 0;
-	int defaultProfile = 1;
-	CORETimer timer;
-	std::shared_ptr<COREAHRS> inputGyro;
-	inputDeviceType inputDevice;
+	} m_PID1, m_PID2;
+	double m_setPosition = 0;
+	double m_setVelocity = 0;
+	double m_actualPosition = 0;
+	double m_actualVelocity = 0;
+	int m_defaultProfile = 1;
+	CORETimer m_timer;
+	std::shared_ptr<COREAHRS> m_inputGyro;
+	inputDeviceType m_inputDevice;
 	PIDProfile *getProfile(int profile);
 };
 }
