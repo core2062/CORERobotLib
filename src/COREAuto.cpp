@@ -2,28 +2,50 @@
 
 using namespace CORE;
 
-COREAuto::COREAuto(CORERobot * robot):
-        m_robot(robot)
-{
-
+Node::Node(COREAutoAction *action) : children(), actions() {
+    actions.push_back(action);
 }
 
-void COREAuto::addParallel(std::shared_ptr<COREAutoAction> autoAction) {
-
+void Node::addNext(Node *childNode) {
+    children.push_back(childNode);
 }
 
-void COREAuto::addSequential(std::shared_ptr<COREAutoAction> autoAction) {
-    m_sequentialActions.push(autoAction);
+void Node::addAction(COREAutoAction *leaf) {
+    actions.push_back(leaf);
 }
 
-void COREAuto::runAuto() {
-	actionStatus lastSeqActionStatus = END;
-    while (!m_sequentialActions.empty() && !m_parallelActions.empty() /*&& IsAutonomous() && !IsDisabled()*/) {
-		if(lastSeqActionStatus == END) {
-            m_sequentialActions.front()->actionInit();
-		}
-        lastSeqActionStatus = m_sequentialActions.front()->action();
+void Node::addCondition(bool(*startCondition)()) {
+    m_startConditonGiven = true;
+    m_startCondition = startCondition;
+}
 
-        m_robot->waitLoopTime();
-	}
+bool Node::start(bool lastNodeComplete) {
+    if (m_startConditonGiven) {
+        return m_startCondition();
+    }
+    return lastNodeComplete;
+}
+
+void Node::doActions() {
+    for (auto action : actions) {
+        action->action();
+    }
+    for (auto child : children) {
+        child->doActions();
+    }
+}
+
+COREAuto::COREAuto() {
+    cout << "Adding to SD" << endl;
+}
+
+void COREAuto::auton() {
+    addNodes();
+    for (auto node : m_firstNode) {
+        node->doActions();
+    }
+}
+
+void COREAuto::addFirstNode(Node *firstNode) {
+    m_firstNode.push_back(firstNode);
 }

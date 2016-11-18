@@ -6,3 +6,4 @@
 #include "src/CORESubsystemsManager.h"
 #include "src/COREHardware.h"
 #include "src/CORERobot.h"
+#include "src/COREAuto.h"

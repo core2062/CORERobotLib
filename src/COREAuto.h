@@ -13,31 +13,46 @@
 using namespace std;
 namespace CORE {
 
-enum actionStatus {
-	CONTINUE,
-	BACKGROUND,
-	END
-};
+    enum actionStatus {
+        CONTINUE,
+        BACKGROUND,
+        END
+    };
 
-class COREAutoAction {
-public:
-	COREAutoAction();
-	virtual void actionInit() {}
-	virtual void actionEnd() {}
-	virtual actionStatus action() = 0;
-	virtual ~COREAutoAction(){}
-};
+    class COREAutoAction {
+    public:
+        virtual void actionInit() {}
 
-class COREAuto {
-public:
-	COREAuto(CORERobot * robot);
-	void addSequential(std::shared_ptr<COREAutoAction> autoAction);
-	void addParallel(std::shared_ptr<COREAutoAction> autoAction);
-	void runAuto();
+        virtual void actionEnd() {}
 
-private:
-    queue<std::shared_ptr<COREAutoAction>> m_sequentialActions;
-    queue<std::shared_ptr<COREAutoAction>> m_parallelActions;
-    CORERobot *m_robot;
-};
+        virtual actionStatus action() = 0;
+
+        virtual ~COREAutoAction() {}
+    };
+
+    class Node {
+    public:
+        Node(COREAutoAction *action);
+        void addNext(Node *childNode);
+        void addAction(COREAutoAction *leaf);
+        void addCondition(bool(*startCondition)());
+        bool start(bool lastNodeComplete);
+        void doActions();
+    private:
+        vector<Node *> children;
+        vector<COREAutoAction *> actions;
+        bool m_startConditonGiven = false;
+        bool (*m_startCondition)();
+    };
+
+    class COREAuto {
+    public:
+        COREAuto();
+        void auton();
+    protected:
+        void addFirstNode(Node *firstNode);
+        virtual void addNodes()=0;
+    private:
+        vector<Node *> m_firstNode;
+    };
 }
