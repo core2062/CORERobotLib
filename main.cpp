@@ -5,8 +5,8 @@ using namespace CORE;
 using namespace std;
 
 enum portAssignments {
-	STEERMOTOR = 12,
-	DRIVEMOTOR = 13
+    STEERMOTOR = 12,
+    DRIVEMOTOR = 13
 };
 
 class DriveSubsystem : public CORESubsystem {
@@ -19,32 +19,58 @@ public:
     void teleopInit() {
     }
     void teleop() {
-    	//cout << DriverStation::GetInstance().GetBatteryVoltage() << std::endl;
-		Robot::motor(DRIVEMOTOR)->Set(Robot::joystick(0)->getAxis(RIGHT_STICK_Y));
-		Robot::motor(STEERMOTOR)->Set(Robot::joystick(0)->getAxis(LEFT_STICK_Y));
-    	cout << "Steer Motor: " << Robot::motor(STEERMOTOR)->Get() << endl;
+        //cout << DriverStation::GetInstance().GetBatteryVoltage() << std::endl;
+        Robot::motor(DRIVEMOTOR)->Set(Robot::joystick(0)->getAxis(RIGHT_STICK_Y));
+        Robot::motor(STEERMOTOR)->Set(Robot::joystick(0)->getAxis(LEFT_STICK_Y));
+        cout << "Steer Motor: " << Robot::motor(STEERMOTOR)->Get() << endl;
     }
     void test() {
         cout << "Tested!" << endl;
     }
 };
 
-class thingy : public COREAutoAction {
+class arm : public COREAutoAction {
 public:
     actionStatus action() {
-        cout << "THINGY!" << endl;
-        return actionStatus::CONTINUE;
+        cout << "Arm!: " << count << endl;
+        if(count < 3) {
+            count++;
+            return actionStatus::CONTINUE;
+        }
+        else {
+            return actionStatus::END;
+        }
     }
+
+private:
+    int count = 0;
+};
+
+class wheels : public COREAutoAction {
+public:
+    actionStatus action() {
+        cout << "Wheels!: " << count << endl;
+        if(count < 3) {
+            count++;
+            return actionStatus::CONTINUE;
+        }
+        else {
+            return actionStatus::END;
+        }
+    }
+
+private:
+    int count = 0;
 };
 
 class driveForwardAuto : public COREAuto {
 public:
     driveForwardAuto() :
-            m_moveForwardAndPutArmDown(new thingy()),
-            m_intakeBall(new thingy()),
-            m_moveBackToStart(new thingy()),
-            m_visionAlign(new thingy()),
-            m_shootBall(new thingy()) {
+            m_moveForwardAndPutArmDown(new arm(), new wheels()),
+            m_intakeBall(new arm()),
+            m_moveBackToStart(new wheels()),
+            m_visionAlign(new wheels()),
+            m_shootBall(new arm()) {
     }
 
     void addNodes() {
@@ -61,39 +87,40 @@ private:
     Node m_moveForwardAndPutArmDown, m_intakeBall, m_moveBackToStart, m_visionAlign, m_shootBall;
 
     static bool ballIntaked() {
-        return true;
+        return false;
     }
 
     static bool targetAquired() {
-        return true;
+        return false;
     }
 };
 
 class offSeasonRobot : public CORERobot {
 public:
-	DriveSubsystem driveSubsystem;
+    //DriveSubsystem driveSubsystem;
     COREJoystick joystick1;
-    COREMotor driveMotor;
-    COREMotor steerMotor;
+    //COREMotor driveMotor;
+    //COREMotor steerMotor;
     driveForwardAuto auto1;
     offSeasonRobot():
-            driveSubsystem(),
+    //driveSubsystem(),
             joystick1(0),
-            driveMotor(DRIVEMOTOR),
-            steerMotor(STEERMOTOR),
+            //driveMotor(DRIVEMOTOR),
+            //steerMotor(STEERMOTOR),
             auto1()
-	{
-	}
+    {
+    }
 
     void robotInit() {
     }
 
     void teleopInit() {
-        auto1.auton();
+        auto1.autonInit();
     }
 
     void teleop() {
-
+        cout << "\nNew Iteration: \n" << endl;
+        auto1.auton();
     }
 };
 
