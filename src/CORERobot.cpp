@@ -23,7 +23,7 @@ void CORERobot::waitLoopTime() {
 }
 
 void CORERobot::RobotInit() {
-    CORESubsystemsManager::robotInit();
+    COREScheduler::robotInit();
 }
 
 void CORERobot::Disabled() {
@@ -35,15 +35,15 @@ void CORERobot::Autonomous() {
 }
 
 void CORERobot::OperatorControl() {
-    CORESubsystemsManager::teleopInit();
+    COREScheduler::teleopInit();
     while (IsOperatorControl() && IsEnabled()) {
-        CORESubsystemsManager::teleop();
+        COREScheduler::teleop();
         waitLoopTime();
     }
-    CORESubsystemsManager::teleopEnd();
+    COREScheduler::teleopEnd();
 }
 
 void CORERobot::Test() {
-    CORESubsystemsManager::test();
+    COREScheduler::test();
 }
 

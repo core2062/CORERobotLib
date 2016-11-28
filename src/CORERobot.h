@@ -2,7 +2,7 @@
 
 #include "WPILib.h"
 
-#include "CORESubsystemsManager.h"
+#include "COREScheduler.h"
 #include "COREHardware/CORETimer.h"
 
 #define START_SIMULATED_ROBOT_CLASS(_ClassName_)                             \
@@ -16,7 +16,6 @@
 using namespace CORE;
 
 namespace CORE {
-
 class CORERobot : public CORESubsystem, public SampleRobot {
 private:
 	bool m_loopStarted = false;

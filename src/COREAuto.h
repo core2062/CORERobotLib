@@ -5,8 +5,9 @@
 #include <queue>
 #include <string>
 #include <memory>
+#include <iostream>
 #include "COREHardware/CORETimer.h"
-#include "CORERobot.h"
+//#include "CORERobot.h"
 
 #include "WPILib.h"
 
@@ -41,6 +42,7 @@ namespace CORE {
         vector<shared_ptr<Node>> m_children;
         vector<shared_ptr<COREAutoAction>> m_actions;
         bool m_startConditonGiven = false;
+        bool m_actionsInitialized = false;
         bool (*m_startCondition)();
     };
 
@@ -49,10 +51,12 @@ namespace CORE {
         COREAuto();
         void auton();
         void autonInit();
+        string putToDashboard(SendableChooser * chooser);
     protected:
         void addFirstNode(Node *firstNode);
         virtual void addNodes() = 0;
     private:
         vector<Node *> m_firstNode;
+        shared_ptr<COREAuto> m_instance;
     };
 }

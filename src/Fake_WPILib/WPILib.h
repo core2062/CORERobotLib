@@ -1,12 +1,16 @@
 #pragma once
 
 #include <string>
+#include <memory>
+#include "StringRef.h"
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
 #include <windows.h>
 #else
 #include <unistd.h>
 #endif
+
+using namespace std;
 
 class CANTalon {
 public:
@@ -36,6 +40,27 @@ public:
 
 class SampleRobot {
 
+};
+
+class SendableChooser {
+public:
+    virtual ~SendableChooser() = default;
+    inline void AddObject(const std::string &name, void *object) {}
+    inline void AddDefault(const std::string &name, void *object) {}
+    inline void *GetSelected() {}
+};
+
+class SmartDashboard {
+public:
+    static inline void init() {}
+    static inline void PutData(string key, SendableChooser *data) {}
+    //static inline void PutData(NamedSendable *value) {}
+    static inline void PutBoolean(string keyName, bool value) {}
+    static inline bool GetBoolean(string keyName, bool defaultValue) {}
+    static inline void PutNumber(string keyName, double value) {}
+    static inline double GetNumber(string keyName, double defaultValue) {}
+    static inline void PutString(string keyName, string value) {}
+    static inline std::string GetString(string keyName, string defaultValue) {}
 };
 
 inline void Wait(double _) {

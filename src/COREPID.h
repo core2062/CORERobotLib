@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "COREHardware/CORETimer.h"
-#include "CORESubsystemsManager.h"
+#include "COREScheduler.h"
 
 namespace CORE {
 class COREAHRS;

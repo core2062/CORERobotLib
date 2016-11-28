@@ -4,7 +4,7 @@
 #include <vector>
 #include <memory>
 
-#include "../CORESubsystemsManager.h"
+#include "../COREScheduler.h"
 
 #include "WPILib.h"
 

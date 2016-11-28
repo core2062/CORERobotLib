@@ -12,7 +12,9 @@ enum portAssignments {
 class DriveSubsystem : public CORESubsystem {
 public:
     DriveSubsystem() {
+
     }
+
     void robotInit() {
 
     }

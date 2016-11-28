@@ -49,12 +49,19 @@ void Node::addCondition(bool(*startCondition)()) {
 }
 
 void Node::act(bool lastNodeDone) {
+    if(!m_actionsInitialized) {
+        for(auto action : m_actions) {
+            action->actionInit();
+            m_actionsInitialized = true;
+        }
+    }
     if(!m_actions.empty()) {
         if ((m_startConditonGiven && m_startCondition) || (!m_startConditonGiven && lastNodeDone)) {
             for (int i = 0; i <  m_actions.size(); i++) {
                 actionStatus status = m_actions[i]->action();
                 switch (status) {
                     case END:
+                        m_actions[i]->actionEnd();
                         m_actions.erase(m_actions.begin() + i);
                         cout << "Erasing element: " << i << endl;
                         i--;

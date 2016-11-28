@@ -6,6 +6,7 @@
 #include "COREHardware/CORETimer.h"
 #include "COREHardware/COREMotor.h"
 #include "COREHardware/COREJoystick.h"
+#include <WPILib.h>
 
 using namespace CORE;
 using namespace std;

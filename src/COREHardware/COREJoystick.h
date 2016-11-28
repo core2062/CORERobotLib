@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <map>
-#include "../CORESubsystemsManager.h"
+#include "../COREScheduler.h"
 
 #include "WPILib.h"
 

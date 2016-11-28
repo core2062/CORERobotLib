@@ -6,7 +6,9 @@ using namespace std;
 
 using namespace CORE;
 
-COREMotor::COREMotor(int port, controllerType controller, controlMode controlMethod, double pProfile1Value, double iProfile1Value, double dProfile1Value, double pProfile2Value, double iProfile2Value, double dProfile2Value, int integralAccuracy) :
+COREMotor::COREMotor(int port, controllerType controller, controlMode controlMethod, double pProfile1Value,
+                     double iProfile1Value, double dProfile1Value, double pProfile2Value, double iProfile2Value,
+                     double dProfile2Value, int integralAccuracy) :
         COREPID(m_motorControlMode == VEL_PID ? PIDType::VEL : (m_motorControlMode == POS_PID ? PIDType::POS
                                                                                               : PIDType::POS_VEL),
                 pProfile1Value, iProfile1Value, dProfile1Value, pProfile2Value, iProfile2Value, dProfile2Value,

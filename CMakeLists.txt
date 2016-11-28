@@ -20,7 +20,7 @@ set(SOURCE_FILES main.cpp
         src/CORELog.cpp
         src/COREPID.cpp
         src/CORERobot.cpp
-        src/CORESubsystemsManager.cpp)
+        src/COREScheduler.cpp)
 
 if(CMAKE_BUILD_TYPE STREQUAL Release)
     set(PROJECT_NAME "ARM_${PROJECT_NAME}")

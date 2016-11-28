@@ -3,7 +3,7 @@
  */
 
 #include "src/COREPID.h"
-#include "src/CORESubsystemsManager.h"
+#include "src/COREScheduler.h"
 #include "src/COREHardware.h"
 #include "src/CORERobot.h"
 #include "src/COREAuto.h"

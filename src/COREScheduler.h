@@ -4,10 +4,12 @@
 #include <string>
 #include <memory>
 #include <iostream>
+#include "COREAuto.h"
+#include <WPILib.h>
 
 using namespace std;
 namespace CORE {
-
+class COREAuto;
 class CORESubsystem {
 public:
 	CORESubsystem();
@@ -38,14 +40,20 @@ public:
 	virtual ~CORETask(){}
 };
 
-class CORESubsystemsManager {
+class COREScheduler {
 private:
-	static vector<std::shared_ptr<CORESubsystem>> subsystems;
-	static vector<std::shared_ptr<CORETask>> tasks;
+	static vector<std::shared_ptr<CORESubsystem>> m_subsystems;
+    static vector<shared_ptr<COREAuto>> m_autons;
+	static vector<std::shared_ptr<CORETask>> m_tasks;
+    static SendableChooser * m_autonChooser;
+    static shared_ptr<COREAuto> m_selectedAuto;
 public:
-	static void addSubsystem(std::shared_ptr<CORESubsystem> subsystem);
+	static void addSubsystem(shared_ptr<CORESubsystem> subsystem);
+    static void addAuton(shared_ptr<COREAuto> auton);
     static void addTask(std::shared_ptr<CORETask> task);
 	static void robotInit();
+    static void autonInit();
+    static void auton();
 	static void teleopInit();
 	static void teleop();
 	static void teleopEnd();
