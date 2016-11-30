@@ -73,6 +73,8 @@ public:
             m_moveBackToStart(new wheels()),
             m_visionAlign(new wheels()),
             m_shootBall(new arm()) {
+        setName("Ta Da!");
+        setDefault(true);
     }
 
     void addNodes() {
@@ -111,18 +113,20 @@ public:
             //steerMotor(STEERMOTOR),
             auto1()
     {
+
     }
 
     void robotInit() {
+
     }
 
     void teleopInit() {
-        auto1.autonInit();
+
     }
 
     void teleop() {
         cout << "\nNew Iteration: \n" << endl;
-        auto1.auton();
+
     }
 };
 

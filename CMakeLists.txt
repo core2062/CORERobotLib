@@ -22,25 +22,8 @@ set(SOURCE_FILES main.cpp
         src/CORERobot.cpp
         src/COREScheduler.cpp)
 
-if(CMAKE_BUILD_TYPE STREQUAL Release)
-    set(PROJECT_NAME "ARM_${PROJECT_NAME}")
-    add_executable(${PROJECT_NAME} ${SOURCE_FILES})
-    set(CMAKE_C_COMPILER /usr/bin/arm-frc-linux-gnueabi-gcc)
-    set(CMAKE_CXX_COMPILER /usr/bin/arm-frc-linux-gnueabi-g++)
-    find_library(WPILIB wpi HINTS ~/wpilib/cpp/current/lib)
-    target_link_libraries(${PROJECT_NAME} ${WPILIB})
-    include_directories(/home/akemperfi/wpilib/cpp/current/include)
-    add_definitions(-D__arm__)
-else()
-    include_directories(src/Fake_WPILib)
-    add_executable(${PROJECT_NAME} ${SOURCE_FILES})
-    set(CMAKE_C_COMPILER /usr/bin/gcc)
-    set(CMAKE_CXX_COMPILER /usr/bin/g++)
-endif()
+add_subdirectory(ARM)
 
-# Deploy target
-find_file(ROBOTCOMMAND ant/robotCommand /usr/share/wpilib)
-add_custom_target(deploy
-        COMMAND sh -c "./deploy.sh ${TEAM_NUMBER} $<TARGET_FILE:${PROJECT_NAME}> ${ROBOTCOMMAND}"
-        DEPENDS ${PROJECT_NAME})
-set_target_properties(deploy PROPERTIES EXCLUDE_FROM_ALL TRUE)
+include_directories(src/Fake_WPILib)
+remove_definitions(__arm__)
+add_executable(${PROJECT_NAME} ${SOURCE_FILES})

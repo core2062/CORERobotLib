@@ -7,6 +7,7 @@
 #include <memory>
 #include <iostream>
 #include "COREHardware/CORETimer.h"
+#include "COREScheduler.h"
 //#include "CORERobot.h"
 
 #include "WPILib.h"
@@ -51,11 +52,15 @@ namespace CORE {
         COREAuto();
         void auton();
         void autonInit();
-        string putToDashboard(SendableChooser * chooser);
+        void putToDashboard(shared_ptr<SendableChooser> chooser);
     protected:
         void addFirstNode(Node *firstNode);
         virtual void addNodes() = 0;
+        void setName(string name);
+        void setDefault(bool defaultAuton);
     private:
+        string m_name;
+        bool m_defaultAuton = false;
         vector<Node *> m_firstNode;
         shared_ptr<COREAuto> m_instance;
     };

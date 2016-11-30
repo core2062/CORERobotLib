@@ -8,6 +8,7 @@
 #define START_SIMULATED_ROBOT_CLASS(_ClassName_)                             \
 	int main() {                                                             \
 		_ClassName_ *robot = new _ClassName_();                              \
+		robot->Autonomous();                                                 \
 	    robot->OperatorControl();                                            \
 	    return 0;                                                         	 \
 	}                                                                        \

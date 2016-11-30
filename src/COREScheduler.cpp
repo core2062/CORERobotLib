@@ -27,6 +27,8 @@ bool CORETask::isDisabled()
 vector<shared_ptr<CORESubsystem>> COREScheduler::m_subsystems;
 vector<shared_ptr<COREAuto>> COREScheduler::m_autons;
 vector<shared_ptr<CORETask>> COREScheduler::m_tasks;
+shared_ptr<SendableChooser> COREScheduler::m_autonChooser;
+shared_ptr<COREAuto> COREScheduler::m_selectedAuto;
 
 void COREScheduler::addSubsystem(shared_ptr<CORESubsystem> subsystem) {
 	m_subsystems.push_back(subsystem);
@@ -35,7 +37,9 @@ void COREScheduler::addSubsystem(shared_ptr<CORESubsystem> subsystem) {
 }
 
 void COREScheduler::addAuton(shared_ptr<COREAuto> auton) {
-
+    m_autons.push_back(auton);
+    cout << "Auton Added" << endl;
+    //TODO: Log -> AUTONNAME added
 }
 
 void COREScheduler::addTask(shared_ptr<CORETask> task) {
@@ -46,19 +50,22 @@ void COREScheduler::robotInit() {
 	for(auto subsystem : m_subsystems) {
 		subsystem->robotInit();
 	}
+	for(auto task : m_tasks) {
+		task->robotInitTask();
+	}
     for(auto auton : m_autons) {
         auton->putToDashboard(m_autonChooser);
     }
-    SmartDashboard::PutData("Autonomous Selection", m_autonChooser);
-	//for(auto task : m_tasks) {
-	//	task->robotInitTask();
-	//}
-	//TODO: Log -> RobotInit Complete
+    //TODO: Log -> RobotInit Complete
 }
 
 void COREScheduler::autonInit() {
-    shared_ptr<COREAuto> pointer((COREAuto*) m_autonChooser->GetSelected());
+#ifdef __arm__
+	shared_ptr<COREAuto> pointer((COREAuto*) m_autonChooser->GetSelected());
     m_selectedAuto = pointer;
+#else
+    m_selectedAuto = m_autons[0];
+#endif
     m_selectedAuto->autonInit();
 }
 

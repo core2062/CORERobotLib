@@ -31,12 +31,15 @@ void CORERobot::Disabled() {
 }
 
 void CORERobot::Autonomous() {
-
+    COREScheduler::autonInit();
+    while(IsAutonomous() && IsEnabled()) {
+        COREScheduler::auton();
+    }
 }
 
 void CORERobot::OperatorControl() {
     COREScheduler::teleopInit();
-    while (IsOperatorControl() && IsEnabled()) {
+    while(IsOperatorControl() && IsEnabled()) {
         COREScheduler::teleop();
         waitLoopTime();
     }

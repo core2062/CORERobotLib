@@ -2,7 +2,7 @@
 
 #include <string>
 #include <memory>
-#include "StringRef.h"
+#include <iostream>
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
 #include <windows.h>

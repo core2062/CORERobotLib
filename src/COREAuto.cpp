@@ -87,7 +87,9 @@ void Node::act(bool lastNodeDone) {
 }
 
 COREAuto::COREAuto() {
-    cout << "Adding to SD" << endl;
+    shared_ptr<COREAuto> pointer(this);
+    m_instance = pointer;
+    COREScheduler::addAuton(m_instance);
 }
 
 void COREAuto::auton() {
@@ -100,6 +102,25 @@ void COREAuto::autonInit() {
     addNodes();
 }
 
+void COREAuto::putToDashboard(shared_ptr<SendableChooser> chooser) {
+    cout << "Adding Autonomous: " << m_name << " to dashboard" << endl;
+    if(m_defaultAuton) {
+        chooser->AddDefault(m_name, m_instance.get());
+    }
+    else {
+        chooser->AddObject(m_name, m_instance.get());
+    }
+}
+
+
 void COREAuto::addFirstNode(Node *firstNode) {
     m_firstNode.push_back(firstNode);
+}
+
+void COREAuto::setName(string name) {
+    m_name = name;
+}
+
+void COREAuto::setDefault(bool defaultAuton) {
+    m_defaultAuton =  defaultAuton;
 }
