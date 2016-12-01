@@ -53,7 +53,7 @@ public:
     static void addTask(std::shared_ptr<CORETask> task);
 	static void robotInit();
     static void autonInit();
-    static void auton();
+    static bool auton();
 	static void teleopInit();
 	static void teleop();
 	static void teleopEnd();

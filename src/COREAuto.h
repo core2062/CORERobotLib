@@ -38,6 +38,7 @@ namespace CORE {
         void addAction(COREAutoAction *leaf);
         void addAction(shared_ptr<COREAutoAction> leaf);
         void addCondition(bool(*startCondition)());
+        bool complete();
         void act(bool lastNodeDone);
     private:
         vector<shared_ptr<Node>> m_children;
@@ -53,6 +54,7 @@ namespace CORE {
         void auton();
         void autonInit();
         void putToDashboard(shared_ptr<SendableChooser> chooser);
+        bool complete();
     protected:
         void addFirstNode(Node *firstNode);
         virtual void addNodes() = 0;

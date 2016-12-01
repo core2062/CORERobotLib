@@ -65,12 +65,14 @@ void COREScheduler::autonInit() {
     m_selectedAuto = pointer;
 #else
     m_selectedAuto = m_autons[0];
+	//TODO: Simulated auto switcher
 #endif
     m_selectedAuto->autonInit();
 }
 
-void COREScheduler::auton() {
+bool COREScheduler::auton() {
     m_selectedAuto->auton();
+    return m_selectedAuto->complete();
 }
 
 void COREScheduler::teleopInit() {

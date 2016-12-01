@@ -48,6 +48,19 @@ void Node::addCondition(bool(*startCondition)()) {
     m_startCondition = startCondition;
 }
 
+bool Node::complete() {
+    if(m_actions.empty()) {
+        bool childrenComplete = true;
+        for(auto child : m_children) {
+            childrenComplete = child->complete();
+        }
+        return childrenComplete;
+    }
+    else {
+        return false;
+    }
+}
+
 void Node::act(bool lastNodeDone) {
     if(!m_actionsInitialized) {
         for(auto action : m_actions) {
@@ -63,11 +76,9 @@ void Node::act(bool lastNodeDone) {
                     case END:
                         m_actions[i]->actionEnd();
                         m_actions.erase(m_actions.begin() + i);
-                        cout << "Erasing element: " << i << endl;
                         i--;
                         break;
                     case CONTINUE:
-                        cout << "Continuing element: " << i << endl;
                         break;
                 }
             }
@@ -112,6 +123,13 @@ void COREAuto::putToDashboard(shared_ptr<SendableChooser> chooser) {
     }
 }
 
+bool COREAuto::complete() {
+    bool nodesComplete = true;
+    for(auto node : m_firstNode) {
+        nodesComplete = node->complete();
+    }
+    return nodesComplete;
+}
 
 void COREAuto::addFirstNode(Node *firstNode) {
     m_firstNode.push_back(firstNode);
