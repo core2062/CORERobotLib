@@ -5,34 +5,34 @@
 #include "COREHardware.h"
 
 namespace CORE {
-class TankDrive {
-public:
-	//TankDrive(COREMotor * frontLeft, COREMotor * backLeft, COREMotor * frontRight, COREMotor * backRight);
-	void SetLeftSpeed();
-	void SetRightSpeed();
-	void SetSpeed();
+	class TankDrive {
+	public:
+		//TankDrive(COREMotor * frontLeft, COREMotor * backLeft, COREMotor * frontRight, COREMotor * backRight);
+		void SetLeftSpeed();
+		void SetRightSpeed();
+		void SetSpeed();
 
-};
+	};
 
-class MecanumDrive {
-private:
+	class MecanumDrive {
+	private:
 
-public:
-	MecanumDrive();
-};
+	public:
+		MecanumDrive();
+	};
 
-class SwerveDrive {
-private:
+	class SwerveDrive {
+	private:
 
-public:
-	SwerveDrive();
-};
+	public:
+		SwerveDrive();
+	};
 
-class AetherDrive {
-private:
+	class AetherDrive {
+	private:
 
-public:
-	AetherDrive();
-	
-};
+	public:
+		AetherDrive();
+
+	};
 }

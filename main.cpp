@@ -113,7 +113,7 @@ public:
             //steerMotor(STEERMOTOR),
             auto1()
     {
-
+        setLoopTime(0.5);
     }
 
     void robotInit() {
