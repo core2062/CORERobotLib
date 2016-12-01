@@ -22,11 +22,13 @@ namespace CORE {
 	};
 
 	class SwerveDrive {
-	private:
-
 	public:
-		SwerveDrive();
-	};
+		SwerveDrive(shared_ptr<COREMotor> frontLeftDrive, shared_ptr<COREMotor> frontLeftSteer,
+                    shared_ptr<COREMotor> backLeftDrive, shared_ptr<COREMotor> backLeftSteer,
+                    shared_ptr<COREMotor> frontRightDrive, shared_ptr<COREMotor> frontRightSteer,
+                    shared_ptr<COREMotor> backRightDrive, shared_ptr<COREMotor> backRightSteer);
+    private:
+    };
 
 	class AetherDrive {
 	private:

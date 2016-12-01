@@ -25,5 +25,6 @@ set(SOURCE_FILES main.cpp
 add_subdirectory(ARM)
 
 include_directories(src/Fake_WPILib)
+include_directories(src)
 remove_definitions(__arm__)
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
