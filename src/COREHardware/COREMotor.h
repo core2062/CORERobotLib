@@ -1,10 +1,11 @@
 #pragma once
 
-#include "../COREPID.h"
 #include <vector>
 #include <memory>
 
 #include "../COREScheduler.h"
+#include "../COREPID.h"
+#include "COREEncoder.h"
 
 #include "WPILib.h"
 
@@ -24,13 +25,17 @@ namespace CORE {
 		VICTOR
 	};
 
-class COREMotor : public COREPID {
+class COREMotor : public COREPID, public COREEncoder {
 public:
-	std::shared_ptr<CANTalon> CANTalonController;
-	std::shared_ptr<Jaguar> JaguarController;
-	std::shared_ptr<Victor> VictorController;
-	//std::shared_ptr<COREEncoder>;
-	COREMotor(int port, controllerType controller = CANTALON, controlMode controlMethod = VOLTAGE, double pProfile1Value = 0, double iProfile1Value = 0, double dProfile1Value = 0, double pProfile2Value = 0, double iProfile2Value = 0, double dProfile2Value = 0, int integralAccuracy = 1);
+	shared_ptr<CANTalon> CANTalonController;
+    shared_ptr<Jaguar> JaguarController;
+    COREMotor(int port, bool reversed);
+    double getDistance(distanceUnit unit);
+    void setDistance(distanceUnit unit);
+    void Set();
+    void Reset();
+    shared_ptr<Victor> VictorController;
+	COREMotor(int port, controllerType controller = CANTALON, encoderType encoder = NONE, controlMode controlMethod = VOLTAGE);
 	void Set(double motorSetValue);
 	double Get();
 	void setReversed(bool reverse = true);
@@ -41,7 +46,7 @@ public:
 	controllerType getControllerType();
 	void setDeadband(double range);
 	void setDeadband(double min, double max);
-	void addSlave(std::shared_ptr<COREMotor> slaveMotor);
+	void addSlave(shared_ptr<COREMotor> slaveMotor);
 	void motorSafety(bool disableMotorSafety = true);
 	void postTeleopTask();
 private:
@@ -59,7 +64,7 @@ private:
     int m_motorPort;
     int m_motorSafetyCounter = 0;
     bool m_motorSafetyDisabled = false;
-    std::vector<COREMotor *> m_slaveMotors;
+    vector<COREMotor *> m_slaveMotors;
     shared_ptr<COREMotor> m_instance;
 };
 }

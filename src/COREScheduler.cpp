@@ -1,12 +1,9 @@
 #include "COREScheduler.h"
+#include "CORESubsystem.h"
 
 using namespace CORE;
 using namespace std;
 
-CORESubsystem::CORESubsystem() {
-    shared_ptr<CORESubsystem> pointer(this);
-	COREScheduler::addSubsystem(pointer);
-}
 
 CORETask::CORETask():
 		m_disabled(false)

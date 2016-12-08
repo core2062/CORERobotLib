@@ -10,21 +10,7 @@
 using namespace std;
 namespace CORE {
 class COREAuto;
-class CORESubsystem {
-public:
-	CORESubsystem();
-	virtual void robotInit() = 0;
-	virtual void teleopInit() = 0;
-	virtual void teleop() = 0;
-	virtual void teleopEnd() {
-		//TODO: Log -> Teleop end not implemented for: NAME
-	}
-	virtual void test() {
-
-	}
-	virtual ~CORESubsystem(){}
-};
-
+class CORESubsystem;
 class CORETask {
 private:
 	bool m_disabled;
