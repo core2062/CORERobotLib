@@ -91,3 +91,9 @@ public:
     inline int32_t Get() {}
     inline void Reset() {}
 };
+
+class DigitalInput {
+public:
+inline DigitalInput(uint32_t channel) {}
+inline bool Get() {return false;}
+};

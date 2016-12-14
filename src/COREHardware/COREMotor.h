@@ -25,6 +25,11 @@ namespace CORE {
 		VICTOR
 	};
 
+    enum limitSwitch {
+        FORWARD,
+        BACKWARD
+    };
+
 class COREMotor : public COREPID, public COREEncoder {
 public:
 	shared_ptr<CANTalon> CANTalonController;
