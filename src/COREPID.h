@@ -5,6 +5,7 @@
 
 #include "COREHardware/CORETimer.h"
 #include "COREScheduler.h"
+#include "COREHardware/CORESensor.h"
 
 namespace CORE {
 class COREAHRS;

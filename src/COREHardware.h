@@ -5,6 +5,7 @@
 
 #include "COREHardware/CORETimer.h"
 #include "COREHardware/COREMotor.h"
+#include "COREHardware/COREEncoder.h"
 #include "COREHardware/COREJoystick.h"
 #include "WPILib.h"
 

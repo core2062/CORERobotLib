@@ -23,11 +23,95 @@ namespace CORE {
 
 	class SwerveDrive {
 	public:
-		SwerveDrive(shared_ptr<COREMotor> frontLeftDrive, shared_ptr<COREMotor> frontLeftSteer,
-                    shared_ptr<COREMotor> backLeftDrive, shared_ptr<COREMotor> backLeftSteer,
-                    shared_ptr<COREMotor> frontRightDrive, shared_ptr<COREMotor> frontRightSteer,
-                    shared_ptr<COREMotor> backRightDrive, shared_ptr<COREMotor> backRightSteer);
+		struct SwerveModule : public COREContinuous{
+
+			SwerveModule(shared_ptr<COREMotor> d, shared_ptr<COREMotor> r){
+				drive = d;
+				rotation = r;
+				encoder = make_shared<COREEncoder>(r, SRX_RELATIVE);
+			}
+
+			double getCurrentAngle(){
+				return clamp(encoder->Get() * encoderRatio);
+			}
+
+			double getSetValue(double angle){
+				int direction = encoder->Get()/abs(encoder->Get());
+				double base = (abs(encoder->Get()) - (abs(encoder->Get())) % (int)(360/encoderRatio));
+				return base * direction + angle/encoderRatio;
+			}
+
+			shared_ptr<COREMotor> drive;
+			shared_ptr<COREMotor> rotation;
+			shared_ptr<COREEncoder> encoder;
+			double setMagnitude = 0;
+			double setAngle = 0;
+			int setDirection = 1;
+			Vector position;
+			double encoderRatio = (360/1024.0) * (1/(16*4.22));
+		};
+
+		enum ControlMode{
+			MECANUM,
+			MECANUMTHROTTLE,
+			FIELDMECANUM,
+			FIELDMECANUMTHROTTLE,
+
+			SMARTMECANUM,
+			SMARTFIELDMECANUM,
+
+			TEST
+
+		};
+
+		SwerveDrive(vector<shared_ptr<SwerveModule>> swerves);
+
+		void robotInit();
+		void setMode(ControlMode m);
+		void releaseMode();
+		void run(double y, double x, double r);
+
+    protected:
+
+		ControlMode m_mode = MECANUM;
+		bool m_forceMode = false;
+
+		double m_wheelbase = 0.0;
+		double m_trackwidth = 0.0;
+
+		JoystickAxis m_xAxis = JoystickAxis::LEFT_STICK_X;
+		JoystickAxis m_yAxis = JoystickAxis::LEFT_STICK_Y;
+		JoystickAxis m_rotXAxis = JoystickAxis::RIGHT_STICK_X;
+		JoystickAxis m_rotYAxis = JoystickAxis::RIGHT_STICK_Y;
+		JoystickAxis m_throttleAxis = JoystickAxis::LEFT_TRIGGER_AXIS;
+
+		double m_rotationScalar = 1.0;
+
+		double m_y = 0.0;
+		double m_x = 0.0;
+		double m_rot = 0.0;
+		double m_throttle = 0.0;
+
     private:
+		SendableChooser m_chooser;
+
+		vector<shared_ptr<SwerveModule>> m_modules;
+
+		void checkSD();
+
+		void setMotors();
+
+		void calculateNormal();
+		void calculateSmart();
+
+		void doMecanum();
+		void doMecanumThrottle();
+		void doFieldMecanum();
+		void doFieldMecanumThrottle();
+		void doSmartMecanum();
+		void doSmartFieldMecanum();
+		void doTest();
+
     };
 
 	class AetherDrive {

@@ -3,6 +3,7 @@
 #include <vector>
 #include <map>
 #include "../COREScheduler.h"
+#include "../COREMath.h"
 
 #include "WPILib.h"
 
@@ -55,8 +56,10 @@ namespace CORE {
     public:
         COREJoystick(uint32_t joystickNumber);
         void registerAxis(JoystickAxis axis);
+        void registerVector(JoystickAxis axisA, JoystickAxis axisB);
         void registerButton(JoystickButton button);
         double getAxis(JoystickAxis axis);
+        Vector getVector(JoystickAxis axisA, JoystickAxis axisB);
         bool getButton(JoystickButton button);
         ButtonState getButtonState(JoystickButton button);
         int getPort();

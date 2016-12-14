@@ -14,6 +14,11 @@ void COREJoystick::registerAxis(JoystickAxis axis) {
     m_axisCache[axis] = m_joystick.GetRawAxis(axis);
 }
 
+void COREJoystick::registerVector(JoystickAxis axisA, JoystickAxis axisB){
+	registerAxis(axisA);
+	registerAxis(axisB);
+}
+
 void COREJoystick::registerButton(JoystickButton button) {
     m_buttonCache[button] = m_joystick.GetRawButton(button) ? ACTIVE : NORMAL;
 }
@@ -25,6 +30,13 @@ double COREJoystick::getAxis(JoystickAxis axis) {
     } else {
         return m_axisCache[axis];
     }
+}
+
+Vector COREJoystick::getVector(JoystickAxis axisA, JoystickAxis axisB){
+	Vector output;
+	output.x = getAxis(axisA);
+	output.y = -getAxis(axisB);
+	return output;
 }
 
 bool COREJoystick::getButton(JoystickButton button) {
