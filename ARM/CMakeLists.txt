@@ -13,7 +13,8 @@ set(SOURCE_FILES ../main.cpp
         ../src/CORELog.cpp
         ../src/COREPID.cpp
         ../src/CORERobot.cpp
-        ../src/COREScheduler.cpp)
+        ../src/COREScheduler.cpp
+        ../src/CORESubsystem.cpp ../src/COREHardware/COREDigital.cpp ../src/COREHardware/COREDigital.h)
 
 set(PROJECT_NAME "ARM_${PROJECT_NAME}")
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
@@ -22,6 +23,7 @@ set(CMAKE_CXX_COMPILER /usr/bin/arm-frc-linux-gnueabi-g++)
 find_library(WPILIB wpi HINTS ~/wpilib/cpp/current/lib)
 target_link_libraries(${PROJECT_NAME} ${WPILIB})
 include_directories(/home/akemperfi/wpilib/cpp/current/include)
+include_directories(src)
 #add_definitions(-D__arm__)
 
 # Deploy target

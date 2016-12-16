@@ -16,6 +16,8 @@ class CANTalon {
 public:
     CANTalon(int _) {}
     inline float Set(float _) {}
+    inline int GetEncPosition() {}
+    inline void SetEncPosition(int _) {}
 };
 
 class Victor {
@@ -82,3 +84,16 @@ inline bool IsAutonomous() {
 inline bool IsDisabled() {
     return false;
 }
+
+class Encoder {
+public:
+    inline Encoder(int aChannel, int bChannel, bool reverseDirection = false) {}
+    inline int32_t Get() {}
+    inline void Reset() {}
+};
+
+class DigitalInput {
+public:
+inline DigitalInput(uint32_t channel) {}
+inline bool Get() {return false;}
+};
