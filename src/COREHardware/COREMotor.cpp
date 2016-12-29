@@ -10,7 +10,7 @@ COREMotor::COREMotor(int port, controllerType controller, encoderType encoder, c
         COREPID(m_motorControlMode == VEL_PID ? PIDType::VEL :
                 (m_motorControlMode == POS_PID ? PIDType::POS : PIDType::POS_VEL), 0, 0, 0),
         m_motorControlMode(controlMethod), m_motorControllerType(controller), m_motorPort(port), m_instance(this),
-        COREEncoder(m_instance, encoder)
+        COREEncoder(CANTalonController, encoder)
 {
 #ifdef __arm__
     if(m_motorControllerType == CORE::CANTALON) {
@@ -56,10 +56,10 @@ bool COREMotor::getReversed() {
 void COREMotor::setControlMode(controlMode controlMethod) {
     m_motorControlMode = controlMethod;
     if (m_motorControlMode == POS_PID) {
-		setType(POS);
+        setType(POS);
     } else if (m_motorControlMode == VEL_PID) {
-		setType(VEL);
-	}
+        setType(VEL);
+    }
 }
 
 controlMode COREMotor::getControlMode() {
@@ -75,7 +75,7 @@ controllerType COREMotor::getControllerType() {
 }
 
 void COREMotor::setDeadband(double range) {
-	setDeadband(-range, range);
+    setDeadband(-range, range);
 }
 
 void COREMotor::setDeadband(double min, double max) {
@@ -92,32 +92,32 @@ void COREMotor::motorSafety(bool disableMotorSafety) {
 }
 
 void COREMotor::postTeleopTask() {
-	//setActualPos(getActualPos());
-	//setActualVel(getActualVel());
+    //setActualPos(getActualPos());
+    //setActualVel(getActualVel());
     if (m_motorControlMode == POS_PID) {
         m_motorValue = calculate();
         m_motorUpdated = true;
     } else if (m_motorControlMode == VEL_PID) {
         m_motorValue = calculate();
         m_motorUpdated = true;
-	}
+    }
     if (!m_motorUpdated && !m_motorSafetyDisabled) {
         if (m_motorSafetyCounter > 3) {
             m_motorValue = 0;
-			cout << "Motor not updated!" << endl;
-		}
-		else {
+            cout << "Motor not updated!" << endl;
+        }
+        else {
             m_motorSafetyCounter++;
-		}
-	}
-	else {
+        }
+    }
+    else {
         m_motorSafetyCounter = 0;
-	}
+    }
     m_motorValue = fabs(m_motorValue) > 1 ? (m_motorValue > 1 ? 1 : -1) : m_motorValue;
     m_motorValue = (m_motorValue < m_deadBandMax && m_motorValue > m_deadBandMin) ? 0 : m_motorValue;
     for (auto motor : m_slaveMotors) {
         motor->Set(m_motorValue);
-	}
+    }
 #ifdef __arm__
     if(m_motorControllerType == CORE::CANTALON) {
         CANTalonController->Set(m_motorValue);

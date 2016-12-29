@@ -3,7 +3,7 @@
 
 using namespace CORE;
 
-COREJoystick::COREJoystick(uint32_t port) :
+COREJoystick::COREJoystick(int port) :
         m_joystick(port),
         m_joystickPort(port),
         m_instance(this) {
@@ -32,6 +32,10 @@ double COREJoystick::getAxis(JoystickAxis axis) {
     }
 }
 
+void COREJoystick::setAxis(JoystickAxis axis, int value) {
+    m_axisCache[axis] = value;
+}
+
 Vector COREJoystick::getVector(JoystickAxis axisA, JoystickAxis axisB){
 	Vector output;
 	output.x = getAxis(axisA);
@@ -46,6 +50,10 @@ bool COREJoystick::getButton(JoystickButton button) {
     } else {
         return (m_buttonCache[button] == PRESSED || m_buttonCache[button] == ACTIVE);
     }
+}
+
+void COREJoystick::setButton(JoystickButton button, bool value) {
+    m_buttonCache[button] = (value ? ACTIVE : NORMAL);
 }
 
 ButtonState COREJoystick::getButtonState(JoystickButton button) {

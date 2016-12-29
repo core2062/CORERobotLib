@@ -54,19 +54,21 @@ namespace CORE {
 
     class COREJoystick : public CORETask {
     public:
-        COREJoystick(uint32_t joystickNumber);
+        COREJoystick(int joystickNumber);
         void registerAxis(JoystickAxis axis);
         void registerVector(JoystickAxis axisA, JoystickAxis axisB);
         void registerButton(JoystickButton button);
         double getAxis(JoystickAxis axis);
+        void setAxis(JoystickAxis axis, int value);
         Vector getVector(JoystickAxis axisA, JoystickAxis axisB);
         bool getButton(JoystickButton button);
+        void setButton(JoystickButton button, bool value);
         ButtonState getButtonState(JoystickButton button);
         int getPort();
         void preTeleopTask();
     private:
         Joystick m_joystick;
-        uint32_t m_joystickPort;
+        int m_joystickPort;
         map<JoystickButton, ButtonState> m_lastButtonCache, m_buttonCache;
         map<JoystickAxis, double> m_axisCache;
         JoystickType m_expectedJoystickType;
