@@ -109,9 +109,9 @@ void SwerveDrive::calculateNormal(){
 		double a,b;
 		a = m_x + m_rot * i->position.unit().y;
 		b = m_y - m_rot * i->position.unit().x;
-		i->setMagnitude = sqrt(pow(a,2) + pow(b,2));
-		double setAngle = (180.0/3.1415)*atan2(a,b);
-		if (abs(setAngle-i->getCurrentAngle())>180){
+		i->setMagnitude = sqrt(pow(a, 2) + pow(b, 2));
+		double setAngle = (180.0/3.1415)*atan2(a, b);
+		if (abs(setAngle - i->getCurrentAngle()) > 180){
 			setAngle = i->clamp(setAngle - 180);
 			i->setDirection = -1;
 		}

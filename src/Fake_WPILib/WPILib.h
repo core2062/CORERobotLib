@@ -94,6 +94,6 @@ public:
 
 class DigitalInput {
 public:
-inline DigitalInput(uint32_t channel) {}
-inline bool Get() {return false;}
+    inline DigitalInput(uint32_t channel) {}
+    inline bool Get() {return false;}
 };

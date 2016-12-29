@@ -1,14 +1,14 @@
 #pragma once
 
-namespace CORE{
+namespace CORE {
 
-	class CORESensor{
+	class CORESensor {
 	public:
 		virtual double Get() = 0;
 		virtual ~CORESensor();
 	};
 
-	class COREContinuous{
+	class COREContinuous {
 	private:
 		double m_minVal = 0;
 		double m_maxVal = 360;

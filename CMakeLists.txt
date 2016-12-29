@@ -16,11 +16,12 @@ set(SOURCE_FILES main.cpp
         src/COREHardware/COREJoystick.cpp
         src/COREHardware/COREMotor.cpp
         src/COREHardware/CORETimer.cpp
+        src/COREHardware/CORESensor.cpp
         src/COREHardware.cpp
         src/CORELog.cpp
         src/COREPID.cpp
         src/CORERobot.cpp
-        src/COREScheduler.cpp src/CORESubsystem.cpp src/CORESubsystem.h src/COREHardware/COREDigital.cpp src/COREHardware/COREDigital.h)
+        src/COREScheduler.cpp)
 
 add_subdirectory(ARM)
 

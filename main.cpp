@@ -10,22 +10,35 @@ enum portAssignments {
 };
 
 class DriveSubsystem : public CORESubsystem {
+private:
+    SwerveDrive::SwerveModule module1;
+    vector<shared_ptr<SwerveDrive::SwerveModule>> m_modules;
 public:
-    DriveSubsystem() {
-
-    }
-
+        SwerveDrive* swerve;
+        DriveSubsystem() : module1(Robot::motor(DRIVEMOTOR), Robot::motor(STEERMOTOR), Robot::motor(DRIVEMOTOR)) {
+            //shared_ptr<SwerveDrive::SwerveModule> pointer(&module1);
+            //m_modules[0] = pointer;
+            //swerve = new SwerveDrive(m_modules);
+        }
     void robotInit() {
 
     }
+
     void teleopInit() {
+
     }
+
     void teleop() {
         //cout << DriverStation::GetInstance().GetBatteryVoltage() << std::endl;
-        Robot::motor(DRIVEMOTOR)->Set(Robot::joystick(0)->getAxis(RIGHT_STICK_Y));
-        Robot::motor(STEERMOTOR)->Set(Robot::joystick(0)->getAxis(LEFT_STICK_Y));
+        Robot::joystick(0)->setAxis(LEFT_STICK_X, 0);
+        Robot::joystick(0)->setAxis(LEFT_STICK_Y, 0);
+        Robot::joystick(0)->setAxis(RIGHT_STICK_X, 0);
+        Robot::joystick(0)->setAxis(RIGHT_STICK_Y, 0);
+        //swerve->run(0,0,0);
         cout << "Steer Motor: " << Robot::motor(STEERMOTOR)->Get() << endl;
+        cout << "Drive Motor: " << Robot::motor(DRIVEMOTOR)->Get() << endl;
     }
+
     void test() {
         cout << "Tested!" << endl;
     }
@@ -68,11 +81,8 @@ private:
 class driveForwardAuto : public COREAuto {
 public:
     driveForwardAuto() :
-            m_moveForwardAndPutArmDown(new arm(), new wheels()),
-            m_intakeBall(new arm()),
-            m_moveBackToStart(new wheels()),
-            m_visionAlign(new wheels()),
-            m_shootBall(new arm()) {
+            m_moveForwardAndPutArmDown(new arm(), new wheels()), m_intakeBall(new arm()),
+            m_moveBackToStart(new wheels()), m_visionAlign(new wheels()), m_shootBall(new arm()) {
         setName("Ta Da!");
         setDefault(true);
     }
@@ -89,7 +99,6 @@ public:
 
 private:
     Node m_moveForwardAndPutArmDown, m_intakeBall, m_moveBackToStart, m_visionAlign, m_shootBall;
-
     static bool ballIntaked() {
         return false;
     }
@@ -101,19 +110,20 @@ private:
 
 class offSeasonRobot : public CORERobot {
 public:
-    //DriveSubsystem driveSubsystem;
+    DriveSubsystem driveSubsystem;
     COREJoystick joystick1;
-    //COREMotor driveMotor;
-    //COREMotor steerMotor;
-    driveForwardAuto auto1;
+    COREMotor driveMotor;
+    COREMotor steerMotor;
+    //driveForwardAuto auto1;
     offSeasonRobot():
-    //driveSubsystem(),
+            driveSubsystem(),
             joystick1(0),
-            //driveMotor(DRIVEMOTOR),
-            //steerMotor(STEERMOTOR),
-            auto1()
+            driveMotor(DRIVEMOTOR),
+            steerMotor(STEERMOTOR)//,
+            //auto1()
     {
         setLoopTime(0.5);
+
     }
 
     void robotInit() {

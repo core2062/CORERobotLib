@@ -1,9 +1,12 @@
 #include "COREScheduler.h"
-#include "CORESubsystem.h"
 
 using namespace CORE;
 using namespace std;
 
+CORESubsystem::CORESubsystem() {
+    shared_ptr<CORESubsystem> pointer(this);
+	COREScheduler::addSubsystem(pointer);
+}
 
 CORETask::CORETask():
 		m_disabled(false)
@@ -57,19 +60,31 @@ void COREScheduler::robotInit() {
 }
 
 void COREScheduler::autonInit() {
+	if(!m_autons.empty()) {
 #ifdef __arm__
-	shared_ptr<COREAuto> pointer((COREAuto*) m_autonChooser->GetSelected());
-    m_selectedAuto = pointer;
+		shared_ptr<COREAuto> pointer((COREAuto*) m_autonChooser->GetSelected());
+		m_selectedAuto = pointer;
 #else
-    m_selectedAuto = m_autons[0];
-	//TODO: Simulated auto switcher
+		m_selectedAuto = m_autons[0];
+		//TODO: Simulated auto switcher
 #endif
-    m_selectedAuto->autonInit();
+		m_selectedAuto->autonInit();
+	}
+	else {
+		cout << "No Autons Added!" << endl;
+		m_selectedAuto = nullptr;
+	}
 }
 
 bool COREScheduler::auton() {
-    m_selectedAuto->auton();
-    return m_selectedAuto->complete();
+	if(m_selectedAuto != nullptr) {
+		m_selectedAuto->auton();
+		return m_selectedAuto->complete();
+	}
+	else {
+		cout << "No Auton Selected!" << endl;
+		return true;
+	}
 }
 
 void COREScheduler::teleopInit() {

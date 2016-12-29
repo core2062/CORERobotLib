@@ -1,8 +1,10 @@
 #pragma once
 
 #include <vector>
+#include <cmath>
 
 #include "COREHardware.h"
+#include "COREHardware/CORESensor.h"
 
 namespace CORE {
 	class TankDrive {
@@ -23,24 +25,22 @@ namespace CORE {
 
 	class SwerveDrive {
 	public:
-		struct SwerveModule : public COREContinuous{
-
-			SwerveModule(shared_ptr<COREMotor> d, shared_ptr<COREMotor> r){
-				drive = d;
-				rotation = r;
-				encoder = make_shared<COREEncoder>(r, SRX_RELATIVE);
+		class SwerveModule : public COREContinuous {
+        public:
+			SwerveModule(shared_ptr<COREMotor> driveMotor, shared_ptr<COREMotor> steerMotor,
+                         shared_ptr<COREEncoder> steerEncoder) {
+				drive = driveMotor;
+				rotation = steerMotor;
+				encoder = steerEncoder;
 			}
-
-			double getCurrentAngle(){
+			double getCurrentAngle() {
 				return clamp(encoder->Get() * encoderRatio);
 			}
-
-			double getSetValue(double angle){
+			double getSetValue(double angle) {
 				int direction = encoder->Get()/abs(encoder->Get());
-				double base = (abs(encoder->Get()) - (abs(encoder->Get())) % (int)(360/encoderRatio));
+				double base = (abs(encoder->Get()) - (int)(abs(encoder->Get())) % (int)(360/encoderRatio));
 				return base * direction + angle/encoderRatio;
 			}
-
 			shared_ptr<COREMotor> drive;
 			shared_ptr<COREMotor> rotation;
 			shared_ptr<COREEncoder> encoder;

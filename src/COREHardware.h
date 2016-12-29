@@ -7,6 +7,7 @@
 #include "COREHardware/COREMotor.h"
 #include "COREHardware/COREEncoder.h"
 #include "COREHardware/COREJoystick.h"
+#include "COREHardware/CORESensor.h"
 #include "WPILib.h"
 
 using namespace CORE;
