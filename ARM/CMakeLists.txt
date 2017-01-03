@@ -14,7 +14,7 @@ set(SOURCE_FILES ../main.cpp
         ../src/CORELog.cpp
         ../src/COREPID.cpp
         ../src/CORERobot.cpp
-        ../src/COREScheduler.cpp)
+        ../src/COREScheduler.cpp ../src/COREDrive/CORESwerve.cpp)
 
 set(PROJECT_NAME "ARM_${PROJECT_NAME}")
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})

@@ -21,7 +21,7 @@ set(SOURCE_FILES main.cpp
         src/CORELog.cpp
         src/COREPID.cpp
         src/CORERobot.cpp
-        src/COREScheduler.cpp)
+        src/COREScheduler.cpp src/COREDrive/CORESwerve.cpp)
 
 add_subdirectory(ARM)
 

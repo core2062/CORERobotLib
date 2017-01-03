@@ -9,17 +9,23 @@ enum portAssignments {
     DRIVEMOTOR = 13
 };
 
-class DriveSubsystem : public CORESubsystem {
+class DriveSubsystem : public CORESubsystem , public CORESwerve {
 private:
-    SwerveDrive::SwerveModule module1;
-    vector<shared_ptr<SwerveDrive::SwerveModule>> m_modules;
+//    SwerveDrive::SwerveModule module1;
+//    vector<shared_ptr<SwerveDrive::SwerveModule>> m_modules;
+    shared_ptr<CORESwerve::SwerveModule> module1 = make_shared<CORESwerve::SwerveModule>(DRIVEMOTOR,
+                                                                                         STEERMOTOR, DRIVEMOTOR); //0, module2, module3;
 public:
-        SwerveDrive* swerve;
-        DriveSubsystem() : module1(Robot::motor(DRIVEMOTOR), Robot::motor(STEERMOTOR), Robot::motor(DRIVEMOTOR)) {
-            //shared_ptr<SwerveDrive::SwerveModule> pointer(&module1);
-            //m_modules[0] = pointer;
-            //swerve = new SwerveDrive(m_modules);
-        }
+//        SwerveDrive* swerve;
+//        DriveSubsystem() : module1(Robot::motor(DRIVEMOTOR), Robot::motor(STEERMOTOR), Robot::motor(DRIVEMOTOR)) {
+//            //shared_ptr<SwerveDrive::SwerveModule> pointer(&module1);
+//            //m_modules[0] = pointer;
+//            //swerve = new SwerveDrive(m_modules);
+//        }
+    DriveSubsystem() : CORESwerve(1, 1, module1, module1, module1, module1){
+
+    }
+
     void robotInit() {
 
     }
@@ -35,8 +41,8 @@ public:
         Robot::joystick(0)->setAxis(RIGHT_STICK_X, 0);
         Robot::joystick(0)->setAxis(RIGHT_STICK_Y, 0);
         //swerve->run(0,0,0);
-        cout << "Steer Motor: " << Robot::motor(STEERMOTOR)->Get() << endl;
-        cout << "Drive Motor: " << Robot::motor(DRIVEMOTOR)->Get() << endl;
+//        cout << "Steer Motor: " << Robot::motor(STEERMOTOR)->Get() << endl;
+//        cout << "Drive Motor: " << Robot::motor(DRIVEMOTOR)->Get() << endl;
     }
 
     void test() {

@@ -8,3 +8,4 @@
 #include "src/CORERobot.h"
 #include "src/COREAuto.h"
 #include "src/COREDrive.h"
+#include "src/COREDrive/CORESwerve.h"
