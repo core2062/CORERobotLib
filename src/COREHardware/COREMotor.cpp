@@ -30,7 +30,7 @@ COREMotor::COREMotor(int port, controllerType controller, encoderType encoder, c
     m_trapSumTimer->Reset();
     m_trapSumTimer->Start();
 #endif
-//    Robot::addMotor(shared_from_this());
+    Robot::addMotor(this);
 }
 
 void COREMotor::Set(double motorSetValue) {

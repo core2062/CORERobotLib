@@ -12,10 +12,8 @@ namespace CORE {
     public:
         class SwerveModule : public COREContinuous, public Vector { //TODO: SwerveModule isn't a COREContinuous, shouldn't inherit from it
         public:
-            SwerveModule(const shared_ptr<COREMotor>& driveMotor, const shared_ptr<COREMotor>& steerMotor, const shared_ptr<COREMotor>& steerEncoder) {
-                m_driveMotor = driveMotor;
-                m_steerMotor = steerMotor;
-                m_steerEncoder = steerEncoder;
+            SwerveModule(COREMotor* driveMotor, COREMotor* steerMotor, COREMotor* steerEncoder) :
+                    m_driveMotor(driveMotor), m_steerMotor(steerMotor), m_steerEncoder(steerEncoder){
                 m_steerMotor->setControlMode(POS_PID);
                 if(m_steerMotor->getP() == 0) {
                     cout << "Warning, steerMotor not given pid values" << endl;
@@ -57,9 +55,9 @@ namespace CORE {
             double x, y;
 
         private:
-            shared_ptr<COREMotor> m_driveMotor;
-            shared_ptr<COREMotor> m_steerMotor;
-            shared_ptr<COREEncoder> m_steerEncoder;
+            COREMotor* m_driveMotor;
+            COREMotor* m_steerMotor;
+            COREEncoder* m_steerEncoder;
             double m_setMagnitude = 0;
             double m_setDirection = 0;
             double m_encoderRatio = 0.00520679058/*(360 / 1024.0) * (1 / (16 * 4.22))*/; //TODO: This needs to have a getter + setter

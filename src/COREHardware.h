@@ -16,13 +16,13 @@ using namespace std;
 namespace CORE {
     class Robot {
     public:
-        static void addMotor(shared_ptr<COREMotor> motor);
-        static void addJoystick(shared_ptr<COREJoystick> joystick);
-        static shared_ptr<COREMotor> motor(int port);
-        static shared_ptr<COREJoystick> joystick(int port);
+        static void addMotor(COREMotor* motor);
+        static void addJoystick(COREJoystick* joystick);
+        static COREMotor* motor(int port);
+        static COREJoystick* joystick(int port);
         static void disableAllMotors();
     private:
-        static map<int, shared_ptr<COREMotor>> m_motorMap;
-        static map<int, shared_ptr<COREJoystick>> m_joystickMap;
+        static map<int, COREMotor*> m_motorMap;
+        static map<int, COREJoystick*> m_joystickMap;
     };
 }

@@ -17,26 +17,33 @@ enum portAssignments {
 
 class DriveSubsystem : public CORESubsystem, public CORESwerve {
 private:
-    shared_ptr<COREMotor> driveMotor1, steerMotor1, driveMotor2, steerMotor2, driveMotor3, steerMotor3, driveMotor4, steerMotor4;
+    COREMotor driveMotor1;
+    COREMotor steerMotor1;
+    COREMotor driveMotor2;
+    COREMotor steerMotor2;
+    COREMotor driveMotor3;
+    COREMotor steerMotor3;
+    COREMotor driveMotor4;
+    COREMotor steerMotor4;
     CORESwerve::SwerveModule module1, module2, module3, module4;
 public:
-    DriveSubsystem() : driveMotor1(make_shared<COREMotor>(DRIVEMOTOR1)), steerMotor1(make_shared<COREMotor>(STEERMOTOR1)),
-                       driveMotor2(make_shared<COREMotor>(DRIVEMOTOR2)), steerMotor2(make_shared<COREMotor>(STEERMOTOR2)),
-                       driveMotor3(make_shared<COREMotor>(DRIVEMOTOR3)), steerMotor3(make_shared<COREMotor>(STEERMOTOR3)),
-                       driveMotor4(make_shared<COREMotor>(DRIVEMOTOR4)), steerMotor4(make_shared<COREMotor>(STEERMOTOR4)),
-                       module1(driveMotor1, steerMotor1, steerMotor1),
-                       module2(driveMotor2, steerMotor2, steerMotor2),
-                       module3(driveMotor3, steerMotor3, steerMotor3),
-                       module4(driveMotor4, steerMotor4, steerMotor4),
+    DriveSubsystem() : driveMotor1(DRIVEMOTOR1), steerMotor1(STEERMOTOR1),
+                       driveMotor2(DRIVEMOTOR2), steerMotor2(STEERMOTOR2),
+                       driveMotor3(DRIVEMOTOR3), steerMotor3(STEERMOTOR3),
+                       driveMotor4(DRIVEMOTOR4), steerMotor4(STEERMOTOR4),
+                       module1(&driveMotor1, &steerMotor1, &steerMotor1),
+                       module2(&driveMotor2, &steerMotor2, &steerMotor2),
+                       module3(&driveMotor3, &steerMotor3, &steerMotor3),
+                       module4(&driveMotor4, &steerMotor4, &steerMotor4),
                        CORESwerve(21, 31, module1, module2, module3, module4) {
-        Robot::addMotor(driveMotor1);
-        Robot::addMotor(driveMotor2);
-        Robot::addMotor(driveMotor3);
-        Robot::addMotor(driveMotor4);
-        Robot::addMotor(steerMotor1);
-        Robot::addMotor(steerMotor2);
-        Robot::addMotor(steerMotor3);
-        Robot::addMotor(steerMotor4);
+        Robot::addMotor(&driveMotor1);
+        Robot::addMotor(&driveMotor2);
+        Robot::addMotor(&driveMotor3);
+        Robot::addMotor(&driveMotor4);
+        Robot::addMotor(&steerMotor1);
+        Robot::addMotor(&steerMotor2);
+        Robot::addMotor(&steerMotor3);
+        Robot::addMotor(&steerMotor4);
     }
 
     void robotInit() {
