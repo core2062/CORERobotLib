@@ -14,7 +14,8 @@ set(SOURCE_FILES ../main.cpp
         ../src/CORELog.cpp
         ../src/COREPID.cpp
         ../src/CORERobot.cpp
-        ../src/COREScheduler.cpp ../src/COREDrive/CORESwerve.cpp)
+        ../src/COREScheduler.cpp
+        ../src/COREDrive/CORESwerve.cpp)
 
 set(PROJECT_NAME "ARM_${PROJECT_NAME}")
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
@@ -23,11 +24,13 @@ set(CMAKE_CXX_COMPILER /usr/bin/arm-frc-linux-gnueabi-g++)
 find_library(WPILIB wpi HINTS ~/wpilib/cpp/current/lib)
 target_link_libraries(${PROJECT_NAME} ${WPILIB})
 include_directories(/home/akemperfi/wpilib/cpp/current/include)
-#add_definitions(-D__arm__)
+
+include_directories(../src)
+add_definitions(-D__arm__)
 
 # Deploy target
 find_file(ROBOTCOMMAND ant/robotCommand /usr/share/wpilib)
 add_custom_target(deploy
-        COMMAND sh -c "./deploy.sh ${TEAM_NUMBER} $<TARGET_FILE:${PROJECT_NAME}> ${ROBOTCOMMAND}"
+        COMMAND sh -c "../../ARM/deploy.sh ${TEAM_NUMBER} $<TARGET_FILE:${PROJECT_NAME}> ${ROBOTCOMMAND}"
         DEPENDS ${PROJECT_NAME})
 set_target_properties(deploy PROPERTIES EXCLUDE_FROM_ALL TRUE)

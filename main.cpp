@@ -5,39 +5,38 @@ using namespace CORE;
 using namespace std;
 
 enum portAssignments {
-    STEERMOTOR1 = 12,
-    DRIVEMOTOR1 = 13,
+    STEERMOTOR1 = 11,
+    DRIVEMOTOR1 = 10,
     STEERMOTOR2 = 14,
-    DRIVEMOTOR2 = 15,
-    STEERMOTOR3 = 16,
-    DRIVEMOTOR3 = 17,
-    STEERMOTOR4 = 18,
-    DRIVEMOTOR4 = 19,
+    DRIVEMOTOR2 = 13,
+    STEERMOTOR3 = 12,
+    DRIVEMOTOR3 = 15,
+    STEERMOTOR4 = 17,
+    DRIVEMOTOR4 = 16
 };
 
-class DriveSubsystem : public CORESubsystem {
+class DriveSubsystem : public CORESubsystem, public CORESwerve {
 private:
-//    SwerveDrive::SwerveModule module1;
-//    vector<shared_ptr<SwerveDrive::SwerveModule>> m_modules;
-    shared_ptr<CORESwerve::SwerveModule> module1, module2, module3, module4;
     shared_ptr<COREMotor> driveMotor1, steerMotor1, driveMotor2, steerMotor2, driveMotor3, steerMotor3, driveMotor4, steerMotor4;
+    CORESwerve::SwerveModule module1, module2, module3, module4;
 public:
-//        SwerveDrive* swerve;
-//        DriveSubsystem() : module1(Robot::motor(DRIVEMOTOR), Robot::motor(STEERMOTOR), Robot::motor(DRIVEMOTOR)) {
-//            //shared_ptr<SwerveDrive::SwerveModule> pointer(&module1);
-//            //m_modules[0] = pointer;
-//            //swerve = new SwerveDrive(m_modules);
-//        }
-    CORESwerve* swerve;
-    DriveSubsystem() : driveMotor1(new COREMotor(DRIVEMOTOR1)), steerMotor1(new COREMotor(STEERMOTOR1)),
-                       driveMotor2(new COREMotor(DRIVEMOTOR2)), steerMotor2(new COREMotor(STEERMOTOR2)),
-                       driveMotor3(new COREMotor(DRIVEMOTOR3)), steerMotor3(new COREMotor(STEERMOTOR3)),
-                       driveMotor4(new COREMotor(DRIVEMOTOR4)), steerMotor4(new COREMotor(STEERMOTOR4)){
-        module1 = make_shared<CORESwerve::SwerveModule>(driveMotor1, steerMotor1, steerMotor1);
-        module2 = make_shared<CORESwerve::SwerveModule>(driveMotor2, steerMotor2, steerMotor2);
-        module3 = make_shared<CORESwerve::SwerveModule>(driveMotor3, steerMotor3, steerMotor3);
-        module4 = make_shared<CORESwerve::SwerveModule>(driveMotor4, steerMotor4, steerMotor4);
-        swerve = new CORESwerve (1.0, 1.0, module1, module2, module3, module4);
+    DriveSubsystem() : driveMotor1(make_shared<COREMotor>(DRIVEMOTOR1)), steerMotor1(make_shared<COREMotor>(STEERMOTOR1)),
+                       driveMotor2(make_shared<COREMotor>(DRIVEMOTOR2)), steerMotor2(make_shared<COREMotor>(STEERMOTOR2)),
+                       driveMotor3(make_shared<COREMotor>(DRIVEMOTOR3)), steerMotor3(make_shared<COREMotor>(STEERMOTOR3)),
+                       driveMotor4(make_shared<COREMotor>(DRIVEMOTOR4)), steerMotor4(make_shared<COREMotor>(STEERMOTOR4)),
+                       module1(driveMotor1, steerMotor1, steerMotor1),
+                       module2(driveMotor2, steerMotor2, steerMotor2),
+                       module3(driveMotor3, steerMotor3, steerMotor3),
+                       module4(driveMotor4, steerMotor4, steerMotor4),
+                       CORESwerve(21, 31, module1, module2, module3, module4) {
+        Robot::addMotor(driveMotor1);
+        Robot::addMotor(driveMotor2);
+        Robot::addMotor(driveMotor3);
+        Robot::addMotor(driveMotor4);
+        Robot::addMotor(steerMotor1);
+        Robot::addMotor(steerMotor2);
+        Robot::addMotor(steerMotor3);
+        Robot::addMotor(steerMotor4);
     }
 
     void robotInit() {
@@ -54,8 +53,7 @@ public:
         Robot::joystick(0)->setAxis(LEFT_STICK_Y, 1);
         Robot::joystick(0)->setAxis(RIGHT_STICK_X, 1);
         Robot::joystick(0)->setAxis(RIGHT_STICK_Y, 1);
-        swerve->cartesian(1, 0, 0);
-        //swerve->run(0,0,0);
+        cartesian(1, 0, 0);
 //        cout << "Steer Motor: " << Robot::motor(STEERMOTOR)->Get() << endl;
 //        cout << "Drive Motor: " << Robot::motor(DRIVEMOTOR)->Get() << endl;
     }
@@ -139,8 +137,7 @@ public:
             joystick1(0)
             //auto1()
     {
-        setLoopTime(0.5);
-
+        setLoopTime(0.01);
     }
 
     void robotInit() {

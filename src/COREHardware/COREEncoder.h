@@ -27,7 +27,6 @@ namespace CORE {
 	public:
 		shared_ptr<Encoder> encoder;
         COREEncoder(shared_ptr<CANTalon> CANTalonController, encoderType encoderType);
-
         COREEncoder(int portA, int portB, encoderType encoder, bool reversed = false);
 //        COREEncoder(shared_ptr<COREMotor> motor, encoderType encoder);
 		void setReversed(bool reversed = true);

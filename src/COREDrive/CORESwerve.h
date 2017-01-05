@@ -3,7 +3,7 @@
 #include <vector>
 #include <cmath>
 
-#include "COREHardware.h"
+#include <COREHardware.h>
 #include "COREDrive.h"
 #include "COREHardware/CORESensor.h"
 
@@ -65,10 +65,9 @@ namespace CORE {
             double m_encoderRatio = 0.00520679058/*(360 / 1024.0) * (1 / (16 * 4.22))*/; //TODO: This needs to have a getter + setter
         };
 
-        CORESwerve(double wheelBase, double trackWidth, const shared_ptr<CORESwerve::SwerveModule>& leftFrontModule,
-                               const shared_ptr<CORESwerve::SwerveModule>& leftBackModule,
-                               const shared_ptr<CORESwerve::SwerveModule>& rightBackModule,
-                               const shared_ptr<CORESwerve::SwerveModule>& rightFrontModule = nullptr);
+        CORESwerve(double wheelBase, double trackWidth, CORESwerve::SwerveModule& leftFrontModule,
+                   CORESwerve::SwerveModule& leftBackModule, CORESwerve::SwerveModule& rightBackModule,
+                   CORESwerve::SwerveModule& rightFrontModule);
         void setRotation(double rotation);
         double getRotation();
         void cartesian(double x, double y, double rotation);
@@ -94,6 +93,6 @@ namespace CORE {
 
     private:
         vector<shared_ptr<SwerveModule>> m_modules;
-        shared_ptr<CORESwerve::SwerveModule> m_leftFrontModule, m_leftBackModule, m_rightBackModule, m_rightFrontModule;
+        shared_ptr<SwerveModule> m_leftFrontModule, m_leftBackModule, m_rightBackModule, m_rightFrontModule;
     };
 }

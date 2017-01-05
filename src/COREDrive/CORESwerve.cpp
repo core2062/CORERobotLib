@@ -155,15 +155,15 @@ void CORESwerve::doFieldMecanumThrottle(){
 
 
 CORESwerve::CORESwerve(double wheelBase, double trackWidth,
-                       const shared_ptr<CORESwerve::SwerveModule>& leftFrontModule,
-                       const shared_ptr<CORESwerve::SwerveModule>& leftBackModule,
-                       const shared_ptr<CORESwerve::SwerveModule>& rightBackModule,
-                       const shared_ptr<CORESwerve::SwerveModule>& rightFrontModule) :
-        m_leftFrontModule(leftFrontModule), m_leftBackModule(leftBackModule),
-        m_rightBackModule(rightBackModule), m_rightFrontModule(rightFrontModule) {
-    m_modules.push_back(leftFrontModule);
-    m_modules.push_back(leftBackModule);
-    m_modules.push_back(rightBackModule);
+                       CORESwerve::SwerveModule& leftFrontModule,
+                       CORESwerve::SwerveModule& leftBackModule,
+                       CORESwerve::SwerveModule& rightBackModule,
+                       CORESwerve::SwerveModule& rightFrontModule) :
+        m_leftFrontModule(&leftFrontModule), m_leftBackModule(&leftBackModule),
+        m_rightBackModule(&rightBackModule), m_rightFrontModule(&rightFrontModule) {
+    m_modules.push_back(m_leftFrontModule);
+    m_modules.push_back(m_leftBackModule);
+    m_modules.push_back(m_rightBackModule);
 
     double x = m_trackwidth*.5;
     double y = m_wheelbase*.5;
@@ -173,11 +173,9 @@ CORESwerve::CORESwerve(double wheelBase, double trackWidth,
     m_leftBackModule->y = -y;
     m_rightBackModule->x = x;
     m_rightBackModule->y = -y;
-    if(m_rightFrontModule != nullptr) {
-        m_modules.push_back(rightFrontModule);
+        m_modules.push_back(m_rightFrontModule);
         m_rightFrontModule->x = x;
         m_rightFrontModule->y = y;
-    }
 }
 
 void CORESwerve::setRotation(double rotation) {

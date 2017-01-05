@@ -9,7 +9,7 @@ using namespace CORE;
 COREMotor::COREMotor(int port, controllerType controller, encoderType encoder, controlMode controlMethod) :
         COREPID(m_motorControlMode == VEL_PID ? PIDType::VEL :
                 (m_motorControlMode == POS_PID ? PIDType::POS : PIDType::POS_VEL), 0, 0, 0),
-        m_motorControlMode(controlMethod), m_motorControllerType(controller), m_motorPort(port), m_instance(this),
+        m_motorControlMode(controlMethod), m_motorControllerType(controller), m_motorPort(port), /*m_instance(this),*/
         COREEncoder(CANTalonController, encoder)
 {
 #ifdef __arm__
@@ -33,7 +33,7 @@ COREMotor::COREMotor(int port, controllerType controller, encoderType encoder, c
     m_trapSumTimer->Reset();
     m_trapSumTimer->Start();
 #endif
-    Robot::addMotor(m_instance);
+//    Robot::addMotor(shared_from_this());
 }
 
 void COREMotor::Set(double motorSetValue) {
