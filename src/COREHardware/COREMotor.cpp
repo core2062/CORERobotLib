@@ -14,16 +14,13 @@ COREMotor::COREMotor(int port, controllerType controller, encoderType encoder, c
 {
 #ifdef __arm__
     if(m_motorControllerType == CORE::CANTALON) {
-        std::shared_ptr<CANTalon> pointer(new CANTalon(port));
-        CANTalonController = pointer;
+        CANTalonController = make_shared<CANTalon>(port);
     }
     else if(m_motorControllerType == CORE::JAGUAR) {
-        std::shared_ptr<Jaguar> pointer(new Jaguar(port));
-        JaguarController = pointer;
+        JaguarController = make_shared<Jaguar>(port);
     }
     else if(m_motorControllerType == CORE::VICTOR) {
-        std::shared_ptr<Victor> pointer(new Victor(port));
-        VictorController = pointer;
+        VictorController = make_shared<Victor>(port);
     }
     else {
         //TODO: Throw error
