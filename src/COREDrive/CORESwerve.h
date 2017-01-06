@@ -10,9 +10,10 @@
 namespace CORE {
     class CORESwerve : public CORETask, public COREDrive {
     public:
-        class SwerveModule : public COREContinuous, public Vector { //TODO: SwerveModule isn't a COREContinuous, shouldn't inherit from it
+        class SwerveModule : public COREContinuous{ //TODO: SwerveModule isn't a COREContinuous, shouldn't inherit from it
         public:
             SwerveModule(COREMotor* driveMotor, COREMotor* steerMotor, COREEncoder* steerEncoder) :
+		    position(0,0),
                     m_driveMotor(driveMotor), m_steerMotor(steerMotor), m_steerEncoder(steerEncoder){
                 m_steerMotor->setControlMode(POS_PID);
                 if(m_steerMotor->getP() == 0) {
@@ -62,7 +63,7 @@ namespace CORE {
             int m_setDirection = 1;
             double m_setAngle = 0;
             double m_setMagnitude = 0;
-            double x, y;
+            Vector position;
 
         private:
             COREMotor* m_driveMotor;
