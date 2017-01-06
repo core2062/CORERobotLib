@@ -239,11 +239,11 @@ void CORESwerve::postTeleopTask() {
 			a = m_x + m_rot * i->position.y;
 			b = m_y - m_rot * i->position.x;
 			i->m_setMagnitude = sqrt(pow(a, 2) + pow(b, 2));
-			double setAngle = (180.0/3.1415)*atan2(a, b);
-			//if (abs(setAngle - i->getCurrentAngle()) > 180){
-			//	setAngle = i->clamp(setAngle - 180);
-			//	i->m_setDirection = -1;
-			//}
+			double setAngle = clamp(90-(180.0/3.1415)*atan2(a, b));
+			if (abs(setAngle - i->getCurrentAngle()) > 180){
+				setAngle = i->clamp(setAngle - 180);
+				i->m_setDirection = -1;
+			}
 			i->m_setAngle = setAngle;
 			i->m_setMagnitude = i->m_setMagnitude * m_throttle;
         	}
