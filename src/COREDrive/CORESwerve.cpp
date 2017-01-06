@@ -167,15 +167,11 @@ CORESwerve::CORESwerve(double wheelBase, double trackWidth,
 
     double x = m_trackwidth*.5;
     double y = m_wheelbase*.5;
-    m_leftFrontModule->x = -x;
-    m_leftFrontModule->y = y;
-    m_leftBackModule->x = -x;
-    m_leftBackModule->y = -y;
-    m_rightBackModule->x = x;
-    m_rightBackModule->y = -y;
+    m_leftFrontModule->position = {-x,y};
+    m_leftBackModule->position = {-x,-y};
+    m_rightBackModule->position = {x,-y};
         m_modules.push_back(m_rightFrontModule);
-        m_rightFrontModule->x = x;
-        m_rightFrontModule->y = y;
+        m_rightFrontModule->position = {x,y};
 }
 
 void CORESwerve::setRotation(double rotation) {
@@ -240,8 +236,8 @@ void CORESwerve::postTeleopTask() {
         	if(fabs(m_x+m_y+m_rot)>.2){
         	i->m_setDirection = 1;
 			double a,b;
-			a = m_x + m_rot * i->y;
-			b = m_y - m_rot * i->x;
+			a = m_x + m_rot * i->position.y;
+			b = m_y - m_rot * i->position.x;
 			i->m_setMagnitude = sqrt(pow(a, 2) + pow(b, 2));
 			double setAngle = (180.0/3.1415)*atan2(a, b);
 			//if (abs(setAngle - i->getCurrentAngle()) > 180){
