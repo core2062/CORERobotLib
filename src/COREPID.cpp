@@ -75,8 +75,8 @@ double COREPID::calculate(int profile) {
 		currentProfile->output = m_actualPosition;
 		return 0;
 	}
-	if(currentProfile->F == 1) {
-		currentProfile->F = 0;
+	if(currentProfile->F == 0) {
+		currentProfile->F = 1;
 	}
 	else {
 		m_timer.Reset();

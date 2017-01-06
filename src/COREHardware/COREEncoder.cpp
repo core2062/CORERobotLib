@@ -54,7 +54,7 @@ void COREEncoder::Set(int value) {
 }
 
 void COREEncoder::Reset() {
-
+	Set(0);
 }
 
 COREEncoder::COREEncoder(shared_ptr<CANTalon> CANTalonController, encoderType encoderType) : m_bondToCANTalon(true) {

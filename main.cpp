@@ -15,7 +15,7 @@ enum portAssignments {
     DRIVEMOTOR4 = 16
 };
 
-class DriveSubsystem : public CORESubsystem, public CORESwerve {
+class DriveSubsystem : public CORESubsystem/*, public CORESwerve*/ {
 private:
     COREMotor driveMotor1;
     COREMotor steerMotor1;
@@ -25,44 +25,71 @@ private:
     COREMotor steerMotor3;
     COREMotor driveMotor4;
     COREMotor steerMotor4;
+    COREEncoder none;
     CORESwerve::SwerveModule module1, module2, module3, module4;
+    CORESwerve* swerve;
 public:
     DriveSubsystem() : driveMotor1(DRIVEMOTOR1), steerMotor1(STEERMOTOR1),
                        driveMotor2(DRIVEMOTOR2), steerMotor2(STEERMOTOR2),
                        driveMotor3(DRIVEMOTOR3), steerMotor3(STEERMOTOR3),
                        driveMotor4(DRIVEMOTOR4), steerMotor4(STEERMOTOR4),
-                       module1(&driveMotor1, &steerMotor1, &steerMotor1),
-                       module2(&driveMotor2, &steerMotor2, &steerMotor2),
-                       module3(&driveMotor3, &steerMotor3, &steerMotor3),
-                       module4(&driveMotor4, &steerMotor4, &steerMotor4),
-                       CORESwerve(21, 31, module1, module2, module3, module4) {
-        Robot::addMotor(&driveMotor1);
-        Robot::addMotor(&driveMotor2);
-        Robot::addMotor(&driveMotor3);
-        Robot::addMotor(&driveMotor4);
-        Robot::addMotor(&steerMotor1);
-        Robot::addMotor(&steerMotor2);
-        Robot::addMotor(&steerMotor3);
-        Robot::addMotor(&steerMotor4);
+					   none(0,0,encoderType::NONE),
+                       module1(&driveMotor1, &steerMotor1, &none),
+                       module2(&driveMotor2, &steerMotor2, &none),
+                       module3(&driveMotor3, &steerMotor3, &none),
+                       module4(&driveMotor4, &steerMotor4, &none) {
+    	swerve = new CORESwerve(21, 31, module1, module2, module3, module4);
     }
 
     void robotInit() {
-
+    	SmartDashboard::PutNumber("P Value", 0.4);
+    	SmartDashboard::PutNumber("I Value", 0.01);
+    	SmartDashboard::PutNumber("D Value", 0.00);
+    	Robot::motor(STEERMOTOR1)->CANTalonController->SetEncPosition(0);
+    	Robot::motor(STEERMOTOR2)->CANTalonController->SetEncPosition(0);
+    	Robot::motor(STEERMOTOR3)->CANTalonController->SetEncPosition(0);
+    	Robot::motor(STEERMOTOR4)->CANTalonController->SetEncPosition(0);
+    	Robot::motor(STEERMOTOR2)->setReversed();
+    	Robot::motor(STEERMOTOR3)->setReversed();
     }
 
     void teleopInit() {
-
+    	Robot::motor(STEERMOTOR1)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
+    	Robot::motor(STEERMOTOR2)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
+    	Robot::motor(STEERMOTOR3)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
+    	Robot::motor(STEERMOTOR4)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
+    	Robot::motor(STEERMOTOR1)->setControlMode(POS_PID);
+    	Robot::motor(STEERMOTOR2)->setControlMode(POS_PID);
+    	Robot::motor(STEERMOTOR3)->setControlMode(POS_PID);
+    	Robot::motor(STEERMOTOR4)->setControlMode(POS_PID);
     }
 
     void teleop() {
         //cout << DriverStation::GetInstance().GetBatteryVoltage() << std::endl;
-        Robot::joystick(0)->setAxis(LEFT_STICK_X, 1);
-        Robot::joystick(0)->setAxis(LEFT_STICK_Y, 1);
+/*        Robot::joystick(0)->setAxis(LEFT_STICK_X, 0);
+        Robot::joystick(0)->setAxis(LEFT_STICK_Y, 0);
         Robot::joystick(0)->setAxis(RIGHT_STICK_X, 1);
-        Robot::joystick(0)->setAxis(RIGHT_STICK_Y, 1);
-        cartesian(1, 0, 0);
+        Robot::joystick(0)->setAxis(RIGHT_STICK_Y, 1);*/
+        swerve->cartesian(Robot::joystick(0)->getAxis(LEFT_STICK_X), Robot::joystick(0)->getAxis(LEFT_STICK_Y), Robot::joystick(0)->getAxis(RIGHT_STICK_X));
 //        cout << "Steer Motor: " << Robot::motor(STEERMOTOR)->Get() << endl;
 //        cout << "Drive Motor: " << Robot::motor(DRIVEMOTOR)->Get() << endl;
+        auto x = SmartDashboard::GetNumber("P Value", 0.0001);
+        Robot::motor(STEERMOTOR1)->setP(x/10000.0);
+        Robot::motor(STEERMOTOR2)->setP(x/10000.0);
+        Robot::motor(STEERMOTOR3)->setP(x/10000.0);
+        Robot::motor(STEERMOTOR4)->setP(x/10000.0);
+
+        x = SmartDashboard::GetNumber("I Value", 0.0001);
+		Robot::motor(STEERMOTOR1)->setI(x/10000.0);
+		Robot::motor(STEERMOTOR2)->setI(x/10000.0);
+		Robot::motor(STEERMOTOR3)->setI(x/10000.0);
+		Robot::motor(STEERMOTOR4)->setI(x/10000.0);
+
+		x = SmartDashboard::GetNumber("D Value", 0.0001);
+		Robot::motor(STEERMOTOR1)->setD(x/10000.0);
+		Robot::motor(STEERMOTOR2)->setD(x/10000.0);
+		Robot::motor(STEERMOTOR3)->setD(x/10000.0);
+		Robot::motor(STEERMOTOR4)->setD(x/10000.0);
     }
 
     void test() {

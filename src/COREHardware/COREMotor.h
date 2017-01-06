@@ -7,7 +7,7 @@
 #include "../COREPID.h"
 #include "COREEncoder.h"
 
-#include "WPILib.h"
+#include <WPILib.h>
 
 namespace CORE {
     enum controlMode {
@@ -29,7 +29,7 @@ namespace CORE {
         FORWARD,
         BACKWARD
     };
-    class COREMotor : public COREPID, public COREEncoder {
+    class COREMotor : public COREPID/*, public COREEncoder*/ {
     public:
         shared_ptr<CANTalon> CANTalonController;
         shared_ptr<Jaguar> JaguarController;

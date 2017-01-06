@@ -230,22 +230,31 @@ double CORESwerve::getDirection() {
 
 void CORESwerve::postTeleopTask() {
     if(true) {
+        m_throttle = Robot::joystick(0)->getAxis(JoystickAxis::RIGHT_TRIGGER_AXIS);
+        m_x = -Robot::joystick(0)->getAxis(JoystickAxis::LEFT_STICK_X);
+        m_y = -Robot::joystick(0)->getAxis(JoystickAxis::LEFT_STICK_Y);
+        m_rot = Robot::joystick(0)->getAxis(JoystickAxis::RIGHT_STICK_X);
+        std::cout << m_rot << "rot" << endl;
+
         for (auto i : m_modules) {
-            i->setDirection(1);
-            double a, b;
-            a = m_x + m_rot * i->y;
-            b = m_y - m_rot * i->x;
-            i->setMagnitude(sqrt(pow(a, 2) + pow(b, 2)));
-            double setAngle = (180.0 / 3.1415) * atan2(a, b);
-            if (abs(setAngle - i->getCurrentAngle()) > 180) {
-                setAngle = i->clamp(setAngle - 180);
-                i->setDirection(-1);
-            }
-            i->setDirection(setAngle);
-            i->update();
+        	if(fabs(m_x+m_y+m_rot)>.2){
+        	i->m_setDirection = 1;
+			double a,b;
+			a = m_x + m_rot * i->y;
+			b = m_y - m_rot * i->x;
+			i->m_setMagnitude = sqrt(pow(a, 2) + pow(b, 2));
+			double setAngle = (180.0/3.1415)*atan2(a, b);
+			//if (abs(setAngle - i->getCurrentAngle()) > 180){
+			//	setAngle = i->clamp(setAngle - 180);
+			//	i->m_setDirection = -1;
+			//}
+			i->m_setAngle = setAngle;
+			i->m_setMagnitude = i->m_setMagnitude * m_throttle;
+        	}
+			i->update();
         }
     }
-    if(false) {
+/*    if(false) {
         for(auto i : m_modules){
             double a,b;
             a = m_x + m_rot * i->y;
@@ -254,5 +263,5 @@ void CORESwerve::postTeleopTask() {
             i->setDirection((180.0/3.1415)*atan2(a,b));
             i->update();
         }
-    }
+    }*/
 }

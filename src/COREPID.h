@@ -18,7 +18,7 @@ enum PIDType {
 
 class COREPID : public CORETask {
 public:
-	COREPID(PIDType PIDControllerType, double pProfile1Value, double iProfile1Value, double dProfile1Value, double fProfile1Value = 1, double pProfile2Value = 0, double iProfile2Value = 0, double dProfile2Value = 0, double fProfile2Value = 0, int integralAccuracy = 1);
+	COREPID(PIDType PIDControllerType, double pProfile1Value, double iProfile1Value, double dProfile1Value, double fProfile1Value = 1, double pProfile2Value = 0, double iProfile2Value = 0, double dProfile2Value = 1, double fProfile2Value = 0, int integralAccuracy = 1);
 	double calculate(int profile = -1);
 	void setPos(double setPositionValue);
 	void setVel(double setVelocityValue);

@@ -12,12 +12,12 @@ using namespace CORE;
 
 namespace CORE {
     enum JoystickAxis {
-        LEFT_STICK_X,
-        LEFT_STICK_Y,
-        RIGHT_STICK_X,
-        RIGHT_STICK_Y,
-        RIGHT_TRIGGER_AXIS,
-        LEFT_TRIGGER_AXIS
+        LEFT_STICK_X = 0,
+        LEFT_STICK_Y = 1,
+        RIGHT_STICK_X=4,
+        RIGHT_STICK_Y=5,
+        RIGHT_TRIGGER_AXIS=3,
+        LEFT_TRIGGER_AXIS = 2
     };
     enum JoystickButton {
         DPAD_N,
