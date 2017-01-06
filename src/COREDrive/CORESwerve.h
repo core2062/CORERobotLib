@@ -8,7 +8,20 @@
 #include "COREHardware/CORESensor.h"
 
 namespace CORE {
-    class CORESwerve : public CORETask, public COREDrive {
+enum portAssignments {
+    STEERMOTOR1 = 11,
+    DRIVEMOTOR1 = 10,
+    STEERMOTOR2 = 14,
+    DRIVEMOTOR2 = 13,
+    STEERMOTOR3 = 12,
+    DRIVEMOTOR3 = 15,
+    STEERMOTOR4 = 17,
+    DRIVEMOTOR4 = 16
+};
+
+
+
+	class CORESwerve : public CORETask, public COREDrive {
     public:
         class SwerveModule : public COREContinuous{ //TODO: SwerveModule isn't a COREContinuous, shouldn't inherit from it
         public:

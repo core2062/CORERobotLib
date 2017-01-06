@@ -164,7 +164,8 @@ CORESwerve::CORESwerve(double wheelBase, double trackWidth,
     m_modules.push_back(m_leftFrontModule);
     m_modules.push_back(m_leftBackModule);
     m_modules.push_back(m_rightBackModule);
-
+    m_trackwidth = trackWidth;
+    m_wheelbase = wheelBase;
     double x = m_trackwidth*.5;
     double y = m_wheelbase*.5;
     m_leftFrontModule->position = {-x,y};
@@ -230,25 +231,45 @@ void CORESwerve::postTeleopTask() {
         m_x = -Robot::joystick(0)->getAxis(JoystickAxis::LEFT_STICK_X);
         m_y = -Robot::joystick(0)->getAxis(JoystickAxis::LEFT_STICK_Y);
         m_rot = Robot::joystick(0)->getAxis(JoystickAxis::RIGHT_STICK_X);
-        std::cout << m_rot << "rot" << endl;
 
+        if(Robot::joystick(0)->getButton(DPAD_NE)){
+            	Robot::motor(STEERMOTOR1)->CANTalonController->SetEncPosition(0);
+            	Robot::motor(STEERMOTOR2)->CANTalonController->SetEncPosition(0);
+            	Robot::motor(STEERMOTOR3)->CANTalonController->SetEncPosition(0);
+            	Robot::motor(STEERMOTOR4)->CANTalonController->SetEncPosition(0);
+        }
+
+        std::cout << m_rot << "rot" << endl;
+        double max = 0.0;
         for (auto i : m_modules) {
         	if(fabs(m_x+m_y+m_rot)>.2){
         	i->m_setDirection = 1;
 			double a,b;
-			a = m_x + m_rot * i->position.y;
-			b = m_y - m_rot * i->position.x;
+			a = m_x + m_rot * i->position.unit().y;
+			std::cout << "Y: " << i->position.y << "  X: " << i->position.x << std::endl;
+			b = m_y - m_rot * i->position.unit().x;
 			i->m_setMagnitude = sqrt(pow(a, 2) + pow(b, 2));
-			double setAngle = clamp(90-(180.0/3.1415)*atan2(a, b));
-			if (abs(setAngle - i->getCurrentAngle()) > 180){
+			double setAngle = i->clamp((180.0/3.1415)*atan2(a, b));
+			/*if (abs(setAngle - i->getCurrentAngle()) > 180){
 				setAngle = i->clamp(setAngle - 180);
 				i->m_setDirection = -1;
-			}
+			}*/
 			i->m_setAngle = setAngle;
 			i->m_setMagnitude = i->m_setMagnitude * m_throttle;
+			if(fabs(i->m_setMagnitude) > max) max = fabs(i->m_setMagnitude);
         	}
-			i->update();
+			//i->update();
         }
+
+        if(max>1.0){
+        	for (auto i : m_modules){
+        		i->m_setMagnitude = i->m_setMagnitude / max;
+        	}
+        }
+        for (auto i : m_modules){
+        	i->update();
+        }
+
     }
 /*    if(false) {
         for(auto i : m_modules){

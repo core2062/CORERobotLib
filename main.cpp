@@ -4,6 +4,7 @@
 using namespace CORE;
 using namespace std;
 
+/*
 enum portAssignments {
     STEERMOTOR1 = 11,
     DRIVEMOTOR1 = 10,
@@ -14,6 +15,7 @@ enum portAssignments {
     STEERMOTOR4 = 17,
     DRIVEMOTOR4 = 16
 };
+*/
 
 class DriveSubsystem : public CORESubsystem/*, public CORESwerve*/ {
 private:
@@ -51,6 +53,9 @@ public:
     	Robot::motor(STEERMOTOR4)->CANTalonController->SetEncPosition(0);
     	Robot::motor(STEERMOTOR2)->setReversed();
     	Robot::motor(STEERMOTOR3)->setReversed();
+    	//Robot::motor(DRIVEMOTOR2)->setReversed();
+    	//Robot::motor(DRIVEMOTOR3)->setReversed();
+    	//Robot::motor(DRIVEMOTOR4)->setReversed();
     }
 
     void teleopInit() {
