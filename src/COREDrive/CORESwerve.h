@@ -9,14 +9,14 @@
 
 namespace CORE {
 enum portAssignments {
-    STEERFL = 11,
-    DRIVEFL = 10,
-    STEERBL = 14,
-    DRIVEBL = 13,
-    STEERBR = 12,
-    DRIVEBR = 15,
-    STEERFR = 17,
-    DRIVEFR = 16
+    STEER_FL = 11,
+    DRIVE_FL = 10,
+    STEER_BL = 14,
+    DRIVE_BL = 13,
+    STEER_BR = 12,
+    DRIVE_BR = 15,
+    STEER_FR = 17,
+    DRIVE_FR = 16
 };
 
 	class CORESwerve : public CORETask, public COREDrive {

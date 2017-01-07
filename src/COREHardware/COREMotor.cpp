@@ -12,9 +12,6 @@ COREMotor::COREMotor(int port, controllerType controller, encoderType encoder, c
         m_motorControlMode(controlMethod), m_motorControllerType(controller), m_motorPort(port)/*, m_instance(this),
         COREEncoder(CANTalonController, encoder)*/
 {
-	CANTalonController = make_shared<CANTalon>(port);
-/*
-#ifdef __arm__
     if(m_motorControllerType == CORE::CANTALON) {
         CANTalonController = make_shared<CANTalon>(port);
     }
@@ -27,12 +24,6 @@ COREMotor::COREMotor(int port, controllerType controller, encoderType encoder, c
     else {
         //TODO: Throw error
     }
-#else
-    m_trapSumTimer = new CORETimer();
-    m_trapSumTimer->Reset();
-    m_trapSumTimer->Start();
-#endif
-*/
     Robot::addMotor(this);
 }
 

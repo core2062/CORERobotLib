@@ -250,16 +250,13 @@ double CORESwerve::getDirection() {
 }
 
 void CORESwerve::postTeleopTask() {
-    m_throttle = Robot::joystick(0)->getAxis(JoystickAxis::RIGHT_TRIGGER_AXIS);
-    m_x = -Robot::joystick(0)->getAxis(JoystickAxis::LEFT_STICK_X);
-    m_y = -Robot::joystick(0)->getAxis(JoystickAxis::LEFT_STICK_Y);
-    m_rot = Robot::joystick(0)->getAxis(JoystickAxis::RIGHT_STICK_X);
+    m_y*=-1;
 
     if(Robot::joystick(0)->getButton(DPAD_NE)){
-            Robot::motor(STEERFL)->CANTalonController->SetEncPosition(0);
-            Robot::motor(STEERBL)->CANTalonController->SetEncPosition(0);
-            Robot::motor(STEERBR)->CANTalonController->SetEncPosition(0);
-            Robot::motor(STEERFR)->CANTalonController->SetEncPosition(0);
+            Robot::motor(STEER_FL)->CANTalonController->SetEncPosition(0);
+            Robot::motor(STEER_BL)->CANTalonController->SetEncPosition(0);
+            Robot::motor(STEER_BR)->CANTalonController->SetEncPosition(0);
+            Robot::motor(STEER_FR)->CANTalonController->SetEncPosition(0);
     }
 
     cout << m_rot << "rot" << endl;
