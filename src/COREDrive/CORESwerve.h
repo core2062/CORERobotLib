@@ -9,17 +9,15 @@
 
 namespace CORE {
 enum portAssignments {
-    STEERMOTOR1 = 11,
-    DRIVEMOTOR1 = 10,
-    STEERMOTOR2 = 14,
-    DRIVEMOTOR2 = 13,
-    STEERMOTOR3 = 12,
-    DRIVEMOTOR3 = 15,
-    STEERMOTOR4 = 17,
-    DRIVEMOTOR4 = 16
+    STEERFL = 11,
+    DRIVEFL = 10,
+    STEERBL = 14,
+    DRIVEBL = 13,
+    STEERBR = 12,
+    DRIVEBR = 15,
+    STEERFR = 17,
+    DRIVEFR = 16
 };
-
-
 
 	class CORESwerve : public CORETask, public COREDrive {
     public:
@@ -29,9 +27,6 @@ enum portAssignments {
 		    position(0,0),
                     m_driveMotor(driveMotor), m_steerMotor(steerMotor), m_steerEncoder(steerEncoder){
                 m_steerMotor->setControlMode(POS_PID);
-                if(m_steerMotor->getP() == 0) {
-                    cout << "Warning, steerMotor not given pid values" << endl;
-                }
             }
 
             double getCurrentAngle() {
@@ -85,17 +80,21 @@ enum portAssignments {
             double m_ticksToRotations = (360 / 1024.0) * (1 / (4 * 4.22)); //TODO: This needs to have a getter + setter
         };
 
-        CORESwerve(double wheelBase, double trackWidth, CORESwerve::SwerveModule& leftFrontModule,
+        CORESwerve(double trackWidth, double wheelBase, CORESwerve::SwerveModule& leftFrontModule,
                    CORESwerve::SwerveModule& leftBackModule, CORESwerve::SwerveModule& rightBackModule,
                    CORESwerve::SwerveModule& rightFrontModule);
         void setRotation(double rotation);
         double getRotation();
+        void setThrottle(double throttle);
+        double getThrottle();
         void cartesian(double x, double y, double rotation);
+        void cartesian(double x, double y, double rotation, double throttle);
         void setX(double x);
         void setY(double y);
         double getX();
         double getY();
         void polar(double magnitude, double direction, double rotation);
+        void polar(double magnitude, double direction, double rotation, double throttle);
         void setMagnitude(double magnitude);
         void setDirection(double direction);
         double getMagnitude();

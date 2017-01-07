@@ -6,95 +6,90 @@ using namespace std;
 
 /*
 enum portAssignments {
-    STEERMOTOR1 = 11,
-    DRIVEMOTOR1 = 10,
-    STEERMOTOR2 = 14,
-    DRIVEMOTOR2 = 13,
-    STEERMOTOR3 = 12,
-    DRIVEMOTOR3 = 15,
-    STEERMOTOR4 = 17,
-    DRIVEMOTOR4 = 16
+    STEERFL = 11,
+    DRIVEFL = 10,
+    STEERBL = 14,
+    DRIVEBL = 13,
+    STEERBR = 12,
+    DRIVEBR = 15,
+    STEERFR = 17,
+    DRIVEFR = 16
 };
 */
 
 class DriveSubsystem : public CORESubsystem/*, public CORESwerve*/ {
 private:
-    COREMotor driveMotor1;
-    COREMotor steerMotor1;
-    COREMotor driveMotor2;
-    COREMotor steerMotor2;
-    COREMotor driveMotor3;
-    COREMotor steerMotor3;
-    COREMotor driveMotor4;
-    COREMotor steerMotor4;
+    COREMotor driveMotorFL;
+    COREMotor steerMotorFL;
+    COREMotor driveMotorBL;
+    COREMotor steerMotorBL;
+    COREMotor driveMotorBR;
+    COREMotor steerMotorBR;
+    COREMotor driveMotorFR;
+    COREMotor steerMotorFR;
     COREEncoder none;
-    CORESwerve::SwerveModule module1, module2, module3, module4;
+    CORESwerve::SwerveModule moduleFL, moduleBL, moduleBR, moduleFR;
     CORESwerve* swerve;
 public:
-    DriveSubsystem() : driveMotor1(DRIVEMOTOR1), steerMotor1(STEERMOTOR1),
-                       driveMotor2(DRIVEMOTOR2), steerMotor2(STEERMOTOR2),
-                       driveMotor3(DRIVEMOTOR3), steerMotor3(STEERMOTOR3),
-                       driveMotor4(DRIVEMOTOR4), steerMotor4(STEERMOTOR4),
-					   none(0,0,encoderType::NONE),
-                       module1(&driveMotor1, &steerMotor1, &none),
-                       module2(&driveMotor2, &steerMotor2, &none),
-                       module3(&driveMotor3, &steerMotor3, &none),
-                       module4(&driveMotor4, &steerMotor4, &none) {
-    	swerve = new CORESwerve(21, 31, module1, module2, module3, module4);
+    DriveSubsystem() : driveMotorFL(DRIVEFL), steerMotorFL(STEERFL),
+                       driveMotorBL(DRIVEBL), steerMotorBL(STEERBL),
+                       driveMotorBR(DRIVEBR), steerMotorBR(STEERBR),
+                       driveMotorFR(DRIVEFR), steerMotorFR(STEERFR),
+					   none(0, 0, encoderType::NONE),
+                       moduleFL(&driveMotorFL, &steerMotorFL, &none),
+                       moduleBL(&driveMotorBL, &steerMotorBL, &none),
+                       moduleBR(&driveMotorBR, &steerMotorBR, &none),
+                       moduleFR(&driveMotorFR, &steerMotorFR, &none) {
+    	swerve = new CORESwerve(21, 31, moduleFL, moduleBL, moduleBR, moduleFR);
     }
 
     void robotInit() {
     	SmartDashboard::PutNumber("P Value", 0.4);
     	SmartDashboard::PutNumber("I Value", 0.01);
     	SmartDashboard::PutNumber("D Value", 0.00);
-    	Robot::motor(STEERMOTOR1)->CANTalonController->SetEncPosition(0);
-    	Robot::motor(STEERMOTOR2)->CANTalonController->SetEncPosition(0);
-    	Robot::motor(STEERMOTOR3)->CANTalonController->SetEncPosition(0);
-    	Robot::motor(STEERMOTOR4)->CANTalonController->SetEncPosition(0);
-    	Robot::motor(STEERMOTOR2)->setReversed();
-    	Robot::motor(STEERMOTOR3)->setReversed();
-    	//Robot::motor(DRIVEMOTOR2)->setReversed();
-    	//Robot::motor(DRIVEMOTOR3)->setReversed();
-    	//Robot::motor(DRIVEMOTOR4)->setReversed();
+    	Robot::motor(STEERFL)->CANTalonController->SetEncPosition(0);
+    	Robot::motor(STEERBL)->CANTalonController->SetEncPosition(0);
+    	Robot::motor(STEERBR)->CANTalonController->SetEncPosition(0);
+    	Robot::motor(STEERFR)->CANTalonController->SetEncPosition(0);
+    	Robot::motor(STEERBL)->setReversed();
+    	Robot::motor(STEERBR)->setReversed();
+    	//Robot::motor(DRIVEBL)->setReversed();
+    	//Robot::motor(DRIVEBR)->setReversed();
+    	//Robot::motor(DRIVEFR)->setReversed();
     }
 
     void teleopInit() {
-    	Robot::motor(STEERMOTOR1)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
-    	Robot::motor(STEERMOTOR2)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
-    	Robot::motor(STEERMOTOR3)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
-    	Robot::motor(STEERMOTOR4)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
-    	Robot::motor(STEERMOTOR1)->setControlMode(POS_PID);
-    	Robot::motor(STEERMOTOR2)->setControlMode(POS_PID);
-    	Robot::motor(STEERMOTOR3)->setControlMode(POS_PID);
-    	Robot::motor(STEERMOTOR4)->setControlMode(POS_PID);
+    	Robot::motor(STEERFL)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
+    	Robot::motor(STEERBL)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
+    	Robot::motor(STEERBR)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
+    	Robot::motor(STEERFR)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
     }
 
     void teleop() {
         //cout << DriverStation::GetInstance().GetBatteryVoltage() << std::endl;
-/*        Robot::joystick(0)->setAxis(LEFT_STICK_X, 0);
+        Robot::joystick(0)->setAxis(LEFT_STICK_X, 0);
         Robot::joystick(0)->setAxis(LEFT_STICK_Y, 0);
-        Robot::joystick(0)->setAxis(RIGHT_STICK_X, 1);
-        Robot::joystick(0)->setAxis(RIGHT_STICK_Y, 1);*/
+        Robot::joystick(0)->setAxis(RIGHT_STICK_X, 0);
+        Robot::joystick(0)->setAxis(LEFT_TRIGGER_AXIS, 0);
         swerve->cartesian(Robot::joystick(0)->getAxis(LEFT_STICK_X), Robot::joystick(0)->getAxis(LEFT_STICK_Y), Robot::joystick(0)->getAxis(RIGHT_STICK_X));
-//        cout << "Steer Motor: " << Robot::motor(STEERMOTOR)->Get() << endl;
-//        cout << "Drive Motor: " << Robot::motor(DRIVEMOTOR)->Get() << endl;
+
         auto x = SmartDashboard::GetNumber("P Value", 0.0001);
-        Robot::motor(STEERMOTOR1)->setP(x/10000.0);
-        Robot::motor(STEERMOTOR2)->setP(x/10000.0);
-        Robot::motor(STEERMOTOR3)->setP(x/10000.0);
-        Robot::motor(STEERMOTOR4)->setP(x/10000.0);
+        Robot::motor(STEERFL)->setP(x/10000.0);
+        Robot::motor(STEERBL)->setP(x/10000.0);
+        Robot::motor(STEERBR)->setP(x/10000.0);
+        Robot::motor(STEERFR)->setP(x/10000.0);
 
         x = SmartDashboard::GetNumber("I Value", 0.0001);
-		Robot::motor(STEERMOTOR1)->setI(x/10000.0);
-		Robot::motor(STEERMOTOR2)->setI(x/10000.0);
-		Robot::motor(STEERMOTOR3)->setI(x/10000.0);
-		Robot::motor(STEERMOTOR4)->setI(x/10000.0);
+		Robot::motor(STEERFL)->setI(x/10000.0);
+		Robot::motor(STEERBL)->setI(x/10000.0);
+		Robot::motor(STEERBR)->setI(x/10000.0);
+		Robot::motor(STEERFR)->setI(x/10000.0);
 
 		x = SmartDashboard::GetNumber("D Value", 0.0001);
-		Robot::motor(STEERMOTOR1)->setD(x/10000.0);
-		Robot::motor(STEERMOTOR2)->setD(x/10000.0);
-		Robot::motor(STEERMOTOR3)->setD(x/10000.0);
-		Robot::motor(STEERMOTOR4)->setD(x/10000.0);
+		Robot::motor(STEERFL)->setD(x/10000.0);
+		Robot::motor(STEERBL)->setD(x/10000.0);
+		Robot::motor(STEERBR)->setD(x/10000.0);
+		Robot::motor(STEERFR)->setD(x/10000.0);
     }
 
     void test() {
@@ -176,7 +171,7 @@ public:
             joystick1(0)
             //auto1()
     {
-        setLoopTime(0.01);
+        setLoopTime(1);
     }
 
     void robotInit() {

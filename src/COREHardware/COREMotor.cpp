@@ -117,12 +117,11 @@ void COREMotor::postTeleopTask() {
     else {
         m_motorSafetyCounter = 0;
     }
-    m_motorValue = fabs(m_motorValue) > 1 ? (m_motorValue > 1 ? 1 : -1) : m_motorValue;
+    m_motorValue = abs(m_motorValue) > 1 ? (m_motorValue > 1 ? 1 : -1) : m_motorValue;
     m_motorValue = (m_motorValue < m_deadBandMax && m_motorValue > m_deadBandMin) ? 0 : m_motorValue;
     for (auto motor : m_slaveMotors) {
         motor->Set(m_motorValue);
     }
-#ifdef __arm__
     if(m_motorControllerType == CORE::CANTALON) {
         CANTalonController->Set(m_motorValue);
     }
@@ -135,13 +134,13 @@ void COREMotor::postTeleopTask() {
     else {
         //TODO: Throw error
     }
-#else
+/*#else
     cout << "Motor Port " << getPort() << " Value = " << m_motorValue << endl;
     m_trapSum -= 0.5 * m_trapSumTimer->Get() * (m_lastMotorValue + m_motorValue);
     m_trapSumTimer->Reset();
     m_lastMotorValue = m_motorValue;
     cout << "Trap Port " << getPort() << " Value = " << m_trapSum << endl;
-#endif
+#endif*/
     m_motorUpdated = false;
 }
 

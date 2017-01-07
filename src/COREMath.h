@@ -2,9 +2,20 @@
 
 #include <cmath>
 
-namespace CORE{
+#define PI 3.141592
 
-	class Vector{
+
+namespace CORE {
+
+	inline double toRadians(double degrees) {
+		return degrees * (PI / 180.0);
+	}
+
+	inline double toDegrees(double degrees) {
+		return degrees * (180.0 / PI);
+	}
+
+	class Vector {
 	public:
 		double x = 0.0;
 		double y = 0.0;
