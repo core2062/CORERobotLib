@@ -251,7 +251,7 @@ double CORESwerve::getDirection() {
 
 void CORESwerve::postTeleopTask() {
     m_y*=-1;
-
+    m_x*=-1;
     if(Robot::joystick(0)->getButton(DPAD_NE)){
             Robot::motor(STEER_FL)->CANTalonController->SetEncPosition(0);
             Robot::motor(STEER_BL)->CANTalonController->SetEncPosition(0);

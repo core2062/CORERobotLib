@@ -23,9 +23,9 @@ enum portAssignments {
     public:
         class SwerveModule : public COREContinuous{ //TODO: SwerveModule isn't a COREContinuous, shouldn't inherit from it
         public:
-            SwerveModule(COREMotor* driveMotor, COREMotor* steerMotor, COREEncoder* steerEncoder) :
+            SwerveModule(COREMotor* driveMotor, COREMotor* steerMotor) :
 		    position(0,0),
-                    m_driveMotor(driveMotor), m_steerMotor(steerMotor), m_steerEncoder(steerEncoder){
+                    m_driveMotor(driveMotor), m_steerMotor(steerMotor) {
                 m_steerMotor->setControlMode(POS_PID);
             }
 
@@ -76,7 +76,6 @@ enum portAssignments {
         private:
             COREMotor* m_driveMotor;
             COREMotor* m_steerMotor;
-            COREEncoder* m_steerEncoder;
             double m_ticksToRotations = (360 / 1024.0) * (1 / (4 * 4.22)); //TODO: This needs to have a getter + setter
         };
 

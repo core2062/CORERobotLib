@@ -27,7 +27,6 @@ private:
     COREMotor steerMotorBR;
     COREMotor driveMotorFR;
     COREMotor steerMotorFR;
-    COREEncoder none;
     CORESwerve::SwerveModule moduleFL, moduleBL, moduleBR, moduleFR;
     CORESwerve* swerve;
 public:
@@ -35,11 +34,10 @@ public:
                        driveMotorBL(DRIVE_BL), steerMotorBL(STEER_BL),
                        driveMotorBR(DRIVE_BR), steerMotorBR(STEER_BR),
                        driveMotorFR(DRIVE_FR), steerMotorFR(STEER_FR),
-					   none(0, 0, encoderType::NONE),
-                       moduleFL(&driveMotorFL, &steerMotorFL, &none),
-                       moduleBL(&driveMotorBL, &steerMotorBL, &none),
-                       moduleBR(&driveMotorBR, &steerMotorBR, &none),
-                       moduleFR(&driveMotorFR, &steerMotorFR, &none) {
+                       moduleFL(&driveMotorFL, &steerMotorFL),
+                       moduleBL(&driveMotorBL, &steerMotorBL),
+                       moduleBR(&driveMotorBR, &steerMotorBR),
+                       moduleFR(&driveMotorFR, &steerMotorFR) {
     	swerve = new CORESwerve(21, 31, moduleFL, moduleBL, moduleBR, moduleFR);
     }
 
@@ -75,7 +73,7 @@ public:
         Robot::motor(STEER_BR)->setP(x/10000.0);
         Robot::motor(STEER_FR)->setP(x/10000.0);
 
-        x = SmartDashboard::GetNumber("I Value", 0.0001);
+        x = SmartDashboard::GetNumber("I Value", 0.001);
 		Robot::motor(STEER_FL)->setI(x/10000.0);
 		Robot::motor(STEER_BL)->setI(x/10000.0);
 		Robot::motor(STEER_BR)->setI(x/10000.0);
