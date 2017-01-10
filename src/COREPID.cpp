@@ -105,15 +105,15 @@ double COREPID::calculate(int profile) {
 			currentProfile->derivative = ((currentProfile->mistake - currentProfile->lastMistake) / time) * currentProfile->D;
 			currentProfile->output = currentProfile->F * (currentProfile->lastOutput + currentProfile->proportional + currentProfile->integral + currentProfile->derivative);
 		} else if (m_controllerType == CONT) {
-            currentProfile->mistake = m_setPosition/m_ticksToDegrees - m_actualPosition/m_ticksToDegrees;
-            double revMistake = m_actualPosition/m_ticksToDegrees - m_setPosition/m_ticksToDegrees;
+            currentProfile->mistake = clamp(m_setPosition) - clamp(m_actualPosition/m_ticksToDegrees);
+            double revMistake = clamp(m_actualPosition/m_ticksToDegrees) - clamp(m_setPosition);
+            cout << "Mistake: " << currentProfile->mistake << endl;
+            cout << "Actual Pos: " << clamp(m_actualPosition/m_ticksToDegrees) << endl;
             if(currentProfile->mistake  >= 360) {
                 currentProfile->mistake  -= 360;
-                cout << "TRIGGERED!!!!" << endl;
             }
             if(revMistake >= 360) {
                 revMistake -= 360;
-                cout << "TRIGGERED on rev!!!!" << endl;
             }
             if(abs(currentProfile->mistake) > abs(revMistake)) {
                 currentProfile->mistake = revMistake;

@@ -17,15 +17,17 @@ namespace CORE {
 
 	inline double arctan(double x, double y) {
 		double result = toDegrees(atan2 (y,x));
-		if(x>=0 && y >= 0) {
+		if(x >=0 && y >= 0) {
 			return 90 - result;
 		} else if (x >= 0 && y < 0) {
 			return 90 + -1 * result;
 		} else if (x <= 0 && y < 0) {
-			return 180 + -1 * result;
-		} else {
+			return 90 + -1 * result;
+		} else if (x < 0 && y >= 0) {
 			return 450 - result;
 		}
+		cout << "Oh no" << endl;
+		return -1;
 	}
 
 	class Vector {

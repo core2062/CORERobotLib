@@ -270,6 +270,9 @@ void CORESwerve::postTeleopTask() {
             if(fabs(i->m_setMagnitude) > max)
                 max = fabs(i->m_setMagnitude);
         }
+        else {
+        	i->m_setMagnitude = 0;
+        }
         //i->update();
     }
 

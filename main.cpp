@@ -42,8 +42,8 @@ public:
     }
 
     void robotInit() {
-    	SmartDashboard::PutNumber("P Value", 0.4);
-    	SmartDashboard::PutNumber("I Value", 0.01);
+    	SmartDashboard::PutNumber("P Value", 0.0004);
+    	SmartDashboard::PutNumber("I Value", 0.001);
     	SmartDashboard::PutNumber("D Value", 0.00);
     	Robot::motor(STEER_FL)->CANTalonController->SetEncPosition(0);
     	Robot::motor(STEER_BL)->CANTalonController->SetEncPosition(0);
@@ -61,32 +61,36 @@ public:
     	Robot::motor(STEER_BL)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
     	Robot::motor(STEER_BR)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
     	Robot::motor(STEER_FR)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
+    	Robot::motor(STEER_FL)->setControlMode(CONT_PID);
+    	Robot::motor(STEER_BL)->setControlMode(CONT_PID);
+    	Robot::motor(STEER_BR)->setControlMode(CONT_PID);
+    	Robot::motor(STEER_FR)->setControlMode(CONT_PID);
     }
 
     void teleop() {
         //cout << DriverStation::GetInstance().GetBatteryVoltage() << std::endl;
-        //swerve->cartesian(Robot::joystick(0)->getAxis(LEFT_STICK_X), Robot::joystick(0)->getAxis(LEFT_STICK_Y), Robot::joystick(0)->getAxis(RIGHT_STICK_X), Robot::joystick(0)->getAxis(RIGHT_TRIGGER_AXIS));
-
+        swerve->cartesian(Robot::joystick(0)->getAxis(LEFT_STICK_X), -1*Robot::joystick(0)->getAxis(LEFT_STICK_Y), Robot::joystick(0)->getAxis(RIGHT_STICK_X), Robot::joystick(0)->getAxis(RIGHT_TRIGGER_AXIS));
+        cout << Robot::joystick(0)->getAxis(LEFT_STICK_X) << endl;
         /*swerve->cartesian(0, 1, 0, 1);*/
 
 
-        auto x = SmartDashboard::GetNumber("P Value", 0.0001);
-        Robot::motor(STEER_FL)->setP(x/10000.0);
-        Robot::motor(STEER_BL)->setP(x/10000.0);
-        Robot::motor(STEER_BR)->setP(x/10000.0);
-        Robot::motor(STEER_FR)->setP(x/10000.0);
+        auto x = SmartDashboard::GetNumber("P Value", 0.01);
+        Robot::motor(STEER_FL)->setP(x);
+        Robot::motor(STEER_BL)->setP(x);
+        Robot::motor(STEER_BR)->setP(x);
+        Robot::motor(STEER_FR)->setP(x);
 
-        x = SmartDashboard::GetNumber("I Value", 0.001);
-		Robot::motor(STEER_FL)->setI(x/10000.0);
-		Robot::motor(STEER_BL)->setI(x/10000.0);
-		Robot::motor(STEER_BR)->setI(x/10000.0);
-		Robot::motor(STEER_FR)->setI(x/10000.0);
+        x = SmartDashboard::GetNumber("I Value", 0.01);
+		Robot::motor(STEER_FL)->setI(x);
+		Robot::motor(STEER_BL)->setI(x);
+		Robot::motor(STEER_BR)->setI(x);
+		Robot::motor(STEER_FR)->setI(x);
 
-		x = SmartDashboard::GetNumber("D Value", 0.0001);
-		Robot::motor(STEER_FL)->setD(x/10000.0);
-		Robot::motor(STEER_BL)->setD(x/10000.0);
-		Robot::motor(STEER_BR)->setD(x/10000.0);
-		Robot::motor(STEER_FR)->setD(x/10000.0);
+		x = SmartDashboard::GetNumber("D Value", 0.01);
+		Robot::motor(STEER_FL)->setD(x);
+		Robot::motor(STEER_BL)->setD(x);
+		Robot::motor(STEER_BR)->setD(x);
+		Robot::motor(STEER_FR)->setD(x);
 
         if(Robot::joystick(0)->getButton(DPAD_NE)){
             Robot::motor(STEER_FL)->CANTalonController->SetEncPosition(0);
@@ -95,9 +99,9 @@ public:
             Robot::motor(STEER_FR)->CANTalonController->SetEncPosition(0);
         }
         SmartDashboard::PutNumber("FL", Robot::motor(STEER_FL)->Get());
-        SmartDashboard::PutNumber("FL", Robot::motor(STEER_BL)->Get());
-        SmartDashboard::PutNumber("FL", Robot::motor(STEER_BR)->Get());
-        SmartDashboard::PutNumber("FL", Robot::motor(STEER_FR)->Get());
+        SmartDashboard::PutNumber("BL", Robot::motor(STEER_BL)->Get());
+        SmartDashboard::PutNumber("BR", Robot::motor(STEER_BR)->Get());
+        SmartDashboard::PutNumber("FR", Robot::motor(STEER_FR)->Get());
 
 /*        tester.setActualPos(10);
         tester.setTicksInRotation(1000);
@@ -187,7 +191,7 @@ public:
             joystick1(0)
             //auto1()
     {
-        setLoopTime(1);
+
     }
 
     void robotInit() {

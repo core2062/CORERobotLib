@@ -96,6 +96,7 @@ void COREMotor::postTeleopTask() {
         m_motorValue = calculate();
         m_motorUpdated = true;
     } else if (m_motorControlMode == CONT_PID) {
+    	setActualPos(CANTalonController->GetEncPosition());
         m_motorValue = calculate();
         m_motorUpdated = true;
         cout << "Actual Pos: " << this->m_actualPosition << endl;
@@ -119,6 +120,7 @@ void COREMotor::postTeleopTask() {
     for (auto motor : m_slaveMotors) {
         motor->Set(m_motorValue);
     }
+
     if(m_motorControllerType == CORE::CANTALON) {
         CANTalonController->Set(m_motorValue);
     }

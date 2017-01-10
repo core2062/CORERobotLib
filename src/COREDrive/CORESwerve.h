@@ -27,7 +27,7 @@ enum portAssignments {
 		    position(0,0),
                     m_driveMotor(driveMotor), m_steerMotor(steerMotor) {
                 m_steerMotor->setControlMode(CONT_PID);
-                m_steerMotor->setTicksInRotation((360 / 1024.0) * (1 / (4 * 4.22)));
+                m_steerMotor->setTicksInRotation(70200);
             }
 
             double getCurrentAngle() {
@@ -68,6 +68,7 @@ enum portAssignments {
                 m_driveMotor->Set(m_setMagnitude * m_setDirection);
                 m_steerMotor->setPos(m_setAngle /*getSetValue(m_setAngle)*/);
                 cout << "Set Angle: " << m_setAngle << endl;
+                cout << "Set Speed: " << m_setMagnitude * m_setDirection << endl;
             }
             int m_setDirection = 1;
             double m_setAngle = 0;
@@ -77,7 +78,7 @@ enum portAssignments {
         private:
             COREMotor* m_driveMotor;
             COREMotor* m_steerMotor;
-            double m_ticksToRotations = (360 / 1024.0) * (1 / (4 * 4.22)); //TODO: This needs to have a getter + setter
+            double m_ticksToRotations = (360/1024.0) * (1 / (4 * 4.22)); //TODO: This needs to have a getter + setter
         };
 
         CORESwerve(double trackWidth, double wheelBase, CORESwerve::SwerveModule& leftFrontModule,

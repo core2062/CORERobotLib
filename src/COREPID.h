@@ -6,6 +6,7 @@
 
 #include "COREHardware/CORETimer.h"
 #include "COREScheduler.h"
+#include "COREMath.h"
 #include "COREHardware/CORESensor.h"
 
 namespace CORE {
@@ -18,7 +19,7 @@ enum PIDType {
 	POS_VEL
 };
 
-class COREPID : public CORETask {
+class COREPID : public CORETask, public COREContinuous {
 public:
 	COREPID(PIDType PIDControllerType, double pProfile1Value, double iProfile1Value, double dProfile1Value, double fProfile1Value = 1, double pProfile2Value = 0, double iProfile2Value = 0, double dProfile2Value = 1, double fProfile2Value = 0, int integralAccuracy = 1);
 	double calculate(int profile = -1);
