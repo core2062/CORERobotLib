@@ -250,14 +250,12 @@ double CORESwerve::getDirection() {
 }
 
 void CORESwerve::postTeleopTask() {
-    cout << m_rot << "rot" << endl;
     double max = 0.0;
     for (auto i : m_modules) {
         if(fabs(m_x+m_y+m_rot)>.2){
             i->m_setDirection = 1;
             double a,b;
             a = m_x + m_rot * i->position.unit().y;
-            std::cout << "Y: " << i->position.y << "  X: " << i->position.x << std::endl;
             b = m_y - m_rot * i->position.unit().x;
             i->m_setMagnitude = sqrt(pow(a, 2) + pow(b, 2));
             double setAngle = arctan(a, b);
