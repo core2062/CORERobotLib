@@ -250,35 +250,25 @@ double CORESwerve::getDirection() {
 }
 
 void CORESwerve::postTeleopTask() {
-    m_y*=-1;
-    m_x*=-1;
-    if(Robot::joystick(0)->getButton(DPAD_NE)){
-            Robot::motor(STEER_FL)->CANTalonController->SetEncPosition(0);
-            Robot::motor(STEER_BL)->CANTalonController->SetEncPosition(0);
-            Robot::motor(STEER_BR)->CANTalonController->SetEncPosition(0);
-            Robot::motor(STEER_FR)->CANTalonController->SetEncPosition(0);
-    }
-
     cout << m_rot << "rot" << endl;
     double max = 0.0;
     for (auto i : m_modules) {
-        if(fabs(m_x + m_y + m_rot) > .2) {
+        if(fabs(m_x+m_y+m_rot)>.2){
             i->m_setDirection = 1;
-            double a = m_x + m_rot * i->position.unit().y;
-            double b = m_y - m_rot * i->position.unit().x;
+            double a,b;
+            a = m_x + m_rot * i->position.unit().y;
+            std::cout << "Y: " << i->position.y << "  X: " << i->position.x << std::endl;
+            b = m_y - m_rot * i->position.unit().x;
             i->m_setMagnitude = sqrt(pow(a, 2) + pow(b, 2));
-            cout << "Y: " << i->position.y << "  X: " << i->position.x << endl;
-            cout << "A: " << a << " B: " << b << endl;
-            double setAngle = i->clamp(toDegrees(atan2(a, b)));
-            if (min(abs(abs(setAngle - i->getCurrentAngle()) - 360), abs(setAngle - i->getCurrentAngle())) < 180) {
+            double setAngle = arctan(a, b);
+            /*if (abs(setAngle - i->getCurrentAngle()) > 180){
                 setAngle = i->clamp(setAngle - 180);
                 i->m_setDirection = -1;
-            }
+            }*/
             i->m_setAngle = setAngle;
             i->m_setMagnitude = i->m_setMagnitude * m_throttle;
-            if(fabs(i->m_setMagnitude) > max) {
+            if(fabs(i->m_setMagnitude) > max)
                 max = fabs(i->m_setMagnitude);
-            }
         }
         //i->update();
     }

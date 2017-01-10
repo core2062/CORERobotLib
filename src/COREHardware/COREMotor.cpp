@@ -8,7 +8,8 @@ using namespace CORE;
 
 COREMotor::COREMotor(int port, controllerType controller, encoderType encoder, controlMode controlMethod) :
         COREPID(m_motorControlMode == VEL_PID ? PIDType::VEL :
-                (m_motorControlMode == POS_PID ? PIDType::POS : PIDType::POS_VEL), 0, 0, 0),
+                (m_motorControlMode == POS_PID ? PIDType::POS :
+                 (m_motorControlMode == CONT_PID ? PIDType::CONT : PIDType::POS_VEL)), 0, 0, 0),
         m_motorControlMode(controlMethod), m_motorControllerType(controller), m_motorPort(port)/*, m_instance(this),
         COREEncoder(CANTalonController, encoder)*/
 {
@@ -50,6 +51,8 @@ void COREMotor::setControlMode(controlMode controlMethod) {
         setType(POS);
     } else if (m_motorControlMode == VEL_PID) {
         setType(VEL);
+    } else if (m_motorControlMode == CONT_PID) {
+        setType(CONT);
     }
 }
 
@@ -87,14 +90,17 @@ void COREMotor::postTeleopTask() {
     //setActualVel(getActualVel());
     if (m_motorControlMode == POS_PID) {
     	setActualPos(CANTalonController->GetEncPosition());
-    	cout << "Actual Pos: " << this->m_actualPosition << endl;
-    	cout << "Set Pos: " << this->m_setPosition << endl;
         m_motorValue = calculate();
-        cout << "Motor Value: " << m_motorValue << endl;
         m_motorUpdated = true;
     } else if (m_motorControlMode == VEL_PID) {
         m_motorValue = calculate();
         m_motorUpdated = true;
+    } else if (m_motorControlMode == CONT_PID) {
+        m_motorValue = calculate();
+        m_motorUpdated = true;
+        cout << "Actual Pos: " << this->m_actualPosition << endl;
+        cout << "Set Pos: " << this->m_setPosition << endl;
+        cout << "Motor Value: " << m_motorValue << endl;
     }
     if (!m_motorUpdated && !m_motorSafetyDisabled) {
         if (m_motorSafetyCounter > 3) {

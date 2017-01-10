@@ -10,7 +10,7 @@ double CORETimer::Get() {
         return std::chrono::duration_cast<std::chrono::duration<double>>(m_stopTime - m_startTime).count();
 	}
     //TODO: Log -> Error, m_timer has not m_started!
-	return -1;
+	return 0;
 }
 void CORETimer::Reset() {
     m_started = false;

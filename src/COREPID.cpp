@@ -43,12 +43,14 @@ COREPID::COREPID(PIDType PIDControllerType, double pProfile1Value, double iProfi
 	m_PID2.D = dProfile2Value;
 	m_PID2.F = fProfile2Value;
 	for(int i = 1; i <= 2; i++) {
-		getProfile(i)->mistake.resize(integralAccuracy);
-		getProfile(i)->mistake[0] = 0;
+		getProfile(i)->riemannSum.resize(integralAccuracy);
+		getProfile(i)->riemannSum[0] = 0;
 		getProfile(i)->lastOutput = 0;
 		getProfile(i)->proportional = 0;
 		getProfile(i)->integral = 0;
 		getProfile(i)->derivative = 0;
+		getProfile(i)->mistake = 0;
+		getProfile(i)->lastMistake = 0;
 	}
 	m_controllerType = PIDControllerType;
 	if(integralAccuracy < 1) {
@@ -67,34 +69,64 @@ COREPID::COREPID(PIDType PIDControllerType, double pProfile1Value, double iProfi
 double COREPID::calculate(int profile) {
 	PIDProfile *currentProfile = getProfile(profile);
 	double sum = 0;
-	for(auto value : currentProfile->mistake) {
+	for(auto value : currentProfile->riemannSum) {
 		sum += value;
 	}
 	double time = m_timer.Get();
+	m_timer.Reset();
+    m_timer.Start();
 	if(time == 0) {
-		currentProfile->output = m_actualPosition;
+		currentProfile->output = 0;
 		return 0;
 	}
 	if(currentProfile->F == 0) {
 		currentProfile->F = 1;
 	}
 	else {
-		m_timer.Reset();
 		if (m_controllerType == POS) {
-			currentProfile->proportional = (m_setPosition - m_actualPosition) * currentProfile->P;
-			currentProfile->mistake.insert(currentProfile->mistake.begin(), currentProfile->proportional);
-			currentProfile->integral += (sum * time) * currentProfile->I; //Technically an approximation of Integral
-			currentProfile->derivative = ((currentProfile->mistake[0] - currentProfile->mistake[1]) / time) * currentProfile->D;
+			currentProfile->mistake = m_setPosition - m_actualPosition;
+			currentProfile->proportional = currentProfile->mistake * currentProfile->P;
+			currentProfile->riemannSum.insert(currentProfile->riemannSum.begin(), currentProfile->proportional*time);
+			double riemann = currentProfile->mistake * time;
+			currentProfile->integral = (riemann + sum) * currentProfile->I;
+			currentProfile->riemannSum.pop_back();
+			currentProfile->riemannSum.insert(currentProfile->riemannSum.begin(), riemann);
+			currentProfile->derivative = ((currentProfile->mistake - currentProfile->lastMistake) / time) * currentProfile->D;
 			currentProfile->output = currentProfile->F * (currentProfile->proportional + currentProfile->integral + currentProfile->derivative);
+			currentProfile->lastMistake = currentProfile->mistake;
 		} else if (m_controllerType == VEL) {
-			currentProfile->proportional = (m_setVelocity - m_actualVelocity) * currentProfile->P;
-			currentProfile->mistake.insert(currentProfile->mistake.begin(), currentProfile->proportional);
-			currentProfile->integral += (sum * time) * currentProfile->I; //Technically an approximation of Integral
-			currentProfile->derivative = ((currentProfile->mistake[0] - currentProfile->mistake[1]) / time) * currentProfile->D;
+			currentProfile->mistake = m_setVelocity - m_setVelocity;
+			currentProfile->proportional = currentProfile->mistake * currentProfile->P;
+			currentProfile->riemannSum.insert(currentProfile->riemannSum.begin(), currentProfile->proportional*time);
+			double riemann = currentProfile->mistake * time;
+			currentProfile->integral = (riemann + sum) * currentProfile->I;
+			currentProfile->riemannSum.pop_back();
+			currentProfile->riemannSum.insert(currentProfile->riemannSum.begin(), riemann);
+			currentProfile->derivative = ((currentProfile->mistake - currentProfile->lastMistake) / time) * currentProfile->D;
 			currentProfile->output = currentProfile->F * (currentProfile->lastOutput + currentProfile->proportional + currentProfile->integral + currentProfile->derivative);
-		}
-		else {
-
+		} else if (m_controllerType == CONT) {
+            currentProfile->mistake = m_setPosition/m_ticksToDegrees - m_actualPosition/m_ticksToDegrees;
+            double revMistake = m_actualPosition/m_ticksToDegrees - m_setPosition/m_ticksToDegrees;
+            if(currentProfile->mistake  >= 360) {
+                currentProfile->mistake  -= 360;
+                cout << "TRIGGERED!!!!" << endl;
+            }
+            if(revMistake >= 360) {
+                revMistake -= 360;
+                cout << "TRIGGERED on rev!!!!" << endl;
+            }
+            if(abs(currentProfile->mistake) > abs(revMistake)) {
+                currentProfile->mistake = revMistake;
+            }
+            currentProfile->proportional = currentProfile->mistake * currentProfile->P;
+            currentProfile->riemannSum.insert(currentProfile->riemannSum.begin(), currentProfile->proportional*time);
+            double riemann = currentProfile->mistake * time;
+            currentProfile->integral = (riemann + sum) * currentProfile->I;
+            currentProfile->riemannSum.pop_back();
+            currentProfile->riemannSum.insert(currentProfile->riemannSum.begin(), riemann);
+            currentProfile->derivative = ((currentProfile->mistake - currentProfile->lastMistake) / time) * currentProfile->D;
+            currentProfile->output = currentProfile->F * (currentProfile->proportional + currentProfile->integral + currentProfile->derivative);
+            currentProfile->lastMistake = currentProfile->mistake;
 		}
 	}
 	currentProfile->lastOutput = currentProfile->output;
@@ -247,4 +279,12 @@ void COREPID::preTeleopTask() {
 
 void COREPID::postTeleopTask() {
 	calculate();
+}
+
+void COREPID::setTicksInRotation(int ticks) {
+    m_ticksToDegrees = 360.0/ticks;
+}
+
+int COREPID::getTicksInRotation() {
+    return m_ticksToDegrees * 360.0;
 }

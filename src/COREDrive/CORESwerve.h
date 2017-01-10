@@ -21,12 +21,13 @@ enum portAssignments {
 
 	class CORESwerve : public CORETask, public COREDrive {
     public:
-        class SwerveModule : public COREContinuous{ //TODO: SwerveModule isn't a COREContinuous, shouldn't inherit from it
+        class SwerveModule : public COREContinuous { //TODO: SwerveModule isn't a COREContinuous, shouldn't inherit from it
         public:
             SwerveModule(COREMotor* driveMotor, COREMotor* steerMotor) :
 		    position(0,0),
                     m_driveMotor(driveMotor), m_steerMotor(steerMotor) {
-                m_steerMotor->setControlMode(POS_PID);
+                m_steerMotor->setControlMode(CONT_PID);
+                m_steerMotor->setTicksInRotation((360 / 1024.0) * (1 / (4 * 4.22)));
             }
 
             double getCurrentAngle() {
@@ -64,8 +65,8 @@ enum portAssignments {
             }*/
 
             void update() {
-                m_driveMotor->Set(m_setMagnitude*m_setDirection);
-                m_steerMotor->setPos(getSetValue(m_setAngle));
+                m_driveMotor->Set(m_setMagnitude * m_setDirection);
+                m_steerMotor->setPos(m_setAngle /*getSetValue(m_setAngle)*/);
                 cout << "Set Angle: " << m_setAngle << endl;
             }
             int m_setDirection = 1;

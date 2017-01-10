@@ -16,7 +16,8 @@ namespace CORE {
         CURRENT,
         POS_PID,
         VEL_PID,
-        POSVELPID
+        CONT_PID,
+        POSVEL_PID
     };
 
     enum controllerType {
@@ -64,6 +65,5 @@ namespace CORE {
         int m_motorSafetyCounter = 0;
         bool m_motorSafetyDisabled = false;
         vector<COREMotor *> m_slaveMotors;
-        shared_ptr<COREMotor> m_instance;
     };
 }

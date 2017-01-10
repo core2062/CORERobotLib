@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-#define PI 3.141592
+#define PI 3.141592653589793
 
 
 namespace CORE {
@@ -13,6 +13,19 @@ namespace CORE {
 
 	inline double toDegrees(double degrees) {
 		return degrees * (180.0 / PI);
+	}
+
+	inline double arctan(double x, double y) {
+		double result = toDegrees(atan2 (y,x));
+		if(x>=0 && y >= 0) {
+			return 90 - result;
+		} else if (x >= 0 && y < 0) {
+			return 90 + -1 * result;
+		} else if (x <= 0 && y < 0) {
+			return 180 + -1 * result;
+		} else {
+			return 450 - result;
+		}
 	}
 
 	class Vector {

@@ -3,11 +3,7 @@
   <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$" />
   <component name="CidrRootsConfiguration">
     <excludeRoots>
-      <file path="$PROJECT_DIR$/cmake-build-arm/CMakeFiles" />
-      <file path="$PROJECT_DIR$/cmake-build-debug/CMakeFiles" />
       <file path="$PROJECT_DIR$/cmake-build-default/CMakeFiles" />
-      <file path="$PROJECT_DIR$/cmake-build-release/CMakeFiles" />
-      <file path="$PROJECT_DIR$/sim" />
     </excludeRoots>
   </component>
 </project>

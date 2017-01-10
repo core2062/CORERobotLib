@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <memory>
+#include <cmath>
 
 #include "COREHardware/CORETimer.h"
 #include "COREScheduler.h"
@@ -13,6 +14,7 @@ class COREAHRS;
 enum PIDType {
 	POS,
 	VEL,
+    CONT,
 	POS_VEL
 };
 
@@ -32,6 +34,8 @@ public:
 	void setI(double value, int profile = -1);
 	void setD(double value, int profile = -1);
 	void setF(double value, int profile = -1);
+    void setTicksInRotation(int ticks);
+    int getTicksInRotation();
 	double getP(int profile = -1);
 	double getI(int profile = -1);
 	double getD(int profile = -1);
@@ -52,13 +56,14 @@ protected:
 		AHRS_INPUT
 	};
 	struct PIDProfile {
-		double P, I, D, F, proportional, integral, derivative, output, lastOutput;
-		std::vector<double> mistake;
+		double P, I, D, F, proportional, integral, derivative, output, lastOutput, mistake, lastMistake;
+		vector<double> riemannSum;
 	} m_PID1, m_PID2;
 	double m_setPosition = 0;
 	double m_setVelocity = 0;
 	double m_actualPosition = 0;
 	double m_actualVelocity = 0;
+    double m_ticksToDegrees = 1;
 	int m_defaultProfile = 1;
 	CORETimer m_timer;
 	std::shared_ptr<COREAHRS> m_inputGyro;
