@@ -105,19 +105,9 @@ double COREPID::calculate(int profile) {
 			currentProfile->derivative = ((currentProfile->mistake - currentProfile->lastMistake) / time) * currentProfile->D;
 			currentProfile->output = currentProfile->F * (currentProfile->lastOutput + currentProfile->proportional + currentProfile->integral + currentProfile->derivative);
 		} else if (m_controllerType == CONT) {
-            currentProfile->mistake = clamp(m_setPosition) - clamp(m_actualPosition/m_ticksToDegrees);
-            double revMistake = clamp(m_actualPosition/m_ticksToDegrees) - clamp(m_setPosition);
+            currentProfile->mistake = (m_setPosition - m_actualPosition * m_ticksToDegrees) - (360 * floor(0.5+(m_setPosition - m_actualPosition * m_ticksToDegrees)/360));
             cout << "Mistake: " << currentProfile->mistake << endl;
-            cout << "Actual Pos: " << clamp(m_actualPosition/m_ticksToDegrees) << endl;
-            if(currentProfile->mistake  >= 360) {
-                currentProfile->mistake  -= 360;
-            }
-            if(revMistake >= 360) {
-                revMistake -= 360;
-            }
-            if(abs(currentProfile->mistake) > abs(revMistake)) {
-                currentProfile->mistake = revMistake;
-            }
+            cout << "Actual Pos: " << clamp(m_actualPosition * m_ticksToDegrees) << endl;
             currentProfile->proportional = currentProfile->mistake * currentProfile->P;
             currentProfile->riemannSum.insert(currentProfile->riemannSum.begin(), currentProfile->proportional*time);
             double riemann = currentProfile->mistake * time;

@@ -34,11 +34,11 @@ public:
                        driveMotorBL(DRIVE_BL), steerMotorBL(STEER_BL),
                        driveMotorBR(DRIVE_BR), steerMotorBR(STEER_BR),
                        driveMotorFR(DRIVE_FR), steerMotorFR(STEER_FR),
-                       /*moduleFL(&driveMotorFL, &steerMotorFL),
+                       moduleFL(&driveMotorFL, &steerMotorFL),
                        moduleBL(&driveMotorBL, &steerMotorBL),
                        moduleBR(&driveMotorBR, &steerMotorBR),
-                       moduleFR(&driveMotorFR, &steerMotorFR) */{
-    	/*swerve = new CORESwerve(21, 31, moduleFL, moduleBL, moduleBR, moduleFR);*/
+                       moduleFR(&driveMotorFR, &steerMotorFR) {
+    	swerve = new CORESwerve(21, 31, moduleFL, moduleBL, moduleBR, moduleFR);
     }
 
     void robotInit() {
@@ -68,16 +68,15 @@ public:
     }
 
     void teleop() {
-/*
+
         //cout << DriverStation::GetInstance().GetBatteryVoltage() << std::endl;
         swerve->cartesian(Robot::joystick(0)->getAxis(LEFT_STICK_X), -1*Robot::joystick(0)->getAxis(LEFT_STICK_Y), Robot::joystick(0)->getAxis(RIGHT_STICK_X), Robot::joystick(0)->getAxis(RIGHT_TRIGGER_AXIS));
-        cout << Robot::joystick(0)->getAxis(LEFT_STICK_X) << endl;
-        */
+        //cout << Robot::joystick(0)->getAxis(LEFT_STICK_X) << endl;
         //swerve->cartesian(0, 1, 0, 1);
 
-        Robot::motor(STEER_FL)->setPos(arctan(Robot::joystick(0)->getAxis(LEFT_STICK_X), -1*Robot::joystick(0)->getAxis(LEFT_STICK_Y)));
-
-        cout << "Actual Pos: " << (Robot::motor(STEER_FL)->CANTalonController->GetEncPosition() / 70200.0) << endl;
+//        Robot::motor(STEER_FL)->setPos(arctan(Robot::joystick(0)->getAxis(LEFT_STICK_X), -1*Robot::joystick(0)->getAxis(LEFT_STICK_Y)));
+//
+//        cout << "Actual Pos: " << (Robot::motor(STEER_FL)->CANTalonController->GetEncPosition() / 70200.0) << endl;
 
 
 
@@ -109,6 +108,9 @@ public:
         SmartDashboard::PutNumber("BL", Robot::motor(STEER_BL)->Get());
         SmartDashboard::PutNumber("BR", Robot::motor(STEER_BR)->Get());
         SmartDashboard::PutNumber("FR", Robot::motor(STEER_FR)->Get());
+
+        SmartDashboard::PutNumber("FL Encoder", Robot::motor(STEER_FL)->CANTalonController->GetEncPosition());
+
 
 /*        tester.setActualPos(10);
         tester.setTicksInRotation(1000);

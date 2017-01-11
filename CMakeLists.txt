@@ -21,7 +21,7 @@ set(SOURCE_FILES main.cpp
         src/CORELog.cpp
         src/COREPID.cpp
         src/CORERobot.cpp
-        src/COREScheduler.cpp src/COREDrive/CORESwerve.cpp src/Fake_WPILib/WPILib.h)
+        src/COREScheduler.cpp src/COREDrive/CORESwerve.cpp src/Fake_WPILib/WPILib.h src/Fake_WPILib/WPILib.h)
 
 add_subdirectory(ARM)
 
