@@ -113,7 +113,7 @@ void COREAuto::autonInit() {
     addNodes();
 }
 
-void COREAuto::putToDashboard(shared_ptr<SendableChooser> chooser) {
+void COREAuto::putToDashboard(shared_ptr<SendableChooser<COREAuto*>> chooser) {
     cout << "Adding Autonomous: " << m_name << " to dashboard" << endl;
     if(m_defaultAuton) {
         chooser->AddDefault(m_name, m_instance.get());

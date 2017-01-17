@@ -255,7 +255,7 @@ void CORESwerve::postTeleopTask() {
         if(fabs(m_x+m_y+m_rot)>.2){
             i->m_setDirection = 1;
             double a,b;
-            a = m_x + m_rot * i->position.unit().y;
+            a = m_x - m_rot * i->position.unit().y;
             b = m_y - m_rot * i->position.unit().x;
             i->m_setMagnitude = sqrt(pow(a, 2) + pow(b, 2));
             double setAngle = arctan(a, b);

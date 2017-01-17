@@ -8,6 +8,7 @@
 #include <WPILib.h>
 
 using namespace std;
+
 namespace CORE {
 class COREAuto;
 class CORESubsystem {
@@ -45,7 +46,7 @@ private:
 	static vector<std::shared_ptr<CORESubsystem>> m_subsystems;
     static vector<shared_ptr<COREAuto>> m_autons;
 	static vector<std::shared_ptr<CORETask>> m_tasks;
-    static shared_ptr<SendableChooser> m_autonChooser;
+    static shared_ptr<SendableChooser<COREAuto*>> m_autonChooser;
     static shared_ptr<COREAuto> m_selectedAuto;
 public:
 	static void addSubsystem(shared_ptr<CORESubsystem> subsystem);

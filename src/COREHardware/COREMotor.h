@@ -46,7 +46,6 @@ namespace CORE {
         controllerType getControllerType();
         void setDeadband(double range);
         void setDeadband(double min, double max);
-        void addSlave(shared_ptr<COREMotor> slaveMotor);
         void motorSafety(bool disableMotorSafety = true);
         void postTeleopTask();
     private:
@@ -64,6 +63,5 @@ namespace CORE {
         int m_motorPort;
         int m_motorSafetyCounter = 0;
         bool m_motorSafetyDisabled = false;
-        vector<COREMotor *> m_slaveMotors;
     };
 }

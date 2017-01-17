@@ -27,12 +27,12 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1484065817487</id>
+			<id>1484590605903</id>
 			<name></name>
 			<type>10</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-navx-mxp</arguments>
+				<arguments>1.0-name-matches-false-false-cmake*</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>

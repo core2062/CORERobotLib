@@ -5,6 +5,7 @@
 
 #include <COREHardware.h>
 #include "COREDrive.h"
+#include "CANTalon.h"
 #include "COREHardware/CORESensor.h"
 
 namespace CORE {
@@ -27,7 +28,7 @@ enum portAssignments {
 		    position(0,0),
                     m_driveMotor(driveMotor), m_steerMotor(steerMotor) {
                 m_steerMotor->setControlMode(CONT_PID);
-                m_steerMotor->setTicksInRotation(70200);
+                m_steerMotor->setTicksInRotation(17210); //70200
             }
 
             double getCurrentAngle() {
@@ -101,6 +102,7 @@ enum portAssignments {
         double getMagnitude();
         double getDirection();
         void postTeleopTask();
+
     protected:
         bool m_forceMode = false;
         double m_wheelbase = 0.0;

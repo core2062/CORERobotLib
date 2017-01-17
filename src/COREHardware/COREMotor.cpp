@@ -9,7 +9,7 @@ using namespace CORE;
 COREMotor::COREMotor(int port, controllerType controller, encoderType encoder, controlMode controlMethod) :
         COREPID(m_motorControlMode == VEL_PID ? PIDType::VEL :
                 (m_motorControlMode == POS_PID ? PIDType::POS :
-                 (m_motorControlMode == CONT_PID ? PIDType::CONT : PIDType::POS_VEL)), 0, 0, 0),
+                 (m_motorControlMode == CONT_PID ? PIDType::CONT : PIDType::POS_VEL)), 0, 0, 0, 0, 0, 0, 0, 5),
         m_motorControlMode(controlMethod), m_motorControllerType(controller), m_motorPort(port)/*, m_instance(this),
         COREEncoder(CANTalonController, encoder)*/
 {
@@ -77,10 +77,6 @@ void COREMotor::setDeadband(double min, double max) {
     m_deadBandMax = max > 1 ? 1 : max;
 }
 
-void COREMotor::addSlave(std::shared_ptr<COREMotor> slaveMotor) {
-    m_slaveMotors.push_back(slaveMotor.get());
-}
-
 void COREMotor::motorSafety(bool disableMotorSafety) {
     m_motorSafetyDisabled = disableMotorSafety;
 }
@@ -117,9 +113,6 @@ void COREMotor::postTeleopTask() {
     }
     m_motorValue = abs(m_motorValue) > 1 ? (m_motorValue > 1 ? 1 : -1) : m_motorValue;
     m_motorValue = (m_motorValue < m_deadBandMax && m_motorValue > m_deadBandMin) ? 0 : m_motorValue;
-    for (auto motor : m_slaveMotors) {
-        motor->Set(m_motorValue);
-    }
 
     if(m_motorControllerType == CORE::CANTALON) {
         CANTalonController->Set(m_motorValue);

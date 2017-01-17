@@ -53,7 +53,7 @@ namespace CORE {
         COREAuto();
         void auton();
         void autonInit();
-        void putToDashboard(shared_ptr<SendableChooser> chooser);
+        void putToDashboard(shared_ptr<SendableChooser<COREAuto*>> chooser);
         bool complete();
     protected:
         void addFirstNode(Node *firstNode);

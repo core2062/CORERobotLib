@@ -6,7 +6,7 @@ namespace CORE {
         virtual void setRotation(double rotation) = 0;
         virtual double getRotation() = 0;
         virtual void setThottle(double throttle) {}
-        virtual double getThrottle() {}
+        virtual double getThrottle() { return 1; }
         virtual void cartesian(double x, double y, double rotation) = 0;
         virtual void cartesian(double x, double y, double rotation, double throttle) {}
         virtual void setX(double x) = 0;

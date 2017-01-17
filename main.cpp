@@ -1,5 +1,7 @@
 #include <iostream>
 #include "CORERobotLib.h"
+#include "WPILib.h"
+
 
 using namespace CORE;
 using namespace std;
@@ -42,7 +44,7 @@ public:
     }
 
     void robotInit() {
-    	SmartDashboard::PutNumber("P Value", 0.00004);
+    	SmartDashboard::PutNumber("P Value", 0.004);
     	SmartDashboard::PutNumber("I Value", 0.00);
     	SmartDashboard::PutNumber("D Value", 0.00);
     	Robot::motor(STEER_FL)->CANTalonController->SetEncPosition(0);
@@ -68,17 +70,7 @@ public:
     }
 
     void teleop() {
-
-        //cout << DriverStation::GetInstance().GetBatteryVoltage() << std::endl;
-        swerve->cartesian(Robot::joystick(0)->getAxis(LEFT_STICK_X), -1*Robot::joystick(0)->getAxis(LEFT_STICK_Y), Robot::joystick(0)->getAxis(RIGHT_STICK_X), Robot::joystick(0)->getAxis(RIGHT_TRIGGER_AXIS));
-        //cout << Robot::joystick(0)->getAxis(LEFT_STICK_X) << endl;
-        //swerve->cartesian(0, 1, 0, 1);
-
-//        Robot::motor(STEER_FL)->setPos(arctan(Robot::joystick(0)->getAxis(LEFT_STICK_X), -1*Robot::joystick(0)->getAxis(LEFT_STICK_Y)));
-//
-//        cout << "Actual Pos: " << (Robot::motor(STEER_FL)->CANTalonController->GetEncPosition() / 70200.0) << endl;
-
-
+        swerve->cartesian(-1*Robot::joystick(0)->getAxis(LEFT_STICK_X), -1*Robot::joystick(0)->getAxis(LEFT_STICK_Y), Robot::joystick(0)->getAxis(RIGHT_STICK_X), Robot::joystick(0)->getAxis(RIGHT_TRIGGER_AXIS));
 
         auto x = SmartDashboard::GetNumber("P Value", 0);
         Robot::motor(STEER_FL)->setP(x);
@@ -104,21 +96,13 @@ public:
             Robot::motor(STEER_BR)->CANTalonController->SetEncPosition(0);
             Robot::motor(STEER_FR)->CANTalonController->SetEncPosition(0);
         }
+
         SmartDashboard::PutNumber("FL", Robot::motor(STEER_FL)->Get());
         SmartDashboard::PutNumber("BL", Robot::motor(STEER_BL)->Get());
         SmartDashboard::PutNumber("BR", Robot::motor(STEER_BR)->Get());
         SmartDashboard::PutNumber("FR", Robot::motor(STEER_FR)->Get());
 
         SmartDashboard::PutNumber("FL Encoder", Robot::motor(STEER_FL)->CANTalonController->GetEncPosition());
-
-
-/*        tester.setActualPos(10);
-        tester.setTicksInRotation(1000);
-        tester.setP(0);
-        tester.setI(0.001);
-        tester.setControlMode(CONT_PID);
-        tester.setPos(90);
-        cout << "Tester = " << tester.Get() << endl;*/
     }
 
     void test() {
@@ -213,7 +197,6 @@ public:
 
     void teleop() {
         cout << "\nNew Iteration: \n" << endl;
-
     }
 };
 

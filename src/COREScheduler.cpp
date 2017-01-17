@@ -27,7 +27,7 @@ bool CORETask::isDisabled()
 vector<shared_ptr<CORESubsystem>> COREScheduler::m_subsystems;
 vector<shared_ptr<COREAuto>> COREScheduler::m_autons;
 vector<shared_ptr<CORETask>> COREScheduler::m_tasks;
-shared_ptr<SendableChooser> COREScheduler::m_autonChooser;
+shared_ptr<SendableChooser<COREAuto*>> COREScheduler::m_autonChooser;
 shared_ptr<COREAuto> COREScheduler::m_selectedAuto;
 
 void COREScheduler::addSubsystem(shared_ptr<CORESubsystem> subsystem) {
@@ -62,8 +62,7 @@ void COREScheduler::robotInit() {
 void COREScheduler::autonInit() {
 	if(!m_autons.empty()) {
 #ifdef __arm__
-		shared_ptr<COREAuto> pointer((COREAuto*) m_autonChooser->GetSelected());
-		m_selectedAuto = pointer;
+		auto m_selectedAuto = m_autonChooser->GetSelected();
 #else
 		m_selectedAuto = m_autons[0];
 		//TODO: Simulated auto switcher

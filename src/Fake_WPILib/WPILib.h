@@ -10,6 +10,8 @@
 #include <unistd.h>
 #endif
 
+#warning Using Fake WPILib
+
 using namespace std;
 
 class CANTalon {
