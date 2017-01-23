@@ -18,7 +18,6 @@ namespace CORE {
 	};
 
 	enum encoderType {
-		NONE,
 		QUAD,
 		SRX_RELATIVE,
 		SRX_ABSOLUTE,

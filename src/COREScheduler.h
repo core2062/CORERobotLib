@@ -5,6 +5,7 @@
 #include <memory>
 #include <iostream>
 #include "COREAuto.h"
+#include "COREHardware.h"
 #include <WPILib.h>
 
 using namespace std;

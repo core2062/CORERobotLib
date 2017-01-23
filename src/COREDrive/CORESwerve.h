@@ -27,8 +27,7 @@ enum portAssignments {
             SwerveModule(COREMotor* driveMotor, COREMotor* steerMotor) :
 		    position(0,0),
                     m_driveMotor(driveMotor), m_steerMotor(steerMotor) {
-                m_steerMotor->setControlMode(CONT_PID);
-                m_steerMotor->setTicksInRotation(17210); //70200
+                //m_steerMotor->setTicksInRotation(17200); //70200
             }
 
             double getCurrentAngle() {
@@ -67,7 +66,7 @@ enum portAssignments {
 
             void update() {
                 m_driveMotor->Set(m_setMagnitude * m_setDirection);
-                m_steerMotor->setPos(m_setAngle /*getSetValue(m_setAngle)*/);
+                //m_steerMotor->setPos(m_setAngle /*getSetValue(m_setAngle)*/);
                 cout << "Set Angle: " << m_setAngle << endl;
                 cout << "Set Speed: " << m_setMagnitude * m_setDirection << endl;
             }

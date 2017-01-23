@@ -165,5 +165,7 @@ sysProps.xml
 *.rc
 /MinGW_Debug/
 /Linux_Debug/
+/cmake-*/
+/linux_simulate/
 *.vcxproj
 *.filters

@@ -51,3 +51,9 @@ void Robot::disableAllMotors() {
 		motor.second->Set(0);
 	}
 }
+
+void Robot::updateMotors() {
+	for(auto motor : m_motorMap) {
+		motor.second->update();
+	}
+}

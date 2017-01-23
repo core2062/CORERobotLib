@@ -1,9 +1,11 @@
 #pragma once
 
 #include <cmath>
+#include <iostream>
 
 #define PI 3.141592653589793
 
+using namespace std;
 
 namespace CORE {
 

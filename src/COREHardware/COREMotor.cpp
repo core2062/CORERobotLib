@@ -1,18 +1,11 @@
 #include "COREMotor.h"
-#include <math.h>
-#include "../COREHardware.h"
 
 using namespace std;
 
 using namespace CORE;
 
-COREMotor::COREMotor(int port, controllerType controller, encoderType encoder, controlMode controlMethod) :
-        COREPID(m_motorControlMode == VEL_PID ? PIDType::VEL :
-                (m_motorControlMode == POS_PID ? PIDType::POS :
-                 (m_motorControlMode == CONT_PID ? PIDType::CONT : PIDType::POS_VEL)), 0, 0, 0, 0, 0, 0, 0, 5),
-        m_motorControlMode(controlMethod), m_motorControllerType(controller), m_motorPort(port)/*, m_instance(this),
-        COREEncoder(CANTalonController, encoder)*/
-{
+COREMotor::COREMotor(int port, controllerType controller, controlMode controlMethod) :
+        m_motorControlMode(controlMethod), m_motorControllerType(controller), m_motorPort(port) {
     if(m_motorControllerType == CORE::CANTALON) {
         CANTalonController = make_shared<CANTalon>(port);
     }
@@ -47,13 +40,6 @@ bool COREMotor::getReversed() {
 
 void COREMotor::setControlMode(controlMode controlMethod) {
     m_motorControlMode = controlMethod;
-    if (m_motorControlMode == POS_PID) {
-        setType(POS);
-    } else if (m_motorControlMode == VEL_PID) {
-        setType(VEL);
-    } else if (m_motorControlMode == CONT_PID) {
-        setType(CONT);
-    }
 }
 
 controlMode COREMotor::getControlMode() {
@@ -81,24 +67,24 @@ void COREMotor::motorSafety(bool disableMotorSafety) {
     m_motorSafetyDisabled = disableMotorSafety;
 }
 
-void COREMotor::postTeleopTask() {
+void COREMotor::update() {
     //setActualPos(getActualPos());
     //setActualVel(getActualVel());
-    if (m_motorControlMode == POS_PID) {
-    	setActualPos(CANTalonController->GetEncPosition());
+/*    if (m_motorControlMode == POS_PID) {
+    	//setActualPos(CANTalonController->GetEncPosition()); //TODO: Fix this
         m_motorValue = calculate();
         m_motorUpdated = true;
     } else if (m_motorControlMode == VEL_PID) {
         m_motorValue = calculate();
         m_motorUpdated = true;
     } else if (m_motorControlMode == CONT_PID) {
-    	setActualPos(CANTalonController->GetEncPosition());
+    	//setActualPos(CANTalonController->GetEncPosition());
         m_motorValue = calculate();
         m_motorUpdated = true;
-        cout << "Actual Pos: " << this->m_actualPosition << endl;
+        cout << "Actual Pos: " << this->m_actualPos << endl;
         cout << "Set Pos: " << this->m_setPosition << endl;
         cout << "Motor Value: " << m_motorValue << endl;
-    }
+    }*/
     if (!m_motorUpdated && !m_motorSafetyDisabled) {
         if (m_motorSafetyCounter > 3) {
             m_motorValue = 0;
@@ -134,6 +120,22 @@ void COREMotor::postTeleopTask() {
     cout << "Trap Port " << getPort() << " Value = " << m_trapSum << endl;
 #endif*/
     m_motorUpdated = false;
+}
+
+double COREMotor::PIDGetPos() {
+    return 0;
+}
+
+double COREMotor::PIDGetVel(){
+    return 0;
+}
+
+double COREMotor::PIDGetAng() {
+    return 0;
+}
+
+void COREMotor::PIDSet(double value) {
+
 }
 
 //COREMotor::COREMotor(int port, bool reversed) : COREEncoder(m_instance, SRX_RELATIVE) {

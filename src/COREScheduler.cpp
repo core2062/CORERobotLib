@@ -109,6 +109,7 @@ void COREScheduler::teleop() {
 		if(!task->isDisabled())
 			task->postTeleopTask();
 	}
+	Robot::updateMotors();
 }
 
 void COREScheduler::teleopEnd() {

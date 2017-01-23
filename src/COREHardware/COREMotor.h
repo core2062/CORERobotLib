@@ -14,10 +14,7 @@ namespace CORE {
         VOLTAGE,
         PERCENTAGE,
         CURRENT,
-        POS_PID,
-        VEL_PID,
-        CONT_PID,
-        POSVEL_PID
+        PID
     };
 
     enum controllerType {
@@ -30,12 +27,12 @@ namespace CORE {
         FORWARD,
         BACKWARD
     };
-    class COREMotor : public COREPID/*, public COREEncoder*/ {
+    class COREMotor : public PIDInput, public PIDOutput /*, public COREEncoder*/ {
     public:
         shared_ptr<CANTalon> CANTalonController;
         shared_ptr<Jaguar> JaguarController;
         shared_ptr<Victor> VictorController;
-        COREMotor(int port, controllerType controller = CANTALON, encoderType encoder = NONE, controlMode controlMethod = VOLTAGE);
+        COREMotor(int port, controllerType controller = CANTALON, controlMode controlMethod = VOLTAGE);
         void Set(double motorSetValue);
         double Get();
         void setReversed(bool reverse = true);
@@ -47,7 +44,11 @@ namespace CORE {
         void setDeadband(double range);
         void setDeadband(double min, double max);
         void motorSafety(bool disableMotorSafety = true);
-        void postTeleopTask();
+        void update();
+        double PIDGetPos() override;
+        double PIDGetVel() override;
+        double PIDGetAng() override;
+        void PIDSet(double value) override;
     private:
         double m_motorValue = 0;
         double m_lastMotorValue = 0;

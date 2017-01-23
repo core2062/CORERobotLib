@@ -10,65 +10,85 @@
 #include "COREHardware/CORESensor.h"
 
 namespace CORE {
-class COREAHRS;
+    class PIDInput {
+    public:
+        virtual double PIDGetPos() { return -1; }
+        virtual double PIDGetVel() { return -1; }
+        virtual double PIDGetAng() { return -1; }
+    };
 
-enum PIDType {
-	POS,
-	VEL,
-    CONT,
-	POS_VEL
-};
+    class PIDOutput {
+    public:
+        virtual void PIDSet(double value) = 0;
+    };
 
-class COREPID : public CORETask, public COREContinuous {
-public:
-	COREPID(PIDType PIDControllerType, double pProfile1Value, double iProfile1Value, double dProfile1Value, double fProfile1Value = 1, double pProfile2Value = 0, double iProfile2Value = 0, double dProfile2Value = 1, double fProfile2Value = 0, int integralAccuracy = 1);
-	double calculate(int profile = -1);
-	void setPos(double setPositionValue);
-	void setVel(double setVelocityValue);
-	double getPos();
-	double getVel();
-	void setActualPos(double actualPositionValue);
-	void setActualVel(double actualVelocityValue);
-	void bindInputDevice(COREAHRS * gyro);
-	void setDefaultProfile(int profile);
-	void setP(double value, int profile = -1);
-	void setI(double value, int profile = -1);
-	void setD(double value, int profile = -1);
-	void setF(double value, int profile = -1);
-    void setTicksInRotation(int ticks);
-    int getTicksInRotation();
-	double getP(int profile = -1);
-	double getI(int profile = -1);
-	double getD(int profile = -1);
-	double getF(int profile = -1);
-	double getOutput(int profile = -1);
-	double getProportional(int profile = -1);
-	double getIntegral(int profile = -1);
-	double getDerivative(int profile = -1);
-	void setType(PIDType type);
-	PIDType getType();
-	void preTeleopTask();
-	void postTeleopTask();
-protected:
-	PIDType m_controllerType;
-	enum inputDeviceType {
-		NO_INPUT,
-		CANTALON_INPUT,
-		AHRS_INPUT
-	};
-	struct PIDProfile {
-		double P, I, D, F, proportional, integral, derivative, output, lastOutput, mistake, lastMistake;
-		vector<double> riemannSum;
-	} m_PID1, m_PID2;
-	double m_setPosition = 0;
-	double m_setVelocity = 0;
-	double m_actualPosition = 0;
-	double m_actualVelocity = 0;
-    double m_ticksToDegrees = 1;
-	int m_defaultProfile = 1;
-	CORETimer m_timer;
-	std::shared_ptr<COREAHRS> m_inputGyro;
-	inputDeviceType m_inputDevice;
-	PIDProfile *getProfile(int profile);
-};
+    enum PIDType {
+        POS,
+        VEL,
+        ANG,
+        POS_VEL,
+        ANG_VEL
+    };
+
+    class COREPID : public CORETask, public COREContinuous {
+    public:
+        COREPID(PIDInput * inputDevice, PIDOutput * outputDevice, PIDType pidType, double pProfile1Value, double iProfile1Value,
+                double dProfile1Value, double fProfile1Value = 1, double pProfile2Value = 0, double iProfile2Value = 0,
+                double dProfile2Value = 1, double fProfile2Value = 0, int integralAccuracy = 1);
+        COREPID(double pProfile1Value, double iProfile1Value,
+                double dProfile1Value, double fProfile1Value = 1, double pProfile2Value = 0, double iProfile2Value = 0,
+                double dProfile2Value = 1, double fProfile2Value = 0, int integralAccuracy = 1);
+        double calculate(int profile = -1);
+        void setPos(double positionSetPoint);
+        void setVel(double velocitySetPoint);
+        void setAng(double angleSetPoint);
+        double getPos();
+        double getVel();
+        double getAng();
+        void setActualPos(double actualPos);
+        void setActualVel(double actualVel);
+        void setActualAng(double actualAng);
+        void setDefaultProfile(int profile);
+        void setP(double value, PIDType pidType, int profile = -1);
+        void setI(double value, PIDType pidType, int profile = -1);
+        void setD(double value, PIDType pidType, int profile = -1);
+        void setF(double value, PIDType pidType, int profile = -1);
+        void setTicksInRotation(int ticks);
+        int getTicksInRotation();
+        double getP(PIDType pidType, int profile = -1);
+        double getI(PIDType pidType, int profile = -1);
+        double getD(PIDType pidType, int profile = -1);
+        double getF(PIDType pidType, int profile = -1);
+        double getOutput(PIDType pidType, int profile = -1);
+        double getProportional(PIDType pidType, int profile = -1);
+        double getIntegral(PIDType pidType, int profile = -1);
+        double getDerivative(PIDType pidType, int profile = -1);
+        void preTeleopTask() override;
+        void postTeleopTask() override;
+    private:
+        struct PIDProfile {
+            struct PIDMode {
+                double P, I, D, F, proportional, integral, derivative, output, lastOutput, mistake, lastMistake;
+                vector<double> riemannSum;
+            } pos, vel, ang;
+        } m_PID1, m_PID2;
+        struct {
+            double setPoint, actual;
+            bool enabled;
+        } m_pos, m_vel, m_ang;
+        PIDProfile * m_currentProfile;
+        double m_ticksToDegrees = 1;
+        double m_time = 0;
+        int m_defaultProfile = 1;
+        CORETimer m_timer;
+        PIDInput * m_inputDevice;
+        PIDOutput * m_outputDevice;
+        PIDProfile::PIDMode * getPIDMode(PIDType pidType, int profile = -1);
+        PIDProfile * getPIDProfile(int profile = -1);
+        PIDType m_PIDTypes[3] = {POS, VEL, ANG};
+        PIDType m_pidType;
+        double posPID(double setPoint);
+        double velPID(double setPoint);
+        double angPID(double setPoint);
+    };
 }

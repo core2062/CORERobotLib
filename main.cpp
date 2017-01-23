@@ -63,16 +63,16 @@ public:
     	Robot::motor(STEER_BL)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
     	Robot::motor(STEER_BR)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
     	Robot::motor(STEER_FR)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
-    	Robot::motor(STEER_FL)->setControlMode(CONT_PID);
+/*    	Robot::motor(STEER_FL)->setControlMode(CONT_PID);
     	Robot::motor(STEER_BL)->setControlMode(CONT_PID);
     	Robot::motor(STEER_BR)->setControlMode(CONT_PID);
-    	Robot::motor(STEER_FR)->setControlMode(CONT_PID);
+    	Robot::motor(STEER_FR)->setControlMode(CONT_PID);*/
     }
 
     void teleop() {
         swerve->cartesian(-1*Robot::joystick(0)->getAxis(LEFT_STICK_X), -1*Robot::joystick(0)->getAxis(LEFT_STICK_Y), Robot::joystick(0)->getAxis(RIGHT_STICK_X), Robot::joystick(0)->getAxis(RIGHT_TRIGGER_AXIS));
 
-        auto x = SmartDashboard::GetNumber("P Value", 0);
+/*        auto x = SmartDashboard::GetNumber("P Value", 0);
         Robot::motor(STEER_FL)->setP(x);
         Robot::motor(STEER_BL)->setP(x);
         Robot::motor(STEER_BR)->setP(x);
@@ -88,7 +88,7 @@ public:
 		Robot::motor(STEER_FL)->setD(x);
 		Robot::motor(STEER_BL)->setD(x);
 		Robot::motor(STEER_BR)->setD(x);
-		Robot::motor(STEER_FR)->setD(x);
+		Robot::motor(STEER_FR)->setD(x);*/
 
         if(Robot::joystick(0)->getButton(DPAD_NE)){
             Robot::motor(STEER_FL)->CANTalonController->SetEncPosition(0);
