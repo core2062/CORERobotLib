@@ -1,4 +1,5 @@
 #include "COREMotor.h"
+#include <COREHardware.h>
 
 using namespace std;
 
@@ -123,19 +124,27 @@ void COREMotor::update() {
 }
 
 double COREMotor::PIDGetPos() {
-    return 0;
+    if(m_motorControllerType == CORE::CANTALON) {
+        return CANTalonController->GetEncPosition();
+    } else {
+        cout << "Error! Motor controller is of type: " << (m_motorControllerType == CORE::JAGUAR ? "Jaguar" : "Victor")
+             << " and has no attached encoder!" << endl;
+        return 0;
+    }
 }
 
-double COREMotor::PIDGetVel(){
-    return 0;
-}
-
-double COREMotor::PIDGetAng() {
-    return 0;
+double COREMotor::PIDGetVel() {
+    if(m_motorControllerType == CORE::CANTALON) {
+        return CANTalonController->GetEncVel();
+    } else {
+        cout << "Error! Motor controller is of type: " << (m_motorControllerType == CORE::JAGUAR ? "Jaguar" : "Victor")
+             << " and has no attached encoder!" << endl;
+        return 0;
+    }
 }
 
 void COREMotor::PIDSet(double value) {
-
+    Set(value);
 }
 
 //COREMotor::COREMotor(int port, bool reversed) : COREEncoder(m_instance, SRX_RELATIVE) {

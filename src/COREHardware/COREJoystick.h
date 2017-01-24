@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <map>
-#include "../COREScheduler.h"
+#include <CORETask.h>
 #include "../COREMath.h"
 
 #include "WPILib.h"

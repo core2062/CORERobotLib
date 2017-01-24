@@ -5,16 +5,42 @@
 #include <cmath>
 
 #include "COREHardware/CORETimer.h"
-#include "COREScheduler.h"
+#include <CORETask.h>
 #include "COREMath.h"
 #include "COREHardware/CORESensor.h"
 
 namespace CORE {
     class PIDInput {
+    private:
+        double m_lastPos = 0;
+        double m_ticksPerDegree = 0;
+        CORETimer * m_timer;
     public:
-        virtual double PIDGetPos() { return -1; }
-        virtual double PIDGetVel() { return -1; }
-        virtual double PIDGetAng() { return -1; }
+        virtual double PIDGetPos() {
+            return 0;
+        }
+        virtual double PIDGetVel() {
+            if(m_timer == nullptr) {
+                m_timer = new CORETimer();
+                return 0;
+            }
+            else {
+                double time = m_timer->Get();
+                m_timer->Reset();
+                m_timer->Start();
+                double currentPos = PIDGetPos();
+                double vel = (currentPos - m_lastPos) / time;
+                m_lastPos = currentPos;
+                return vel;
+            }
+        }
+        virtual double PIDGetAng() {
+            return PIDGetPos() * m_ticksPerDegree;
+        }
+
+        void setTicksPerRotation(double ticks) {
+            m_ticksPerDegree = 360.0/ticks;
+        }
     };
 
     class PIDOutput {

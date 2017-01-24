@@ -422,13 +422,5 @@ void COREPID::preTeleopTask() {
 }
 
 void COREPID::postTeleopTask() {
-	calculate();
-}
-
-void COREPID::setTicksInRotation(int ticks) {
-    m_ticksToDegrees = 360.0/ticks;
-}
-
-int COREPID::getTicksInRotation() {
-    return m_ticksToDegrees * 360.0;
+	m_outputDevice->PIDSet(calculate());
 }

@@ -47,9 +47,16 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
 set(WPILIB_HOME $ENV{HOME}/wpilib/cpp/current)
 set(PROJECT_NAME "ARM_${PROJECT_NAME}")
+if(WIN32)
+    set(CMAKE_C_COMPILER C:/frc/bin/arm-frc-linux-gnueabi-g++)
+    set(CMAKE_CXX_COMPILER C:/frc/bin/arm-frc-linux-gnueabi-g++)
+    set(WPILIB_HOME C:/Users/Andrew/wpilib/cpp/current)
+else()
+    set(CMAKE_C_COMPILER /usr/bin/arm-frc-linux-gnueabi-gcc)
+    set(CMAKE_CXX_COMPILER /usr/bin/arm-frc-linux-gnueabi-g++)
+    set(WPILIB_HOME $ENV{HOME}/wpilib/cpp/current)
+endif()
 
-set(CMAKE_C_COMPILER /usr/bin/arm-frc-linux-gnueabi-gcc)
-set(CMAKE_CXX_COMPILER /usr/bin/arm-frc-linux-gnueabi-g++)
 
 include_directories(${PROJECT_SOURCE_DIR}/3rdparty/CANTalon/include)
 link_directories(${PROJECT_SOURCE_DIR}/3rdparty/CANTalon/lib)

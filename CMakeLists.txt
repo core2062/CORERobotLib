@@ -49,8 +49,8 @@ set(${PROJECT_NAME} ARM_${PROJECT_NAME})
 set(CMAKE_C_COMPILER gcc)
 set(CMAKE_CXX_COMPILER g++)
 
-include_directories(${PROJECT_SOURCE_DIR}/3rdparty/CANTalon/include)
-include_directories(${PROJECT_SOURCE_DIR}/3rdparty/NavX/include)
+#include_directories(${PROJECT_SOURCE_DIR}/3rdparty/CANTalon/include)
+#include_directories(${PROJECT_SOURCE_DIR}/3rdparty/NavX/include)
 
 include_directories(${PROJECT_SOURCE_DIR}/src/Fake_WPILib)
 include_directories(${WPILIB_HOME}/include)

@@ -3,11 +3,12 @@
 #include <vector>
 #include <memory>
 
-#include "../COREScheduler.h"
-#include "../COREPID.h"
+#include <CORETask.h>
+#include <COREPID.h>
 #include "COREEncoder.h"
 
 #include <WPILib.h>
+#include <CANTalon.h>
 
 namespace CORE {
     enum controlMode {
@@ -47,7 +48,6 @@ namespace CORE {
         void update();
         double PIDGetPos() override;
         double PIDGetVel() override;
-        double PIDGetAng() override;
         void PIDSet(double value) override;
     private:
         double m_motorValue = 0;

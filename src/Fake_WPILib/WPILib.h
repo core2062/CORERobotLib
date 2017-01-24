@@ -14,18 +14,6 @@
 
 using namespace std;
 
-class CANTalon {
-public:
-    enum FeedbackDevice {
-        CtreMagEncoder_Relative
-    };
-    CANTalon(int _) {}
-    inline float Set(float _) {}
-    inline int GetEncPosition() { return -1; }
-    inline void SetEncPosition(int _) {}
-    inline void SetFeedbackDevice(FeedbackDevice _) {}
-};
-
 class Victor {
 public:
     Victor(int _) {}
@@ -50,6 +38,7 @@ class SampleRobot {
 
 };
 
+template <class T>
 class SendableChooser {
 public:
     virtual ~SendableChooser() = default;
@@ -61,7 +50,7 @@ public:
 class SmartDashboard {
 public:
     static inline void init() {}
-    static inline void PutData(string key, SendableChooser *data) {}
+    //static inline void PutData(string key, SendableChooser *data) {}
     //static inline void PutData(NamedSendable *value) {}
     static inline void PutBoolean(string keyName, bool value) {}
     static inline bool GetBoolean(string keyName, bool defaultValue) {}
