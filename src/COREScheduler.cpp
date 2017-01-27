@@ -60,6 +60,11 @@ void COREScheduler::robotInit() {
 }
 
 void COREScheduler::autonInit() {
+	for(auto task : m_tasks) {
+        if (!task->isDisabled()) {
+            task->autonInitTask();
+        }
+	}
 	if(!m_autons.empty()) {
 #ifdef __arm__
 		auto m_selectedAuto = m_autonChooser->GetSelected();
@@ -121,6 +126,16 @@ void COREScheduler::teleopEnd() {
 		subsystem->teleopEnd();
 	}
 	//TODO: Log -> TeleopEnd Complete
+}
+
+void COREScheduler::disabled() {
+	for(auto task : m_tasks) {
+		if (!task->isDisabled())
+			task->disabledTask();
+		}
+	for(auto subsystem : m_subsystems) {
+		subsystem->disabled();
+	}
 }
 
 void COREScheduler::test() {

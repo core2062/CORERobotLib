@@ -32,7 +32,7 @@ void CORERobot::RobotInit() {
 }
 
 void CORERobot::Disabled() {
-    //TODO: Do something here
+    COREScheduler::disabled();
 }
 
 void CORERobot::Autonomous() {

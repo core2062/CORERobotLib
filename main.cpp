@@ -19,7 +19,7 @@ enum portAssignments {
 };
 */
 
-class DriveSubsystem : public CORESubsystem/*, public CORESwerve*/ {
+class DriveSubsystem : public CORESubsystem {
 private:
     COREMotor driveMotorFL;
     COREMotor steerMotorFL;

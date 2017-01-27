@@ -22,6 +22,9 @@ public:
 	virtual void teleopEnd() {
 		//TODO: Log -> Teleop end not implemented for: NAME
 	}
+    virtual void disabled() {
+
+    }
 	virtual void test() {
 
 	}
@@ -45,6 +48,7 @@ public:
 	static void teleopInit();
 	static void teleop();
 	static void teleopEnd();
+	static void disabled();
 	static void test();
 };
 }
