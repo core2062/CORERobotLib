@@ -29,7 +29,7 @@ set(SOURCE_FILES main.cpp
 include_directories(src/Fake_WPILib)
 include_directories(src)
 remove_definitions(__arm__)
-add_executable(${PROJECT_NAME} ${SOURCE_FILES})]]
+add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})]]
 
 cmake_minimum_required(VERSION 2.8)
 
@@ -49,8 +49,8 @@ set(${PROJECT_NAME} ARM_${PROJECT_NAME})
 set(CMAKE_C_COMPILER gcc)
 set(CMAKE_CXX_COMPILER g++)
 
-#include_directories(${PROJECT_SOURCE_DIR}/3rdparty/CANTalon/include)
-#include_directories(${PROJECT_SOURCE_DIR}/3rdparty/NavX/include)
+include_directories(${PROJECT_SOURCE_DIR}/3rdparty/CANTalon/include)
+include_directories(${PROJECT_SOURCE_DIR}/3rdparty/NavX/include)
 
 include_directories(${PROJECT_SOURCE_DIR}/src/Fake_WPILib)
 include_directories(${WPILIB_HOME}/include)
@@ -71,7 +71,8 @@ set(SOURCE_FILES main.cpp
         src/COREPID.cpp
         src/CORERobot.cpp
         src/COREScheduler.cpp
-        src/COREDrive/CORESwerve.cpp)
+        src/COREDrive/CORESwerve.cpp
+        src/COREDashboard.cpp)
 
 # Deploy target
 
