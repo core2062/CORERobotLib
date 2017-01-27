@@ -9,6 +9,7 @@
 
 #include "WPILib.h"
 
+/*
 using namespace std;
 namespace CORE {
 class CORELog : public CORETask {
@@ -22,4 +23,4 @@ public:
 	void postTeleopTask();
 
 };
-}
+}*/

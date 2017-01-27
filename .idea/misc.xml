@@ -7,8 +7,10 @@
     </libraryRoots>
     <excludeRoots>
       <file path="$PROJECT_DIR$/Debug" />
+      <file path="$PROJECT_DIR$/build/CMakeFiles" />
       <file path="$PROJECT_DIR$/cmake-build-default" />
       <file path="$PROJECT_DIR$/cmake-build-default/CMakeFiles" />
+      <file path="$PROJECT_DIR$/lib/CMakeFiles" />
       <file path="$PROJECT_DIR$/linux_simulate" />
     </excludeRoots>
   </component>
