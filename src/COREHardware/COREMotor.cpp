@@ -68,6 +68,15 @@ void COREMotor::motorSafety(bool disableMotorSafety) {
     m_motorSafetyDisabled = disableMotorSafety;
 }
 
+double COREMotor::getCurrent() {
+    if(m_motorControllerType == CORE::CANTALON) {
+        return CANTalonController->GetOutputCurrent();
+    } else {
+        //TODO: Throw error
+        return 0;
+    }
+}
+
 void COREMotor::update() {
     //setActualPos(getActualPos());
     //setActualVel(getActualVel());

@@ -45,6 +45,7 @@ namespace CORE {
         void setDeadband(double range);
         void setDeadband(double min, double max);
         void motorSafety(bool disableMotorSafety = true);
+        double getCurrent();
         void update();
         double PIDGetPos() override;
         double PIDGetVel() override;
