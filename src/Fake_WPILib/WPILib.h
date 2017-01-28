@@ -92,3 +92,19 @@ public:
     inline DigitalInput(uint32_t channel) {}
     inline bool Get() {return false;}
 };
+
+class DriverStation {
+public:
+    enum Alliance {
+        kRed,
+        kBlue,
+        kInvalid
+    };
+    static inline DriverStation &GetInstance() {
+        static DriverStation instance;
+        return instance;
+    }
+    bool IsFMSAttached() { return false; }
+    Alliance GetAlliance() { return Alliance::kInvalid; }
+    int GetLocation() { return 0; }
+};

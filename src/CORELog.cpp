@@ -56,20 +56,23 @@ CORELog::CORELog(string fileName) {
 }*/
 
 void CORELog::logInfo(string message) {
-    m_file << "[INFO - " << getRobotMode() << "] - " << round(m_matchTimer.Get() * 1000.0 ) / 1000.0 << " "
+    m_file << "[INFO - " << getRobotMode() << "] - " << round(m_matchTimer.Get() * 1000.0) / 1000.0 << " "
            << message << "\n";
+    cout << "INFO: " << message << "\n";
 }
 
 //[INFO - TELEOP] - matchtime
 
 void CORELog::logWarning(string message) {
-    m_file << "[WARN - " << getRobotMode() << "] - " << round(m_matchTimer.Get() * 1000.0 ) / 1000.0 << " "
+    m_file << "[WARN - " << getRobotMode() << "] - " << round(m_matchTimer.Get() * 1000.0) / 1000.0 << " "
            << message << "\n";
+    cout << "WARNING: " << message << "\n";
 }
 
 void CORELog::logError(string message) {
-    m_file << "[ERROR - " << getRobotMode() << "] - " << round(m_matchTimer.Get() * 1000.0 ) / 1000.0 << " "
+    m_file << "[ERROR - " << getRobotMode() << "] - " << round(m_matchTimer.Get() * 1000.0) / 1000.0 << " "
            << message << "\n";
+    cout << "ERROR" << message << "\n";
 }
 
 void CORELog::updateLog() {

@@ -176,7 +176,7 @@ private:
 
 class offSeasonRobot : public CORERobot {
 public:
-    shared_ptr<DriveSubsystem> driveSubsystem;
+    DriveSubsystem driveSubsystem;
     COREJoystick joystick1;
     //driveForwardAuto auto1;
     offSeasonRobot():
