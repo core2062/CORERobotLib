@@ -3,9 +3,11 @@
 using namespace CORE;
 using namespace std;
 
-CORESubsystem::CORESubsystem() {
+CORESubsystem::CORESubsystem(string name) {
+    m_name = name;
     shared_ptr<CORESubsystem> pointer(this);
 	COREScheduler::addSubsystem(pointer);
+
 }
 
 CORETask::CORETask():
@@ -25,10 +27,10 @@ bool CORETask::isDisabled()
 }
 
 vector<shared_ptr<CORESubsystem>> COREScheduler::m_subsystems;
-vector<shared_ptr<COREAuto>> COREScheduler::m_autons;
+vector<shared_ptr<COREAuton>> COREScheduler::m_autons;
 vector<shared_ptr<CORETask>> COREScheduler::m_tasks;
-shared_ptr<SendableChooser<COREAuto*>> COREScheduler::m_autonChooser;
-shared_ptr<COREAuto> COREScheduler::m_selectedAuto;
+shared_ptr<SendableChooser<COREAuton*>> COREScheduler::m_autonChooser;
+shared_ptr<COREAuton> COREScheduler::m_selectedAuto;
 
 void COREScheduler::addSubsystem(shared_ptr<CORESubsystem> subsystem) {
 	m_subsystems.push_back(subsystem);
@@ -36,7 +38,7 @@ void COREScheduler::addSubsystem(shared_ptr<CORESubsystem> subsystem) {
 	//TODO: Log -> SUBSYSTEMNAME added
 }
 
-void COREScheduler::addAuton(shared_ptr<COREAuto> auton) {
+void COREScheduler::addAuton(shared_ptr<COREAuton> auton) {
     m_autons.push_back(auton);
     cout << "Auton Added" << endl;
     //TODO: Log -> AUTONNAME added
@@ -114,7 +116,7 @@ void COREScheduler::teleop() {
 		if(!task->isDisabled())
 			task->postTeleopTask();
 	}
-	Robot::updateMotors();
+//	Robot::updateMotors();
 }
 
 void COREScheduler::teleopEnd() {

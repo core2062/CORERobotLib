@@ -1,3 +1,4 @@
+/*
 #include "COREHardware.h"
 
 using namespace CORE;
@@ -57,3 +58,4 @@ void Robot::updateMotors() {
 		motor.second->update();
 	}
 }
+*/

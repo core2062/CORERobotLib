@@ -6,7 +6,7 @@ using namespace CORE;
 COREJoystick::COREJoystick(int port) :
         m_joystick(port),
         m_joystickPort(port) {
-    Robot::addJoystick(this);
+//    Robot::addJoystick(this);
 }
 
 void COREJoystick::registerAxis(JoystickAxis axis) {

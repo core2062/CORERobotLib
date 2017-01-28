@@ -1,22 +1,22 @@
-#include "COREAuto.h"
+#include "COREAuton.h"
 
 using namespace CORE;
 
-Node::Node(COREAutoAction *action1, COREAutoAction *action2, COREAutoAction *action3):
+Node::Node(COREAutonAction *action1, COREAutonAction *action2, COREAutonAction *action3):
 m_children(), m_actions() {
-    shared_ptr<COREAutoAction> pointer(action1);
+    shared_ptr<COREAutonAction> pointer(action1);
     m_actions.push_back(pointer);
     if(action2 != nullptr) {
-        shared_ptr<COREAutoAction> pointer(action2);
+        shared_ptr<COREAutonAction> pointer(action2);
         m_actions.push_back(pointer);
     } else if (action3 != nullptr) {
-        shared_ptr<COREAutoAction> pointer(action3);
+        shared_ptr<COREAutonAction> pointer(action3);
         m_actions.push_back(pointer);
     }
 }
 
-Node::Node(shared_ptr<COREAutoAction> action1, shared_ptr<COREAutoAction> action2,
-        shared_ptr<COREAutoAction> action3) : m_children(), m_actions() {
+Node::Node(shared_ptr<COREAutonAction> action1, shared_ptr<COREAutonAction> action2,
+        shared_ptr<COREAutonAction> action3) : m_children(), m_actions() {
     m_actions.push_back(action1);
     if(action2 != nullptr) {
         m_actions.push_back(action2);
@@ -34,12 +34,12 @@ void Node::addNext(shared_ptr<Node> childNode) {
     m_children.push_back(childNode);
 }
 
-void Node::addAction(COREAutoAction *leaf) {
-    shared_ptr<COREAutoAction> pointer(leaf);
+void Node::addAction(COREAutonAction *leaf) {
+    shared_ptr<COREAutonAction> pointer(leaf);
     m_actions.push_back(pointer);
 }
 
-void Node::addAction(shared_ptr<COREAutoAction> leaf) {
+void Node::addAction(shared_ptr<COREAutonAction> leaf) {
     m_actions.push_back(leaf);
 }
 
@@ -97,23 +97,26 @@ void Node::act(bool lastNodeDone) {
     }
 }
 
-COREAuto::COREAuto() {
-    shared_ptr<COREAuto> pointer(this);
+COREAuton::COREAuton(string name, Node * firstNode, bool defaultAuton) {
+    m_name = name;
+    m_defaultAuton = defaultAuton;
+    m_firstNode.push_back(firstNode);
+    shared_ptr<COREAuton> pointer(this);
     m_instance = pointer;
     COREScheduler::addAuton(m_instance);
 }
 
-void COREAuto::auton() {
+void COREAuton::auton() {
     for (auto node : m_firstNode) {
         node->act(true);
     }
 }
 
-void COREAuto::autonInit() {
+void COREAuton::autonInit() {
     addNodes();
 }
 
-void COREAuto::putToDashboard(shared_ptr<SendableChooser<COREAuto*>> chooser) {
+void COREAuton::putToDashboard(shared_ptr<SendableChooser<COREAuton*>> chooser) {
     cout << "Adding Autonomous: " << m_name << " to dashboard" << endl;
     if(m_defaultAuton) {
         chooser->AddDefault(m_name, m_instance.get());
@@ -123,7 +126,7 @@ void COREAuto::putToDashboard(shared_ptr<SendableChooser<COREAuto*>> chooser) {
     }
 }
 
-bool COREAuto::complete() {
+bool COREAuton::complete() {
     bool nodesComplete = true;
     for(auto node : m_firstNode) {
         nodesComplete = node->complete();
@@ -131,14 +134,6 @@ bool COREAuto::complete() {
     return nodesComplete;
 }
 
-void COREAuto::addFirstNode(Node *firstNode) {
+void COREAuton::addFirstNode(Node * firstNode) {
     m_firstNode.push_back(firstNode);
-}
-
-void COREAuto::setName(string name) {
-    m_name = name;
-}
-
-void COREAuto::setDefault(bool defaultAuton) {
-    m_defaultAuton =  defaultAuton;
 }

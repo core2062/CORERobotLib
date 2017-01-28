@@ -20,7 +20,7 @@ include_directories(${PROJECT_SOURCE_DIR})
 # find src -iname "*.cpp"
 # in project root
 set(SOURCE_FILES ${PROJECT_SOURCE_DIR}/main.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREAuto.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREAuton.cpp
         ${PROJECT_SOURCE_DIR}/src/COREDrive.cpp
         ${PROJECT_SOURCE_DIR}/src/COREHardware/COREEncoder.cpp
         ${PROJECT_SOURCE_DIR}/src/COREHardware/COREJoystick.cpp
@@ -32,7 +32,8 @@ set(SOURCE_FILES ${PROJECT_SOURCE_DIR}/main.cpp
         ${PROJECT_SOURCE_DIR}/src/COREPID.cpp
         ${PROJECT_SOURCE_DIR}/src/CORERobot.cpp
         ${PROJECT_SOURCE_DIR}/src/COREScheduler.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREDrive/CORESwerve.cpp ../src/COREDashboard.cpp ../src/COREDashboard.h)
+        ${PROJECT_SOURCE_DIR}/src/COREDrive/CORESwerve.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREDashboard.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 

@@ -11,7 +11,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -g")
 # find src -iname "*.cpp"
 # in project root
 set(SOURCE_FILES main.cpp
-        src/COREAuto.cpp
+        src/COREAuton.cpp
         src/COREDrive.cpp
         src/COREHardware/COREEncoder.cpp
         src/COREHardware/COREJoystick.cpp
@@ -59,7 +59,7 @@ include_directories(${PROJECT_SOURCE_DIR}/src/Fake_WPILib)
 # find src -iname "*.cpp"
 # in project root
 set(SOURCE_FILES main.cpp
-        src/COREAuto.cpp
+        src/COREAuton.cpp
         src/COREDrive.cpp
         src/COREHardware/COREEncoder.cpp
         src/COREHardware/COREJoystick.cpp

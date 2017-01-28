@@ -2,7 +2,7 @@
 
 using namespace CORE;
 
-CORERobot::CORERobot() {
+CORERobot::CORERobot() : CORESubsystem("Robot") {
 
 }
 

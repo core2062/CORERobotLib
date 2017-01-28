@@ -19,7 +19,7 @@ COREMotor::COREMotor(int port, controllerType controller, controlMode controlMet
     else {
         //TODO: Throw error
     }
-    Robot::addMotor(this);
+//    Robot::addMotor(this);
 }
 
 void COREMotor::Set(double motorSetValue) {

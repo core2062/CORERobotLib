@@ -6,7 +6,6 @@
 using namespace CORE;
 using namespace std;
 
-/*
 enum portAssignments {
     STEER_FL = 11,
     DRIVE_FL = 10,
@@ -17,7 +16,6 @@ enum portAssignments {
     STEER_FR = 17,
     DRIVE_FR = 16
 };
-*/
 
 class DriveSubsystem : public CORESubsystem {
 private:
@@ -29,13 +27,16 @@ private:
     COREMotor steerMotorBR;
     COREMotor driveMotorFR;
     COREMotor steerMotorFR;
+    COREJoystick joystick1;
     CORESwerve::SwerveModule moduleFL, moduleBL, moduleBR, moduleFR;
     CORESwerve* swerve;
 public:
-    DriveSubsystem() : driveMotorFL(DRIVE_FL), steerMotorFL(STEER_FL),
+    DriveSubsystem() : CORESubsystem("Drive Subsystem"),
+                       driveMotorFL(DRIVE_FL), steerMotorFL(STEER_FL),
                        driveMotorBL(DRIVE_BL), steerMotorBL(STEER_BL),
                        driveMotorBR(DRIVE_BR), steerMotorBR(STEER_BR),
                        driveMotorFR(DRIVE_FR), steerMotorFR(STEER_FR),
+                       joystick1(0),
                        moduleFL(&driveMotorFL, &steerMotorFL),
                        moduleBL(&driveMotorBL, &steerMotorBL),
                        moduleBR(&driveMotorBR, &steerMotorBR),
@@ -47,22 +48,22 @@ public:
     	SmartDashboard::PutNumber("P Value", 0.004);
     	SmartDashboard::PutNumber("I Value", 0.00);
     	SmartDashboard::PutNumber("D Value", 0.00);
-    	Robot::motor(STEER_FL)->CANTalonController->SetEncPosition(0);
-    	Robot::motor(STEER_BL)->CANTalonController->SetEncPosition(0);
-    	Robot::motor(STEER_BR)->CANTalonController->SetEncPosition(0);
-    	Robot::motor(STEER_FR)->CANTalonController->SetEncPosition(0);
-    	Robot::motor(STEER_BL)->setReversed();
-    	Robot::motor(STEER_BR)->setReversed();
+        steerMotorFL.CANTalonController->SetEncPosition(0);
+        steerMotorBL.CANTalonController->SetEncPosition(0);
+        steerMotorBR.CANTalonController->SetEncPosition(0);
+        steerMotorFR.CANTalonController->SetEncPosition(0);
+        steerMotorBL.setReversed();
+        steerMotorBR.setReversed();
     	//Robot::motor(DRIVE_BL)->setReversed();
     	//Robot::motor(DRIVE_BR)->setReversed();
     	//Robot::motor(DRIVE_FR)->setReversed();
     }
 
     void teleopInit() {
-    	Robot::motor(STEER_FL)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
-    	Robot::motor(STEER_BL)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
-    	Robot::motor(STEER_BR)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
-    	Robot::motor(STEER_FR)->CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
+    	steerMotorFL.CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
+    	steerMotorBL.CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
+    	steerMotorBR.CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
+    	steerMotorFR.CANTalonController->SetFeedbackDevice(CANTalon::FeedbackDevice::CtreMagEncoder_Relative);
 /*    	Robot::motor(STEER_FL)->setControlMode(CONT_PID);
     	Robot::motor(STEER_BL)->setControlMode(CONT_PID);
     	Robot::motor(STEER_BR)->setControlMode(CONT_PID);
@@ -70,7 +71,7 @@ public:
     }
 
     void teleop() {
-        swerve->cartesian(-1 * Robot::joystick(0)->getAxis(LEFT_STICK_X), -1 * Robot::joystick(0)->getAxis(LEFT_STICK_Y), Robot::joystick(0)->getAxis(RIGHT_STICK_X), Robot::joystick(0)->getAxis(RIGHT_TRIGGER_AXIS));
+        swerve->cartesian(-1 * joystick1.getAxis(LEFT_STICK_X), -1 * joystick1.getAxis(LEFT_STICK_Y), joystick1.getAxis(RIGHT_STICK_X), joystick1.getAxis(RIGHT_TRIGGER_AXIS));
 
 /*        auto x = SmartDashboard::GetNumber("P Value", 0);
         Robot::motor(STEER_FL)->setP(x);
@@ -87,22 +88,22 @@ public:
 		x = SmartDashboard::GetNumber("D Value", 0);
 		Robot::motor(STEER_FL)->setD(x);
 		Robot::motor(STEER_BL)->setD(x);
-		Robot::motor(STEER_BR)->setD(x);
+		Robot::`motor(STEER_BR)->setD(x);
 		Robot::motor(STEER_FR)->setD(x);*/
 
-        if(Robot::joystick(0)->getButton(DPAD_NE)){
-            Robot::motor(STEER_FL)->CANTalonController->SetEncPosition(0);
-            Robot::motor(STEER_BL)->CANTalonController->SetEncPosition(0);
-            Robot::motor(STEER_BR)->CANTalonController->SetEncPosition(0);
-            Robot::motor(STEER_FR)->CANTalonController->SetEncPosition(0);
+        if(joystick1.getButton(DPAD_NE)){
+            steerMotorFL.CANTalonController->SetEncPosition(0);
+            steerMotorBL.CANTalonController->SetEncPosition(0);
+            steerMotorBR.CANTalonController->SetEncPosition(0);
+            steerMotorFR.CANTalonController->SetEncPosition(0);
         }
 
-        SmartDashboard::PutNumber("FL", Robot::motor(STEER_FL)->Get());
-        SmartDashboard::PutNumber("BL", Robot::motor(STEER_BL)->Get());
-        SmartDashboard::PutNumber("BR", Robot::motor(STEER_BR)->Get());
-        SmartDashboard::PutNumber("FR", Robot::motor(STEER_FR)->Get());
+        SmartDashboard::PutNumber("FL", steerMotorFL.Get());
+        SmartDashboard::PutNumber("BL", steerMotorBL.Get());
+        SmartDashboard::PutNumber("BR", steerMotorBR.Get());
+        SmartDashboard::PutNumber("FR", steerMotorFR.Get());
 
-        SmartDashboard::PutNumber("FL Encoder", Robot::motor(STEER_FL)->CANTalonController->GetEncPosition());
+        SmartDashboard::PutNumber("FL Encoder", steerMotorFL.CANTalonController->GetEncPosition());
     }
 
     void test() {
@@ -110,7 +111,7 @@ public:
     }
 };
 
-class arm : public COREAutoAction {
+class arm : public COREAutonAction {
 public:
     actionStatus action() {
         cout << "Arm!: " << count << endl;
@@ -127,7 +128,7 @@ private:
     int count = 0;
 };
 
-class wheels : public COREAutoAction {
+class wheels : public COREAutonAction {
 public:
     actionStatus action() {
         cout << "Wheels!: " << count << endl;
@@ -144,17 +145,14 @@ private:
     int count = 0;
 };
 
-class driveForwardAuto : public COREAuto {
+class driveForwardAuto : public COREAuton {
 public:
-    driveForwardAuto() :
-            m_moveForwardAndPutArmDown(new arm(), new wheels()), m_intakeBall(new arm()),
-            m_moveBackToStart(new wheels()), m_visionAlign(new wheels()), m_shootBall(new arm()) {
-        setName("Ta Da!");
-        setDefault(true);
+    driveForwardAuto() : COREAuton("Ta Da!", &m_moveForwardAndPutArmDown),
+                         m_moveForwardAndPutArmDown(new arm(), new wheels()), m_intakeBall(new arm()),
+                         m_moveBackToStart(new wheels()), m_visionAlign(new wheels()), m_shootBall(new arm()) {
     }
 
     void addNodes() {
-        addFirstNode(&m_moveForwardAndPutArmDown);
         m_moveForwardAndPutArmDown.addNext(&m_intakeBall);
         m_intakeBall.addNext(&m_moveBackToStart);
         m_moveBackToStart.addCondition(ballIntaked);
@@ -177,11 +175,9 @@ private:
 class offSeasonRobot : public CORERobot {
 public:
     DriveSubsystem driveSubsystem;
-    COREJoystick joystick1;
     //driveForwardAuto auto1;
     offSeasonRobot():
-            driveSubsystem(),
-            joystick1(0)
+            driveSubsystem()
             //auto1()
     {
 

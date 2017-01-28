@@ -6,6 +6,6 @@
 #include "src/COREScheduler.h"
 #include "src/COREHardware.h"
 #include "src/CORERobot.h"
-#include "src/COREAuto.h"
+#include "src/COREAuton.h"
 #include "src/COREDrive.h"
 #include "src/COREDrive/CORESwerve.h"

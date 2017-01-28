@@ -9,17 +9,6 @@
 #include "COREHardware/CORESensor.h"
 
 namespace CORE {
-enum portAssignments {
-    STEER_FL = 11,
-    DRIVE_FL = 10,
-    STEER_BL = 14,
-    DRIVE_BL = 13,
-    STEER_BR = 12,
-    DRIVE_BR = 15,
-    STEER_FR = 17,
-    DRIVE_FR = 16
-};
-
 	class CORESwerve : public CORETask, public COREDrive {
     public:
         class SwerveModule : public COREContinuous { //TODO: SwerveModule isn't a COREContinuous, shouldn't inherit from it
