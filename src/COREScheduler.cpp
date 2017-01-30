@@ -50,6 +50,7 @@ void COREScheduler::addTask(shared_ptr<CORETask> task) {
 
 void COREScheduler::robotInit() {
     CORELog::robotInit();
+    COREConstantsManager::robotInit();
 	for(auto subsystem : m_subsystems) {
 		subsystem->robotInit();
 	}

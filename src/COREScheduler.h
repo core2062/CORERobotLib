@@ -6,6 +6,7 @@
 #include <iostream>
 #include "COREAuton.h"
 #include "COREHardware.h"
+#include "COREConstant.h"
 #include <WPILib.h>
 #include "CORETask.h"
 #include "CORELog.h"
