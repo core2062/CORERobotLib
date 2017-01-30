@@ -66,7 +66,6 @@ set(SOURCE_FILES main.cpp
         src/COREHardware/COREMotor.cpp
         src/COREHardware/CORETimer.cpp
         src/COREHardware/CORESensor.cpp
-        src/COREHardware.cpp
         src/CORELog.cpp
         src/COREPID.cpp
         src/CORERobot.cpp
