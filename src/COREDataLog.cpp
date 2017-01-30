@@ -1,6 +1,7 @@
 #include "COREDataLog.h"
 
 
+/*
 CORE::COREDataLog::COREDataLog(string name) {
     m_name = name;
 }
@@ -44,3 +45,4 @@ void CORE::COREDataLog::setDefaultString(string value) {
 void CORE::COREDataLog::setDefaultBoolean(bool value) {
     m_defaultBoolean = value;
 }
+*/
