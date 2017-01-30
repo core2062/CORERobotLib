@@ -2,6 +2,10 @@
 
 using namespace CORE;
 
+ofstream CORELog::m_file;
+string CORELog::m_fileName;
+robotMode CORELog::m_robotMode;
+CORETimer CORELog::m_matchTimer;
 
 void CORELog::writeLastDuration() {
     logInfo(getRobotMode() + " lasted " + to_string(m_matchTimer.Get()) + " seconds");
@@ -21,34 +25,6 @@ string CORELog::getRobotMode() {
             break;
     }
     return robotModeName;
-}
-
-CORELog::CORELog(string fileName) {
-    m_robotMode = DISABLED;
-    time_t currentTime = time(0);
-    struct tm * now = localtime(& currentTime);
-    m_fileName = "";
-    if(DriverStation::GetInstance().IsFMSAttached()) {
-        string alliance;
-        switch(DriverStation::GetInstance().GetAlliance()) {
-            case DriverStation::Alliance::kRed:
-                alliance = "Red";
-                break;
-            case DriverStation::Alliance::kBlue:
-                alliance = "Blue";
-                break;
-            default:
-                alliance = "Unknown";
-                break;
-        }
-        m_fileName = alliance + " Alliance - Station "
-                     + to_string(DriverStation::GetInstance().GetLocation()) + " - ";
-        //Red Alliance - Station 1 - MM-DD--H-MN
-    }
-    m_fileName += to_string(now->tm_mon) + "--" + to_string(now->tm_mday) + "-" + to_string(now->tm_hour)
-                  + "-" + to_string(now->tm_min);
-    m_file.open(m_fileName);
-
 }
 
 /*void CORELog::logData(string message) {
@@ -83,28 +59,52 @@ string CORELog::getName() {
     return std::string();
 }
 
-void CORELog::robotInitTask() {
+void CORELog::robotInit() {
+    m_robotMode = DISABLED;
+    time_t currentTime = time(0);
+    struct tm * now = localtime(& currentTime);
+    m_fileName = "";
+    if(DriverStation::GetInstance().IsFMSAttached()) {
+        string alliance;
+        switch(DriverStation::GetInstance().GetAlliance()) {
+            case DriverStation::Alliance::kRed:
+                alliance = "Red";
+                break;
+            case DriverStation::Alliance::kBlue:
+                alliance = "Blue";
+                break;
+            default:
+                alliance = "Unknown";
+                break;
+        }
+        m_fileName = alliance + " Alliance - Station "
+                     + to_string(DriverStation::GetInstance().GetLocation()) + " - ";
+        //Red Alliance - Station 1 - MM-DD--H-MN
+    }
+    m_fileName += to_string(now->tm_mon) + "--" + to_string(now->tm_mday) + "-" + to_string(now->tm_hour)
+                  + "-" + to_string(now->tm_min);
+    m_file.open(m_fileName);
     writeLastDuration();
     m_robotMode = DISABLED;
     m_matchTimer.Reset();
     m_matchTimer.Start();
 }
 
-void CORELog::autonInitTask() {
+void CORELog::autonInit() {
     writeLastDuration();
     m_robotMode = AUTON;
     m_matchTimer.Reset();
     m_matchTimer.Start();
 }
 
-void CORELog::teleopInitTask() {
+void CORELog::teleopInit() {
     writeLastDuration();
     m_robotMode = TELEOP;
     m_matchTimer.Reset();
     m_matchTimer.Start();
 }
 
-void CORELog::disabledTask() {
+void CORELog::disabled() {
     writeLastDuration();
     m_robotMode = DISABLED;
     m_matchTimer.Reset();

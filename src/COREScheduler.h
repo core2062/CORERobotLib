@@ -8,6 +8,7 @@
 #include "COREHardware.h"
 #include <WPILib.h>
 #include "CORETask.h"
+#include "CORELog.h"
 
 using namespace std;
 

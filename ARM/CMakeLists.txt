@@ -33,7 +33,7 @@ set(SOURCE_FILES ${PROJECT_SOURCE_DIR}/main.cpp
         ${PROJECT_SOURCE_DIR}/src/CORERobot.cpp
         ${PROJECT_SOURCE_DIR}/src/COREScheduler.cpp
         ${PROJECT_SOURCE_DIR}/src/COREDrive/CORESwerve.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREDashboard.cpp)
+        ${PROJECT_SOURCE_DIR}/src/COREDataLog.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 

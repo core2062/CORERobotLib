@@ -5,9 +5,9 @@
 using namespace std;
 
 namespace CORE {
-    class COREDashboard {
+    class COREDataLog {
     public:
-        COREDashboard(string name);
+        COREDataLog(string name);
         void putNumber(double value);
         double getNumber();
         void putString(string value);

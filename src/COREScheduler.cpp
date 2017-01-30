@@ -49,6 +49,7 @@ void COREScheduler::addTask(shared_ptr<CORETask> task) {
 }
 
 void COREScheduler::robotInit() {
+    CORELog::robotInit();
 	for(auto subsystem : m_subsystems) {
 		subsystem->robotInit();
 	}
@@ -62,6 +63,7 @@ void COREScheduler::robotInit() {
 }
 
 void COREScheduler::autonInit() {
+    CORELog::autonInit();
 	for(auto task : m_tasks) {
         if (!task->isDisabled()) {
             task->autonInitTask();
@@ -94,6 +96,7 @@ bool COREScheduler::auton() {
 }
 
 void COREScheduler::teleopInit() {
+    CORELog::teleopInit();
 	for(auto subsystem : m_subsystems) {
 		subsystem->teleopInit();
 	}
@@ -131,6 +134,7 @@ void COREScheduler::teleopEnd() {
 }
 
 void COREScheduler::disabled() {
+    CORELog::disabled();
 	for(auto task : m_tasks) {
 		if (!task->isDisabled())
 			task->disabledTask();

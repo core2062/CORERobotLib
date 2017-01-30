@@ -72,7 +72,7 @@ set(SOURCE_FILES main.cpp
         src/CORERobot.cpp
         src/COREScheduler.cpp
         src/COREDrive/CORESwerve.cpp
-        src/COREDashboard.cpp)
+        src/COREDataLog.cpp)
 
 # Deploy target
 
