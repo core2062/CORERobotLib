@@ -1,24 +1,38 @@
 #pragma once
 
+#include "CORETask.h"
+#include "CORELog.h"
+#include "COREMath.h"
+
 namespace CORE {
-    class COREDrive {
+    class COREDrive : public CORETask {
     public:
-        virtual void setRotation(double rotation) = 0;
-        virtual double getRotation() = 0;
-        virtual void setThottle(double throttle) {}
-        virtual double getThrottle() { return 1; }
-        virtual void cartesian(double x, double y, double rotation) = 0;
-        virtual void cartesian(double x, double y, double rotation, double throttle) {}
-        virtual void setX(double x) = 0;
-        virtual void setY(double y) = 0;
-        virtual double getX() = 0;
-        virtual double getY() = 0;
-        virtual void polar(double magnitude, double direction, double rotation) = 0;
-        virtual void polar(double magnitude, double direction, double rotation, double throttle) {}
-        virtual void setMagnitude(double magnitude) = 0;
-        virtual void setDirection(double direction) = 0;
-        virtual double getMagnitude() = 0;
-        virtual double getDirection() = 0;
+        COREDrive();
+        virtual void setRotation(double rotation);
+        virtual double getRotation();
+        virtual void setThottle(double throttle);
+        virtual double getThrottle();
+        virtual void cartesian(double x, double y, double rotation);
+        virtual void cartesian(double x, double y, double rotation, double throttle);
+        virtual void setX(double x);
+        virtual void setY(double y);
+        virtual double getX();
+        virtual double getY();
+        virtual void polar(double magnitude, double direction, double rotation);
+        virtual void polar(double magnitude, double direction, double rotation, double throttle);
+        virtual void setMagnitude(double magnitude);
+        virtual void setDirection(double direction);
+        virtual double getMagnitude();
+        virtual double getDirection();
+        void preTeleopTask() override;
+        void postTeleopTask() override;
+    protected:
+        virtual void update() = 0;
+        double m_direction, m_x, m_y;
+    private:
+        double m_rot, m_mag, m_throttle;
+        bool m_useThrottle, m_useCartesian, m_usePolar, m_useMag, m_useDirection;
+
     };
 }
 
@@ -36,12 +50,4 @@ private:
 
 public:
     MecanumDrive();
-};
-
-class AetherDrive {
-private:
-
-public:
-    AetherDrive();
-
 };

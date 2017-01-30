@@ -9,7 +9,7 @@
 #include "COREHardware/CORESensor.h"
 
 namespace CORE {
-	class CORESwerve : public CORETask, public COREDrive {
+	class CORESwerve : public COREDrive {
     public:
         class SwerveModule : public COREContinuous { //TODO: SwerveModule isn't a COREContinuous, shouldn't inherit from it
         public:
@@ -89,9 +89,9 @@ namespace CORE {
         void setDirection(double direction);
         double getMagnitude();
         double getDirection();
-        void postTeleopTask();
 
     protected:
+        void update();
         bool m_forceMode = false;
         double m_wheelbase = 0.0;
         double m_trackwidth = 0.0;
