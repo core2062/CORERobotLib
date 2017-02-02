@@ -13,7 +13,7 @@ double etherR(double fwd, double rcw, double a, double b){
 void COREEtherDrive::update() {
     if (drive_mag>0){
         if (drive_rot>=0){
-            left = etherL(drive_mag * (robot.joystick.button(DRIVE_MAG_SPEED))? 1: .5, drive_rot, a, b * (robot.joystick.button(DRIVE_ROT_SPEED)?2:1));
+            left = etherL(drive_mag * (robot.joystick.button(DRIVE_MAG_SPEED))? 1 : .5, drive_rot, a, b * (robot.joystick.button(DRIVE_ROT_SPEED)?2:1));
             right = etherR(drive_mag * (robot.joystick.button(DRIVE_MAG_SPEED))?1:.5, drive_rot, a, b * (robot.joystick.button(DRIVE_ROT_SPEED)?2:1));
         } else{
             left = etherR(drive_mag * (robot.joystick.button(DRIVE_MAG_SPEED))?1:.5, -drive_rot, a, b * (robot.joystick.button(DRIVE_ROT_SPEED)?2:1));
