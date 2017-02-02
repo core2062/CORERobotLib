@@ -9,3 +9,4 @@
 #include "src/COREAuton.h"
 #include "src/COREDrive.h"
 #include "src/COREDrive/CORESwerve.h"
+#include "src/COREConstant.h"

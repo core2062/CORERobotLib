@@ -28,6 +28,7 @@ private:
     COREMotor driveMotorFR;
     COREMotor steerMotorFR;
     COREJoystick joystick1;
+    COREConstant<string> testing;
     CORESwerve::SwerveModule moduleFL, moduleBL, moduleBR, moduleFR;
     CORESwerve* swerve;
 public:
@@ -37,6 +38,7 @@ public:
                        driveMotorBR(DRIVE_BR), steerMotorBR(STEER_BR),
                        driveMotorFR(DRIVE_FR), steerMotorFR(STEER_FR),
                        joystick1(0),
+					   testing("Test", "Test Value"),
                        moduleFL(&driveMotorFL, &steerMotorFL),
                        moduleBL(&driveMotorBL, &steerMotorBL),
                        moduleBR(&driveMotorBR, &steerMotorBR),
@@ -147,7 +149,7 @@ private:
 
 class driveForwardAuto : public COREAuton {
 public:
-    driveForwardAuto() : COREAuton("Ta Da!", &m_moveForwardAndPutArmDown),
+    driveForwardAuto() : COREAuton("Ta Da!", &m_moveForwardAndPutArmDown, false),
                          m_moveForwardAndPutArmDown(new arm(), new wheels()), m_intakeBall(new arm()),
                          m_moveBackToStart(new wheels()), m_visionAlign(new wheels()), m_shootBall(new arm()) {
     }
@@ -175,10 +177,10 @@ private:
 class offSeasonRobot : public CORERobot {
 public:
     DriveSubsystem driveSubsystem;
-    //driveForwardAuto auto1;
+    driveForwardAuto auto1;
     offSeasonRobot():
-            driveSubsystem()
-            //auto1()
+            driveSubsystem(),
+            auto1()
     {
 
     }
