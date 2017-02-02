@@ -6,6 +6,7 @@
 #include <memory>
 #include <ctime>
 #include <fstream>
+#include <cmath>
 #include "COREHardware/CORETimer.h"
 
 #include "WPILib.h"
@@ -19,7 +20,6 @@ namespace CORE {
     };
 class CORELog {
 public:
-//	static void logData(string message);
 	static void logInfo(string message);
 	static void logWarning(string message);
 	static void logError(string message);
@@ -33,6 +33,7 @@ private:
     static void writeLastDuration();
     static string getRobotMode();
     static ofstream m_file;
+    static vector<string> m_fileCache;
     static string m_fileName;
     static robotMode m_robotMode;
 	static CORETimer m_matchTimer;

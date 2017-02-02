@@ -6,11 +6,11 @@
 #include <string>
 #include <memory>
 #include <iostream>
-#include "COREHardware/CORETimer.h"
-#include "COREScheduler.h"
-//#include "CORERobot.h"
 
 #include "WPILib.h"
+#include "COREHardware/CORETimer.h"
+#include "COREScheduler.h"
+#include "CORELog.h"
 
 using namespace std;
 namespace CORE {
@@ -61,7 +61,6 @@ namespace CORE {
     private:
         string m_name;
         bool m_defaultAuton = false;
-        vector<Node *> m_firstNode;
-        shared_ptr<COREAuton> m_instance;
+        vector<Node*> m_firstNode;
     };
 }

@@ -23,7 +23,7 @@ namespace CORE {
     private:
         bool m_loopStarted = false;
         CORETimer m_loopTimer;
-        double m_targetLoopTime = 0.1;
+        double m_targetLoopTime = 0.01;
     public:
         CORERobot();
         void waitLoopTime();

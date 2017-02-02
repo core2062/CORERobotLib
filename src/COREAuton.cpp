@@ -101,9 +101,7 @@ COREAuton::COREAuton(string name, Node * firstNode, bool defaultAuton) {
     m_name = name;
     m_defaultAuton = defaultAuton;
     m_firstNode.push_back(firstNode);
-    shared_ptr<COREAuton> pointer(this);
-    m_instance = pointer;
-    COREScheduler::addAuton(m_instance);
+    COREScheduler::addAuton(this);
 }
 
 void COREAuton::auton() {
@@ -117,12 +115,12 @@ void COREAuton::autonInit() {
 }
 
 void COREAuton::putToDashboard(shared_ptr<SendableChooser<COREAuton*>> chooser) {
-    cout << "Adding Autonomous: " << m_name << " to dashboard" << endl;
+    CORELog::logInfo("Adding Autonomous: " + m_name + " to dashboard");
     if(m_defaultAuton) {
-        chooser->AddDefault(m_name, m_instance.get());
+        chooser->AddDefault(m_name, this);
     }
     else {
-        chooser->AddObject(m_name, m_instance.get());
+        chooser->AddObject(m_name, this);
     }
 }
 

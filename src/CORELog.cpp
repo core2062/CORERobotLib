@@ -4,6 +4,7 @@ using namespace CORE;
 
 ofstream CORELog::m_file;
 string CORELog::m_fileName;
+vector<string> CORELog::m_fileCache;
 robotMode CORELog::m_robotMode;
 CORETimer CORELog::m_matchTimer;
 
@@ -27,32 +28,35 @@ string CORELog::getRobotMode() {
     return robotModeName;
 }
 
-/*void CORELog::logData(string message) {
-
-}*/
 
 void CORELog::logInfo(string message) {
-    m_file << "[INFO - " << getRobotMode() << "] - " << round(m_matchTimer.Get() * 1000.0) / 1000.0 << " "
-           << message << "\n";
+    m_fileCache.push_back("[INFO - " + getRobotMode() + "] - " + to_string(round(m_matchTimer.Get() * 1000.0) / 1000.0)
+                          + " " + message + "\n");
     cout << "INFO: " << message << "\n";
 }
 
-//[INFO - TELEOP] - matchtime
-
 void CORELog::logWarning(string message) {
-    m_file << "[WARN - " << getRobotMode() << "] - " << round(m_matchTimer.Get() * 1000.0) / 1000.0 << " "
-           << message << "\n";
+    m_fileCache.push_back("[WARNING - " + getRobotMode() + "] - " + to_string(round(m_matchTimer.Get() * 1000.0) / 1000.0)
+                          + " " + message + "\n");
     cout << "WARNING: " << message << "\n";
 }
 
 void CORELog::logError(string message) {
-    m_file << "[ERROR - " << getRobotMode() << "] - " << round(m_matchTimer.Get() * 1000.0) / 1000.0 << " "
-           << message << "\n";
-    cout << "ERROR" << message << "\n";
+    m_fileCache.push_back("[ERROR - " + getRobotMode() + "] - " + to_string(round(m_matchTimer.Get() * 1000.0) / 1000.0)
+                          + " " + message + "\n");
+    cout << "ERROR: " << message << "\n";
 }
 
 void CORELog::updateLog() {
-
+    CORETimer duration;
+    duration.Reset();
+    duration.Start();
+	for(auto text : m_fileCache) {
+		m_file << text;
+	}
+	m_file.close();
+	m_file.open(m_fileName);
+    logInfo("Writing to log took: " + to_string(duration.Get()));
 }
 
 string CORELog::getName() {
@@ -63,7 +67,7 @@ void CORELog::robotInit() {
     m_robotMode = DISABLED;
     time_t currentTime = time(0);
     struct tm * now = localtime(& currentTime);
-    m_fileName = "";
+    m_fileName = "/home/lvuser/CORELogs/";
     if(DriverStation::GetInstance().IsFMSAttached()) {
         string alliance;
         switch(DriverStation::GetInstance().GetAlliance()) {
@@ -79,12 +83,12 @@ void CORELog::robotInit() {
         }
         m_fileName = alliance + " Alliance - Station "
                      + to_string(DriverStation::GetInstance().GetLocation()) + " - ";
-        //Red Alliance - Station 1 - MM-DD--H-MN
     }
-    m_fileName += to_string(now->tm_mon) + "--" + to_string(now->tm_mday) + "-" + to_string(now->tm_hour)
-                  + "-" + to_string(now->tm_min);
+    m_fileName += to_string(now->tm_mon) + "-" + to_string(now->tm_mday) + "--" + to_string(now->tm_hour)
+                  + "-" + to_string(now->tm_min)+".txt";
     m_file.open(m_fileName);
-    writeLastDuration();
+    cout << "INFO: Log file written to: /home/lvuser/CORELogs/" << m_fileName << endl;
+    m_fileCache.clear();
     m_robotMode = DISABLED;
     m_matchTimer.Reset();
     m_matchTimer.Start();
@@ -109,4 +113,5 @@ void CORELog::disabled() {
     m_robotMode = DISABLED;
     m_matchTimer.Reset();
     m_matchTimer.Start();
+    updateLog();
 }

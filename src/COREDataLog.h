@@ -1,6 +1,7 @@
 #pragma once
 
 #include "WPILib.h"
+#include <vector>
 
 using namespace std;
 

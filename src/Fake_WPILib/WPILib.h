@@ -104,7 +104,23 @@ public:
         static DriverStation instance;
         return instance;
     }
-    bool IsFMSAttached() { return false; }
-    Alliance GetAlliance() { return Alliance::kInvalid; }
-    int GetLocation() { return 0; }
+    inline bool IsFMSAttached() { return false; }
+    inline Alliance GetAlliance() { return Alliance::kInvalid; }
+    inline int GetLocation() { return 0; }
+};
+
+class Preferences {
+public:
+    static inline Preferences &GetInstance() {
+        static Preferences instance;
+        return instance;
+    }
+    inline void PutDouble(string, string) {}
+    inline void PutString(string, string) {}
+    inline void PutBoolean(string, string) {}
+    inline void PutInt(string, string) {}
+    inline double GetDouble(string) { return 0; }
+    inline string GetString(string) { return "null"; }
+    inline bool GetBoolean(string) { return false; }
+    inline int GetInt(string) { return 0; }
 };

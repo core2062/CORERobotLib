@@ -27,7 +27,7 @@ bool CORETask::isDisabled()
 }
 
 vector<shared_ptr<CORESubsystem>> COREScheduler::m_subsystems;
-vector<shared_ptr<COREAuton>> COREScheduler::m_autons;
+vector<COREAuton*> COREScheduler::m_autons;
 vector<shared_ptr<CORETask>> COREScheduler::m_tasks;
 shared_ptr<SendableChooser<COREAuton*>> COREScheduler::m_autonChooser;
 shared_ptr<COREAuton> COREScheduler::m_selectedAuto;
@@ -38,7 +38,7 @@ void COREScheduler::addSubsystem(shared_ptr<CORESubsystem> subsystem) {
 	//TODO: Log -> SUBSYSTEMNAME added
 }
 
-void COREScheduler::addAuton(shared_ptr<COREAuton> auton) {
+void COREScheduler::addAuton(COREAuton * auton) {
     m_autons.push_back(auton);
     cout << "Auton Added" << endl;
     //TODO: Log -> AUTONNAME added
@@ -57,9 +57,11 @@ void COREScheduler::robotInit() {
 	for(auto task : m_tasks) {
 		task->robotInitTask();
 	}
+	m_autonChooser = make_shared<SendableChooser<COREAuton*>>();
     for(auto auton : m_autons) {
         auton->putToDashboard(m_autonChooser);
     }
+    SmartDashboard::PutData("Auto Mode", m_autonChooser.get());
     //TODO: Log -> RobotInit Complete
 }
 
@@ -98,6 +100,7 @@ bool COREScheduler::auton() {
 
 void COREScheduler::teleopInit() {
     CORELog::teleopInit();
+    COREConstantsManager::updateConstants();
 	for(auto subsystem : m_subsystems) {
 		subsystem->teleopInit();
 	}
