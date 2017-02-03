@@ -5,7 +5,7 @@
 #include <memory>
 #include <iostream>
 
-#include "WPILib.h"
+#include <WPILib.h>
 #include "COREAuton.h"
 #include "COREHardware.h"
 #include "COREConstant.h"

@@ -7,7 +7,7 @@
 #include <memory>
 #include <iostream>
 
-#include "WPILib.h"
+#include <WPILib.h>
 #include "COREHardware/CORETimer.h"
 #include "COREScheduler.h"
 #include "CORELog.h"

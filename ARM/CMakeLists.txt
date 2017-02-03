@@ -1,10 +1,22 @@
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+set(CMAKE_SYSTEM_NAME Linux)
 
-set(WPILIB_HOME $ENV{HOME}/wpilib/cpp/current)
+if(WIN32)
+    set(WPILIB_HOME C:/Users/Andrew/wpilib/cpp/current)
+    #TODO: This needs to be changed to work for everyone
+else()
+    set(WPILIB_HOME $ENV{HOME}/wpilib/cpp/current)
+endif()
+
 set(PROJECT_NAME "ARM_${PROJECT_NAME}")
 
-set(CMAKE_C_COMPILER /usr/bin/arm-frc-linux-gnueabi-gcc)
-set(CMAKE_CXX_COMPILER /usr/bin/arm-frc-linux-gnueabi-g++)
+if(WIN32)
+    set(CMAKE_C_COMPILER C:/frc/bin/arm-frc-linux-gnueabi-gcc)
+    set(CMAKE_CXX_COMPILER C:/frc/bin/arm-frc-linux-gnueabi-g++)
+else()
+    set(CMAKE_C_COMPILER /usr/bin/arm-frc-linux-gnueabi-gcc)
+    set(CMAKE_CXX_COMPILER /usr/bin/arm-frc-linux-gnueabi-g++)
+endif()
 
 include_directories(${PROJECT_SOURCE_DIR}/3rdparty/CANTalon/include)
 link_directories(${PROJECT_SOURCE_DIR}/3rdparty/CANTalon/lib)
@@ -33,7 +45,8 @@ set(SOURCE_FILES ${PROJECT_SOURCE_DIR}/main.cpp
         ${PROJECT_SOURCE_DIR}/src/COREScheduler.cpp
         ${PROJECT_SOURCE_DIR}/src/COREDrive/CORESwerve.cpp
         ${PROJECT_SOURCE_DIR}/src/COREDataLog.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREConstant.cpp ../src/CORECSVWriter.cpp ../src/CORECSVWriter.h)
+        ${PROJECT_SOURCE_DIR}/src/COREConstant.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREDrive/COREEtherDrive.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 

@@ -5,7 +5,7 @@
 #include <CORETask.h>
 #include "../COREMath.h"
 
-#include "WPILib.h"
+#include <WPILib.h>
 
 using namespace std;
 using namespace CORE;

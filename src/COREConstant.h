@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "CORELog.h"
-#include "WPILib.h"
+#include <WPILib.h>
 
 using namespace std;
 

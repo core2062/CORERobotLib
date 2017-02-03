@@ -73,7 +73,8 @@ public:
     }
 
     void teleop() {
-        swerve->cartesian(-1 * joystick1.getAxis(LEFT_STICK_X), -1 * joystick1.getAxis(LEFT_STICK_Y), joystick1.getAxis(RIGHT_STICK_X), joystick1.getAxis(RIGHT_TRIGGER_AXIS));
+        swerve->cartesian(-1 * joystick1.getAxis(LEFT_STICK_X), -1 * joystick1.getAxis(LEFT_STICK_Y),
+                          joystick1.getAxis(RIGHT_STICK_X), joystick1.getAxis(RIGHT_TRIGGER_AXIS));
 
 /*        auto x = SmartDashboard::GetNumber("P Value", 0);
         Robot::motor(STEER_FL)->setP(x);
