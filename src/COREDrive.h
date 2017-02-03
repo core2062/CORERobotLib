@@ -28,9 +28,9 @@ namespace CORE {
         void postTeleopTask() override;
     protected:
         virtual void update() = 0;
-        double m_direction, m_x, m_y;
+        double m_direction, m_x, m_y, m_rot;
     private:
-        double m_rot, m_mag, m_throttle;
+        double /*m_rot, */m_mag, m_throttle;
         bool m_useThrottle, m_useCartesian, m_usePolar, m_useMag, m_useDirection;
 
     };
