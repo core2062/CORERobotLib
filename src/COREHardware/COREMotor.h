@@ -28,7 +28,7 @@ namespace CORE {
         FORWARD,
         BACKWARD
     };
-    class COREMotor : public PIDInput, public PIDOutput /*, public COREEncoder*/ {
+    class COREMotor : public PIDInput, public PIDOutput {
     public:
         shared_ptr<CANTalon> CANTalonController;
         shared_ptr<Jaguar> JaguarController;

@@ -46,7 +46,7 @@ set(SOURCE_FILES ${PROJECT_SOURCE_DIR}/main.cpp
         ${PROJECT_SOURCE_DIR}/src/COREDrive/CORESwerve.cpp
         ${PROJECT_SOURCE_DIR}/src/COREDataLog.cpp
         ${PROJECT_SOURCE_DIR}/src/COREConstant.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREDrive/COREEtherDrive.cpp)
+        ${PROJECT_SOURCE_DIR}/src/COREDrive/COREEtherDrive.cpp ../src/COREHardware.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 

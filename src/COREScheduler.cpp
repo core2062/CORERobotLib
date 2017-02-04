@@ -40,7 +40,6 @@ void COREScheduler::addSubsystem(shared_ptr<CORESubsystem> subsystem) {
 void COREScheduler::addAuton(COREAuton * auton) {
     m_autons.push_back(auton);
     CORELog::logInfo(auton->getName() + " Auton Added");
-    //TODO: Log -> AUTONNAME added
 }
 
 void COREScheduler::addTask(shared_ptr<CORETask> task) {
@@ -96,6 +95,7 @@ bool COREScheduler::auton() {
 		for(auto task : m_tasks) {
 			if(!task->isDisabled())
 				task->postLoopTask();
+            COREHardwareManager::updateMotors();
 		}
 		return m_selectedAuto->complete();
 	}
@@ -130,7 +130,7 @@ void COREScheduler::teleop() {
 		if(!task->isDisabled())
 			task->postLoopTask();
 	}
-//	Robot::updateMotors();
+    COREHardwareManager::updateMotors();
 }
 
 void COREScheduler::teleopEnd() {
