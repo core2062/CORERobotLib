@@ -3,7 +3,8 @@
 #include <vector>
 #include <map>
 #include <CORETask.h>
-#include "../COREMath.h"
+#include <CORELog.h>
+#include <COREMath.h>
 
 #include <WPILib.h>
 
@@ -11,49 +12,49 @@ using namespace std;
 using namespace CORE;
 
 namespace CORE {
-    enum JoystickAxis {
-        LEFT_STICK_X = 0,
-        LEFT_STICK_Y = 1,
-        RIGHT_STICK_X=4,
-        RIGHT_STICK_Y=5,
-        RIGHT_TRIGGER_AXIS=3,
-        LEFT_TRIGGER_AXIS = 2
-    };
-    enum JoystickButton {
-        DPAD_N,
-        DPAD_NE,
-        DPAD_E,
-        DPAD_SE,
-        DPAD_S,
-        DPAD_SW,
-        DPAD_W,
-        DPAD_NW,
-        LEFT_STICK,
-        RIGHT_STICK,
-        BACK_BUTTON,
-        LOGO_BUTTON,
-        START_BUTTON,
-        Y_BUTTON,
-        B_BUTTON,
-        A_BUTTON,
-        X_BUTTON,
-        LEFT_BUTTON,
-        RIGHT_BUTTON,
-        LEFT_TRIGGER,
-        RIGHT_TRIGGER
-    };
-    enum ButtonState {
-        PRESSED,
-        ACTIVE,
-        RELEASED,
-        NORMAL
-    };
-    enum JoystickType {
-        F310
-    };
-
     class COREJoystick : public CORETask {
     public:
+        enum JoystickAxis {
+            LEFT_STICK_X = 0,
+            LEFT_STICK_Y = 1,
+            RIGHT_STICK_X=4,
+            RIGHT_STICK_Y=5,
+            RIGHT_TRIGGER_AXIS=3,
+            LEFT_TRIGGER_AXIS = 2
+        };
+        enum JoystickButton {
+            DPAD_N,
+            DPAD_NE,
+            DPAD_E,
+            DPAD_SE,
+            DPAD_S,
+            DPAD_SW,
+            DPAD_W,
+            DPAD_NW,
+            LEFT_STICK=9,
+            RIGHT_STICK=10,
+            BACK_BUTTON=6,
+            LOGO_BUTTON=8,
+            START_BUTTON=7,
+            Y_BUTTON=3,
+            B_BUTTON=1,
+            A_BUTTON=0,
+            X_BUTTON=2,
+            LEFT_BUTTON=4,
+            RIGHT_BUTTON=5,
+            LEFT_TRIGGER,
+            RIGHT_TRIGGER
+        };
+        enum ButtonState {
+            RISING_EDGE,
+            ON,
+            FALLING_EDGE,
+            OFF
+        };
+        enum JoystickType {
+            F310
+        };
+
         COREJoystick(int joystickNumber);
         void registerAxis(JoystickAxis axis);
         void registerVector(JoystickAxis axisA, JoystickAxis axisB);
@@ -63,6 +64,8 @@ namespace CORE {
         Vector getVector(JoystickAxis axisA, JoystickAxis axisB);
         bool getButton(JoystickButton button);
         void setButton(JoystickButton button, bool value);
+        bool getRisingEdge(JoystickButton button);
+        bool getFallingEdge(JoystickButton button);
         ButtonState getButtonState(JoystickButton button);
         int getPort();
         void preLoopTask();

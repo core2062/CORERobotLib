@@ -6,7 +6,6 @@ using namespace CORE;
 COREJoystick::COREJoystick(int port) :
         m_joystick(port),
         m_joystickPort(port) {
-//    Robot::addJoystick(this);
 }
 
 void COREJoystick::registerAxis(JoystickAxis axis) {
@@ -19,7 +18,7 @@ void COREJoystick::registerVector(JoystickAxis axisA, JoystickAxis axisB){
 }
 
 void COREJoystick::registerButton(JoystickButton button) {
-    m_buttonCache[button] = m_joystick.GetRawButton(button) ? ACTIVE : NORMAL;
+    m_buttonCache[button] = m_joystick.GetRawButton(button) ? ON : OFF;
 }
 
 double COREJoystick::getAxis(JoystickAxis axis) {
@@ -47,19 +46,28 @@ bool COREJoystick::getButton(JoystickButton button) {
         registerButton(button);
         return m_joystick.GetRawButton(button);
     } else {
-        return (m_buttonCache[button] == PRESSED || m_buttonCache[button] == ACTIVE);
+        return (m_buttonCache[button] == RISING_EDGE || m_buttonCache[button] == ON);
     }
 }
 
 void COREJoystick::setButton(JoystickButton button, bool value) {
-    m_buttonCache[button] = (value ? ACTIVE : NORMAL);
+    m_buttonCache[button] = (value ? ON : OFF);
 }
 
-ButtonState COREJoystick::getButtonState(JoystickButton button) {
+bool COREJoystick::getRisingEdge(JoystickButton button) {
+    return m_buttonCache[button] == RISING_EDGE;
+}
+
+bool COREJoystick::getFallingEdge(JoystickButton button) {
+    return m_buttonCache[button] == FALLING_EDGE;
+}
+
+COREJoystick::ButtonState COREJoystick::getButtonState(JoystickButton button) {
     if (m_buttonCache.find(button) == m_buttonCache.end()) {
-        //TODO: Error: button not registered, registering and returning state
+        CORELog::logWarning("Joystick " + to_string(getPort()) + " button " + to_string(button)
+                            + " not registered, registering and returning current state");
         registerButton(button);
-        return m_joystick.GetRawButton(button) ? ACTIVE : NORMAL;
+        return m_joystick.GetRawButton(button) ? ON : OFF;
     } else {
         return m_buttonCache[button];
     }
@@ -73,16 +81,16 @@ void COREJoystick::preLoopTask() {
     m_lastButtonCache = m_buttonCache;
     for (auto button : m_buttonCache) {
         bool isActive = m_joystick.GetRawButton(button.first);
-        if (m_lastButtonCache[button.first] == RELEASED || m_lastButtonCache[button.first] == NORMAL) {
+        if (m_lastButtonCache[button.first] == FALLING_EDGE || m_lastButtonCache[button.first] == OFF) {
             if (isActive)
-                m_buttonCache[button.first] = PRESSED;
+                m_buttonCache[button.first] = RISING_EDGE;
             else
-                m_buttonCache[button.first] = NORMAL;
-        } else if (m_lastButtonCache[button.first] == PRESSED || m_lastButtonCache[button.first] == ACTIVE) {
+                m_buttonCache[button.first] = OFF;
+        } else if (m_lastButtonCache[button.first] == RISING_EDGE || m_lastButtonCache[button.first] == ON) {
             if (isActive)
-                m_buttonCache[button.first] = ACTIVE;
+                m_buttonCache[button.first] = ON;
             else
-                m_buttonCache[button.first] = RELEASED;
+                m_buttonCache[button.first] = FALLING_EDGE;
         }
     }
     for (auto axis : m_axisCache) {
