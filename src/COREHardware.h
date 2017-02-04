@@ -10,11 +10,9 @@
 #include "COREHardware/CORESensor.h"
 
 class COREHardwareManager {
-    friend class COREScheduler;
-    friend class COREMotor;
 public:
     static void updateMotors();
-private:
     static void addMotor(COREMotor * motor);
+private:
     static vector<COREMotor*> m_motors;
 };

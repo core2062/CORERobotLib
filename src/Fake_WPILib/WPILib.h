@@ -38,8 +38,15 @@ class SampleRobot {
 
 };
 
+class Sendable {
+public:
+    /*virtual void InitTable(std::shared_ptr<ITable> subtable) = 0;
+    virtual std::shared_ptr<ITable> GetTable() const = 0;
+    virtual std::string GetSmartDashboardType() const = 0;*/
+};
+
 template <class T>
-class SendableChooser {
+class SendableChooser : public Sendable {
 public:
     virtual ~SendableChooser() = default;
     inline void AddObject(const std::string &name, void *object) {}
@@ -50,7 +57,7 @@ public:
 class SmartDashboard {
 public:
     static inline void init() {}
-    //static inline void PutData(string key, SendableChooser *data) {}
+    static inline void PutData(string key, Sendable *data) {}
     //static inline void PutData(NamedSendable *value) {}
     static inline void PutBoolean(string keyName, bool value) {}
     static inline bool GetBoolean(string keyName, bool defaultValue) {}
@@ -100,7 +107,7 @@ public:
         kBlue,
         kInvalid
     };
-    static inline DriverStation &GetInstance() {
+    static inline DriverStation& GetInstance() {
         static DriverStation instance;
         return instance;
     }
@@ -111,16 +118,21 @@ public:
 
 class Preferences {
 public:
-    static inline Preferences &GetInstance() {
-        static Preferences instance;
-        return instance;
+    static inline Preferences* GetInstance() {
+        if(!m_instance) {
+            m_instance = new Preferences;
+        }
+        return m_instance;
     }
-    inline void PutDouble(string, string) {}
-    inline void PutString(string, string) {}
-    inline void PutBoolean(string, string) {}
-    inline void PutInt(string, string) {}
-    inline double GetDouble(string) { return 0; }
-    inline string GetString(string) { return "null"; }
-    inline bool GetBoolean(string) { return false; }
-    inline int GetInt(string) { return 0; }
+    inline void PutDouble(string _, double __) {}
+    inline void PutString(string _, string __) {}
+    inline void PutBoolean(string _, bool __) {}
+    inline void PutInt(string _, int __) {}
+    inline double GetDouble(string _) { return 0; }
+    inline string GetString(string _) { return "null"; }
+    inline bool GetBoolean(string _) { return false; }
+    inline int GetInt(string _) { return 0; }
+
+private:
+    static Preferences * m_instance;
 };

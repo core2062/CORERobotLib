@@ -19,7 +19,7 @@ COREMotor::COREMotor(int port, controllerType controller, controlMode controlMet
     else {
         //TODO: Throw error
     }
-//    Robot::addMotor(this);
+    COREHardwareManager::addMotor(this);
 }
 
 void COREMotor::Set(double motorSetValue) {
@@ -78,23 +78,6 @@ double COREMotor::getCurrent() {
 }
 
 void COREMotor::update() {
-    //setActualPos(getActualPos());
-    //setActualVel(getActualVel());
-/*    if (m_motorControlMode == POS_PID) {
-    	//setActualPos(CANTalonController->GetEncPosition()); //TODO: Fix this
-        m_motorValue = calculate();
-        m_motorUpdated = true;
-    } else if (m_motorControlMode == VEL_PID) {
-        m_motorValue = calculate();
-        m_motorUpdated = true;
-    } else if (m_motorControlMode == CONT_PID) {
-    	//setActualPos(CANTalonController->GetEncPosition());
-        m_motorValue = calculate();
-        m_motorUpdated = true;
-        cout << "Actual Pos: " << this->m_actualPos << endl;
-        cout << "Set Pos: " << this->m_setPosition << endl;
-        cout << "Motor Value: " << m_motorValue << endl;
-    }*/
     if (!m_motorUpdated && !m_motorSafetyDisabled) {
         if (m_motorSafetyCounter > 3) {
             m_motorValue = 0;
