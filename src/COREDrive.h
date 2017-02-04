@@ -24,8 +24,8 @@ namespace CORE {
         virtual void setDirection(double direction);
         virtual double getMagnitude();
         virtual double getDirection();
-        void preTeleopTask() override;
-        void postTeleopTask() override;
+        void preLoopTask() override;
+        void postLoopTask() override;
     protected:
         virtual void update() = 0;
         double m_direction, m_x, m_y, m_rot;

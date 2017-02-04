@@ -69,7 +69,7 @@ int COREJoystick::getPort() {
     return m_joystickPort;
 }
 
-void COREJoystick::preTeleopTask() {
+void COREJoystick::preLoopTask() {
     m_lastButtonCache = m_buttonCache;
     for (auto button : m_buttonCache) {
         bool isActive = m_joystick.GetRawButton(button.first);

@@ -89,8 +89,8 @@ namespace CORE {
         double getProportional(PIDType pidType, int profile = -1);
         double getIntegral(PIDType pidType, int profile = -1);
         double getDerivative(PIDType pidType, int profile = -1);
-        void preTeleopTask() override;
-        void postTeleopTask() override;
+        void preLoopTask() override;
+        void postLoopTask() override;
     private:
         struct PIDProfile {
             struct PIDMode {

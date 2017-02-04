@@ -397,7 +397,7 @@ double COREPID::getDerivative(PIDType pidType, int profile) {
 	return getPIDMode(pidType, profile)->derivative;
 }
 
-void COREPID::preTeleopTask() {
+void COREPID::preLoopTask() {
     if(m_inputDevice != nullptr) {
         switch(m_pidType) {
             case POS:
@@ -421,6 +421,6 @@ void COREPID::preTeleopTask() {
     }
 }
 
-void COREPID::postTeleopTask() {
+void COREPID::postLoopTask() {
 	m_outputDevice->PIDSet(calculate());
 }

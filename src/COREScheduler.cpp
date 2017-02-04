@@ -88,8 +88,16 @@ void COREScheduler::autonInit() {
 }
 
 bool COREScheduler::auton() {
+	for(auto task : m_tasks) {
+		if(!task->isDisabled())
+			task->preLoopTask();
+	}
 	if(m_selectedAuto != nullptr) {
 		m_selectedAuto->auton();
+		for(auto task : m_tasks) {
+			if(!task->isDisabled())
+				task->postLoopTask();
+		}
 		return m_selectedAuto->complete();
 	}
 	else {
@@ -114,14 +122,14 @@ void COREScheduler::teleopInit() {
 void COREScheduler::teleop() {
 	for(auto task : m_tasks) {
 		if(!task->isDisabled())
-			task->preTeleopTask();
+			task->preLoopTask();
 	}
 	for(auto subsystem : m_subsystems) {
 		subsystem->teleop();
 	}
 	for(auto task : m_tasks) {
 		if(!task->isDisabled())
-			task->postTeleopTask();
+			task->postLoopTask();
 	}
 //	Robot::updateMotors();
 }

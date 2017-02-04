@@ -3,7 +3,7 @@
 using namespace CORE;
 
 COREDrive::COREDrive(){
-    preTeleopTask();
+    preLoopTask();
 }
 
 
@@ -85,7 +85,7 @@ double COREDrive::getDirection() {
     return m_direction;
 }
 
-void COREDrive::preTeleopTask() {
+void COREDrive::preLoopTask() {
     m_direction = 0;
     m_mag = 0;
     m_useThrottle = false;
@@ -99,7 +99,7 @@ void COREDrive::preTeleopTask() {
     m_y = 0;
 }
 
-void COREDrive::postTeleopTask() {
+void COREDrive::postLoopTask() {
     if(m_useMag && m_useDirection) {
         m_x = m_mag * toDegrees(cos(toRadians(m_direction)));
         m_y = m_mag * toDegrees(sin(toRadians(m_direction)));

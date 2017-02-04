@@ -65,7 +65,7 @@ namespace CORE {
         void setButton(JoystickButton button, bool value);
         ButtonState getButtonState(JoystickButton button);
         int getPort();
-        void preTeleopTask();
+        void preLoopTask();
     private:
         Joystick m_joystick;
         int m_joystickPort;
