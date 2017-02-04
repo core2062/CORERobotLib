@@ -10,3 +10,5 @@
 #include "src/COREDrive.h"
 #include "src/COREDrive/CORESwerve.h"
 #include "src/COREConstant.h"
+#include "src/COREDrive/COREEtherDrive.h"
+#include "src/COREDrive/CORESwerve.h"

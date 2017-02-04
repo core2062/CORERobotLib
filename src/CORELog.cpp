@@ -7,6 +7,7 @@ string CORELog::m_fileName;
 vector<string> CORELog::m_fileCache;
 robotMode CORELog::m_robotMode;
 CORETimer CORELog::m_matchTimer;
+CORELog::loggingLevel CORELog::m_consoleLoggingLevel;
 
 void CORELog::writeLastDuration() {
     logInfo(getRobotMode() + " lasted " + to_string(m_matchTimer.Get()) + " seconds");
@@ -32,19 +33,25 @@ string CORELog::getRobotMode() {
 void CORELog::logInfo(string message) {
     m_fileCache.push_back("[INFO - " + getRobotMode() + "] - " + to_string(round(m_matchTimer.Get() * 1000.0) / 1000.0)
                           + " " + message + "\n");
-    cout << "INFO: " << message << "\n";
+    if(m_consoleLoggingLevel <= INFO) {
+        cout << "INFO: " << message << "\n";
+    }
 }
 
 void CORELog::logWarning(string message) {
     m_fileCache.push_back("[WARNING - " + getRobotMode() + "] - " + to_string(round(m_matchTimer.Get() * 1000.0) / 1000.0)
                           + " " + message + "\n");
-    cout << "WARNING: " << message << "\n";
+    if(m_consoleLoggingLevel <= WARNING) {
+        cout << "WARNING: " << message << "\n";
+    }
 }
 
 void CORELog::logError(string message) {
     m_fileCache.push_back("[ERROR - " + getRobotMode() + "] - " + to_string(round(m_matchTimer.Get() * 1000.0) / 1000.0)
                           + " " + message + "\n");
-    cout << "ERROR: " << message << "\n";
+    if(m_consoleLoggingLevel <= WARNING) {
+        cout << "ERROR: " << message << "\n";
+    }
 }
 
 void CORELog::updateLog() {
@@ -55,7 +62,6 @@ void CORELog::updateLog() {
 		m_file << text;
 	}
 	m_file.close();
-	m_file.open(m_fileName);
     logInfo("Writing to log took: " + to_string(duration.Get()));
 }
 
@@ -65,6 +71,7 @@ string CORELog::getName() {
 
 void CORELog::robotInit() {
     m_robotMode = DISABLED;
+    m_consoleLoggingLevel = INFO;
     time_t currentTime = time(0);
     struct tm * now = localtime(& currentTime);
     m_fileName = "/home/lvuser/CORELogs/";
@@ -86,7 +93,7 @@ void CORELog::robotInit() {
     }
     m_fileName += to_string(now->tm_mon) + "-" + to_string(now->tm_mday) + "--" + to_string(now->tm_hour)
                   + "-" + to_string(now->tm_min)+".txt";
-    m_file.open(m_fileName);
+//    m_file.open(m_fileName);
     cout << "INFO: Log file written to: /home/lvuser/CORELogs/" << m_fileName << endl;
     m_fileCache.clear();
     m_robotMode = DISABLED;
@@ -95,6 +102,7 @@ void CORELog::robotInit() {
 }
 
 void CORELog::autonInit() {
+    m_file.open(m_fileName);
     writeLastDuration();
     m_robotMode = AUTON;
     m_matchTimer.Reset();
@@ -102,6 +110,7 @@ void CORELog::autonInit() {
 }
 
 void CORELog::teleopInit() {
+    m_file.open(m_fileName);
     writeLastDuration();
     m_robotMode = TELEOP;
     m_matchTimer.Reset();
@@ -114,4 +123,8 @@ void CORELog::disabled() {
     m_matchTimer.Reset();
     m_matchTimer.Start();
     updateLog();
+}
+
+void CORELog::setConsoleLoggingLevel(CORELog::loggingLevel level) {
+    m_consoleLoggingLevel = level;
 }

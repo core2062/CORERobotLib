@@ -58,20 +58,24 @@ include_directories(${PROJECT_SOURCE_DIR}/src/Fake_WPILib)
 # For quick list run
 # find src -iname "*.cpp"
 # in project root
-set(SOURCE_FILES main.cpp
-        src/COREAuton.cpp
-        src/COREDrive.cpp
-        src/COREHardware/COREEncoder.cpp
-        src/COREHardware/COREJoystick.cpp
-        src/COREHardware/COREMotor.cpp
-        src/COREHardware/CORETimer.cpp
-        src/COREHardware/CORESensor.cpp
-        src/CORELog.cpp
-        src/COREPID.cpp
-        src/CORERobot.cpp
-        src/COREScheduler.cpp
-        src/COREDrive/CORESwerve.cpp
-        src/COREDataLog.cpp)
+set(SOURCE_FILES ${PROJECT_SOURCE_DIR}/main.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREAuton.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREDrive.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREHardware/COREEncoder.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREHardware/COREJoystick.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREHardware/COREMotor.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREHardware/CORETimer.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREHardware/CORESensor.cpp
+        ${PROJECT_SOURCE_DIR}/src/CORELog.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREPID.cpp
+        ${PROJECT_SOURCE_DIR}/src/CORERobot.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREScheduler.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREDrive/CORESwerve.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREDataLog.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREConstant.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREDrive/COREEtherDrive.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREHardware.cpp
+        ${PROJECT_SOURCE_DIR}/src/Fake_WPILib/WPILib.cpp)
 
 # Deploy target
 

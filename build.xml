@@ -17,7 +17,7 @@
   <!-- <property name="team-number" value=""/> -->
 
   <!-- By default the target is set to 10.TE.AM.2 -->
-  <!-- <property name="target" value=""/> -->
+  <property name="target" value="10.20.62.63"/>
 
   <property file="${user.home}/wpilib/wpilib.properties"/>
   <property file="build.properties"/>

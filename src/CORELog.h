@@ -21,9 +21,9 @@ namespace CORE {
 class CORELog {
 public:
 	enum loggingLevel {
-		INFO,
-		WARNING,
-		ERROR
+		INFO=0,
+		WARNING=1,
+		ERROR=2
 	};
 	static void logInfo(string message);
 	static void logWarning(string message);
@@ -34,7 +34,7 @@ public:
     static void autonInit();
     static void teleopInit();
     static void disabled();
-	static void setConsoleLoggingLevel();
+	static void setConsoleLoggingLevel(loggingLevel level);
 private:
     static void writeLastDuration();
     static string getRobotMode();
@@ -43,5 +43,6 @@ private:
     static string m_fileName;
     static robotMode m_robotMode;
 	static CORETimer m_matchTimer;
+	static loggingLevel m_consoleLoggingLevel;
 };
 }

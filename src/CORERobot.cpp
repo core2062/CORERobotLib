@@ -52,5 +52,8 @@ void CORERobot::OperatorControl() {
 }
 
 void CORERobot::Test() {
-    COREScheduler::test();
+    while(IsEnabled()) {
+        COREScheduler::test();
+        waitLoopTime();
+    }
 }

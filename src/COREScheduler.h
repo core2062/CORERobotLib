@@ -40,7 +40,7 @@ private:
     static vector<COREAuton*> m_autons;
 	static vector<std::shared_ptr<CORETask>> m_tasks;
     static shared_ptr<SendableChooser<COREAuton*>> m_autonChooser;
-    static shared_ptr<COREAuton> m_selectedAuto;
+    static COREAuton* m_selectedAuto;
 public:
 	static void addSubsystem(shared_ptr<CORESubsystem> subsystem);
     static void addAuton(COREAuton * auton);

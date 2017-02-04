@@ -30,7 +30,7 @@ vector<shared_ptr<CORESubsystem>> COREScheduler::m_subsystems;
 vector<COREAuton*> COREScheduler::m_autons;
 vector<shared_ptr<CORETask>> COREScheduler::m_tasks;
 shared_ptr<SendableChooser<COREAuton*>> COREScheduler::m_autonChooser;
-shared_ptr<COREAuton> COREScheduler::m_selectedAuto;
+COREAuton* COREScheduler::m_selectedAuto;
 
 void COREScheduler::addSubsystem(shared_ptr<CORESubsystem> subsystem) {
 	m_subsystems.push_back(subsystem);
