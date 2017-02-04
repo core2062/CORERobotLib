@@ -13,10 +13,8 @@ void CORERobot::waitLoopTime() {
         m_loopStarted = true;
     }
     double loopTime = m_loopTimer.Get() < m_targetLoopTime ? m_targetLoopTime - m_loopTimer.Get() : 0.0;
-    //SmartDashboard::PutNumber("Timer", m_loopTimer.Get());
     if (m_loopTimer.Get() >= m_targetLoopTime * 1.2) {
-        //outLog.appendLog("[PROBLEM] Loop Time High! Timer at: ", m_loopTimer.Get());
-        cout << "Loop m_timer high at " << m_loopTimer.Get() << " seconds!" << endl;
+        CORELog::logWarning("Loop m_timer high at " + to_string(m_loopTimer.Get()) + " seconds!");
     }
     Wait(loopTime);
     m_loopTimer.Reset();

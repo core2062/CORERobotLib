@@ -32,7 +32,8 @@ namespace CORE {
     class Node {
     public:
         Node(COREAutonAction *action1, COREAutonAction *action2 = nullptr, COREAutonAction *action3 = nullptr);
-        Node(shared_ptr<COREAutonAction> action1, shared_ptr<COREAutonAction> action2 = nullptr, shared_ptr<COREAutonAction> action3 = nullptr);
+        Node(shared_ptr<COREAutonAction> action1, shared_ptr<COREAutonAction> action2 = nullptr,
+             shared_ptr<COREAutonAction> action3 = nullptr);
         void addNext(Node *childNode);
         void addNext(shared_ptr<Node> childNode);
         void addAction(COREAutonAction *leaf);
@@ -49,16 +50,18 @@ namespace CORE {
     };
 
     class COREAuton {
+        friend class COREScheduler;
     public:
         COREAuton(string name, Node * firstNode, bool defaultAuton = false);
-        void auton();
-        void autonInit();
-        bool complete();
-        void putToDashboard(shared_ptr<SendableChooser<COREAuton*>> chooser);
     protected:
         void addFirstNode(Node * firstNode);
         virtual void addNodes() = 0;
     private:
+        void auton();
+        void autonInit();
+        bool complete();
+        void putToDashboard(shared_ptr<SendableChooser<COREAuton*>> chooser);
+        string getName();
         string m_name;
         bool m_defaultAuton = false;
         vector<Node*> m_firstNode;

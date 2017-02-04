@@ -22,15 +22,9 @@ public:
 	virtual void robotInit() = 0;
 	virtual void teleopInit() = 0;
 	virtual void teleop() = 0;
-	virtual void teleopEnd() {
-		//TODO: Log -> Teleop end not implemented for: NAME
-	}
-    virtual void disabled() {
-
-    }
-	virtual void test() {
-
-	}
+	virtual void teleopEnd() {}
+    virtual void disabled() {}
+	virtual void test() {}
     string getName() {
         return m_name;
     }

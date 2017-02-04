@@ -5,6 +5,7 @@
 
 #include "COREScheduler.h"
 #include "COREHardware/CORETimer.h"
+#include "CORELog.h"
 
 #define START_SIMULATED_ROBOT_CLASS(_ClassName_)                             \
 	int main() {                                                             \

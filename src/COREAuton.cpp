@@ -135,3 +135,7 @@ bool COREAuton::complete() {
 void COREAuton::addFirstNode(Node * firstNode) {
     m_firstNode.push_back(firstNode);
 }
+
+string COREAuton::getName() {
+    return m_name;
+}

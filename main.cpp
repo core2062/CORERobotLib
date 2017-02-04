@@ -73,8 +73,8 @@ public:
     }
 
     void teleop() {
-        swerve->cartesian(-1 * joystick1.getAxis(LEFT_STICK_X), -1 * joystick1.getAxis(LEFT_STICK_Y),
-                          joystick1.getAxis(RIGHT_STICK_X), joystick1.getAxis(RIGHT_TRIGGER_AXIS));
+        swerve->cartesian(-1 * joystick1.getAxis(COREJoystick::LEFT_STICK_X), -1 * joystick1.getAxis(COREJoystick::LEFT_STICK_Y),
+                          joystick1.getAxis(COREJoystick::RIGHT_STICK_X), joystick1.getAxis(COREJoystick::RIGHT_TRIGGER_AXIS));
 
 /*        auto x = SmartDashboard::GetNumber("P Value", 0);
         Robot::motor(STEER_FL)->setP(x);
@@ -94,7 +94,7 @@ public:
 		Robot::`motor(STEER_BR)->setD(x);
 		Robot::motor(STEER_FR)->setD(x);*/
 
-        if(joystick1.getButton(DPAD_NE)){
+        if(joystick1.getButton(COREJoystick::DPAD_NE)){
             steerMotorFL.CANTalonController->SetEncPosition(0);
             steerMotorBL.CANTalonController->SetEncPosition(0);
             steerMotorBR.CANTalonController->SetEncPosition(0);

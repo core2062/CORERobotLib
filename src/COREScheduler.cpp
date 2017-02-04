@@ -34,13 +34,12 @@ shared_ptr<COREAuton> COREScheduler::m_selectedAuto;
 
 void COREScheduler::addSubsystem(shared_ptr<CORESubsystem> subsystem) {
 	m_subsystems.push_back(subsystem);
-	cout << "Subsystem Added" << endl;
-	//TODO: Log -> SUBSYSTEMNAME added
+	CORELog::logInfo(subsystem->getName() + " Subsystem Added");
 }
 
 void COREScheduler::addAuton(COREAuton * auton) {
     m_autons.push_back(auton);
-    cout << "Auton Added" << endl;
+    CORELog::logInfo(auton->getName() + " Auton Added");
     //TODO: Log -> AUTONNAME added
 }
 
