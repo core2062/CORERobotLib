@@ -50,7 +50,8 @@ set(SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/COREPID.cpp
         ${PROJECT_SOURCE_DIR}/src/CORERobot.cpp
         ${PROJECT_SOURCE_DIR}/src/COREScheduler.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREController/COREMotionProfile.cpp)
+        ${PROJECT_SOURCE_DIR}/src/COREController/COREMotionProfile.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREController.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
