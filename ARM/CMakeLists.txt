@@ -31,23 +31,26 @@ include_directories(${PROJECT_SOURCE_DIR})
 # For quick list run
 # find src -iname "*.cpp"
 # in project root
-set(SOURCE_FILES ${PROJECT_SOURCE_DIR}/main.cpp
+set(SOURCE_FILES
+        ${PROJECT_SOURCE_DIR}/main.cpp
         ${PROJECT_SOURCE_DIR}/src/COREAuton.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREConstant.cpp
+        ${PROJECT_SOURCE_DIR}/src/CORECSVWriter.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREDataLog.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREDrive/COREEtherDrive.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREDrive/CORESwerveDrive.cpp
         ${PROJECT_SOURCE_DIR}/src/COREDrive.cpp
         ${PROJECT_SOURCE_DIR}/src/COREHardware/COREEncoder.cpp
         ${PROJECT_SOURCE_DIR}/src/COREHardware/COREJoystick.cpp
         ${PROJECT_SOURCE_DIR}/src/COREHardware/COREMotor.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREHardware/CORETimer.cpp
         ${PROJECT_SOURCE_DIR}/src/COREHardware/CORESensor.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREHardware/CORETimer.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREHardware.cpp
         ${PROJECT_SOURCE_DIR}/src/CORELog.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREMotionProfile.cpp
         ${PROJECT_SOURCE_DIR}/src/COREPID.cpp
         ${PROJECT_SOURCE_DIR}/src/CORERobot.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREScheduler.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREDrive/CORESwerve.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREDataLog.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREConstant.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREDrive/COREEtherDrive.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREHardware.cpp)
+        ${PROJECT_SOURCE_DIR}/src/COREScheduler.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 

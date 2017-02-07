@@ -29,8 +29,6 @@ private:
     COREMotor steerMotorFR;
     COREJoystick joystick1;
     COREConstant<string> testing;
-    CORESwerve::SwerveModule moduleFL, moduleBL, moduleBR, moduleFR;
-    CORESwerve* swerve;
 public:
     DriveSubsystem() : CORESubsystem("Drive Subsystem"),
                        driveMotorFL(DRIVE_FL), steerMotorFL(STEER_FL),
@@ -38,12 +36,7 @@ public:
                        driveMotorBR(DRIVE_BR), steerMotorBR(STEER_BR),
                        driveMotorFR(DRIVE_FR), steerMotorFR(STEER_FR),
                        joystick1(0),
-					   testing("Test", "Test Value"),
-                       moduleFL(&driveMotorFL, &steerMotorFL),
-                       moduleBL(&driveMotorBL, &steerMotorBL),
-                       moduleBR(&driveMotorBR, &steerMotorBR),
-                       moduleFR(&driveMotorFR, &steerMotorFR) {
-    	swerve = new CORESwerve(21, 31, moduleFL, moduleBL, moduleBR, moduleFR);
+					   testing("Test", "Test Value") {
     }
 
     void robotInit() {
@@ -73,8 +66,6 @@ public:
     }
 
     void teleop() {
-        swerve->cartesian(-1 * joystick1.getAxis(COREJoystick::LEFT_STICK_X), -1 * joystick1.getAxis(COREJoystick::LEFT_STICK_Y),
-                          joystick1.getAxis(COREJoystick::RIGHT_STICK_X), joystick1.getAxis(COREJoystick::RIGHT_TRIGGER_AXIS));
 
 /*        auto x = SmartDashboard::GetNumber("P Value", 0);
         Robot::motor(STEER_FL)->setP(x);
