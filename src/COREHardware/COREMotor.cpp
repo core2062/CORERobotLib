@@ -138,7 +138,3 @@ double COREMotor::PIDGetVel() {
 void COREMotor::PIDSet(double value) {
     Set(value);
 }
-
-//COREMotor::COREMotor(int port, bool reversed) : COREEncoder(m_instance, SRX_RELATIVE) {
-//
-//}

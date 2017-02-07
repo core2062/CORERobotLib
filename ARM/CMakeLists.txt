@@ -47,10 +47,10 @@ set(SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/COREHardware/CORETimer.cpp
         ${PROJECT_SOURCE_DIR}/src/COREHardware.cpp
         ${PROJECT_SOURCE_DIR}/src/CORELog.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREMotionProfile.cpp
         ${PROJECT_SOURCE_DIR}/src/COREPID.cpp
         ${PROJECT_SOURCE_DIR}/src/CORERobot.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREScheduler.cpp)
+        ${PROJECT_SOURCE_DIR}/src/COREScheduler.cpp
+        ${PROJECT_SOURCE_DIR}/src/COREController/COREMotionProfile.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
