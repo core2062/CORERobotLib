@@ -40,30 +40,39 @@ namespace CORE {
         void addAction(shared_ptr<COREAutonAction> leaf);
         void addCondition(bool(*startCondition)());
         bool complete();
+        void reset();
         void act(bool lastNodeDone);
     private:
         vector<shared_ptr<Node>> m_children;
         vector<shared_ptr<COREAutonAction>> m_actions;
+        vector<shared_ptr<COREAutonAction>> m_actionsCache;
         bool m_startConditonGiven = false;
         bool m_actionsInitialized = false;
         bool (*m_startCondition)();
     };
 
     class COREAuton {
-        friend class COREScheduler;
     public:
         COREAuton(string name, Node * firstNode, bool defaultAuton = false);
+        void putToDashboard(shared_ptr<SendableChooser<COREAuton*>> chooser);
+        inline COREAuton* getInstance() {
+        	return this;
+        }
+        inline bool getDefault() {
+        	return m_defaultAuton;
+        }
+        string getName();
+        void auton();
+        void autonInit();
+        bool complete();
+        void reset();
     protected:
         void addFirstNode(Node * firstNode);
         virtual void addNodes() = 0;
     private:
-        void auton();
-        void autonInit();
-        bool complete();
-        void putToDashboard(shared_ptr<SendableChooser<COREAuton*>> chooser);
-        string getName();
         string m_name;
         bool m_defaultAuton = false;
+        bool m_nodesAdded = false;
         vector<Node*> m_firstNode;
     };
 }

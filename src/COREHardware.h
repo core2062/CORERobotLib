@@ -12,6 +12,7 @@
 class COREHardwareManager {
 public:
     static void updateMotors();
+    static void zeroMotors();
     static void addMotor(COREMotor * motor);
 private:
     static vector<COREMotor*> m_motors;

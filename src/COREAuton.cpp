@@ -3,15 +3,15 @@
 using namespace CORE;
 
 Node::Node(COREAutonAction *action1, COREAutonAction *action2, COREAutonAction *action3):
-m_children(), m_actions() {
+m_children(), m_actions(), m_actionsCache() {
     shared_ptr<COREAutonAction> pointer(action1);
-    m_actions.push_back(pointer);
+    m_actionsCache.push_back(pointer);
     if(action2 != nullptr) {
         shared_ptr<COREAutonAction> pointer(action2);
-        m_actions.push_back(pointer);
+        m_actionsCache.push_back(pointer);
     } else if (action3 != nullptr) {
         shared_ptr<COREAutonAction> pointer(action3);
-        m_actions.push_back(pointer);
+        m_actionsCache.push_back(pointer);
     }
 }
 
@@ -50,15 +50,24 @@ void Node::addCondition(bool(*startCondition)()) {
 
 bool Node::complete() {
     if(m_actions.empty()) {
-        bool childrenComplete = true;
         for(auto child : m_children) {
-            childrenComplete = child->complete();
+        	if(!child->complete())
+        		return false;
         }
-        return childrenComplete;
+        return true;
     }
     else {
         return false;
     }
+}
+
+void Node::reset() {
+	for(auto child : m_children) {
+		child->reset();
+	}
+	m_actions.clear();
+    m_actions = m_actionsCache;
+    m_actionsInitialized = false;
 }
 
 void Node::act(bool lastNodeDone) {
@@ -69,7 +78,7 @@ void Node::act(bool lastNodeDone) {
         }
     }
     if(!m_actions.empty()) {
-        if ((m_startConditonGiven && m_startCondition) || (!m_startConditonGiven && lastNodeDone)) {
+        if ((m_startConditonGiven && m_startCondition && !lastNodeDone) || (!m_startConditonGiven && lastNodeDone)) {
             for (int i = 0; i <  m_actions.size(); i++) {
                 actionStatus status = m_actions[i]->action();
                 switch (status) {
@@ -111,11 +120,15 @@ void COREAuton::auton() {
 }
 
 void COREAuton::autonInit() {
-    addNodes();
+    reset();
+    if(!m_nodesAdded) {
+    	m_nodesAdded = true;
+    	addNodes();
+    }
 }
 
 void COREAuton::putToDashboard(shared_ptr<SendableChooser<COREAuton*>> chooser) {
-    CORELog::logInfo("Adding Autonomous: " + m_name + " to dashboard");
+    CORELog::logInfo("Adding autonomous: " + m_name + " to dashboard");
     if(m_defaultAuton) {
         chooser->AddDefault(m_name, this);
     }
@@ -125,11 +138,17 @@ void COREAuton::putToDashboard(shared_ptr<SendableChooser<COREAuton*>> chooser) 
 }
 
 bool COREAuton::complete() {
-    bool nodesComplete = true;
     for(auto node : m_firstNode) {
-        nodesComplete = node->complete();
+        if(!node->complete())
+        	return false;
     }
-    return nodesComplete;
+    return true;
+}
+
+void COREAuton::reset() {
+	for(auto node : m_firstNode) {
+		node->reset();
+	}
 }
 
 void COREAuton::addFirstNode(Node * firstNode) {

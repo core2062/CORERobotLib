@@ -28,7 +28,6 @@ namespace CORE {
 		} else if (x < 0 && y >= 0) {
 			return 450 - result;
 		}
-		cout << "Oh no" << endl;
 		return -1;
 	}
 

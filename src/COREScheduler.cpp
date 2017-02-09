@@ -30,16 +30,18 @@ vector<shared_ptr<CORESubsystem>> COREScheduler::m_subsystems;
 vector<COREAuton*> COREScheduler::m_autons;
 vector<shared_ptr<CORETask>> COREScheduler::m_tasks;
 shared_ptr<SendableChooser<COREAuton*>> COREScheduler::m_autonChooser;
-COREAuton* COREScheduler::m_selectedAuto;
+
+COREAuton* COREScheduler::m_selectedAuton;
+CORETimer COREScheduler::m_autonTimer;
 
 void COREScheduler::addSubsystem(shared_ptr<CORESubsystem> subsystem) {
 	m_subsystems.push_back(subsystem);
-	CORELog::logInfo(subsystem->getName() + " Subsystem Added");
+	CORELog::logInfo(subsystem->getName() + " subsystem added");
 }
 
 void COREScheduler::addAuton(COREAuton * auton) {
     m_autons.push_back(auton);
-    CORELog::logInfo(auton->getName() + " Auton Added");
+    CORELog::logInfo(auton->getName() + " autonomous added");
 }
 
 void COREScheduler::addTask(shared_ptr<CORETask> task) {
@@ -59,7 +61,7 @@ void COREScheduler::robotInit() {
     for(auto auton : m_autons) {
         auton->putToDashboard(m_autonChooser);
     }
-    SmartDashboard::PutData("Auto Mode", m_autonChooser.get());
+    SmartDashboard::PutData("Autonomous", m_autonChooser.get());
     //TODO: Log -> RobotInit Complete
 }
 
@@ -72,17 +74,19 @@ void COREScheduler::autonInit() {
 	}
 	if(!m_autons.empty()) {
 #ifdef __arm__
-		auto m_selectedAuto = m_autonChooser->GetSelected();
+		m_selectedAuton = m_autonChooser->GetSelected();
 #else
-		m_selectedAuto = m_autons[0];
+		m_selectedAuton = m_autons[0];
 		//TODO: Simulated auto switcher
 #endif
-		m_selectedAuto->autonInit();
+		m_selectedAuton->autonInit();
 	}
 	else {
-		cout << "No Autons Added!" << endl;
-		m_selectedAuto = nullptr;
+		CORELog::logWarning("No autonomous routines added!");
+		m_selectedAuton = nullptr;
 	}
+	m_autonTimer.Reset();
+	m_autonTimer.Start();
 }
 
 bool COREScheduler::auton() {
@@ -90,17 +94,22 @@ bool COREScheduler::auton() {
 		if(!task->isDisabled())
 			task->preLoopTask();
 	}
-	if(m_selectedAuto != nullptr) {
-		m_selectedAuto->auton();
+	if(m_selectedAuton != nullptr) {
+		m_selectedAuton->auton();
 		for(auto task : m_tasks) {
 			if(!task->isDisabled())
 				task->postLoopTask();
-            COREHardwareManager::updateMotors();
 		}
-		return m_selectedAuto->complete();
+		COREHardwareManager::updateMotors();
+		bool complete = m_selectedAuton->complete();
+		if(complete) {
+			CORELog::logInfo(m_selectedAuton->getName() + " autonomous complete! Took: "
+							 + to_string(m_autonTimer.Get()) + " seconds");
+		}
+		return complete;
 	}
 	else {
-		cout << "No Auton Selected!" << endl;
+		CORELog::logWarning("No autonomous selected!");
 		return true;
 	}
 }
@@ -153,6 +162,7 @@ void COREScheduler::disabled() {
 	for(auto subsystem : m_subsystems) {
 		subsystem->disabled();
 	}
+	COREHardwareManager::zeroMotors();
 }
 
 void COREScheduler::test() {

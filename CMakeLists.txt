@@ -45,7 +45,7 @@ set(SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/COREPID.cpp
         ${PROJECT_SOURCE_DIR}/src/CORERobot.cpp
         ${PROJECT_SOURCE_DIR}/src/COREScheduler.cpp
-        ${PROJECT_SOURCE_DIR}/src/Fake_WPILib/WPILib.cpp)
+        ${PROJECT_SOURCE_DIR}/src/Fake_WPILib/WPILib.cpp main.h)
 
 
         # Deploy target
