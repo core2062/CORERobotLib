@@ -5,6 +5,7 @@
 
 #include <CORETask.h>
 #include <COREPID.h>
+#include <COREController.h>
 #include "COREEncoder.h"
 
 #include <WPILib.h>
@@ -28,7 +29,7 @@ namespace CORE {
         FORWARD,
         BACKWARD
     };
-    class COREMotor : public PIDInput, public PIDOutput {
+    class COREMotor : public ControllerInput, public ControllerOutput {
     public:
         shared_ptr<CANTalon> CANTalonController;
         shared_ptr<Jaguar> JaguarController;
@@ -47,9 +48,9 @@ namespace CORE {
         void motorSafety(bool disableMotorSafety = true);
         double getCurrent();
         void update();
-        double PIDGetPos() override;
-        double PIDGetVel() override;
-        void PIDSet(double value) override;
+        double ControllerGetPos() override;
+        double ControllerGetVel() override;
+        void ControllerSet(double value) override;
     private:
         double m_motorValue = 0;
         double m_lastMotorValue = 0;

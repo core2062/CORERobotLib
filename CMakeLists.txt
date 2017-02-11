@@ -29,7 +29,6 @@ set(SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/main.cpp
         ${PROJECT_SOURCE_DIR}/src/COREAuton.cpp
         ${PROJECT_SOURCE_DIR}/src/COREConstant.cpp
-        ${PROJECT_SOURCE_DIR}/src/CORECSVWriter.cpp
         ${PROJECT_SOURCE_DIR}/src/COREDataLog.cpp
         ${PROJECT_SOURCE_DIR}/src/COREDrive/COREEtherDrive.cpp
         ${PROJECT_SOURCE_DIR}/src/COREDrive/CORESwerveDrive.cpp
@@ -45,7 +44,7 @@ set(SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/src/COREPID.cpp
         ${PROJECT_SOURCE_DIR}/src/CORERobot.cpp
         ${PROJECT_SOURCE_DIR}/src/COREScheduler.cpp
-        ${PROJECT_SOURCE_DIR}/src/Fake_WPILib/WPILib.cpp main.h)
+        ${PROJECT_SOURCE_DIR}/src/Fake_WPILib/WPILib.cpp)
 
 
         # Deploy target

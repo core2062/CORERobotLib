@@ -71,7 +71,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="main.cpp|build|lib|3rdparty|cmake-build-default|src/Fake_WPILib|Debug|navx-mxp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="build|lib|3rdparty|cmake-build-default|src/Fake_WPILib|Debug|navx-mxp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

@@ -35,7 +35,6 @@ set(SOURCE_FILES
         ${PROJECT_SOURCE_DIR}/main.cpp
         ${PROJECT_SOURCE_DIR}/src/COREAuton.cpp
         ${PROJECT_SOURCE_DIR}/src/COREConstant.cpp
-        ${PROJECT_SOURCE_DIR}/src/CORECSVWriter.cpp
         ${PROJECT_SOURCE_DIR}/src/COREDataLog.cpp
         ${PROJECT_SOURCE_DIR}/src/COREDrive/COREEtherDrive.cpp
         ${PROJECT_SOURCE_DIR}/src/COREDrive/CORESwerveDrive.cpp

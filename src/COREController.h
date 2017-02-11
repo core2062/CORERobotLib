@@ -32,7 +32,7 @@ namespace CORE {
                 return vel;
             }
         }
-        virtual double PIDGetAng() {
+        virtual double ControllerGetAng() {
             return ControllerGetPos() * m_ticksPerDegree;
         }
 

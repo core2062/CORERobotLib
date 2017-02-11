@@ -1,10 +1,24 @@
 #include "COREMotionProfile.h"
 
-CORE::COREMotionProfile::COREMotionProfile(CORE::ControllerInput *inputDevice, CORE::ControllerOutput *outputDevice) {
+CORE::COREMotionProfile::COREMotionProfile(CORE::ControllerInput *inputDevice, CORE::ControllerOutput *outputDevice,
+                                           double maxVel, double maxAccel): m_actualVelocity(0), m_maxOutputSpeed(0),
+										   m_timeToAccel(0),  m_ticksToAccel(0) {
     m_inputDevice = inputDevice;
     m_outputDevice = outputDevice;
+    m_maxVel = maxVel;
+    m_maxAccel = maxAccel;
     m_timer.Reset();
     m_timer.Start();
+}
+
+CORE::COREMotionProfile::COREMotionProfile(double maxVel, double maxAccel): m_actualVelocity(0), m_maxOutputSpeed(0),
+		   m_timeToAccel(0),  m_ticksToAccel(0) {
+	m_inputDevice = nullptr;
+	m_outputDevice = nullptr;
+	m_maxVel = maxVel;
+	m_maxAccel = maxAccel;
+	m_timer.Reset();
+	m_timer.Start();
 }
 
 void CORE::COREMotionProfile::setMaxVel(double maxVelocity) {

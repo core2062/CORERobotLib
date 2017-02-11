@@ -126,7 +126,7 @@ double COREPID::angPID(double setPoint) {
  * @param fProfile2Value The F constant for profile 2, Set to 1 or 0 to disable. Disabled by default
  * @param integralAccuracy The number of previous errors to use when calculating the Integral term. Set to 1 by default
  */
-COREPID::COREPID(PIDInput * inputDevice, PIDOutput * outputDevice, PIDType pidType, double pProfile1Value, double iProfile1Value,
+COREPID::COREPID(ControllerInput * inputDevice, ControllerOutput * outputDevice, PIDType pidType, double pProfile1Value, double iProfile1Value,
                  double dProfile1Value, double fProfile1Value, double pProfile2Value, double iProfile2Value,
                  double dProfile2Value, double fProfile2Value, int integralAccuracy) {
     m_inputDevice = inputDevice;
@@ -401,26 +401,26 @@ void COREPID::preLoopTask() {
     if(m_inputDevice != nullptr) {
         switch(m_pidType) {
             case POS:
-                setActualPos(m_inputDevice->PIDGetPos());
+                setActualPos(m_inputDevice->ControllerGetPos());
                 break;
             case VEL:
-                setActualVel(m_inputDevice->PIDGetVel());
+                setActualVel(m_inputDevice->ControllerGetVel());
                 break;
             case ANG:
-                setActualAng(m_inputDevice->PIDGetAng());
+                setActualAng(m_inputDevice->ControllerGetAng());
                 break;
             case POS_VEL:
-                setActualPos(m_inputDevice->PIDGetPos());
-                setActualVel(m_inputDevice->PIDGetVel());
+                setActualPos(m_inputDevice->ControllerGetPos());
+                setActualVel(m_inputDevice->ControllerGetVel());
                 break;
             case ANG_VEL:
-                setActualAng(m_inputDevice->PIDGetAng());
-                setActualVel(m_inputDevice->PIDGetVel());
+                setActualAng(m_inputDevice->ControllerGetAng());
+                setActualVel(m_inputDevice->ControllerGetVel());
                 break;
         }
     }
 }
 
 void COREPID::postLoopTask() {
-	m_outputDevice->PIDSet(calculate());
+	m_outputDevice->ControllerSet(calculate());
 }

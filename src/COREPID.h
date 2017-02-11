@@ -7,47 +7,10 @@
 #include "COREHardware/CORETimer.h"
 #include <CORETask.h>
 #include "COREMath.h"
+#include <COREController.h>
 #include "COREHardware/CORESensor.h"
 
 namespace CORE {
-    class PIDInput {
-    private:
-        double m_lastPos = 0;
-        double m_ticksPerDegree = 0;
-        CORETimer * m_timer;
-    public:
-        virtual double PIDGetPos() {
-            return 0;
-        }
-        virtual double PIDGetVel() {
-            if(m_timer == nullptr) {
-                m_timer = new CORETimer();
-                return 0;
-            }
-            else {
-                double time = m_timer->Get();
-                m_timer->Reset();
-                m_timer->Start();
-                double currentPos = PIDGetPos();
-                double vel = (currentPos - m_lastPos) / time;
-                m_lastPos = currentPos;
-                return vel;
-            }
-        }
-        virtual double PIDGetAng() {
-            return PIDGetPos() * m_ticksPerDegree;
-        }
-
-        void setTicksPerRotation(double ticks) {
-            m_ticksPerDegree = 360.0/ticks;
-        }
-    };
-
-    class PIDOutput {
-    public:
-        virtual void PIDSet(double value) = 0;
-    };
-
     enum PIDType {
         POS,
         VEL,
@@ -58,7 +21,7 @@ namespace CORE {
 
     class COREPID : public CORETask, public COREContinuous {
     public:
-        COREPID(PIDInput * inputDevice, PIDOutput * outputDevice, PIDType pidType, double pProfile1Value, double iProfile1Value,
+        COREPID(ControllerInput * inputDevice, ControllerOutput * outputDevice, PIDType pidType, double pProfile1Value, double iProfile1Value,
                 double dProfile1Value, double fProfile1Value = 1, double pProfile2Value = 0, double iProfile2Value = 0,
                 double dProfile2Value = 1, double fProfile2Value = 0, int integralAccuracy = 1);
         COREPID(double pProfile1Value, double iProfile1Value,
@@ -107,8 +70,8 @@ namespace CORE {
         double m_time = 0;
         int m_defaultProfile = 1;
         CORETimer m_timer;
-        PIDInput * m_inputDevice;
-        PIDOutput * m_outputDevice;
+        ControllerInput * m_inputDevice;
+        ControllerOutput * m_outputDevice;
         PIDProfile::PIDMode * getPIDMode(PIDType pidType, int profile = -1);
         PIDProfile * getPIDProfile(int profile = -1);
         PIDType m_PIDTypes[3] = {POS, VEL, ANG};

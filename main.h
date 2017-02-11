@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "CORERobotLib.h"
+#include "src/COREController/COREMotionProfile.h"
 #include "WPILib.h"
 
 using namespace CORE;
@@ -101,16 +102,28 @@ class Robot : public CORERobot {
 public:
     //static shared_ptr<DriveSubsystem> driveSubsystem;
     driveForwardAuto auto1;
+    DoubleSolenoid leftShifter;
+    DoubleSolenoid rightShifter;
+    COREJoystick joystick;
+    COREMotor motor1;
+    COREMotionProfile profile;
+    bool highGear = false;
     Robot():
             //driveSubsystem(),
-            auto1()
+            auto1(),
+			leftShifter(0, 1),
+			rightShifter(2, 3),
+			joystick(0),
+            motor1(14),
+			profile(1, 1)
     {
 
     }
 
     inline void robotInit() {
-
-
+    	joystick.registerButton(COREJoystick::LEFT_BUTTON);
+    	leftShifter.Set(DoubleSolenoid::kForward);
+    	rightShifter.Set(DoubleSolenoid::kForward);
     }
 
     inline void teleopInit() {
@@ -118,6 +131,20 @@ public:
     }
 
     inline void teleop() {
-        cout << "\nNew Iteration: \n" << endl;
+    	if(joystick.getRisingEdge(COREJoystick::LEFT_BUTTON)) {
+    		if(highGear) {
+    			leftShifter.Set(DoubleSolenoid::kReverse);
+    			rightShifter.Set(DoubleSolenoid::kReverse);
+    			highGear = false;
+    		}
+    		else {
+    			leftShifter.Set(DoubleSolenoid::kForward);
+    			rightShifter.Set(DoubleSolenoid::kForward);
+    			highGear = true;
+    		}
+    	}
+    	if(joystick.getRisingEdge(COREJoystick::A_BUTTON)) {
+    	    profile.Set(100);
+    	}
     }
 };

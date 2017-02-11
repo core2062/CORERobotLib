@@ -115,7 +115,7 @@ void COREMotor::update() {
     m_motorUpdated = false;
 }
 
-double COREMotor::PIDGetPos() {
+double COREMotor::ControllerGetPos() {
     if(m_motorControllerType == CORE::CANTALON) {
         return CANTalonController->GetEncPosition();
     } else {
@@ -125,7 +125,7 @@ double COREMotor::PIDGetPos() {
     }
 }
 
-double COREMotor::PIDGetVel() {
+double COREMotor::ControllerGetVel() {
     if(m_motorControllerType == CORE::CANTALON) {
         return CANTalonController->GetEncVel();
     } else {
@@ -135,6 +135,6 @@ double COREMotor::PIDGetVel() {
     }
 }
 
-void COREMotor::PIDSet(double value) {
+void COREMotor::ControllerSet(double value) {
     Set(value);
 }

@@ -5,7 +5,7 @@ using namespace CORE;
 vector<ICOREConstant*> COREConstantsManager::m_constants;
 
 void COREConstantsManager::robotInit() {
-
+    updateConstants();
 }
 
 void COREConstantsManager::updateConstants() {
