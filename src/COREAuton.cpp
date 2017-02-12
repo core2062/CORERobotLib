@@ -114,14 +114,14 @@ void Node::act(bool lastNodeDone) {
     if(!m_actions.empty()) {
         if ((m_startConditonGiven && m_startCondition && !lastNodeDone) || (!m_startConditonGiven && lastNodeDone)) {
             for (int i = 0; i <  m_actions.size(); i++) {
-                actionStatus status = m_actions[i]->action();
+                COREAutonAction::actionStatus status = m_actions[i]->action();
                 switch (status) {
-                    case END:
+                    case COREAutonAction::END:
                         m_actions[i]->actionEnd();
                         m_actions.erase(m_actions.begin() + i);
                         i--;
                         break;
-                    case CONTINUE:
+                    case COREAutonAction::CONTINUE:
                         break;
                 }
             }

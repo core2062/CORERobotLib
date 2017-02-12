@@ -14,15 +14,14 @@
 
 using namespace std;
 namespace CORE {
-
-    enum actionStatus {
-        CONTINUE,
-        BACKGROUND,
-        END
-    };
-
     class COREAutonAction {
     public:
+        enum actionStatus {
+            CONTINUE,
+            BACKGROUND,
+            END
+        };
+
         virtual void actionInit() {}
         virtual void actionEnd() {}
         virtual actionStatus action() = 0;
