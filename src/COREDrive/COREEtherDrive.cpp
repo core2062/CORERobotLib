@@ -4,9 +4,53 @@ using namespace CORE;
 
 COREEtherDrive::COREEtherDrive(COREMotor * leftMotor1, COREMotor * leftMotor2, COREMotor * rightMotor1,
                                COREMotor * rightMotor2, double a, double b, double quickTurn) :
-        m_leftMotor1(leftMotor1), m_leftMotor2(leftMotor2), m_rightMotor1(rightMotor1), m_rightMotor2(rightMotor2),
-        m_a(a), m_b(b), m_quickTurn(quickTurn) {
+        m_leftMotor1(leftMotor1), m_leftMotor2(leftMotor2), m_rightMotor1(rightMotor1), m_rightMotor2(rightMotor2){
+	m_a = a;
+	m_b = b;
+	m_quickTurn = quickTurn;
 
+}
+
+void COREEtherDrive::setAB(double a, double b){
+	m_a = a;
+	m_b = b;
+}
+
+void COREEtherDrive::setQuickturn(double q){
+	m_quickTurn = q;
+}
+
+VelocityPair COREEtherDrive::calculate(double mag, double rot, double deadband){
+	if(abs(mag) < deadband){
+		mag = 0;
+	}
+	if(abs(rot) < deadband){
+		rot = 0;
+	}
+	double left, right;
+	   if (mag > 0){
+	        if (rot >= 0){
+	            left = etherL(mag, rot, m_a, m_b);
+	            right = etherR(mag, rot, m_a, m_b);
+	        } else{
+	            left = etherR(mag, -rot, m_a, m_b);
+	            right = etherL(mag, -rot, m_a, m_b);
+	        }
+	    } else if (mag < 0) {
+	        if (rot>=0){
+
+	            left = -etherR(-mag, rot, m_a, m_b);
+	            right = -etherL(-mag, rot, m_a, m_b);
+	        } else{
+	            left = -etherL(-mag, -rot, m_a, m_b);
+	            right = -etherR(-mag, -rot, m_a, m_b);
+	        }
+	    } else {
+	        left = (rot * m_quickTurn);
+	        right = (-rot * m_quickTurn);
+	    }
+
+	   return {left, right};
 }
 
 double COREEtherDrive::etherL(double fwd, double rcw, double a, double b) {
