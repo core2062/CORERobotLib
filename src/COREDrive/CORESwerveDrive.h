@@ -9,12 +9,13 @@
 #include "COREHardware/CORESensor.h"
 
 namespace CORE {
-	class CORESwerve : public COREDrive {
+    class CORESwerve : public COREDrive {
     public:
-        class SwerveModule : public COREContinuous { //TODO: SwerveModule isn't a COREContinuous, shouldn't inherit from it
+        class SwerveModule
+                : public COREContinuous { //TODO: SwerveModule isn't a COREContinuous, shouldn't inherit from it
         public:
             SwerveModule(COREMotor* driveMotor, COREMotor* steerMotor) :
-		    position(0,0),
+                    position(0, 0),
                     m_driveMotor(driveMotor), m_steerMotor(steerMotor) {
                 //m_steerMotor->setTicksInRotation(17200); //70200
             }
@@ -24,9 +25,12 @@ namespace CORE {
             }
 
             double getSetValue(double angle) {
-                int direction = m_steerMotor->CANTalonController->GetEncPosition() == 0 ? 0 : m_steerMotor->CANTalonController->GetEncPosition() / abs(m_steerMotor->CANTalonController->GetEncPosition());
+                int direction = m_steerMotor->CANTalonController->GetEncPosition() == 0 ? 0 :
+                                m_steerMotor->CANTalonController->GetEncPosition() /
+                                abs(m_steerMotor->CANTalonController->GetEncPosition());
                 double base = (abs(m_steerMotor->CANTalonController->GetEncPosition()) -
-                               (int)(abs(m_steerMotor->CANTalonController->GetEncPosition())) % (int)(360.0 / m_ticksToRotations));
+                               (int) (abs(m_steerMotor->CANTalonController->GetEncPosition())) %
+                               (int) (360.0 / m_ticksToRotations));
                 return /*(base * direction) +*/ (angle / m_ticksToRotations);
 
                 /*
@@ -44,7 +48,6 @@ namespace CORE {
                 m_setMagnitude = setMagnitude;
             }
 
-
 /*            double getAngle() {
                 return m_setAngle;
             }
@@ -59,6 +62,7 @@ namespace CORE {
                 cout << "Set Angle: " << m_setAngle << endl;
                 cout << "Set Speed: " << m_setMagnitude * m_setDirection << endl;
             }
+
             int m_setDirection = 1;
             double m_setAngle = 0;
             double m_setMagnitude = 0;
@@ -67,12 +71,12 @@ namespace CORE {
         private:
             COREMotor* m_driveMotor;
             COREMotor* m_steerMotor;
-            double m_ticksToRotations = (360/1024.0) * (1 / (4 * 4.22)); //TODO: This needs to have a getter + setter
+            double m_ticksToRotations = (360 / 1024.0) * (1 / (4 * 4.22)); //TODO: This needs to have a getter + setter
         };
 
-        CORESwerve(double trackWidth, double wheelBase, CORESwerve::SwerveModule& leftFrontModule,
-                   CORESwerve::SwerveModule& leftBackModule, CORESwerve::SwerveModule& rightBackModule,
-                   CORESwerve::SwerveModule& rightFrontModule);
+        CORESwerve(double trackWidth, double wheelBase, CORESwerve::SwerveModule &leftFrontModule,
+                   CORESwerve::SwerveModule &leftBackModule, CORESwerve::SwerveModule &rightBackModule,
+                   CORESwerve::SwerveModule &rightFrontModule);
         void setRotation(double rotation);
         double getRotation();
         void setThrottle(double throttle);

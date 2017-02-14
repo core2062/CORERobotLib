@@ -5,14 +5,14 @@ using namespace CORE;
 /*
  * Create a node with given actions. These actions will all be run in parallel to each other.
  */
-Node::Node(COREAutonAction *action1, COREAutonAction *action2, COREAutonAction *action3):
-m_children(), m_actions(), m_actionsCache() {
+Node::Node(COREAutonAction* action1, COREAutonAction* action2, COREAutonAction* action3) :
+        m_children(), m_actions(), m_actionsCache() {
     shared_ptr<COREAutonAction> pointer(action1);
     m_actionsCache.push_back(pointer);
     if(action2 != nullptr) {
         shared_ptr<COREAutonAction> pointer(action2);
         m_actionsCache.push_back(pointer);
-    } else if (action3 != nullptr) {
+    } else if(action3 != nullptr) {
         shared_ptr<COREAutonAction> pointer(action3);
         m_actionsCache.push_back(pointer);
     }
@@ -22,11 +22,11 @@ m_children(), m_actions(), m_actionsCache() {
  * Create a node with given action. These actions will all be run in parallel to each other.
  */
 Node::Node(shared_ptr<COREAutonAction> action1, shared_ptr<COREAutonAction> action2,
-        shared_ptr<COREAutonAction> action3) : m_children(), m_actions() {
+           shared_ptr<COREAutonAction> action3) : m_children(), m_actions() {
     m_actions.push_back(action1);
     if(action2 != nullptr) {
         m_actions.push_back(action2);
-    } else if (action3 != nullptr) {
+    } else if(action3 != nullptr) {
         m_actions.push_back(action3);
     }
 }
@@ -34,7 +34,7 @@ Node::Node(shared_ptr<COREAutonAction> action1, shared_ptr<COREAutonAction> acti
 /*
  * Add a node to this node which will be run sequentially after this node completes all of its actions
  */
-void Node::addNext(Node *childNode) {
+void Node::addNext(Node* childNode) {
     shared_ptr<Node> pointer(childNode);
     m_children.push_back(pointer);
 }
@@ -49,7 +49,7 @@ void Node::addNext(shared_ptr<Node> childNode) {
 /*
  * Add an action to this node which will be run in parallel to other actions in this node
  */
-void Node::addAction(COREAutonAction *leaf) {
+void Node::addAction(COREAutonAction* leaf) {
     shared_ptr<COREAutonAction> pointer(leaf);
     m_actions.push_back(pointer);
 }
@@ -66,7 +66,7 @@ void Node::addAction(shared_ptr<COREAutonAction> leaf) {
  * This condition will be checked by the previous node while it is not complete.
  * While it is true this action will run its actions.
  */
-void Node::addCondition(bool(*startCondition)()) {
+void Node::addCondition(bool(* startCondition)()) {
     m_startConditonGiven = true;
     m_startCondition = startCondition;
 }
@@ -77,12 +77,12 @@ void Node::addCondition(bool(*startCondition)()) {
 bool Node::complete() {
     if(m_actions.empty()) {
         for(auto child : m_children) {
-        	if(!child->complete())
-        		return false;
+            if(!child->complete()) {
+                return false;
+            }
         }
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
@@ -91,10 +91,10 @@ bool Node::complete() {
  * Prepares node to be run
  */
 void Node::reset() {
-	for(auto child : m_children) {
-		child->reset();
-	}
-	m_actions.clear();
+    for(auto child : m_children) {
+        child->reset();
+    }
+    m_actions.clear();
     m_actions = m_actionsCache;
     m_actionsInitialized = false;
 }
@@ -112,10 +112,10 @@ void Node::act(bool lastNodeDone) {
         }
     }
     if(!m_actions.empty()) {
-        if ((m_startConditonGiven && m_startCondition && !lastNodeDone) || (!m_startConditonGiven && lastNodeDone)) {
-            for (int i = 0; i <  m_actions.size(); i++) {
+        if((m_startConditonGiven && m_startCondition && !lastNodeDone) || (!m_startConditonGiven && lastNodeDone)) {
+            for(int i = 0; i < m_actions.size(); i++) {
                 COREAutonAction::actionStatus status = m_actions[i]->action();
-                switch (status) {
+                switch(status) {
                     case COREAutonAction::END:
                         m_actions[i]->actionEnd();
                         m_actions.erase(m_actions.begin() + i);
@@ -125,16 +125,14 @@ void Node::act(bool lastNodeDone) {
                         break;
                 }
             }
-            for (auto child : m_children) {
+            for(auto child : m_children) {
                 child->act(false);
             }
-        }
-        else if (m_startConditonGiven && !m_startCondition) {
+        } else if(m_startConditonGiven && !m_startCondition) {
             return;
         }
-    }
-    else {
-        for (auto child : m_children) {
+    } else {
+        for(auto child : m_children) {
             child->act(true);
         }
     }
@@ -144,7 +142,7 @@ void Node::act(bool lastNodeDone) {
  * Initialize an autonomous routine with given name, first node, and whether this autonomous should be the default
  * selected autonomous on Smart Dashboard
  */
-COREAuton::COREAuton(string name, Node * firstNode, bool defaultAuton) {
+COREAuton::COREAuton(string name, Node* firstNode, bool defaultAuton) {
     m_name = name;
     m_defaultAuton = defaultAuton;
     m_firstNode.push_back(firstNode);
@@ -155,7 +153,7 @@ COREAuton::COREAuton(string name, Node * firstNode, bool defaultAuton) {
  * Run autonomous routine. Needs to be called each iteration.
  */
 void COREAuton::auton() {
-    for (auto node : m_firstNode) {
+    for(auto node : m_firstNode) {
         node->act(true);
     }
 }
@@ -166,8 +164,8 @@ void COREAuton::auton() {
 void COREAuton::autonInit() {
     reset();
     if(!m_nodesAdded) {
-    	m_nodesAdded = true;
-    	addNodes();
+        m_nodesAdded = true;
+        addNodes();
     }
 }
 
@@ -178,8 +176,7 @@ void COREAuton::putToDashboard(shared_ptr<SendableChooser<COREAuton*>> chooser) 
     CORELog::logInfo("Adding autonomous: " + m_name + " to dashboard");
     if(m_defaultAuton) {
         chooser->AddDefault(m_name, this);
-    }
-    else {
+    } else {
         chooser->AddObject(m_name, this);
     }
 }
@@ -189,8 +186,9 @@ void COREAuton::putToDashboard(shared_ptr<SendableChooser<COREAuton*>> chooser) 
  */
 bool COREAuton::complete() {
     for(auto node : m_firstNode) {
-        if(!node->complete())
-        	return false;
+        if(!node->complete()) {
+            return false;
+        }
     }
     return true;
 }
@@ -199,15 +197,15 @@ bool COREAuton::complete() {
  * Reset all nodes in autonomous routine
  */
 void COREAuton::reset() {
-	for(auto node : m_firstNode) {
-		node->reset();
-	}
+    for(auto node : m_firstNode) {
+        node->reset();
+    }
 }
 
 /*
  * Add another node to be run on start of autonomous routine
  */
-void COREAuton::addFirstNode(Node * firstNode) {
+void COREAuton::addFirstNode(Node* firstNode) {
     m_firstNode.push_back(firstNode);
 }
 

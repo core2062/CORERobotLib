@@ -60,7 +60,7 @@ namespace CORE {
         bool m_motorUpdated = false;
         controlMode m_motorControlMode;
         controllerType m_motorControllerType;
-        CORETimer *m_trapSumTimer;
+        CORETimer* m_trapSumTimer;
         double m_lastSum = 0;
         int m_motorPort;
         int m_motorSafetyCounter = 0;

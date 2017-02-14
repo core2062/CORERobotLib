@@ -7,6 +7,7 @@
 #include "COREHardware/CORETimer.h"
 #include <CORETask.h>
 #include "COREMath.h"
+#include "CORELog.h"
 #include <COREController.h>
 #include "COREHardware/CORESensor.h"
 
@@ -21,12 +22,13 @@ namespace CORE {
 
     class COREPID : public CORETask, public COREContinuous {
     public:
-        COREPID(ControllerInput * inputDevice, ControllerOutput * outputDevice, PIDType pidType, double pProfile1Value, double iProfile1Value,
-                double dProfile1Value, double fProfile1Value = 1, double pProfile2Value = 0, double iProfile2Value = 0,
-                double dProfile2Value = 1, double fProfile2Value = 0, int integralAccuracy = 1);
-        COREPID(double pProfile1Value, double iProfile1Value,
-                double dProfile1Value, double fProfile1Value = 1, double pProfile2Value = 0, double iProfile2Value = 0,
-                double dProfile2Value = 1, double fProfile2Value = 0, int integralAccuracy = 1);
+        COREPID(ControllerInput* inputDevice, ControllerOutput* outputDevice, PIDType pidType, double pProfile1Value,
+                double iProfile1Value, double dProfile1Value, double fProfile1Value = 1, double pProfile2Value = 0,
+                double iProfile2Value = 0, double dProfile2Value = 1, double fProfile2Value = 0,
+                int integralAccuracy = 1);
+        COREPID(double pProfile1Value, double iProfile1Value, double dProfile1Value, double fProfile1Value = 1,
+                double pProfile2Value = 0, double iProfile2Value = 0, double dProfile2Value = 1,
+                double fProfile2Value = 0, int integralAccuracy = 1);
         double calculate(int profile = -1);
         void setPos(double positionSetPoint);
         void setVel(double velocitySetPoint);
@@ -63,15 +65,15 @@ namespace CORE {
             double setPoint, actual;
             bool enabled;
         } m_pos, m_vel, m_ang;
-        PIDProfile * m_currentProfile;
+        PIDProfile* m_currentProfile;
         double m_ticksToDegrees = 1;
         double m_time = 0;
         int m_defaultProfile = 1;
         CORETimer m_timer;
-        ControllerInput * m_inputDevice;
-        ControllerOutput * m_outputDevice;
-        PIDProfile::PIDMode * getPIDMode(PIDType pidType, int profile = -1);
-        PIDProfile * getPIDProfile(int profile = -1);
+        ControllerInput* m_inputDevice;
+        ControllerOutput* m_outputDevice;
+        PIDProfile::PIDMode* getPIDMode(PIDType pidType, int profile = -1);
+        PIDProfile* getPIDProfile(int profile = -1);
         PIDType m_PIDTypes[3] = {POS, VEL, ANG};
         PIDType m_pidType;
         double posPID(double setPoint);

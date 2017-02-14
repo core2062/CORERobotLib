@@ -7,39 +7,39 @@ using namespace CORE;
  * @param profile The profile number to get
  * @return A pointer to the PIDProfile struct
  */
-COREPID::PIDProfile::PIDMode * COREPID::getPIDMode(PIDType pidType, int profile) {
-	switch(profile) {
-	case 1:
-        if(pidType == PIDType::POS) {
-            return &m_PID1.pos;
-        } else if(pidType == PIDType::VEL) {
-            return &m_PID1.vel;
-        } else if(pidType == PIDType::ANG) {
-            return &m_PID1.ang;
-        } else {
-            cout << "Error! PID type invalid!" << endl;
-        }
-	case 2:
-        if(pidType == PIDType::POS) {
-            return &m_PID2.pos;
-        } else if(pidType == PIDType::VEL) {
-            return &m_PID2.vel;
-        } else if(pidType == PIDType::ANG) {
-            return &m_PID2.ang;
-        } else {
-            cout << "Error! PID type invalid!" << endl;
-        }
-	default:
-		return getPIDMode(pidType, m_defaultProfile);
-	}
-}
-
-COREPID::PIDProfile * COREPID::getPIDProfile(int profile) {
+COREPID::PIDProfile::PIDMode* COREPID::getPIDMode(PIDType pidType, int profile) {
     switch(profile) {
         case 1:
-                return &m_PID1;
+            if(pidType == PIDType::POS) {
+                return &m_PID1.pos;
+            } else if(pidType == PIDType::VEL) {
+                return &m_PID1.vel;
+            } else if(pidType == PIDType::ANG) {
+                return &m_PID1.ang;
+            } else {
+                cout << "Error! PID type invalid!" << endl;
+            }
         case 2:
-                return &m_PID2;
+            if(pidType == PIDType::POS) {
+                return &m_PID2.pos;
+            } else if(pidType == PIDType::VEL) {
+                return &m_PID2.vel;
+            } else if(pidType == PIDType::ANG) {
+                return &m_PID2.ang;
+            } else {
+                cout << "Error! PID type invalid!" << endl;
+            }
+        default:
+            return getPIDMode(pidType, m_defaultProfile);
+    }
+}
+
+COREPID::PIDProfile* COREPID::getPIDProfile(int profile) {
+    switch(profile) {
+        case 1:
+            return &m_PID1;
+        case 2:
+            return &m_PID2;
         default:
             return getPIDProfile(m_defaultProfile);
     }
@@ -97,7 +97,7 @@ double COREPID::angPID(double setPoint) {
         sum += value;
     }
     m_currentProfile->ang.mistake = (setPoint - m_ang.actual * m_ticksToDegrees)
-                                    - (360 * floor(0.5+(setPoint - m_ang.actual * m_ticksToDegrees)/360));
+                                    - (360 * floor(0.5 + (setPoint - m_ang.actual * m_ticksToDegrees) / 360));
     m_currentProfile->ang.proportional = m_currentProfile->ang.mistake * m_currentProfile->ang.P;
     m_currentProfile->ang.riemannSum.insert(m_currentProfile->ang.riemannSum.begin(),
                                             m_currentProfile->ang.proportional * m_time);
@@ -126,9 +126,10 @@ double COREPID::angPID(double setPoint) {
  * @param fProfile2Value The F constant for profile 2, Set to 1 or 0 to disable. Disabled by default
  * @param integralAccuracy The number of previous errors to use when calculating the Integral term. Set to 1 by default
  */
-COREPID::COREPID(ControllerInput * inputDevice, ControllerOutput * outputDevice, PIDType pidType, double pProfile1Value, double iProfile1Value,
-                 double dProfile1Value, double fProfile1Value, double pProfile2Value, double iProfile2Value,
-                 double dProfile2Value, double fProfile2Value, int integralAccuracy) {
+COREPID::COREPID(ControllerInput* inputDevice, ControllerOutput* outputDevice, PIDType pidType,
+                 double pProfile1Value, double iProfile1Value, double dProfile1Value, double fProfile1Value,
+                 double pProfile2Value, double iProfile2Value, double dProfile2Value, double fProfile2Value,
+                 int integralAccuracy) {
     m_inputDevice = inputDevice;
     m_outputDevice = outputDevice;
     for(auto type : m_PIDTypes) {
@@ -141,7 +142,7 @@ COREPID::COREPID(ControllerInput * inputDevice, ControllerOutput * outputDevice,
         getPIDMode(type, 2)->D = dProfile2Value;
         getPIDMode(type, 2)->F = fProfile2Value;
     }
-	for(int i = 1; i <= 2; i++) {
+    for(int i = 1; i <= 2; i++) {
         for(auto type : m_PIDTypes) {
             getPIDMode(type, i)->riemannSum.resize(integralAccuracy);
             getPIDMode(type, i)->riemannSum[0] = 0;
@@ -152,12 +153,12 @@ COREPID::COREPID(ControllerInput * inputDevice, ControllerOutput * outputDevice,
             getPIDMode(type, i)->mistake = 0;
             getPIDMode(type, i)->lastMistake = 0;
         }
-	}
-	if(integralAccuracy < 1) {
-		integralAccuracy = 1;
-	}
-	m_timer.Reset();
-	m_timer.Start();
+    }
+    if(integralAccuracy < 1) {
+        integralAccuracy = 1;
+    }
+    m_timer.Reset();
+    m_timer.Start();
 }
 
 /**
@@ -172,9 +173,9 @@ COREPID::COREPID(ControllerInput * inputDevice, ControllerOutput * outputDevice,
  * @param fProfile2Value The F constant for profile 2, Set to 1 or 0 to disable. Disabled by default
  * @param integralAccuracy The number of previous errors to use when calculating the Integral term. Set to 1 by default
  */
-COREPID::COREPID(double pProfile1Value, double iProfile1Value,
-                 double dProfile1Value, double fProfile1Value, double pProfile2Value, double iProfile2Value,
-                 double dProfile2Value, double fProfile2Value, int integralAccuracy) {
+COREPID::COREPID(double pProfile1Value, double iProfile1Value, double dProfile1Value, double fProfile1Value,
+                 double pProfile2Value, double iProfile2Value, double dProfile2Value, double fProfile2Value,
+                 int integralAccuracy) {
     m_inputDevice = nullptr;
     m_outputDevice = nullptr;
     for(auto type : m_PIDTypes) {
@@ -213,15 +214,15 @@ COREPID::COREPID(double pProfile1Value, double iProfile1Value,
  */
 double COREPID::calculate(int profile) {
     m_currentProfile = getPIDProfile(profile);
-	m_time = m_timer.Get();
-	m_timer.Reset();
+    m_time = m_timer.Get();
+    m_timer.Reset();
     m_timer.Start();
-	if(m_time == 0) {
+    if(m_time == 0) {
         for(auto type : m_PIDTypes) {
             getPIDMode(type, profile)->output = 0;
         }
-		return 0;
-	}
+        return 0;
+    }
     for(auto type : m_PIDTypes) {
         if(getPIDMode(type, profile)->F == 0) {
             getPIDMode(type, profile)->F = 1;
@@ -245,13 +246,13 @@ double COREPID::calculate(int profile) {
         m_ang.enabled = false;
         return angPID(m_ang.setPoint);
     } else if(!m_pos.enabled && !m_vel.enabled && !m_ang.enabled) { //None
-        cout << "Error! PID not fed!" << endl;
+        CORELog::logWarning("PID not fed!");
         return 0;
     } else {
         m_pos.enabled = false;
         m_vel.enabled = false;
         m_ang.enabled = false;
-        cout << "Error! Illegal PID configuration!" << endl;
+        CORELog::logError("Illegal PID configuration!");
         return 0;
     }
 }
@@ -261,11 +262,11 @@ double COREPID::calculate(int profile) {
  * @param positionSetPoint The new position set point of the PID loop
  */
 void COREPID::setPos(double positionSetPoint) {
-	m_pos.setPoint = positionSetPoint;
+    m_pos.setPoint = positionSetPoint;
 }
 
 void COREPID::setVel(double velocitySetPoint) {
-	m_vel.setPoint = velocitySetPoint;
+    m_vel.setPoint = velocitySetPoint;
 }
 
 void COREPID::setAng(double angleSetPoint) {
@@ -276,20 +277,20 @@ void COREPID::setAng(double angleSetPoint) {
 * Get the position which this PID loop was set to
 */
 double COREPID::getPos() {
-	return m_pos.setPoint;
+    return m_pos.setPoint;
 }
 
 /**
 * Get the velocity which this PID loop was set to
 */
-double COREPID::getVel () {
-	return m_vel.setPoint;
+double COREPID::getVel() {
+    return m_vel.setPoint;
 }
 
 /**
 * Get the velocity which this PID loop was set to
 */
-double COREPID::getAng () {
+double COREPID::getAng() {
     return m_ang.setPoint;
 }
 
@@ -313,32 +314,32 @@ void COREPID::setActualAng(double actualAng) {
  * Get the P value of this PID loop
  */
 double COREPID::getP(PIDType pidType, int profile) {
-	return getPIDMode(pidType, profile)->P;
+    return getPIDMode(pidType, profile)->P;
 }
 
 /**
  * Get the I value of this PID loop
  */
 double COREPID::getI(PIDType pidType, int profile) {
-	return getPIDMode(pidType, profile)->I;
+    return getPIDMode(pidType, profile)->I;
 }
 
 /**
  * Get the D value of this PID loop
  */
 double COREPID::getD(PIDType pidType, int profile) {
-	return getPIDMode(pidType, profile)->D;
+    return getPIDMode(pidType, profile)->D;
 }
 
 /**
  * Get the F value of this PID loop
  */
 double COREPID::getF(PIDType pidType, int profile) {
-	return getPIDMode(pidType, profile)->F;
+    return getPIDMode(pidType, profile)->F;
 }
 
 void COREPID::setDefaultProfile(int profile) {
-	m_defaultProfile = profile;
+    m_defaultProfile = profile;
 }
 
 /**
@@ -373,28 +374,28 @@ void COREPID::setF(double value, PIDType pidType, int profile) {
  * Get the output of this PID loop
  */
 double COREPID::getOutput(PIDType pidType, int profile) {
-	return getPIDMode(pidType, profile)->output;
+    return getPIDMode(pidType, profile)->output;
 }
 
 /**
  * Get the proportional term of this PID loop
  */
 double COREPID::getProportional(PIDType pidType, int profile) {
-	return getPIDMode(pidType, profile)->proportional;
+    return getPIDMode(pidType, profile)->proportional;
 }
 
 /**
  * Get the integral term of this PID loop
  */
 double COREPID::getIntegral(PIDType pidType, int profile) {
-	return getPIDMode(pidType, profile)->integral;
+    return getPIDMode(pidType, profile)->integral;
 }
 
 /**
  * Get the derivative term of this PID loop
  */
 double COREPID::getDerivative(PIDType pidType, int profile) {
-	return getPIDMode(pidType, profile)->derivative;
+    return getPIDMode(pidType, profile)->derivative;
 }
 
 void COREPID::preLoopTask() {
@@ -422,5 +423,5 @@ void COREPID::preLoopTask() {
 }
 
 void COREPID::postLoopTask() {
-	m_outputDevice->ControllerSet(calculate());
+    m_outputDevice->ControllerSet(calculate());
 }

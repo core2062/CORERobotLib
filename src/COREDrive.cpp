@@ -2,10 +2,9 @@
 
 using namespace CORE;
 
-COREDrive::COREDrive(){
+COREDrive::COREDrive() {
     preLoopTask();
 }
-
 
 void COREDrive::setRotation(double rotation) {
     m_rot = rotation;

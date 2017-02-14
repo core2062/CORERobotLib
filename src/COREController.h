@@ -12,17 +12,17 @@ namespace CORE {
     private:
         double m_lastPos = 0;
         double m_ticksPerDegree = 0;
-        CORETimer * m_timer;
+        CORETimer* m_timer;
     public:
         virtual double ControllerGetPos() {
             return 0;
         }
+
         virtual double ControllerGetVel() {
             if(m_timer == nullptr) {
                 m_timer = new CORETimer();
                 return 0;
-            }
-            else {
+            } else {
                 double time = m_timer->Get();
                 m_timer->Reset();
                 m_timer->Start();
@@ -32,12 +32,13 @@ namespace CORE {
                 return vel;
             }
         }
+
         virtual double ControllerGetAng() {
             return ControllerGetPos() * m_ticksPerDegree;
         }
 
         void setTicksPerRotation(double ticks) {
-            m_ticksPerDegree = 360.0/ticks;
+            m_ticksPerDegree = 360.0 / ticks;
         }
     };
 
@@ -54,8 +55,8 @@ namespace CORE {
         virtual double getActual();
     protected:
         virtual void update(int profile = -1) = 0;
-        ControllerInput * m_inputDevice;
-        ControllerOutput * m_outputDevice;
+        ControllerInput* m_inputDevice;
+        ControllerOutput* m_outputDevice;
         double m_actualPosition = 0;
         double m_setPoint = 0;
     };

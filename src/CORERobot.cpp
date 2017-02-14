@@ -7,13 +7,13 @@ CORERobot::CORERobot() : CORESubsystem("Robot") {
 }
 
 void CORERobot::waitLoopTime() {
-    if (!m_loopStarted) {
+    if(!m_loopStarted) {
         m_loopTimer.Reset();
         m_loopTimer.Start();
         m_loopStarted = true;
     }
     double loopTime = m_loopTimer.Get() < m_targetLoopTime ? m_targetLoopTime - m_loopTimer.Get() : 0.0;
-    if (m_loopTimer.Get() >= m_targetLoopTime * 1.2) {
+    if(m_loopTimer.Get() >= m_targetLoopTime * 1.2) {
         CORELog::logWarning("Loop timer high at " + to_string(m_loopTimer.Get()) + " seconds!");
     }
     Wait(loopTime);

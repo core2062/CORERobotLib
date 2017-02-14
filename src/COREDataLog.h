@@ -9,48 +9,48 @@ namespace CORE {
     class ICOREDataLogger {
     public:
         virtual string getName() = 0;
-        virtual void updateConstant(Preferences * prefs) = 0;
+        virtual void updateConstant(Preferences* prefs) = 0;
     };
 
-    template <class T>
+    template<class T>
     class COREDataLogger : public ICOREDataLogger {
     public:
         COREDataLogger(string name, T defaultValue);
         string getName();
-        void updateConstant(Preferences * prefs);
+        void updateConstant(Preferences* prefs);
         T value;
     private:
         string m_name;
     };
 
-    template <>
+    template<>
     class COREDataLogger<double> : public ICOREDataLogger {
     public:
         COREDataLogger(string name, double defaultValue);
         string getName();
-        void updateConstant(Preferences * prefs);
+        void updateConstant(Preferences* prefs);
         double value;
     private:
         string m_name;
     };
 
-    template <>
+    template<>
     class COREDataLogger<string> : public ICOREDataLogger {
     public:
         COREDataLogger(string name, string defaultValue);
         string getName();
-        void updateConstant(Preferences * prefs);
+        void updateConstant(Preferences* prefs);
         string value;
     private:
         string m_name;
     };
 
-    template <>
+    template<>
     class COREDataLogger<bool> : public ICOREDataLogger {
     public:
         COREDataLogger(string name, bool defaultValue);
         string getName();
-        void updateConstant(Preferences * prefs);
+        void updateConstant(Preferences* prefs);
         bool value;
     private:
         string m_name;
@@ -60,11 +60,11 @@ namespace CORE {
     public:
         static void robotInit();
         static void updateConstants();
-        static void addLogger(ICOREDataLogger *instance);
+        static void addLogger(ICOREDataLogger* instance);
     private:
         static vector<ICOREDataLogger*> m_constants;
         static string m_defaultConstantsFile; //TODO: Put constants to CSV file
-        static Preferences * m_prefs;
+        static Preferences* m_prefs;
     };
 
 

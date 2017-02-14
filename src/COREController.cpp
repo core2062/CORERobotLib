@@ -1,6 +1,5 @@
 #include "COREController.h"
 
-
 void CORE::COREController::Set(double setPoint) {
     m_setPoint = setPoint;
 }

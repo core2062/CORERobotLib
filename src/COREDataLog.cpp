@@ -1,4 +1,3 @@
-#include "COREDataLog.h"
 
 
 /*

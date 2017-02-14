@@ -1,3 +1,3 @@
 #include "WPILib.h"
 
-Preferences *Preferences::m_instance;
+Preferences* Preferences::m_instance;

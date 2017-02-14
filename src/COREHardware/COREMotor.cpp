@@ -10,14 +10,11 @@ COREMotor::COREMotor(int port, controllerType controller, controlMode controlMet
     if(m_motorControllerType == CORE::CANTALON) {
         CANTalonController = make_shared<CANTalon>(port);
         Encoder = make_shared<COREEncoder>(CANTalonController, SRX_RELATIVE);
-    }
-    else if(m_motorControllerType == CORE::JAGUAR) {
+    } else if(m_motorControllerType == CORE::JAGUAR) {
         JaguarController = make_shared<Jaguar>(port);
-    }
-    else if(m_motorControllerType == CORE::VICTOR) {
+    } else if(m_motorControllerType == CORE::VICTOR) {
         VictorController = make_shared<Victor>(port);
-    }
-    else {
+    } else {
         //TODO: Throw error
     }
     COREHardwareManager::addMotor(this);
@@ -80,20 +77,19 @@ double COREMotor::getCurrent() {
 
 void COREMotor::Update() {
     if(m_motorControlMode == FOLLOWER || (m_motorControllerType == CANTALON
-                                         && CANTalonController->GetControlMode() == CANTalon::ControlMode::kFollower)) {
+                                          &&
+                                          CANTalonController->GetControlMode() == CANTalon::ControlMode::kFollower)) {
         m_motorControlMode = FOLLOWER;
         return;
     }
-    if (!m_motorUpdated && !m_motorSafetyDisabled) {
-        if (m_motorSafetyCounter > 3) {
+    if(!m_motorUpdated && !m_motorSafetyDisabled) {
+        if(m_motorSafetyCounter > 3) {
             m_motorValue = 0;
             cout << "Motor not updated!" << endl;
-        }
-        else {
+        } else {
             m_motorSafetyCounter++;
         }
-    }
-    else {
+    } else {
         m_motorSafetyCounter = 0;
     }
     m_motorValue = abs(m_motorValue) > 1 ? (m_motorValue > 1 ? 1 : -1) : m_motorValue;
@@ -101,14 +97,11 @@ void COREMotor::Update() {
 
     if(m_motorControllerType == CORE::CANTALON) {
         CANTalonController->Set(m_motorValue);
-    }
-    else if(m_motorControllerType == CORE::JAGUAR) {
+    } else if(m_motorControllerType == CORE::JAGUAR) {
         JaguarController->Set(m_motorValue);
-    }
-    else if(m_motorControllerType == CORE::VICTOR) {
+    } else if(m_motorControllerType == CORE::VICTOR) {
         VictorController->Set(m_motorValue);
-    }
-    else {
+    } else {
         //TODO: Throw error
     }
 /*#else

@@ -5,13 +5,13 @@ using namespace CORE;
 vector<COREMotor*> COREHardwareManager::m_motors;
 vector<COREEncoder*> COREHardwareManager::m_encoders;
 
-void COREHardwareManager::addMotor(COREMotor * motor) {
-	bool error = false;
-	int port = motor->getPort();
+void COREHardwareManager::addMotor(COREMotor* motor) {
+    bool error = false;
+    int port = motor->getPort();
     for(auto motor : m_motors) {
-    	if(motor->getPort() == port) {
-    		CORELog::logError("Cannot add two motors of port " + to_string(port) + " to robot!");
-    	}
+        if(motor->getPort() == port) {
+            CORELog::logError("Cannot add two motors of port " + to_string(port) + " to robot!");
+        }
     }
     if(!error) {
         m_motors.push_back(motor);
@@ -20,9 +20,9 @@ void COREHardwareManager::addMotor(COREMotor * motor) {
 }
 
 void COREHardwareManager::zeroMotors() {
-	for(auto motor : m_motors) {
-		motor->Set(0);
-	}
+    for(auto motor : m_motors) {
+        motor->Set(0);
+    }
 }
 
 void COREHardwareManager::updateMotors() {
@@ -43,7 +43,7 @@ void COREHardwareManager::zeroEncoders() {
     }
 }
 
-void COREHardwareManager::addEncoder(COREEncoder * encoder) {
+void COREHardwareManager::addEncoder(COREEncoder* encoder) {
     m_encoders.push_back(encoder);
     if(!encoder->IsBoundToCANTalon()) {
         CORELog::logInfo("Encoder in ports " + to_string(encoder->GetPortA()) + ", "

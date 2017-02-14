@@ -17,9 +17,9 @@ namespace CORE {
         enum JoystickAxis {
             LEFT_STICK_X = 0,
             LEFT_STICK_Y = 1,
-            RIGHT_STICK_X=4,
-            RIGHT_STICK_Y=5,
-            RIGHT_TRIGGER_AXIS=3,
+            RIGHT_STICK_X = 4,
+            RIGHT_STICK_Y = 5,
+            RIGHT_TRIGGER_AXIS = 3,
             LEFT_TRIGGER_AXIS = 2
         };
         enum JoystickButton {
@@ -31,17 +31,17 @@ namespace CORE {
             DPAD_SW,
             DPAD_W,
             DPAD_NW,
-            LEFT_STICK=9,
-            RIGHT_STICK=10,
-            BACK_BUTTON=7,
+            LEFT_STICK = 9,
+            RIGHT_STICK = 10,
+            BACK_BUTTON = 7,
             LOGO_BUTTON,
-            START_BUTTON=8,
-            Y_BUTTON=4,
-            B_BUTTON=2,
-            A_BUTTON=1,
-            X_BUTTON=3,
-            LEFT_BUTTON=5,
-            RIGHT_BUTTON=6,
+            START_BUTTON = 8,
+            Y_BUTTON = 4,
+            B_BUTTON = 2,
+            A_BUTTON = 1,
+            X_BUTTON = 3,
+            LEFT_BUTTON = 5,
+            RIGHT_BUTTON = 6,
             LEFT_TRIGGER,
             RIGHT_TRIGGER
         };

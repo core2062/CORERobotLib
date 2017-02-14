@@ -5,7 +5,7 @@
 namespace CORE {
     class COREMotionProfile : COREController {
     public:
-        COREMotionProfile(ControllerInput * inputDevice, ControllerOutput * outputDevice, double maxVel, double maxAccel);
+        COREMotionProfile(ControllerInput* inputDevice, ControllerOutput* outputDevice, double maxVel, double maxAccel);
         COREMotionProfile(double maxVel, double maxAccel);
         void setMaxVel(double maxVelocity);
         void setMaxAccel(double maxAcceleration);

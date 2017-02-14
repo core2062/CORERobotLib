@@ -29,7 +29,6 @@ string CORELog::getRobotMode() {
     return robotModeName;
 }
 
-
 void CORELog::logInfo(string message) {
     m_fileCache.push_back("[INFO - " + getRobotMode() + "] - " + to_string(round(m_matchTimer.Get() * 1000.0) / 1000.0)
                           + " " + message + "\n");
@@ -39,8 +38,9 @@ void CORELog::logInfo(string message) {
 }
 
 void CORELog::logWarning(string message) {
-    m_fileCache.push_back("[WARNING - " + getRobotMode() + "] - " + to_string(round(m_matchTimer.Get() * 1000.0) / 1000.0)
-                          + " " + message + "\n");
+    m_fileCache.push_back(
+            "[WARNING - " + getRobotMode() + "] - " + to_string(round(m_matchTimer.Get() * 1000.0) / 1000.0)
+            + " " + message + "\n");
     if(m_consoleLoggingLevel <= WARNING) {
         cout << "WARNING: " << message << "\n";
     }
@@ -58,10 +58,10 @@ void CORELog::updateLog() {
     CORETimer duration;
     duration.Reset();
     duration.Start();
-	for(auto text : m_fileCache) {
-		m_file << text;
-	}
-	m_file.close();
+    for(auto text : m_fileCache) {
+        m_file << text;
+    }
+    m_file.close();
     logInfo("Writing to log took: " + to_string(duration.Get()));
 }
 
@@ -73,7 +73,7 @@ void CORELog::robotInit() {
     m_robotMode = DISABLED;
     m_consoleLoggingLevel = INFO;
     time_t currentTime = time(0);
-    struct tm * now = localtime(& currentTime);
+    struct tm* now = localtime(&currentTime);
     m_fileName = "/home/lvuser/CORELogs/";
     if(DriverStation::GetInstance().IsFMSAttached()) {
         string alliance;
@@ -92,7 +92,7 @@ void CORELog::robotInit() {
                      + to_string(DriverStation::GetInstance().GetLocation()) + " - ";
     }
     m_fileName += to_string(now->tm_mon) + "-" + to_string(now->tm_mday) + "--" + to_string(now->tm_hour)
-                  + "-" + to_string(now->tm_min)+".txt";
+                  + "-" + to_string(now->tm_min) + ".txt";
 //    m_file.open(m_fileName);
     cout << "INFO: Log file written to: /home/lvuser/CORELogs/" << m_fileName << endl;
     m_fileCache.clear();

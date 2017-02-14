@@ -14,6 +14,6 @@ void COREConstantsManager::updateConstants() {
     }
 }
 
-void COREConstantsManager::addConstant(ICOREConstant * instance) {
+void COREConstantsManager::addConstant(ICOREConstant* instance) {
     m_constants.push_back(instance);
 }
