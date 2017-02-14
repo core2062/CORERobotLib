@@ -1,62 +1,100 @@
 #include "COREEncoder.h"
+#include <COREHardware.h>
 
 using namespace CORE;
 
 COREEncoder::COREEncoder(int portA, int portB, encoderType encoderType, bool reversed) : m_encoderType(encoderType),
-                                                                                         m_reversed(true) {
+                                                                                         m_reversed(reversed) {
     shared_ptr<Encoder> pointer(new Encoder(portA, portB));
     encoder = pointer;
+    m_portA = portA;
+    m_portB = portB;
+    m_boundToCANTalon = false;
+    Reset();
+    COREHardwareManager::addEncoder(this);
 }
 
-//COREEncoder::COREEncoder(shared_ptr<COREMotor> motor, encoderType encoder) : m_encoderType(encoder) {
-//    cout << motor << endl;
-//    cout << m_motor << endl;
-//    m_motor = motor;
-//    cout << "Thing" << endl;
-//    cout << m_motor->getPort() << endl;
-//    if(m_motor->getControllerType() == CANTALON) {
-//        cout << "Error: motor in port " << m_motor->getPort() << " is not a CANTalon!" << endl;
-//    }
-//}
+COREEncoder::COREEncoder(shared_ptr<CANTalon> boundCANTalonController, encoderType encoder, bool reversed)
+        : m_encoderType(encoder),
+          m_reversed(reversed) {
+    CANTalonController = boundCANTalonController;
+    m_portA = -1;
+    m_portB = -1;
+    m_boundToCANTalon = true;
+    Reset();
+    COREHardwareManager::addEncoder(this);
+}
 
-void COREEncoder::setReversed(bool reversed) {
+void COREEncoder::setEncReversed(bool reversed) {
     m_reversed = reversed;
 }
 
-bool COREEncoder::getReversed() {
+bool COREEncoder::getEncReversed() {
     return m_reversed;
 }
 
-int COREEncoder::Get() {
-//    if(m_motor != nullptr && m_motor->getControllerType() == CANTALON) {
-//        return (m_motor->CANTalonController->GetEncPosition() * (m_reversed ? -1 : 1)) + m_offset;
-//    }
-    return (encoder->Get() * (m_reversed ? -1 : 1)) + m_offset;
+int COREEncoder::GetEncPos() {
+    return m_pos;
+}
+
+double COREEncoder::GetEncVel() {
+    return m_vel;
+}
+
+double COREEncoder::GetEncAccel() {
+    return m_accel;
 }
 
 double COREEncoder::getDistance(distanceUnit unit) {
-    return 0;
+    return m_ticksToDistanceConversion[unit];
 }
 
-void COREEncoder::setDistance(distanceUnit unit) {
-
+void COREEncoder::setDistance(distanceUnit unit, double ticksToUnit) {
+    m_ticksToDistanceConversion[unit] = ticksToUnit;
 }
 
-void COREEncoder::Set(int value) {
-//    if(m_motor != nullptr && m_motor->getControllerType() == CANTALON) {
-//        m_motor->CANTalonController->SetEncPosition(value);
-//        m_offset = 0;
-//    }
-//    else {
+void COREEncoder::SetEncPos(int value) {
+    if(m_boundToCANTalon) {
+        CANTalonController->SetEncPosition(value);
+        m_offset = 0;
+    } else {
         encoder->Reset();
         m_offset = value;
-//    }
+    }
+    m_lastPos = value;
+    m_lastVel = 0;
 }
 
 void COREEncoder::Reset() {
-	Set(0);
+    SetEncPos(0);
 }
 
-COREEncoder::COREEncoder(shared_ptr<CANTalon> CANTalonController, encoderType encoderType) : m_bondToCANTalon(true) {
-    m_CANTalonController = CANTalonController;
+int COREEncoder::GetPortA() {
+    return m_portA;
+}
+
+int COREEncoder::GetPortB() {
+    return m_portB;
+}
+
+bool COREEncoder::IsBoundToCANTalon() {
+    return m_boundToCANTalon;
+}
+
+void COREEncoder::Update() {
+    double time = m_timer.Get();
+    if(time != 0) {
+        if(m_boundToCANTalon) {
+            m_pos = CANTalonController->GetEncPosition();
+            m_vel = CANTalonController->GetEncVel();
+        } else {
+            m_pos = (encoder->Get() * (m_reversed ? -1 : 1)) + m_offset;
+            m_vel = (m_pos - m_lastPos) / time;
+        }
+        m_accel = (m_vel - m_lastVel) / time;
+        m_lastPos = m_pos;
+        m_lastVel = m_vel;
+    }
+    m_timer.Reset();
+    m_timer.Start();
 }

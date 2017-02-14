@@ -117,7 +117,7 @@ void CORESwerve::update() {
         else {
         	i->m_setMagnitude = 0;
         }
-        //i->update();
+        //i->Update();
     }
 
     if(max>1.0){

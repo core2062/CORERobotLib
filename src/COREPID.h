@@ -42,8 +42,6 @@ namespace CORE {
         void setI(double value, PIDType pidType, int profile = -1);
         void setD(double value, PIDType pidType, int profile = -1);
         void setF(double value, PIDType pidType, int profile = -1);
-        void setTicksInRotation(int ticks);
-        int getTicksInRotation();
         double getP(PIDType pidType, int profile = -1);
         double getI(PIDType pidType, int profile = -1);
         double getD(PIDType pidType, int profile = -1);

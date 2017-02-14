@@ -53,6 +53,7 @@ void CORERobot::OperatorControl() {
 
 void CORERobot::Test() {
     while(IsEnabled()) {
+        LiveWindow::GetInstance()->Run();
         COREScheduler::test();
         waitLoopTime();
     }

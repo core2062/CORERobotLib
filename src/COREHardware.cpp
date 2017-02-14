@@ -3,6 +3,7 @@
 using namespace CORE;
 
 vector<COREMotor*> COREHardwareManager::m_motors;
+vector<COREEncoder*> COREHardwareManager::m_encoders;
 
 void COREHardwareManager::addMotor(COREMotor * motor) {
 	bool error = false;
@@ -26,6 +27,29 @@ void COREHardwareManager::zeroMotors() {
 
 void COREHardwareManager::updateMotors() {
     for(auto motor : m_motors) {
-        motor->update();
+        motor->Update();
+    }
+}
+
+void COREHardwareManager::updateEncoders() {
+    for(auto encoder : m_encoders) {
+        encoder->Update();
+    }
+}
+
+void COREHardwareManager::zeroEncoders() {
+    for(auto encoder : m_encoders) {
+        encoder->Reset();
+    }
+}
+
+void COREHardwareManager::addEncoder(COREEncoder * encoder) {
+    m_encoders.push_back(encoder);
+    if(!encoder->IsBoundToCANTalon()) {
+        CORELog::logInfo("Encoder in ports " + to_string(encoder->GetPortA()) + ", "
+                         + to_string(encoder->GetPortB()) + " added");
+    } else {
+        CORELog::logInfo("Encoder bound to CAN Talon ID: " + to_string(encoder->CANTalonController->GetDeviceID())
+                         + " added");
     }
 }

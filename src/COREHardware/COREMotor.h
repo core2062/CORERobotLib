@@ -16,7 +16,7 @@ namespace CORE {
         VOLTAGE,
         PERCENTAGE,
         CURRENT,
-        PID
+        FOLLOWER
     };
 
     enum controllerType {
@@ -29,11 +29,12 @@ namespace CORE {
         FORWARD,
         BACKWARD
     };
-    class COREMotor : public ControllerInput, public ControllerOutput {
+    class COREMotor : public ControllerOutput {
     public:
         shared_ptr<CANTalon> CANTalonController;
         shared_ptr<Jaguar> JaguarController;
         shared_ptr<Victor> VictorController;
+        shared_ptr<COREEncoder> Encoder;
         COREMotor(int port, controllerType controller = CANTALON, controlMode controlMethod = VOLTAGE);
         void Set(double motorSetValue);
         double Get();
@@ -47,9 +48,7 @@ namespace CORE {
         void setDeadband(double min, double max);
         void motorSafety(bool disableMotorSafety = true);
         double getCurrent();
-        void update();
-        double ControllerGetPos() override;
-        double ControllerGetVel() override;
+        void Update();
         void ControllerSet(double value) override;
     private:
         double m_motorValue = 0;

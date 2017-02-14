@@ -9,6 +9,7 @@ COREMotor::COREMotor(int port, controllerType controller, controlMode controlMet
         m_motorControlMode(controlMethod), m_motorControllerType(controller), m_motorPort(port) {
     if(m_motorControllerType == CORE::CANTALON) {
         CANTalonController = make_shared<CANTalon>(port);
+        Encoder = make_shared<COREEncoder>(CANTalonController, SRX_RELATIVE);
     }
     else if(m_motorControllerType == CORE::JAGUAR) {
         JaguarController = make_shared<Jaguar>(port);
@@ -77,7 +78,12 @@ double COREMotor::getCurrent() {
     }
 }
 
-void COREMotor::update() {
+void COREMotor::Update() {
+    if(m_motorControlMode == FOLLOWER || (m_motorControllerType == CANTALON
+                                         && CANTalonController->GetControlMode() == CANTalon::ControlMode::kFollower)) {
+        m_motorControlMode = FOLLOWER;
+        return;
+    }
     if (!m_motorUpdated && !m_motorSafetyDisabled) {
         if (m_motorSafetyCounter > 3) {
             m_motorValue = 0;
@@ -113,26 +119,6 @@ void COREMotor::update() {
     cout << "Trap Port " << getPort() << " Value = " << m_trapSum << endl;
 #endif*/
     m_motorUpdated = false;
-}
-
-double COREMotor::ControllerGetPos() {
-    if(m_motorControllerType == CORE::CANTALON) {
-        return CANTalonController->GetEncPosition();
-    } else {
-        cout << "Error! Motor controller is of type: " << (m_motorControllerType == CORE::JAGUAR ? "Jaguar" : "Victor")
-             << " and has no attached encoder!" << endl;
-        return 0;
-    }
-}
-
-double COREMotor::ControllerGetVel() {
-    if(m_motorControllerType == CORE::CANTALON) {
-        return CANTalonController->GetEncVel();
-    } else {
-        cout << "Error! Motor controller is of type: " << (m_motorControllerType == CORE::JAGUAR ? "Jaguar" : "Victor")
-             << " and has no attached encoder!" << endl;
-        return 0;
-    }
 }
 
 void COREMotor::ControllerSet(double value) {
