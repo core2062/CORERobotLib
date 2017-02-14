@@ -38,7 +38,7 @@ double CORE::COREMotionProfile::getMaxAccel() {
 }
 
 void CORE::COREMotionProfile::Set(double setPoint) {
-    COREController::Set(setPoint);
+    COREMotionController::Set(setPoint);
     m_actualVelocity = m_inputDevice->ControllerGetVel();
     m_timeToAccel = (m_maxVel - m_actualVelocity) / m_maxAccel;
     m_ticksToAccel = m_actualPosition + 0.5 * m_maxAccel * (m_timeToAccel * m_timeToAccel);
@@ -51,15 +51,15 @@ void CORE::COREMotionProfile::Set(double setPoint) {
 }
 
 double CORE::COREMotionProfile::Get() {
-    return COREController::Get();
+    return COREMotionController::Get();
 }
 
 void CORE::COREMotionProfile::setActual(double actualPosition) {
-    COREController::setActual(actualPosition);
+    COREMotionController::setActual(actualPosition);
 }
 
 double CORE::COREMotionProfile::getActual() {
-    return COREController::getActual();
+    return COREMotionController::getActual();
 }
 
 void CORE::COREMotionProfile::update(int profile) {

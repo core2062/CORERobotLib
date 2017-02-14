@@ -46,7 +46,7 @@ namespace CORE {
         virtual void ControllerSet(double value) = 0;
     };
 
-    class COREController {
+    class COREMotionController {
     public:
         virtual void Set(double setPoint);
         virtual double Get();

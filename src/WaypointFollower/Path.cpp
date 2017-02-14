@@ -6,6 +6,10 @@ Waypoint::Waypoint(Translation2d pos, double spd, std::string setFlag) {
 	flag = setFlag;
 }
 
+Path::Path(){
+
+}
+
 Path::Path(std::vector<Waypoint> waypoints) {
 	m_waypoints = waypoints;
 	for (unsigned int i = 0; i < m_waypoints.size() - 1; ++i){

@@ -34,6 +34,47 @@ private:
     string m_name;
 };
 
+class COREController : public CORETask{
+public:
+	COREController(string ID);
+
+	virtual void enabledLoop() = 0;
+	virtual void enable(){};
+	virtual void disable(){};
+
+	bool isEnabled(){
+		return m_enabled;
+	}
+	string getID(){
+		return m_ID;
+	}
+	virtual ~COREController(){};
+private:
+	string m_ID;
+	bool m_enabled = false;
+};
+
+class COREVariableControlledSubsystem : public CORESubsystem{
+public:
+	COREVariableControlledSubsystem(string name);
+	virtual void robotInit() = 0;
+	virtual void teleopInit() = 0;
+	virtual void teleop();
+	virtual void teleopEnd() {}
+    virtual void disabled() {}
+	virtual void test() {}
+	bool setController(string id);
+	bool setController(COREController * controller, bool store = false);
+    string getName() {
+        return m_name;
+    }
+	virtual ~COREVariableControlledSubsystem(){}
+
+private:
+    string m_name;
+    COREController* m_currentController = 0;
+};
+
 class COREScheduler {
 private:
 	static vector<std::shared_ptr<CORESubsystem>> m_subsystems;

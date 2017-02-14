@@ -10,6 +10,42 @@ CORESubsystem::CORESubsystem(string name) {
 
 }
 
+COREController::COREController(string ID) : CORETask(){
+	m_ID = ID;
+}
+
+COREVariableControlledSubsystem::COREVariableControlledSubsystem(
+		string name) : CORESubsystem(name) {
+}
+
+void CORE::COREVariableControlledSubsystem::teleop() {
+	if(m_currentController != 0){
+		if(m_currentController->isEnabled()){
+			m_currentController->enabledLoop();
+		}
+	}
+}
+
+bool COREVariableControlledSubsystem::setController(string id) {
+	if(m_controllers.count(id)){
+		m_currentController = m_controllers[id];
+		return true;
+	}
+	return false;
+}
+
+bool COREVariableControlledSubsystem::setController(
+		COREController* controller, bool store) {
+	if(controller == 0){
+		return false;
+	}
+	m_currentController = controller;
+	if(store && !m_controllers.count(controller->getID())){
+		m_controllers[controller->getID()] = controller;
+	}
+	return true;
+}
+
 CORETask::CORETask():
 		m_disabled(false)
 {
@@ -171,3 +207,4 @@ void COREScheduler::test() {
 	}
 	//TODO: Do something
 }
+

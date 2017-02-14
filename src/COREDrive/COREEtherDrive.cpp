@@ -2,6 +2,10 @@
 
 using namespace CORE;
 
+double COREEtherDrive::m_a = 0.0;
+double COREEtherDrive::m_b = 0.0;
+double COREEtherDrive::m_quickTurn = 0.0;
+
 COREEtherDrive::COREEtherDrive(COREMotor * leftMotor1, COREMotor * leftMotor2, COREMotor * rightMotor1,
                                COREMotor * rightMotor2, double a, double b, double quickTurn) :
         m_leftMotor1(leftMotor1), m_leftMotor2(leftMotor2), m_rightMotor1(rightMotor1), m_rightMotor2(rightMotor2){
