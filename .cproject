@@ -9,6 +9,7 @@
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CORERobotLib"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/GearsBotCPPWin/Debug"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CORERobotLib/Debug"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CORERobotLib/lib"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="GearsBotCPPWin" srcPrefixMapping="" srcRootPath=""/>
 						<entry flags="RESOLVED" kind="libraryFile" name="CORERobotLib" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
@@ -73,7 +74,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="build|lib|3rdparty" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="src/Fake_WPILib|build|lib|3rdparty" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -86,6 +87,7 @@
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration configurationName="Windows Simulate"/>
+		<configuration configurationName="lib"/>
 		<configuration configurationName="Simulate">
 			<resource resourceType="PROJECT" workspacePath="/GearsBotCPP"/>
 		</configuration>

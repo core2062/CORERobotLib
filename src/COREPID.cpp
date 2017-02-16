@@ -14,21 +14,19 @@ COREPID::PIDProfile::PIDMode* COREPID::getPIDMode(PIDType pidType, int profile) 
                 return &m_PID1.pos;
             } else if(pidType == PIDType::VEL) {
                 return &m_PID1.vel;
-            } else if(pidType == PIDType::ANG) {
-                return &m_PID1.ang;
             } else {
-                cout << "Error! PID type invalid!" << endl;
+                return &m_PID1.ang;
             }
+            break;
         case 2:
             if(pidType == PIDType::POS) {
                 return &m_PID2.pos;
             } else if(pidType == PIDType::VEL) {
                 return &m_PID2.vel;
-            } else if(pidType == PIDType::ANG) {
-                return &m_PID2.ang;
             } else {
-                cout << "Error! PID type invalid!" << endl;
+                return &m_PID2.ang;
             }
+            break;
         default:
             return getPIDMode(pidType, m_defaultProfile);
     }
@@ -126,39 +124,51 @@ double COREPID::angPID(double setPoint) {
  * @param fProfile2Value The F constant for profile 2, Set to 1 or 0 to disable. Disabled by default
  * @param integralAccuracy The number of previous errors to use when calculating the Integral term. Set to 1 by default
  */
+COREPID::COREPID(shared_ptr<ControllerInput> inputDevice, shared_ptr<ControllerOutput> outputDevice, PIDType pidType,
+                 double pProfile1Value, double iProfile1Value, double dProfile1Value, double fProfile1Value,
+                 double pProfile2Value, double iProfile2Value, double dProfile2Value, double fProfile2Value,
+                 int integralAccuracy) {
+		m_inputDevice = inputDevice;
+	    m_outputDevice = outputDevice;
+	    m_currentProfile = getPIDProfile(1);
+	    for(auto type : m_PIDTypes) {
+	        getPIDMode(type, 1)->P = pProfile1Value;
+	        getPIDMode(type, 1)->I = iProfile1Value;
+	        getPIDMode(type, 1)->D = dProfile1Value;
+	        getPIDMode(type, 1)->F = fProfile1Value;
+	        getPIDMode(type, 2)->P = pProfile2Value;
+	        getPIDMode(type, 2)->I = iProfile2Value;
+	        getPIDMode(type, 2)->D = dProfile2Value;
+	        getPIDMode(type, 2)->F = fProfile2Value;
+	    }
+	    for(int i = 1; i <= 2; i++) {
+	        for(auto type : m_PIDTypes) {
+	            getPIDMode(type, i)->riemannSum.resize(integralAccuracy);
+	            getPIDMode(type, i)->riemannSum[0] = 0;
+	            getPIDMode(type, i)->lastOutput = 0;
+	            getPIDMode(type, i)->proportional = 0;
+	            getPIDMode(type, i)->integral = 0;
+	            getPIDMode(type, i)->derivative = 0;
+	            getPIDMode(type, i)->mistake = 0;
+	            getPIDMode(type, i)->lastMistake = 0;
+	        }
+	    }
+	    if(integralAccuracy < 1) {
+	        integralAccuracy = 1;
+	    }
+	    m_timer.Reset();
+	    m_timer.Start();
+}
+
 COREPID::COREPID(ControllerInput* inputDevice, ControllerOutput* outputDevice, PIDType pidType,
                  double pProfile1Value, double iProfile1Value, double dProfile1Value, double fProfile1Value,
                  double pProfile2Value, double iProfile2Value, double dProfile2Value, double fProfile2Value,
                  int integralAccuracy) {
-    m_inputDevice = inputDevice;
-    m_outputDevice = outputDevice;
-    for(auto type : m_PIDTypes) {
-        getPIDMode(type, 1)->P = pProfile1Value;
-        getPIDMode(type, 1)->I = iProfile1Value;
-        getPIDMode(type, 1)->D = dProfile1Value;
-        getPIDMode(type, 1)->F = fProfile1Value;
-        getPIDMode(type, 2)->P = pProfile2Value;
-        getPIDMode(type, 2)->I = iProfile2Value;
-        getPIDMode(type, 2)->D = dProfile2Value;
-        getPIDMode(type, 2)->F = fProfile2Value;
-    }
-    for(int i = 1; i <= 2; i++) {
-        for(auto type : m_PIDTypes) {
-            getPIDMode(type, i)->riemannSum.resize(integralAccuracy);
-            getPIDMode(type, i)->riemannSum[0] = 0;
-            getPIDMode(type, i)->lastOutput = 0;
-            getPIDMode(type, i)->proportional = 0;
-            getPIDMode(type, i)->integral = 0;
-            getPIDMode(type, i)->derivative = 0;
-            getPIDMode(type, i)->mistake = 0;
-            getPIDMode(type, i)->lastMistake = 0;
-        }
-    }
-    if(integralAccuracy < 1) {
-        integralAccuracy = 1;
-    }
-    m_timer.Reset();
-    m_timer.Start();
+	shared_ptr<ControllerInput> inputDevicePointer(inputDevice);
+	shared_ptr<ControllerOutput> outputDevicePointer(outputDevice);
+	COREPID(inputDevicePointer, outputDevicePointer, pidType, pProfile1Value, iProfile1Value, dProfile1Value, fProfile1Value,
+            pProfile2Value, iProfile2Value, dProfile2Value, fProfile2Value, integralAccuracy);
+
 }
 
 /**

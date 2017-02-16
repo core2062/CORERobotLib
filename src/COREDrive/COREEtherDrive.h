@@ -15,7 +15,7 @@ namespace CORE {
     protected:
         void update() override;
     private:
-        COREMotor* m_leftMotor1, * m_rightMotor1, * m_leftMotor2, * m_rightMotor2;
+        COREMotor* m_leftMotor1, * m_leftMotor2, * m_rightMotor1, * m_rightMotor2;
         double etherL(double fwd, double rcw, double a, double b);
         double etherR(double fwd, double rcw, double a, double b);
         double m_a, m_b, m_quickTurn, m_left, m_right;

@@ -40,11 +40,14 @@ namespace CORE {
         void setTicksPerRotation(double ticks) {
             m_ticksPerDegree = 360.0 / ticks;
         }
+
+        virtual ~ControllerInput() {}
     };
 
     class ControllerOutput {
     public:
         virtual void ControllerSet(double value) = 0;
+        virtual ~ControllerOutput() {}
     };
 
     class COREController {
@@ -53,6 +56,7 @@ namespace CORE {
         virtual double Get();
         virtual void setActual(double actualPosition);
         virtual double getActual();
+        virtual ~COREController() {}
     protected:
         virtual void update(int profile = -1) = 0;
         ControllerInput* m_inputDevice;

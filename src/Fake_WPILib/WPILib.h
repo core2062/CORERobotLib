@@ -1,4 +1,5 @@
 #pragma once
+#ifndef __arm__
 
 #include <string>
 #include <memory>
@@ -61,7 +62,7 @@ public:
 
     inline void AddDefault(const std::string &name, void* object) {}
 
-    inline void* GetSelected() {}
+    inline void* GetSelected() { return nullptr; }
 };
 
 class SmartDashboard {
@@ -73,15 +74,15 @@ public:
     //static inline void PutData(NamedSendable *value) {}
     static inline void PutBoolean(string keyName, bool value) {}
 
-    static inline bool GetBoolean(string keyName, bool defaultValue) {}
+    static inline bool GetBoolean(string keyName, bool defaultValue) { return false; }
 
     static inline void PutNumber(string keyName, double value) {}
 
-    static inline double GetNumber(string keyName, double defaultValue) {}
+    static inline double GetNumber(string keyName, double defaultValue) { return 0; }
 
     static inline void PutString(string keyName, string value) {}
 
-    static inline std::string GetString(string keyName, string defaultValue) {}
+    static inline std::string GetString(string keyName, string defaultValue) { return "null"; }
 };
 
 inline void Wait(double _) {
@@ -112,7 +113,7 @@ class Encoder {
 public:
     inline Encoder(int aChannel, int bChannel, bool reverseDirection = false) {}
 
-    inline int32_t Get() {}
+    inline int32_t Get() { return -1; }
 
     inline void Reset() {}
 };
@@ -172,3 +173,4 @@ public:
 private:
     static Preferences* m_instance;
 };
+#endif
