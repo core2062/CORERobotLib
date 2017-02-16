@@ -8,13 +8,9 @@ namespace CORE {
         CORETask();
 
         virtual void robotInitTask() {}
-
         virtual void autonInitTask() {}
-
         virtual void teleopInitTask() {}
-
         virtual void preLoopTask() {}
-
         virtual void postLoopTask() {}
 
         virtual void teleopEndTask() {}

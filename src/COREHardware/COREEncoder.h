@@ -6,7 +6,7 @@
 #include <WPILib.h>
 #include "CORETimer.h"
 #include "CANTalon.h"
-#include <COREController.h>
+#include "../COREController.h"
 
 using namespace std;
 

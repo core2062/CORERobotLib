@@ -4,11 +4,11 @@
 #include <memory>
 #include <cmath>
 
+#include "CORETask.h"
 #include "COREHardware/CORETimer.h"
-#include <CORETask.h>
 #include "COREMath.h"
 #include "CORELog.h"
-#include <COREController.h>
+#include "COREController.h"
 #include "COREHardware/CORESensor.h"
 
 namespace CORE {

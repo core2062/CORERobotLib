@@ -2,9 +2,9 @@
 
 #include <vector>
 #include <map>
-#include <CORETask.h>
-#include <CORELog.h>
-#include <COREMath.h>
+#include "../CORETask.h"
+#include "../CORELog.h"
+#include "../COREMath.h"
 
 #include <WPILib.h>
 

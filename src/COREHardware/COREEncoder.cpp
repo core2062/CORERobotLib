@@ -1,5 +1,5 @@
 #include "COREEncoder.h"
-#include <COREHardware.h>
+#include "../COREHardware.h"
 
 using namespace CORE;
 

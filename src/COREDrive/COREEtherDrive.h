@@ -2,10 +2,10 @@
 
 #include <iostream>
 
-#include <CORETask.h>
-#include <COREHardware/COREMotor.h>
-#include <COREConstant.h>
-#include <COREDrive.h>
+#include "../CORETask.h"
+#include "../COREHardware/COREMotor.h"
+#include "../COREConstant.h"
+#include "../COREDrive.h"
 
 namespace CORE {
     class COREEtherDrive : public COREDrive {

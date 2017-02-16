@@ -1,5 +1,5 @@
 #include "COREMotor.h"
-#include <COREHardware.h>
+#include "../COREHardware.h"
 
 using namespace std;
 

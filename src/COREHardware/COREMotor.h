@@ -3,9 +3,9 @@
 #include <vector>
 #include <memory>
 
-#include <CORETask.h>
-#include <COREPID.h>
-#include <COREController.h>
+#include "../CORETask.h"
+#include "../COREPID.h"
+#include "../COREController.h"
 #include "COREEncoder.h"
 
 #include <WPILib.h>

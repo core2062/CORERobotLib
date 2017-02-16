@@ -3,10 +3,10 @@
 #include <vector>
 #include <cmath>
 
-#include <COREHardware.h>
-#include "COREDrive.h"
+#include "../COREHardware.h"
+#include "../COREDrive.h"
 #include "CANTalon.h"
-#include "COREHardware/CORESensor.h"
+#include "../COREHardware/CORESensor.h"
 
 namespace CORE {
     class CORESwerve : public COREDrive {

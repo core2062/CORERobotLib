@@ -1,6 +1,6 @@
 #pragma once
 
-#include <COREController.h>
+#include "../COREController.h"
 
 namespace CORE {
     class COREMotionProfile : COREController {
