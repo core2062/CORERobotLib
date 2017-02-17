@@ -10,10 +10,35 @@ CORESubsystem::CORESubsystem(string name) {
 
 }
 
-CORETask::CORETask() :
-        m_disabled(false) {
-    shared_ptr<CORETask> pointer(this);
-    COREScheduler::addTask(pointer);
+COREController::COREController() : CORETask(){
+}
+
+COREVariableControlledSubsystem::COREVariableControlledSubsystem(
+		string name) : CORESubsystem(name) {
+}
+
+void CORE::COREVariableControlledSubsystem::teleop() {
+	if(m_currentController != 0){
+		if(m_currentController->isEnabled()){
+			m_currentController->enabledLoop();
+		}
+	}
+}
+
+bool COREVariableControlledSubsystem::setController(
+		COREController* controller) {
+	if(controller == 0){
+		return false;
+	}
+	m_currentController = controller;
+	return true;
+}
+
+CORETask::CORETask():
+		m_disabled(false)
+{
+	shared_ptr<CORETask> pointer(this);
+	COREScheduler::addTask(pointer);
 }
 
 void CORETask::disableTasks(bool disable) {
@@ -178,3 +203,4 @@ void COREScheduler::test() {
     }
     //TODO: Do something
 }
+

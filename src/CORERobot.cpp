@@ -2,6 +2,8 @@
 
 using namespace CORE;
 
+gameMode CORERobot::m_mode = DISABLE;
+
 CORERobot::CORERobot() : CORESubsystem("Robot") {
 
 }
@@ -30,10 +32,12 @@ void CORERobot::RobotInit() {
 }
 
 void CORERobot::Disabled() {
+	m_mode = DISABLE;
     COREScheduler::disabled();
 }
 
 void CORERobot::Autonomous() {
+	m_mode = AUTO;
     bool autonComplete = false;
     COREScheduler::autonInit();
     while(IsAutonomous() && IsEnabled() && !autonComplete) {
@@ -43,6 +47,7 @@ void CORERobot::Autonomous() {
 }
 
 void CORERobot::OperatorControl() {
+	m_mode = TELE;
     COREScheduler::teleopInit();
     while(IsOperatorControl() && IsEnabled()) {
         COREScheduler::teleop();
@@ -52,9 +57,14 @@ void CORERobot::OperatorControl() {
 }
 
 void CORERobot::Test() {
+	m_mode = TEST;
     while(IsEnabled()) {
         LiveWindow::GetInstance()->Run();
         COREScheduler::test();
         waitLoopTime();
     }
+}
+
+gameMode CORERobot::getMode(){
+	return m_mode;
 }

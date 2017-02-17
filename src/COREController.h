@@ -50,7 +50,7 @@ namespace CORE {
         virtual ~ControllerOutput() {}
     };
 
-    class COREController {
+    class COREMotionController {
     public:
         virtual void Set(double setPoint);
         virtual double Get();

@@ -3,7 +3,7 @@
 #include "../COREController.h"
 
 namespace CORE {
-    class COREMotionProfile : COREController {
+    class COREMotionProfile : COREMotionController {
     public:
         COREMotionProfile(ControllerInput* inputDevice, ControllerOutput* outputDevice, double maxVel, double maxAccel);
         COREMotionProfile(double maxVel, double maxAccel);
