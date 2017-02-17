@@ -2,20 +2,23 @@
 #include "../COREHardware.h"
 
 using namespace std;
-
 using namespace CORE;
 
 COREMotor::COREMotor(int port, controllerType controller, controlMode controlMethod) :
         m_motorControlMode(controlMethod), m_motorControllerType(controller), m_motorPort(port) {
     if(m_motorControllerType == CORE::CANTALON) {
-        CANTalonController = make_shared<CANTalon>(port);
+    	try {
+    		CANTalonController = make_shared<CANTalon>(port);
+    	} catch (const std::exception& e) {
+    		cout << e.what() << endl;
+    	}
         Encoder = make_shared<COREEncoder>(CANTalonController, SRX_RELATIVE);
     } else if(m_motorControllerType == CORE::JAGUAR) {
         JaguarController = make_shared<Jaguar>(port);
     } else if(m_motorControllerType == CORE::VICTOR) {
         VictorController = make_shared<Victor>(port);
     } else {
-        //TODO: Throw error
+        CORELog::logError("Non existent motor controller type given");
     }
     COREHardwareManager::addMotor(this);
 }
@@ -47,6 +50,12 @@ controlMode COREMotor::getControlMode() {
 
 int COREMotor::getPort() {
     return m_motorPort;
+}
+
+string COREMotor::getName() {
+	ostringstream name;
+	CANTalonController->GetDescription(name);
+	return name.str();
 }
 
 controllerType COREMotor::getControllerType() {

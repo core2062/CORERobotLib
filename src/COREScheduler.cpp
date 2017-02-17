@@ -5,8 +5,8 @@ using namespace std;
 
 CORESubsystem::CORESubsystem(string name) {
     m_name = name;
-    shared_ptr<CORESubsystem> pointer(this);
-    COREScheduler::addSubsystem(pointer);
+//    shared_ptr<CORESubsystem> pointer(this);
+    COREScheduler::addSubsystem(this);
 
 }
 
@@ -24,7 +24,7 @@ bool CORETask::isDisabled() {
     return m_disabled;
 }
 
-vector<shared_ptr<CORESubsystem>> COREScheduler::m_subsystems;
+vector<CORESubsystem*> COREScheduler::m_subsystems;
 vector<COREAuton*> COREScheduler::m_autons;
 vector<shared_ptr<CORETask>> COREScheduler::m_tasks;
 shared_ptr<SendableChooser<COREAuton*>> COREScheduler::m_autonChooser;
@@ -32,9 +32,13 @@ shared_ptr<SendableChooser<COREAuton*>> COREScheduler::m_autonChooser;
 COREAuton* COREScheduler::m_selectedAuton;
 CORETimer COREScheduler::m_autonTimer;
 
-void COREScheduler::addSubsystem(shared_ptr<CORESubsystem> subsystem) {
+void COREScheduler::addSubsystem(CORESubsystem* subsystem) {
     m_subsystems.push_back(subsystem);
-    CORELog::logInfo(subsystem->getName() + " subsystem added");
+    if(subsystem == nullptr) {
+    	CORELog::logError("Subsystem added as null pointer!");
+    } else {
+    	CORELog::logInfo(subsystem->getName() + " subsystem added");
+    }
 }
 
 void COREScheduler::addAuton(COREAuton* auton) {

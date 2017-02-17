@@ -11,6 +11,8 @@
 #include <WPILib.h>
 #include <CANTalon.h>
 
+using namespace std;
+
 namespace CORE {
     enum controlMode {
         VOLTAGE,
@@ -43,6 +45,7 @@ namespace CORE {
         void setControlMode(controlMode controlMethod);
         controlMode getControlMode();
         int getPort();
+        string getName();
         controllerType getControllerType();
         void setDeadband(double range);
         void setDeadband(double min, double max);

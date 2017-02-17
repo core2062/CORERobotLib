@@ -41,14 +41,14 @@ namespace CORE {
 
     class COREScheduler {
     private:
-        static vector<std::shared_ptr<CORESubsystem>> m_subsystems;
+        static vector<CORESubsystem*> m_subsystems;
         static vector<COREAuton*> m_autons;
         static vector<std::shared_ptr<CORETask>> m_tasks;
         static shared_ptr<SendableChooser<COREAuton*>> m_autonChooser;
         static COREAuton* m_selectedAuton;
         static CORETimer m_autonTimer;
     public:
-        static void addSubsystem(shared_ptr<CORESubsystem> subsystem);
+        static void addSubsystem(CORESubsystem* subsystem);
         static void addAuton(COREAuton* auton);
         static void addTask(std::shared_ptr<CORETask> task);
         static void robotInit();
