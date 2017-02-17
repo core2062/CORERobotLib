@@ -6,9 +6,11 @@ Waypoint::Waypoint(Translation2d pos, double spd, std::string setFlag) {
 	flag = setFlag;
 }
 
+/*
 Path::Path(){
 
 }
+*/
 
 Path::Path(std::vector<Waypoint> waypoints) {
 	m_waypoints = waypoints;
@@ -28,8 +30,8 @@ Path::Path(std::vector<Waypoint> waypoints) {
 double Path::update(Translation2d pos) {
 	double rv = 0.0;
 	for(unsigned int i = 0; i < m_segments.size() - 1; ++i){
-		PathSegment segment = m_segments[i];
-		PathSegment::ClosestPointReport closestPointReport = segment.getClosestPoint(pos);
+//		PathSegment segment = m_segments[i];
+		PathSegment::ClosestPointReport closestPointReport = m_segments[i].getClosestPoint(pos);
 		if (closestPointReport.index >= .99){
 			m_segments.erase(m_segments.begin() + i);
 			if(m_waypoints.size() > 0){
@@ -41,18 +43,17 @@ double Path::update(Translation2d pos) {
 			return update(pos);
 		} else {
 			if(closestPointReport.index > 0.0){
-				segment.updateStart(closestPointReport.closestPoint);
+				m_segments[i].updateStart(closestPointReport.closestPoint);
 			}
 
 			rv = closestPointReport.distance;
 
 			if(m_segments.size() > i + 1){
-				PathSegment next = m_segments[i+1];
-				PathSegment::ClosestPointReport nextClosestPointReport = next.getClosestPoint(pos);
+				PathSegment::ClosestPointReport nextClosestPointReport = m_segments[i+1].getClosestPoint(pos);
 				if(nextClosestPointReport.index > 0
 						&& nextClosestPointReport.index < .99
 						&& nextClosestPointReport.distance < rv){
-					next.updateStart(nextClosestPointReport.closestPoint);
+					m_segments[i+1].updateStart(nextClosestPointReport.closestPoint);
 					rv = nextClosestPointReport.distance;
 					m_segments.erase(m_segments.begin() + i);
 					if(m_waypoints.size() > 0){

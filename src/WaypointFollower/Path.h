@@ -18,8 +18,8 @@ protected:
 	std::vector<std::string> m_flags;
 
 public:
-	Path();
-	Path(std::vector<Waypoint> waypoints);
+	//Path();
+	Path(std::vector<Waypoint> waypoints = {Waypoint(Translation2d(),0)});
 
 	double update(Translation2d pos);
 

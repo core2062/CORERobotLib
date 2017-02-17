@@ -59,7 +59,11 @@ Rotation2d Rotation2d::rotateBy(Rotation2d other) {
 }
 
 Rotation2d Rotation2d::inverse() {
-	return Rotation2d(m_cos, m_sin, false);
+	return Rotation2d(m_cos, -m_sin, false);
+}
+
+Rotation2d Rotation2d::opposite() {
+	return Rotation2d(-m_cos, -m_sin, false);
 }
 
 Rotation2d Rotation2d::interpolate(Rotation2d other, double x) {

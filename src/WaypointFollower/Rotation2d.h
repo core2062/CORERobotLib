@@ -24,6 +24,7 @@ public:
 
 	Rotation2d rotateBy(Rotation2d other);
 	Rotation2d inverse();
+	Rotation2d opposite();
 
 	Rotation2d interpolate(Rotation2d other, double x);
 };

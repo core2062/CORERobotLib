@@ -36,7 +36,7 @@ private:
 
 class COREController : public CORETask{
 public:
-	COREController(string ID);
+	COREController();
 
 	virtual void enabledLoop() = 0;
 	virtual void enable(){};
@@ -45,12 +45,8 @@ public:
 	bool isEnabled(){
 		return m_enabled;
 	}
-	string getID(){
-		return m_ID;
-	}
 	virtual ~COREController(){};
-private:
-	string m_ID;
+protected:
 	bool m_enabled = false;
 };
 
@@ -64,7 +60,7 @@ public:
     virtual void disabled() {}
 	virtual void test() {}
 	bool setController(string id);
-	bool setController(COREController * controller, bool store = false);
+	bool setController(COREController * controller);
     string getName() {
         return m_name;
     }

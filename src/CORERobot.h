@@ -20,11 +20,19 @@
 using namespace CORE;
 
 namespace CORE {
+
+enum gameMode{
+	TELE,
+	AUTO,
+	TEST,
+	DISABLE
+};
     class CORERobot : public CORESubsystem, public SampleRobot {
     private:
         bool m_loopStarted = false;
         CORETimer m_loopTimer;
         double m_targetLoopTime = 0.01;
+        static gameMode m_mode;
     public:
         CORERobot();
         void waitLoopTime();
@@ -34,5 +42,7 @@ namespace CORE {
         void Autonomous();
         void OperatorControl();
         void Test();
+
+        static gameMode getMode();
     };
 }

@@ -10,8 +10,7 @@ CORESubsystem::CORESubsystem(string name) {
 
 }
 
-COREController::COREController(string ID) : CORETask(){
-	m_ID = ID;
+COREController::COREController() : CORETask(){
 }
 
 COREVariableControlledSubsystem::COREVariableControlledSubsystem(
@@ -26,23 +25,12 @@ void CORE::COREVariableControlledSubsystem::teleop() {
 	}
 }
 
-bool COREVariableControlledSubsystem::setController(string id) {
-	if(m_controllers.count(id)){
-		m_currentController = m_controllers[id];
-		return true;
-	}
-	return false;
-}
-
 bool COREVariableControlledSubsystem::setController(
-		COREController* controller, bool store) {
+		COREController* controller) {
 	if(controller == 0){
 		return false;
 	}
 	m_currentController = controller;
-	if(store && !m_controllers.count(controller->getID())){
-		m_controllers[controller->getID()] = controller;
-	}
 	return true;
 }
 
