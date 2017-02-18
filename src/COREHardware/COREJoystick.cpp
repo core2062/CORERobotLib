@@ -5,7 +5,7 @@ using namespace CORE;
 bool COREJoystick::getPOVButton(JoystickButton button) {
 	switch(m_joystick.GetPOV()) {
 	case 0:
-		return button == DPAD_N;
+		return (button == DPAD_N);
 		break;
 	case 45:
 		return button == DPAD_NE;
@@ -17,7 +17,7 @@ bool COREJoystick::getPOVButton(JoystickButton button) {
 		return button == DPAD_SE;
 		break;
 	case 180:
-		return button == DPAD_S;
+		return (button == DPAD_S);
 		break;
 	case 225:
 		return button == DPAD_SW;
@@ -61,7 +61,11 @@ void COREJoystick::registerVector(JoystickAxis axisA, JoystickAxis axisB) {
  * Register a joystick button to be used. Must be called before a joystick button can be used.
  */
 void COREJoystick::registerButton(JoystickButton button) {
-	m_buttonCache[button] = m_joystick.GetRawButton(button) ? ON : OFF;
+	if(button > -1){
+		m_buttonCache[button] = (m_joystick.GetRawButton(button)) ? ON : OFF;
+	} else {
+		m_buttonCache[button] = (getPOVButton(button)) ? ON : OFF;
+	}
 }
 
 /*
@@ -99,7 +103,7 @@ Vector COREJoystick::getVector(JoystickAxis axisA, JoystickAxis axisB) {
 bool COREJoystick::getButton(JoystickButton button) {
     if(m_buttonCache.find(button) == m_buttonCache.end()) {
         registerButton(button);
-        return m_joystick.GetRawButton(button);
+        return getButton(button);
     } else {
         return (m_buttonCache[button] == RISING_EDGE || m_buttonCache[button] == ON);
     }
@@ -156,7 +160,7 @@ void COREJoystick::preLoopTask() {
     m_lastButtonCache = m_buttonCache;
     for(auto button : m_buttonCache) {
     	bool isActive;
-    	if(button.first != -1) {
+    	if(button.first > -1) {
 			isActive = m_joystick.GetRawButton(button.first);
     	} else {
     		isActive = getPOVButton(button.first);

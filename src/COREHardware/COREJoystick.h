@@ -23,13 +23,13 @@ namespace CORE {
             LEFT_TRIGGER_AXIS = 2
         };
         enum JoystickButton {
-            DPAD_N=-1,
-            DPAD_NE=-1,
-            DPAD_E=-1,
-            DPAD_SE=-1,
-            DPAD_S=-1,
-            DPAD_SW=-1,
-            DPAD_W=-1,
+            DPAD_N=-8,
+            DPAD_NE=-7,
+            DPAD_E=-6,
+            DPAD_SE=-5,
+            DPAD_S=-4,
+            DPAD_SW=-3,
+            DPAD_W=-2,
             DPAD_NW=-1,
             LEFT_STICK = 9,
             RIGHT_STICK = 10,
