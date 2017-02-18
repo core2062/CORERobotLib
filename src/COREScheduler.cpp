@@ -17,8 +17,8 @@ COREController::COREController() : CORETask() {
 COREVariableControlledSubsystem::COREVariableControlledSubsystem(string name) : CORESubsystem(name) {
 }
 
-void CORE::COREVariableControlledSubsystem::teleop() {
-	if(m_currentController != 0){
+void COREVariableControlledSubsystem::teleop() {
+	if(m_currentController != nullptr){
 		if(m_currentController->isEnabled()){
 			m_currentController->enabledLoop();
 		}

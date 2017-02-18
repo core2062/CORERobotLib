@@ -39,8 +39,12 @@ namespace CORE {
 		COREController();
 
 		virtual void enabledLoop() = 0;
-		virtual void enable() {}
-		virtual void disable() {}
+		virtual void enable() {
+			m_enabled = true;
+		}
+		virtual void disable() {
+			m_enabled = false;
+		}
 		bool isEnabled() {
 			return m_enabled;
 		}
@@ -54,18 +58,17 @@ namespace CORE {
 		COREVariableControlledSubsystem(string name);
 		virtual void robotInit() = 0;
 		virtual void teleopInit() = 0;
-		virtual void teleop() = 0;
+		virtual void teleop() override;
 		virtual void teleopEnd() {}
 		virtual void test() {}
 		virtual void disabled() {}
-		bool setController(string id);
 		bool setController(COREController * controller);
 		string getName() {
 			return m_name;
 		}
 		virtual ~COREVariableControlledSubsystem(){}
 
-	private:
+	protected:
 		string m_name;
 		COREController* m_currentController = 0;
 	};
