@@ -46,10 +46,10 @@ void COREHardwareManager::zeroEncoders() {
 void COREHardwareManager::addEncoder(COREEncoder* encoder) {
     m_encoders.push_back(encoder);
     if(!encoder->IsBoundToCANTalon()) {
-        CORELog::logInfo("Encoder in ports " + to_string(encoder->GetPortA()) + ", "
+        CORELog::logInfo("m_encoder in ports " + to_string(encoder->GetPortA()) + ", "
                          + to_string(encoder->GetPortB()) + " added");
     } else {
-        CORELog::logInfo("Encoder bound to CAN Talon ID: " + to_string(encoder->CANTalonController->GetDeviceID())
+        CORELog::logInfo("m_encoder bound to CAN Talon ID: " + to_string(encoder->CANTalonController->GetDeviceID())
                          + " added");
     }
 }

@@ -21,15 +21,15 @@ namespace CORE {
             }
 
             double getCurrentAngle() {
-                return clamp(m_steerMotor->CANTalonController->GetEncPosition() * m_ticksToRotations);
+                //return clamp(m_steerMotor->m_CANTalonController->GetEncPosition() * m_ticksToRotations);
             }
 
             double getSetValue(double angle) {
-//                int direction = m_steerMotor->CANTalonController->GetEncPosition() == 0 ? 0 :
-//                                m_steerMotor->CANTalonController->GetEncPosition() /
-//                                abs(m_steerMotor->CANTalonController->GetEncPosition());
-//                double base = (abs(m_steerMotor->CANTalonController->GetEncPosition()) -
-//                               (int) (abs(m_steerMotor->CANTalonController->GetEncPosition())) %
+//                int direction = m_steerMotor->m_CANTalonController->GetEncPosition() == 0 ? 0 :
+//                                m_steerMotor->m_CANTalonController->GetEncPosition() /
+//                                abs(m_steerMotor->m_CANTalonController->GetEncPosition());
+//                double base = (abs(m_steerMotor->m_CANTalonController->GetEncPosition()) -
+//                               (int) (abs(m_steerMotor->m_CANTalonController->GetEncPosition())) %
 //                               (int) (360.0 / m_ticksToRotations));
                 return /*(base * direction) +*/ (angle / m_ticksToRotations);
 

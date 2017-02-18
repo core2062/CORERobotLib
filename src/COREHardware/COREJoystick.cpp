@@ -61,11 +61,7 @@ void COREJoystick::registerVector(JoystickAxis axisA, JoystickAxis axisB) {
  * Register a joystick button to be used. Must be called before a joystick button can be used.
  */
 void COREJoystick::registerButton(JoystickButton button) {
-	if(button ) {
-		m_buttonCache[button] = m_joystick.GetRawButton(button) ? ON : OFF;
-	} else {
-
-	}
+	m_buttonCache[button] = m_joystick.GetRawButton(button) ? ON : OFF;
 }
 
 /*
