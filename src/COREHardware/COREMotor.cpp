@@ -7,11 +7,7 @@ using namespace CORE;
 COREMotor::COREMotor(int port, controllerType controller, controlMode controlMethod) :
         m_motorControlMode(controlMethod), m_motorControllerType(controller), m_motorPort(port) {
     if(m_motorControllerType == CORE::CANTALON) {
-    	try {
-    		CANTalonController = make_shared<CANTalon>(port);
-    	} catch (const std::exception& e) {
-    		cout << e.what() << endl;
-    	}
+    	CANTalonController = make_shared<CANTalon>(port);
         Encoder = make_shared<COREEncoder>(CANTalonController, SRX_RELATIVE);
     } else if(m_motorControllerType == CORE::JAGUAR) {
         JaguarController = make_shared<Jaguar>(port);
@@ -54,8 +50,14 @@ int COREMotor::getPort() {
 
 string COREMotor::getName() {
 	ostringstream name;
-	CANTalonController->GetDescription(name);
-	return name.str();
+	if(m_motorControllerType == CANTALON) {
+		CANTalonController->GetDescription(name);
+		return name.str();
+	} else {
+		//TODO: Better name
+		return to_string(m_motorPort);
+	}
+
 }
 
 controllerType COREMotor::getControllerType() {
@@ -86,15 +88,15 @@ double COREMotor::getCurrent() {
 
 void COREMotor::Update() {
     if(m_motorControlMode == FOLLOWER || (m_motorControllerType == CANTALON
-                                          &&
-                                          CANTalonController->GetControlMode() == CANTalon::ControlMode::kFollower)) {
+                                          && (CANTalonController->GetTalonControlMode() == CANTalon::TalonControlMode::kFollowerMode
+                                        		  || CANTalonController->GetControlMode() == CANTalon::ControlMode::kFollower))) {
         m_motorControlMode = FOLLOWER;
         return;
     }
     if(!m_motorUpdated && !m_motorSafetyDisabled) {
         if(m_motorSafetyCounter > 3) {
             m_motorValue = 0;
-            cout << "Motor not updated!" << endl;
+            CORELog::logWarning("Motor in port: " + to_string(m_motorPort) + " not updated!");
         } else {
             m_motorSafetyCounter++;
         }

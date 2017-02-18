@@ -16,9 +16,6 @@
 	    return 0;                                                         	 \
 	}                                                                        \
 
-
-using namespace CORE;
-
 namespace CORE {
 
 enum gameMode{

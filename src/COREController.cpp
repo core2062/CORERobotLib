@@ -1,17 +1,19 @@
 #include "COREController.h"
 
-void CORE::COREController::Set(double setPoint) {
+using namespace CORE;
+
+void COREMotionController::Set(double setPoint) {
     m_setPoint = setPoint;
 }
 
-double CORE::COREMotionController::Get() {
+double COREMotionController::Get() {
     return m_setPoint;
 }
 
-void CORE::COREMotionController::setActual(double actualPosition) {
+void COREMotionController::setActual(double actualPosition) {
     m_actualPosition = actualPosition;
 }
 
-double CORE::COREMotionController::getActual() {
+double COREMotionController::getActual() {
     return m_actualPosition;
 }

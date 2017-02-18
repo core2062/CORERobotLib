@@ -30,6 +30,7 @@ bool InterpolatingDouble::operator<(const InterpolatingDouble& other) const {
 
 InterpolatingTreeMap::InterpolatingTreeMap(int maxSize) {
 	m_max = maxSize;
+	put(InterpolatingDouble(0.0), Position2d());
 }
 
 Position2d InterpolatingTreeMap::put(InterpolatingDouble key,

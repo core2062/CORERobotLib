@@ -23,14 +23,14 @@ namespace CORE {
             LEFT_TRIGGER_AXIS = 2
         };
         enum JoystickButton {
-            DPAD_N,
-            DPAD_NE,
-            DPAD_E,
-            DPAD_SE,
-            DPAD_S,
-            DPAD_SW,
-            DPAD_W,
-            DPAD_NW,
+            DPAD_N=-1,
+            DPAD_NE=-1,
+            DPAD_E=-1,
+            DPAD_SE=-1,
+            DPAD_S=-1,
+            DPAD_SW=-1,
+            DPAD_W=-1,
+            DPAD_NW=-1,
             LEFT_STICK = 9,
             RIGHT_STICK = 10,
             BACK_BUTTON = 7,
@@ -76,6 +76,7 @@ namespace CORE {
         map<JoystickAxis, double> m_axisCache;
         JoystickType m_expectedJoystickType;
         std::shared_ptr<COREJoystick> m_instance;
+        bool getPOVButton(JoystickButton button);
     };
 
 }

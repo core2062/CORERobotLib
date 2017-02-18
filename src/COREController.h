@@ -56,7 +56,7 @@ namespace CORE {
         virtual double Get();
         virtual void setActual(double actualPosition);
         virtual double getActual();
-        virtual ~COREController() {}
+        virtual ~COREMotionController() {}
     protected:
         virtual void update(int profile = -1) = 0;
         ControllerInput* m_inputDevice;

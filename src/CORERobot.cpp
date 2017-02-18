@@ -40,6 +40,8 @@ void CORERobot::Autonomous() {
 	m_mode = AUTO;
     bool autonComplete = false;
     COREScheduler::autonInit();
+    m_loopTimer.Reset();
+    m_loopTimer.Start();
     while(IsAutonomous() && IsEnabled() && !autonComplete) {
         autonComplete = COREScheduler::auton();
         waitLoopTime();
@@ -49,6 +51,8 @@ void CORERobot::Autonomous() {
 void CORERobot::OperatorControl() {
 	m_mode = TELE;
     COREScheduler::teleopInit();
+    m_loopTimer.Reset();
+    m_loopTimer.Start();
     while(IsOperatorControl() && IsEnabled()) {
         COREScheduler::teleop();
         waitLoopTime();
@@ -58,6 +62,8 @@ void CORERobot::OperatorControl() {
 
 void CORERobot::Test() {
 	m_mode = TEST;
+	m_loopTimer.Reset();
+	m_loopTimer.Start();
     while(IsEnabled()) {
         LiveWindow::GetInstance()->Run();
         COREScheduler::test();

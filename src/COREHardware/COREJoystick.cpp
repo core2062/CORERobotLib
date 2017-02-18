@@ -2,6 +2,38 @@
 
 using namespace CORE;
 
+bool COREJoystick::getPOVButton(JoystickButton button) {
+	switch(m_joystick.GetPOV()) {
+	case 0:
+		return button == DPAD_N;
+		break;
+	case 45:
+		return button == DPAD_NE;
+		break;
+	case 90:
+		return button == DPAD_E;
+		break;
+	case 135:
+		return button == DPAD_SE;
+		break;
+	case 180:
+		return button == DPAD_S;
+		break;
+	case 225:
+		return button == DPAD_SW;
+		break;
+	case 270:
+		return button == DPAD_W;
+		break;
+	case 315:
+		return button == DPAD_NW;
+		break;
+	default:
+		return false;
+		break;
+	}
+}
+
 /*
  * Initialize joystick with given port starting at 0
  */
@@ -29,7 +61,11 @@ void COREJoystick::registerVector(JoystickAxis axisA, JoystickAxis axisB) {
  * Register a joystick button to be used. Must be called before a joystick button can be used.
  */
 void COREJoystick::registerButton(JoystickButton button) {
-    m_buttonCache[button] = m_joystick.GetRawButton(button) ? ON : OFF;
+	if(button ) {
+		m_buttonCache[button] = m_joystick.GetRawButton(button) ? ON : OFF;
+	} else {
+
+	}
 }
 
 /*
@@ -123,20 +159,25 @@ int COREJoystick::getPort() {
 void COREJoystick::preLoopTask() {
     m_lastButtonCache = m_buttonCache;
     for(auto button : m_buttonCache) {
-        bool isActive = m_joystick.GetRawButton(button.first);
-        if(m_lastButtonCache[button.first] == FALLING_EDGE || m_lastButtonCache[button.first] == OFF) {
-            if(isActive) {
-                m_buttonCache[button.first] = RISING_EDGE;
-            } else {
-                m_buttonCache[button.first] = OFF;
-            }
-        } else if(m_lastButtonCache[button.first] == RISING_EDGE || m_lastButtonCache[button.first] == ON) {
-            if(isActive) {
-                m_buttonCache[button.first] = ON;
-            } else {
-                m_buttonCache[button.first] = FALLING_EDGE;
-            }
-        }
+    	bool isActive;
+    	if(button.first != -1) {
+			isActive = m_joystick.GetRawButton(button.first);
+    	} else {
+    		isActive = getPOVButton(button.first);
+    	}
+    	if(m_lastButtonCache[button.first] == FALLING_EDGE || m_lastButtonCache[button.first] == OFF) {
+			if(isActive) {
+				m_buttonCache[button.first] = RISING_EDGE;
+			} else {
+				m_buttonCache[button.first] = OFF;
+			}
+		} else if(m_lastButtonCache[button.first] == RISING_EDGE || m_lastButtonCache[button.first] == ON) {
+			if(isActive) {
+				m_buttonCache[button.first] = ON;
+			} else {
+				m_buttonCache[button.first] = FALLING_EDGE;
+			}
+		}
     }
     for(auto axis : m_axisCache) {
         m_axisCache[axis.first] = m_joystick.GetRawAxis(axis.first);

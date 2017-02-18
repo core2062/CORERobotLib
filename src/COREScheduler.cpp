@@ -10,11 +10,11 @@ CORESubsystem::CORESubsystem(string name) {
 
 }
 
-COREController::COREController() : CORETask(){
+COREController::COREController() : CORETask() {
+
 }
 
-COREVariableControlledSubsystem::COREVariableControlledSubsystem(
-		string name) : CORESubsystem(name) {
+COREVariableControlledSubsystem::COREVariableControlledSubsystem(string name) : CORESubsystem(name) {
 }
 
 void CORE::COREVariableControlledSubsystem::teleop() {
@@ -34,24 +34,9 @@ bool COREVariableControlledSubsystem::setController(
 	return true;
 }
 
-CORETask::CORETask():
-		m_disabled(false)
-{
-	shared_ptr<CORETask> pointer(this);
-	COREScheduler::addTask(pointer);
-}
-
-void CORETask::disableTasks(bool disable) {
-    m_disabled = disable;
-}
-
-bool CORETask::isDisabled() {
-    return m_disabled;
-}
-
 vector<CORESubsystem*> COREScheduler::m_subsystems;
 vector<COREAuton*> COREScheduler::m_autons;
-vector<shared_ptr<CORETask>> COREScheduler::m_tasks;
+vector<CORETask*> COREScheduler::m_tasks;
 shared_ptr<SendableChooser<COREAuton*>> COREScheduler::m_autonChooser;
 
 COREAuton* COREScheduler::m_selectedAuton;
@@ -71,7 +56,7 @@ void COREScheduler::addAuton(COREAuton* auton) {
     CORELog::logInfo(auton->getName() + " autonomous added");
 }
 
-void COREScheduler::addTask(shared_ptr<CORETask> task) {
+void COREScheduler::addTask(CORETask* task) {
     m_tasks.push_back(task);
 }
 
@@ -116,6 +101,7 @@ void COREScheduler::autonInit() {
 }
 
 bool COREScheduler::auton() {
+	COREHardwareManager::updateEncoders();
     for(auto task : m_tasks) {
         if(!task->isDisabled()) {
             task->preLoopTask();
@@ -156,6 +142,7 @@ void COREScheduler::teleopInit() {
 }
 
 void COREScheduler::teleop() {
+	COREHardwareManager::updateEncoders();
     for(auto task : m_tasks) {
         if(!task->isDisabled()) {
             task->preLoopTask();

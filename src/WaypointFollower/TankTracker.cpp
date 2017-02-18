@@ -1,9 +1,11 @@
 #include "TankTracker.h"
 
 TankTracker::TankTracker(CANTalon* left, CANTalon* right, AHRS* gyro) {
+	std::cout << "Tracker Construct" << std::endl;
 	m_left = left;
 	m_right = right;
 	m_gyro = gyro;
+	std::cout << "Tracker Contruct End" << std::endl;
 }
 
 void TankTracker::reset(double time, Position2d initial) {
