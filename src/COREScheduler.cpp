@@ -27,7 +27,8 @@ void COREVariableControlledSubsystem::teleop() {
 
 bool COREVariableControlledSubsystem::setController(
 		COREController* controller) {
-	if(controller == 0){
+	if(controller == nullptr){
+		m_currentController = nullptr;
 		return false;
 	}
 	m_currentController = controller;
