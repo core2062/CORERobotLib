@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <memory>
+#include <iosfwd>
 
 #include "../CORETask.h"
 #include "../COREPID.h"
@@ -32,7 +33,7 @@ namespace CORE {
     };
     class COREMotor : public ControllerOutput {
     public:
-        COREMotor(int port, controllerType controller = CANTALON, controlMode controlMethod = VOLTAGE);
+        COREMotor(int port, controllerType controller = CANTALON, controlMode controlMethod = PERCENTAGE);
         void Set(double motorSetValue);
         double Get();
         void setReversed(bool reverse = true);

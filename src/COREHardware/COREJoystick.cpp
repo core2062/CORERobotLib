@@ -5,7 +5,7 @@ using namespace CORE;
 bool COREJoystick::getPOVButton(JoystickButton button) {
 	switch(m_joystick.GetPOV()) {
 	case 0:
-		return (button == DPAD_N);
+		return button == DPAD_N;
 		break;
 	case 45:
 		return button == DPAD_NE;
@@ -17,7 +17,7 @@ bool COREJoystick::getPOVButton(JoystickButton button) {
 		return button == DPAD_SE;
 		break;
 	case 180:
-		return (button == DPAD_S);
+		return button == DPAD_S;
 		break;
 	case 225:
 		return button == DPAD_SW;

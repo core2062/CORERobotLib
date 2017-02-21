@@ -64,7 +64,7 @@ int COREMotor::getPort() {
 }
 
 string COREMotor::getName() {
-	ostringstream name;
+	std::ostringstream name;
 	if(m_motorControllerType == CANTALON) {
 		m_CANTalonController->GetDescription(name);
 		return name.str();
