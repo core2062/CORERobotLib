@@ -23,7 +23,7 @@ public:
 
 	Position2d::Delta update(Position2d robotPos, double now);
 
-	bool checkFlag(std::string flag);
+	bool checkEvent(std::string event);
 
 	struct Circle{
 		Translation2d center;

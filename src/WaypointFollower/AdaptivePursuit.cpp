@@ -76,8 +76,8 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
 
 }
 
-bool AdaptivePursuit::checkFlag(std::string flag) {
-	return m_path.isFlagSet(flag);
+bool AdaptivePursuit::checkEvent(std::string event) {
+	return m_path.eventPassed(event);
 }
 
 AdaptivePursuit::Circle::Circle(Translation2d cent, double rad,

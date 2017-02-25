@@ -7,15 +7,15 @@
 struct Waypoint{
 	Translation2d position;
 	double speed;
-	std::string flag;
-	Waypoint(Translation2d pos, double spd, std::string setFlag = "");
+	std::string event;
+	Waypoint(Translation2d pos = Translation2d(0,0), double spd = 0.0, std::string completeEvent = "");
 };
 
 class Path{
 protected:
 	std::vector<Waypoint> m_waypoints;
 	std::vector<PathSegment> m_segments;
-	std::vector<std::string> m_flags;
+	std::vector<std::string> m_events;
 
 public:
 	//Path();
@@ -23,7 +23,7 @@ public:
 
 	double update(Translation2d pos);
 
-	bool isFlagSet(std::string flag);
+	bool eventPassed(std::string event);
 
 	double getRemainingLength();
 

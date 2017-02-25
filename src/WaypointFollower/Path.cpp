@@ -1,9 +1,9 @@
 #include "Path.h"
 
-Waypoint::Waypoint(Translation2d pos, double spd, std::string setFlag) {
+Waypoint::Waypoint(Translation2d pos, double spd, std::string completeEvent) {
 	position = pos;
 	speed = spd;
-	flag = setFlag;
+	event = completeEvent;
 }
 
 /*
@@ -31,8 +31,8 @@ Path::Path(std::vector<Waypoint> waypoints, bool flipX, bool flipY) {
 	}
 
 	if(m_waypoints.size() > 0){
-		if(m_waypoints[0].flag != ""){
-			m_flags.push_back(m_waypoints[0].flag);
+		if(m_waypoints[0].event != ""){
+			m_events.push_back(m_waypoints[0].event);
 		}
 		m_waypoints.erase(m_waypoints.begin());
 	}
@@ -46,8 +46,8 @@ double Path::update(Translation2d pos) {
 		if (closestPointReport.index >= .99){
 			m_segments.erase(m_segments.begin() + i);
 			if(m_waypoints.size() > 0){
-				if(m_waypoints[0].flag != ""){
-					m_flags.push_back(m_waypoints[0].flag);
+				if(m_waypoints[0].event != ""){
+					m_events.push_back(m_waypoints[0].event);
 				}
 				m_waypoints.erase(m_waypoints.begin());
 			}
@@ -68,8 +68,8 @@ double Path::update(Translation2d pos) {
 					rv = nextClosestPointReport.distance;
 					m_segments.erase(m_segments.begin() + i);
 					if(m_waypoints.size() > 0){
-						if(m_waypoints[0].flag != ""){
-							m_flags.push_back(m_waypoints[0].flag);
+						if(m_waypoints[0].event != ""){
+							m_events.push_back(m_waypoints[0].event);
 						}
 						m_waypoints.erase(m_waypoints.begin());
 					}
@@ -81,8 +81,8 @@ double Path::update(Translation2d pos) {
 	return rv;
 }
 
-bool Path::isFlagSet(std::string flag) {
-	return (find(m_flags.begin(), m_flags.end(), flag) != m_flags.end());
+bool Path::eventPassed(std::string event) {
+	return (find(m_events.begin(), m_events.end(), event) != m_events.end());
 }
 
 double Path::getRemainingLength() {
