@@ -36,9 +36,9 @@ Path PathLoader::loadPath(std::string fileName, bool flipX, bool flipY) {
         }
         else{
         	std::cout << "File: " << fileName << " was empty!" << std::endl;
-        	return Path(Waypoint({-1,-1}, -1), flipX, flipY);
+        	return Path({Waypoint({-1,-1}, -1)}, flipX, flipY);
         }
     }
     std::cout << "Failed to open: " << fileName << std::endl;
-    return Path(Waypoint({-1,-1}, -1), flipX, flipY);
+    return Path({Waypoint({-1,-1}, -1)}, flipX, flipY);
 }
