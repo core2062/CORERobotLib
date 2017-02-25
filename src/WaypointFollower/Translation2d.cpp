@@ -55,3 +55,11 @@ Translation2d Translation2d::interpolate(Translation2d other, double x) {
 Translation2d Translation2d::extrapolate(Translation2d other, double x) {
 	return Translation2d(x * (other.getX() - m_x) + m_x, x * (other.getY() - m_y) + m_y);
 }
+
+Translation2d Translation2d::flipX() {
+	return Translation2d(-m_x, m_y);
+}
+
+Translation2d Translation2d::flipY() {
+	return Translation2d(m_x, -m_y);
+}

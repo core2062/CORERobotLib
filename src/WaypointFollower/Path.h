@@ -19,7 +19,7 @@ protected:
 
 public:
 	//Path();
-	Path(std::vector<Waypoint> waypoints = {Waypoint(Translation2d(),0)});
+	Path(std::vector<Waypoint> waypoints = {Waypoint(Translation2d(),0)}, bool flipX = false, bool flipY = false);
 
 	double update(Translation2d pos);
 

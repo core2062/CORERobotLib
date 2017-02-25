@@ -12,11 +12,22 @@ Path::Path(){
 }
 */
 
-Path::Path(std::vector<Waypoint> waypoints) {
+Path::Path(std::vector<Waypoint> waypoints, bool flipX, bool flipY) {
 	m_waypoints = waypoints;
 	for (unsigned int i = 0; i < m_waypoints.size() - 1; ++i){
-		m_segments.push_back(
-				PathSegment(m_waypoints[i].position, m_waypoints[i+1].position, m_waypoints[i].speed));
+		if(flipX && flipY){
+			m_segments.push_back(
+					PathSegment(m_waypoints[i].position.inverse(), m_waypoints[i+1].position.inverse(), m_waypoints[i].speed));
+		}else if(flipX){
+			m_segments.push_back(
+					PathSegment(m_waypoints[i].position.flipX(), m_waypoints[i+1].position.flipX(), m_waypoints[i].speed));
+		}else if(flipY){
+			m_segments.push_back(
+					PathSegment(m_waypoints[i].position.flipY(), m_waypoints[i+1].position.flipY(), m_waypoints[i].speed));
+		}else{
+			m_segments.push_back(
+					PathSegment(m_waypoints[i].position, m_waypoints[i+1].position, m_waypoints[i].speed));
+		}
 	}
 
 	if(m_waypoints.size() > 0){

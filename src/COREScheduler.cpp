@@ -19,9 +19,9 @@ COREVariableControlledSubsystem::COREVariableControlledSubsystem(string name) : 
 
 void COREVariableControlledSubsystem::teleop() {
 	if(m_currentController != nullptr){
-		if(m_currentController->isEnabled()){
+		//if(m_currentController->isEnabled()){
 			m_currentController->enabledLoop();
-		}
+		//}
 	}
 }
 

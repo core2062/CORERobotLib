@@ -31,5 +31,8 @@ public:
 
 	Translation2d extrapolate(Translation2d other, double x);
 
+	Translation2d flipX();
+	Translation2d flipY();
+
 
 };
