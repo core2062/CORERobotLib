@@ -53,3 +53,15 @@ void COREHardwareManager::addEncoder(COREEncoder* encoder) {
                          + " added");
     }
 }
+
+void COREHardwareManager::cleanUp() {
+	CORELog::logInfo("Cleaning up COREHardwareManager!");
+	for (auto i = m_motors.begin(); i != m_motors.end(); i++){
+	    delete *i;
+	}
+	m_motors.clear();
+	for (auto i = m_encoders.begin(); i != m_encoders.end(); i++){
+		delete *i;
+	}
+	m_encoders.clear();
+}

@@ -93,5 +93,6 @@ namespace CORE {
 		static void teleopEnd();
 		static void disabled();
 		static void test();
+		static void cleanUp();
 	};
 }

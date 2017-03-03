@@ -11,7 +11,7 @@
 #include "src/COREAuton.h"
 #include "src/COREConstant.h"
 #include "src/COREDrive.h"
-#include "src/COREDrive/CORESwerveDrive.h"
+//#include "src/COREDrive/CORESwerveDrive.h" //TODO: Rewrite swerve code
 #include "src/COREDrive/COREEtherDrive.h"
 #include "src/COREController/COREMotionProfile.h"
 #include "src/COREDataLog.h"

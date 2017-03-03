@@ -63,7 +63,7 @@ void COREScheduler::addTask(CORETask* task) {
 
 void COREScheduler::robotInit() {
     CORELog::robotInit();
-    COREConstantsManager::robotInit();
+    COREConstantsManager::updateConstants();
     for(auto subsystem : m_subsystems) {
         subsystem->robotInit();
     }
@@ -80,6 +80,7 @@ void COREScheduler::robotInit() {
 
 void COREScheduler::autonInit() {
     CORELog::autonInit();
+    COREConstantsManager::updateConstants();
     for(auto task : m_tasks) {
         if(!task->isDisabled()) {
             task->autonInitTask();
@@ -192,3 +193,21 @@ void COREScheduler::test() {
     //TODO: Do something
 }
 
+void COREScheduler::cleanUp() {
+	CORELog::logInfo("Cleaning up COREScheduler!");
+	delete m_selectedAuton;
+	for (auto i = m_autons.begin(); i != m_autons.end(); i++){
+		delete *i;
+	}
+	m_autons.clear();
+	for (auto i = m_tasks.begin(); i != m_tasks.end(); i++){
+		delete *i;
+	}
+	m_tasks.clear();
+	for (auto i = m_subsystems.begin(); i != m_subsystems.end(); i++){
+		delete *i;
+	}
+	m_subsystems.clear();
+	COREHardwareManager::cleanUp();
+	COREConstantsManager::cleanUp();
+}

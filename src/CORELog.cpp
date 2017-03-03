@@ -1,11 +1,11 @@
 #include "CORELog.h"
+#include "CORERobot.h"
 
 using namespace CORE;
 
 ofstream CORELog::m_file;
 string CORELog::m_fileName;
 vector<string> CORELog::m_fileCache;
-robotMode CORELog::m_robotMode;
 CORETimer CORELog::m_matchTimer;
 CORELog::loggingLevel CORELog::m_consoleLoggingLevel;
 
@@ -15,8 +15,8 @@ void CORELog::writeLastDuration() {
 
 string CORELog::getRobotMode() {
     string robotModeName;
-    switch(m_robotMode) {
-        case DISABLED:
+    switch(CORERobot::getMode()) {
+        case DISABLE:
             robotModeName = "DISABLED";
             break;
         case AUTON:
@@ -25,6 +25,9 @@ string CORELog::getRobotMode() {
         case TELEOP:
             robotModeName = "TELEOP";
             break;
+        default:
+        	robotModeName = "INVALID";
+        	break;
     }
     return robotModeName;
 }
@@ -70,33 +73,31 @@ string CORELog::getName() {
 }
 
 void CORELog::robotInit() {
-    m_robotMode = DISABLED;
     m_consoleLoggingLevel = INFO;
     time_t currentTime = time(0);
     struct tm* now = localtime(&currentTime);
     m_fileName = "/home/lvuser/CORELogs/";
     if(DriverStation::GetInstance().IsFMSAttached()) {
         string alliance;
-        switch(DriverStation::GetInstance().GetAlliance()) {
-            case DriverStation::Alliance::kRed:
+        switch(CORERobot::getAlliance()) {
+            case RED:
                 alliance = "Red";
                 break;
-            case DriverStation::Alliance::kBlue:
+            case BLUE:
                 alliance = "Blue";
                 break;
             default:
-                alliance = "Unknown";
+                alliance = "Invalid";
                 break;
         }
         m_fileName = alliance + " Alliance - Station "
-                     + to_string(DriverStation::GetInstance().GetLocation()) + " - ";
+                     + to_string(CORERobot::getStation()) + " - ";
     }
     m_fileName += to_string(now->tm_mon) + "-" + to_string(now->tm_mday) + "--" + to_string(now->tm_hour)
                   + "-" + to_string(now->tm_min) + ".txt";
 //    m_file.open(m_fileName);
     cout << "INFO: Log file written to: /home/lvuser/CORELogs/" << m_fileName << endl;
     m_fileCache.clear();
-    m_robotMode = DISABLED;
     m_matchTimer.Reset();
     m_matchTimer.Start();
 }
@@ -104,7 +105,6 @@ void CORELog::robotInit() {
 void CORELog::autonInit() {
     m_file.open(m_fileName);
     writeLastDuration();
-    m_robotMode = AUTON;
     m_matchTimer.Reset();
     m_matchTimer.Start();
 }
@@ -112,14 +112,12 @@ void CORELog::autonInit() {
 void CORELog::teleopInit() {
     m_file.open(m_fileName);
     writeLastDuration();
-    m_robotMode = TELEOP;
     m_matchTimer.Reset();
     m_matchTimer.Start();
 }
 
 void CORELog::disabled() {
     writeLastDuration();
-    m_robotMode = DISABLED;
     m_matchTimer.Reset();
     m_matchTimer.Start();
     updateLog();

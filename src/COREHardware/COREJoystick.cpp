@@ -37,9 +37,22 @@ bool COREJoystick::getPOVButton(JoystickButton button) {
 /*
  * Initialize joystick with given port starting at 0
  */
-COREJoystick::COREJoystick(int port) :
+COREJoystick::COREJoystick(int port, JoystickType expectedJoystickType) :
         m_joystick(port),
-        m_joystickPort(port) {
+        m_joystickPort(port),
+		m_expectedJoystickType(expectedJoystickType) {
+	string actualJoystickName = m_joystick.GetName();
+	switch(m_expectedJoystickType) {
+	case F310_X_MODE:
+		if(actualJoystickName != "Controller (Gamepad F310)") {
+
+		}
+
+		break;
+	case F310_D_MODE:
+
+		break;
+	}
 }
 
 /*

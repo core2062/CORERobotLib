@@ -19,10 +19,16 @@
 namespace CORE {
 
 enum gameMode{
-	TELE,
-	AUTO,
+	TELEOP,
+	AUTON,
 	TEST,
 	DISABLE
+};
+
+enum gameAlliance {
+	RED,
+	BLUE,
+	INVALID
 };
     class CORERobot : public CORESubsystem, public SampleRobot {
     private:
@@ -30,6 +36,9 @@ enum gameMode{
         CORETimer m_loopTimer;
         double m_targetLoopTime = 0.01;
         static gameMode m_mode;
+        static gameAlliance m_alliance;
+        static int m_station;
+        void updateRobotState();
     public:
         CORERobot();
         void waitLoopTime();
@@ -39,7 +48,9 @@ enum gameMode{
         void Autonomous();
         void OperatorControl();
         void Test();
-
+        ~CORERobot();
         static gameMode getMode();
+        static gameAlliance getAlliance();
+        static int getStation();
     };
 }
