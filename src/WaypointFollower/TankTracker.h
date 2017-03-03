@@ -22,6 +22,12 @@ private:
 public:
 	TankTracker(CANTalon * left, CANTalon * right, AHRS * gyro);
 
+	~TankTracker(){
+		m_left = nullptr;
+		m_right = nullptr;
+		m_gyro = nullptr;
+	}
+
 	void reset(double time, Position2d initial);
 
 	void start();
