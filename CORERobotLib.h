@@ -14,3 +14,4 @@
 #include "src/COREDrive/CORESwerveDrive.h"
 #include "src/COREDrive/COREEtherDrive.h"
 #include "src/COREController/COREMotionProfile.h"
+#include "src/COREDataLog.h"

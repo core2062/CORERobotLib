@@ -8,5 +8,5 @@
 #include <stdlib.h>
 
 class PathLoader{
-	static Path loadPath(std::string fileName, bool flipX, bool flipY);
+	static Path loadPath(std::string fileName, bool flipX = false, bool flipY = false);
 };
