@@ -55,10 +55,10 @@ namespace CORE {
         void ControllerSet(double value) override;
         void Update();
     private:
-        shared_ptr<CANTalon> m_CANTalonController;
-        shared_ptr<Jaguar> m_JaguarController;
-        shared_ptr<Victor> m_VictorController;
-        shared_ptr<COREEncoder> m_encoder;
+        shared_ptr<CANTalon> m_CANTalonController = nullptr;
+        shared_ptr<Jaguar> m_JaguarController = nullptr;
+        shared_ptr<Victor> m_VictorController = nullptr;
+        shared_ptr<COREEncoder> m_encoder = nullptr;
         double m_motorValue = 0;
         double m_lastMotorValue = 0;
         bool m_isFollower = false;

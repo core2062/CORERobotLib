@@ -153,28 +153,28 @@ void COREMotor::ControllerSet(double value) {
 }
 
 shared_ptr<CANTalon> COREMotor::getCANTalon() {
-    if(m_CANTalonController == nullptr) {
+    if(!m_CANTalonController) {
         CORELog::logError("Motor in port: " + to_string(m_motorPort) + " returning CANTalon nullptr!");
     }
     return m_CANTalonController;
 }
 
 shared_ptr<Jaguar> COREMotor::getJaguar() {
-    if(m_JaguarController == nullptr) {
+    if(!m_JaguarController) {
         CORELog::logError("Motor in port: " + to_string(m_motorPort) + " returning Jaguar nullptr!");
     }
     return m_JaguarController;
 }
 
 shared_ptr<Victor> COREMotor::getVictor() {
-    if(m_VictorController == nullptr) {
+    if(!m_VictorController) {
         CORELog::logError("Motor in port: " + to_string(m_motorPort) + " returning Victor nullptr!");
     }
     return m_VictorController;
 }
 
 shared_ptr<COREEncoder> COREMotor::getEncoder() {
-    if(m_encoder == nullptr) {
+    if(!m_encoder) {
         CORELog::logError("Motor in port: " + to_string(m_motorPort) + " returning Encoder nullptr!");
     }
     return m_encoder;
