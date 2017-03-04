@@ -15,3 +15,4 @@
 #include "src/COREDrive/COREEtherDrive.h"
 #include "src/COREController/COREMotionProfile.h"
 #include "src/COREDataLog.h"
+#include "src/WaypointFollower/WaypointFollower.h"
