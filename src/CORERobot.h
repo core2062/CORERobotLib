@@ -45,6 +45,7 @@ enum gameAlliance {
         void setLoopTime(double loopTime);
         void RobotInit();
         void Disabled();
+        virtual void autonInit(){};
         void Autonomous();
         void OperatorControl();
         void Test();
