@@ -1,6 +1,7 @@
 #include "COREAuton.h"
 
 using namespace CORE;
+
 /*
  * Create a node with given actions. These actions will all be run in parallel to each other.
  */
@@ -209,7 +210,9 @@ bool COREAuton::complete() {
  */
 void COREAuton::reset() {
     for(auto node : m_firstNode) {
-        node->reset();
+        if(!node) {
+            node->reset();
+        }
     }
 }
 
