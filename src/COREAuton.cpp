@@ -7,12 +7,15 @@ using namespace CORE;
  */
 Node::Node(COREAutonAction* action1, COREAutonAction* action2, COREAutonAction* action3) :
         m_children(), m_actions(), m_actionsCache() {
-    shared_ptr<COREAutonAction> pointer(action1);
-    m_actionsCache.push_back(pointer);
+    if(action1 != nullptr) {
+        shared_ptr<COREAutonAction> pointer(action1);
+        m_actionsCache.push_back(pointer);
+    }
     if(action2 != nullptr) {
         shared_ptr<COREAutonAction> pointer(action2);
         m_actionsCache.push_back(pointer);
-    } else if(action3 != nullptr) {
+    }
+    if(action3 != nullptr) {
         shared_ptr<COREAutonAction> pointer(action3);
         m_actionsCache.push_back(pointer);
     }
@@ -20,13 +23,17 @@ Node::Node(COREAutonAction* action1, COREAutonAction* action2, COREAutonAction* 
 
 /*
  * Create a node with given action. These actions will all be run in parallel to each other.
+ * Nullptrs will not be added as actions, they will be ignored
  */
 Node::Node(shared_ptr<COREAutonAction> action1, shared_ptr<COREAutonAction> action2,
            shared_ptr<COREAutonAction> action3) : m_children(), m_actions() {
-    m_actions.push_back(action1);
-    if(action2 != nullptr) {
+    if(!action1) {
+        m_actions.push_back(action1);
+    }
+    if(!action2) {
         m_actions.push_back(action2);
-    } else if(action3 != nullptr) {
+    }
+    if(!action3) {
         m_actions.push_back(action3);
     }
 }
@@ -50,15 +57,19 @@ void Node::addNext(shared_ptr<Node> childNode) {
  * Add an action to this node which will be run in parallel to other actions in this node
  */
 void Node::addAction(COREAutonAction* leaf) {
-    shared_ptr<COREAutonAction> pointer(leaf);
-    m_actions.push_back(pointer);
+    if(leaf != nullptr) {
+        shared_ptr<COREAutonAction> pointer(leaf);
+        m_actions.push_back(pointer);
+    }
 }
 
 /*
  * Add an action to this node which will be run in parallel to other actions in this node
  */
 void Node::addAction(shared_ptr<COREAutonAction> leaf) {
-    m_actions.push_back(leaf);
+    if(!leaf) {
+        m_actions.push_back(leaf);
+    }
 }
 
 /*
@@ -147,7 +158,9 @@ void Node::act(bool lastNodeDone) {
 COREAuton::COREAuton(string name, Node* firstNode, bool defaultAuton) {
     m_name = name;
     m_defaultAuton = defaultAuton;
-    m_firstNode.push_back(firstNode);
+    if(firstNode != nullptr) {
+        m_firstNode.push_back(firstNode);
+    }
     COREScheduler::addAuton(this);
 }
 
@@ -206,9 +219,12 @@ void COREAuton::reset() {
 
 /*
  * Add another node to be run on start of autonomous routine
+ * Nullptrs will not be added as actions, they will be ignored
  */
 void COREAuton::addFirstNode(Node* firstNode) {
-    m_firstNode.push_back(firstNode);
+    if(firstNode != nullptr) {
+        m_firstNode.push_back(firstNode);
+    }
 }
 
 /*
