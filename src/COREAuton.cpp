@@ -1,26 +1,22 @@
 #include "COREAuton.h"
 
 using namespace CORE;
-
 /*
  * Create a node with given actions. These actions will all be run in parallel to each other.
  */
 Node::Node(COREAutonAction* action1, COREAutonAction* action2, COREAutonAction* action3) :
-        m_children(), m_actions(), m_actionsCache() {
+        m_children(), m_actions() {
     if(action1 != nullptr) {
         shared_ptr<COREAutonAction> pointer(action1);
         m_actions.push_back(pointer);
-        m_actionsCache.push_back(pointer);
     }
     if(action2 != nullptr) {
         shared_ptr<COREAutonAction> pointer(action2);
         m_actions.push_back(pointer);
-        m_actionsCache.push_back(pointer);
     }
     if(action3 != nullptr) {
         shared_ptr<COREAutonAction> pointer(action3);
         m_actions.push_back(pointer);
-        m_actionsCache.push_back(pointer);
     }
 }
 
@@ -32,15 +28,12 @@ Node::Node(shared_ptr<COREAutonAction> action1, shared_ptr<COREAutonAction> acti
            shared_ptr<COREAutonAction> action3) : m_children(), m_actions() {
     if(!action1) {
         m_actions.push_back(action1);
-        m_actionsCache.push_back(action1);
     }
     if(!action2) {
         m_actions.push_back(action2);
-        m_actionsCache.push_back(action2);
     }
     if(!action3) {
         m_actions.push_back(action3);
-        m_actionsCache.push_back(action3);
     }
 }
 
@@ -66,7 +59,6 @@ void Node::addAction(COREAutonAction* leaf) {
     if(leaf != nullptr) {
         shared_ptr<COREAutonAction> pointer(leaf);
         m_actions.push_back(pointer);
-        m_actionsCache.push_back(pointer);
     }
 }
 
@@ -76,7 +68,6 @@ void Node::addAction(COREAutonAction* leaf) {
 void Node::addAction(shared_ptr<COREAutonAction> leaf) {
     if(!leaf) {
         m_actions.push_back(leaf);
-        m_actionsCache.push_back(leaf);
     }
 }
 
@@ -114,7 +105,7 @@ void Node::reset() {
         child->reset();
     }
     m_actions.clear();
-    m_actions = m_actionsCache;
+    m_children.clear();
     m_actionsInitialized = false;
 }
 
@@ -185,11 +176,8 @@ void COREAuton::auton() {
  * Initialize autonomous routine by reseting and adding all nodes.
  */
 void COREAuton::autonInit() {
-    if(!m_nodesAdded) {
-        m_nodesAdded = true;
-        addNodes();
-    }
     reset();
+    addNodes();
 }
 
 /*

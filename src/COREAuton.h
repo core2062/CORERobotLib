@@ -46,7 +46,6 @@ namespace CORE {
     private:
         vector<shared_ptr<Node>> m_children;
         vector<shared_ptr<COREAutonAction>> m_actions;
-        vector<shared_ptr<COREAutonAction>> m_actionsCache;
         bool m_startConditonGiven = false;
         bool m_actionsInitialized = false;
         bool (* m_startCondition)();
@@ -77,7 +76,6 @@ namespace CORE {
     private:
         string m_name;
         bool m_defaultAuton = false;
-        bool m_nodesAdded = false;
         vector<Node*> m_firstNode;
     };
 }
