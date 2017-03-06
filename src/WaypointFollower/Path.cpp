@@ -40,9 +40,10 @@ Path::Path(std::vector<Waypoint> waypoints, bool flipX, bool flipY) {
 
 double Path::update(Translation2d pos) {
 	double rv = 0.0;
-	for(unsigned int i = 0; i < m_segments.size() - 1; ++i){
+	for(unsigned int i = 0; i < m_segments.size(); i++){
 //		PathSegment segment = m_segments[i];
 		PathSegment::ClosestPointReport closestPointReport = m_segments[i].getClosestPoint(pos);
+//		std::cout << "Index " << closestPointReport.index << std::endl;
 		if (closestPointReport.index >= .99){
 			m_segments.erase(m_segments.begin() + i);
 			if(m_waypoints.size() > 0){

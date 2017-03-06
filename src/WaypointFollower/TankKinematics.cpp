@@ -9,7 +9,7 @@ Position2d::Delta TankKinematics::forwardKinematics(double leftDelta,
 		double rightDelta) {
 	double linearVel = (leftDelta + rightDelta) / 2.0;
 	double deltaV = (rightDelta - leftDelta) / 2.0;
-	double deltaRot = deltaV * 2 * .15 / 4.0;
+	double deltaRot = deltaV * 2 * .1 / 4.0;
 	return Position2d::Delta(linearVel, 0, deltaRot);
 }
 
@@ -29,6 +29,6 @@ VelocityPair TankKinematics::inverseKinematics(Position2d::Delta vel) {
 	if(fabs(vel.dtheta) < kE){
 		return VelocityPair(vel.dx, vel.dx);
 	}
-	double deltaV = 4.0 * vel.dtheta / (2 * .15);
-	return VelocityPair(vel.dx - deltaV, vel.dx + deltaV);
+	double deltaV = 4.0 * vel.dtheta / (2 * .1);
+	return VelocityPair(vel.dx + deltaV, vel.dx - deltaV);
 }

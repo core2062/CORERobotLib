@@ -15,6 +15,7 @@ void PathSegment::updateStart(Translation2d newStart) {
 	m_start = newStart;
 	m_startToEnd = m_start.inverse().translateBy(m_end);
 	m_length = m_startToEnd.norm();
+//	std::cout << "New Length: " << m_length << std::endl;
 }
 
 double PathSegment::getSpeed() {
