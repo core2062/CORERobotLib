@@ -1,16 +1,23 @@
 #include "PathLoader.h"
 
-Path PathLoader::loadPath(std::string fileName, bool flipX, bool flipY) {
+Path * PathLoader::loadPath(std::string fileName, double speedScale, bool flipX, bool flipY) {
+	std::cout << "Loading File: " << fileName << std::endl;
 	std::vector<Waypoint> points;
     std::string line;
     std::string fileStarter = "/home/lvuser/COREAutoPaths/";
     std::ifstream inFile(fileStarter + fileName);
     if (inFile.is_open()) {
         while (std::getline(inFile, line)) {
+            while (line.find('\r') != std::string::npos) {
+                line.erase(line.find('\r'), 1);
+            }
+            while (line.find('\n') != std::string::npos) {
+                line.erase(line.find('\n'), 1);
+            }
             Waypoint p;
             std::size_t comma = line.find(',');
             std::string data = line.substr(0, comma);
-            p.position.setY(atof(data.c_str()));
+            p.position.setX(atof(data.c_str()));
             line.erase(0, comma+1);
             comma = line.find(',');
             data = line.substr(0, comma);
@@ -28,17 +35,22 @@ Path PathLoader::loadPath(std::string fileName, bool flipX, bool flipY) {
             }
             else {
                 p.speed = atof(line.c_str());
+                p.speed *= speedScale;
             }
             points.push_back(p);
         }
         if(!points.empty()){
-        	return Path(points, flipX, flipY);
+        	std::cout << fileName << " has " << points.size() << " points" << std::endl;
+        	for(auto i : points){
+        		std::cout << i.position.getX() << " " << i.position.getY() << std::endl;
+        	}
+        	return new Path(points, flipX, flipY);
         }
         else{
         	std::cout << "File: " << fileName << " was empty!" << std::endl;
-        	return Path({Waypoint({-1,-1}, -1)}, flipX, flipY);
+        	return new Path({Waypoint({-1,-1}, -1)}, flipX, flipY);
         }
     }
     std::cout << "Failed to open: " << fileName << std::endl;
-    return Path({Waypoint({-1,-1}, -1)}, flipX, flipY);
+    return new Path({Waypoint({-1,-1}, -1)}, flipX, flipY);
 }

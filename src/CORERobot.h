@@ -26,9 +26,9 @@ enum gameMode{
 };
 
 enum gameAlliance {
-	RED,
-	BLUE,
-	INVALID
+	RED = -1,
+	BLUE = 1,
+	INVALID = 0
 };
     class CORERobot : public CORESubsystem, public SampleRobot {
     private:
