@@ -105,14 +105,16 @@ void Node::reset() {
  * @param lastNodeDone If previous node is complete.
  */
 void Node::act(bool lastNodeDone) {
-    if(!m_actionsInitialized) {
+    bool shouldAct = (m_startConditonGiven && m_startCondition && !lastNodeDone)
+                     || (!m_startConditonGiven && lastNodeDone);
+    if(!m_actionsInitialized && shouldAct) {
         for(auto action : m_actions) {
             action->actionInit();
             m_actionsInitialized = true;
         }
     }
     if(!m_actions.empty()) {
-        if((m_startConditonGiven && m_startCondition && !lastNodeDone) || (!m_startConditonGiven && lastNodeDone)) {
+        if(shouldAct) {
             for(unsigned int i = 0; i < m_actions.size(); i++) {
                 COREAutonAction::actionStatus status = m_actions[i]->action();
                 switch(status) {
