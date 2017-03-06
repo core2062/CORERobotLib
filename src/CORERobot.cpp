@@ -71,6 +71,7 @@ void CORERobot::Autonomous() {
     m_loopTimer.Reset();
     m_loopTimer.Start();
     while(IsAutonomous() && IsEnabled() && !autonComplete) {
+        COREHardwareManager::zeroMotors();
         autonComplete = COREScheduler::auton();
         waitLoopTime();
     }
