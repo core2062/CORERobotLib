@@ -9,14 +9,17 @@ Node::Node(COREAutonAction* action1, COREAutonAction* action2, COREAutonAction* 
         m_children(), m_actions(), m_actionsCache() {
     if(action1 != nullptr) {
         shared_ptr<COREAutonAction> pointer(action1);
+        m_actions.push_back(pointer);
         m_actionsCache.push_back(pointer);
     }
     if(action2 != nullptr) {
         shared_ptr<COREAutonAction> pointer(action2);
+        m_actions.push_back(pointer);
         m_actionsCache.push_back(pointer);
     }
     if(action3 != nullptr) {
         shared_ptr<COREAutonAction> pointer(action3);
+        m_actions.push_back(pointer);
         m_actionsCache.push_back(pointer);
     }
 }
@@ -29,12 +32,15 @@ Node::Node(shared_ptr<COREAutonAction> action1, shared_ptr<COREAutonAction> acti
            shared_ptr<COREAutonAction> action3) : m_children(), m_actions() {
     if(!action1) {
         m_actions.push_back(action1);
+        m_actionsCache.push_back(action1);
     }
     if(!action2) {
         m_actions.push_back(action2);
+        m_actionsCache.push_back(action2);
     }
     if(!action3) {
         m_actions.push_back(action3);
+        m_actionsCache.push_back(action3);
     }
 }
 
@@ -60,6 +66,7 @@ void Node::addAction(COREAutonAction* leaf) {
     if(leaf != nullptr) {
         shared_ptr<COREAutonAction> pointer(leaf);
         m_actions.push_back(pointer);
+        m_actionsCache.push_back(pointer);
     }
 }
 
@@ -69,6 +76,7 @@ void Node::addAction(COREAutonAction* leaf) {
 void Node::addAction(shared_ptr<COREAutonAction> leaf) {
     if(!leaf) {
         m_actions.push_back(leaf);
+        m_actionsCache.push_back(leaf);
     }
 }
 
@@ -177,11 +185,11 @@ void COREAuton::auton() {
  * Initialize autonomous routine by reseting and adding all nodes.
  */
 void COREAuton::autonInit() {
-    reset();
     if(!m_nodesAdded) {
         m_nodesAdded = true;
         addNodes();
     }
+    reset();
 }
 
 /*
