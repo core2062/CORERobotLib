@@ -49,13 +49,6 @@ void Node::addCondition(bool(* startCondition)()) {
  * Returns true if all actions are complete and all child nodes are complete or if timeout has been exceeded
  */
 bool Node::complete() {
-    if(m_timer.Get() > m_timeout) {
-        CORELog::logInfo("Timeout of: " + to_string(m_timeout) + " exceeded in node!");
-        for(auto action : m_actions) {
-            action->actionEnd();
-        }
-        return true;
-    }
     if(m_actions.empty()) {
         for(auto child : m_children) {
             if(!child->complete()) {
@@ -103,6 +96,16 @@ void Node::act(bool lastNodeDone) {
             m_actionsInitialized = true;
         }
     }
+    if(!m_actions.empty() && (m_timer.Get() > m_timeout)) {
+        CORELog::logInfo("Timeout of: " + to_string(m_timeout) + " exceeded in node!");
+        for(auto action : m_actions) {
+            action->actionEnd();
+        }
+        for (auto i = m_actions.begin(); i != m_actions.end(); i++){
+            delete *i;
+        }
+        m_actions.clear();
+    }
     if(!m_actions.empty()) {
         if(shouldAct) {
             for(unsigned int i = 0; i < m_actions.size(); i++) {
@@ -110,6 +113,7 @@ void Node::act(bool lastNodeDone) {
                 switch(status) {
                     case COREAutonAction::END:
                         m_actions[i]->actionEnd();
+                        //TODO: There's a memory leak here, need to fix
                         m_actions.erase(m_actions.begin() + i);
                         i--;
                         break;
@@ -124,9 +128,9 @@ void Node::act(bool lastNodeDone) {
             return;
         }
     } else {
-        for(auto child : m_children) {
-            child->act(true);
-        }
+    	for(auto child : m_children) {
+    		child->act(true);
+    	}
     }
 }
 
