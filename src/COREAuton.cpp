@@ -3,10 +3,11 @@
 using namespace CORE;
 
 /*
- * Create a node with given actions. These actions will all be run in parallel to each other.
+ * Create a node with given actions and timeout. These actions will all be run in parallel to each other.
+ * Nullptrs will not be added as actions, they will be ignored.
  */
-Node::Node(COREAutonAction* action1, COREAutonAction* action2, COREAutonAction* action3) :
-        m_children(), m_actions() {
+Node::Node(double timeout, COREAutonAction* action1, COREAutonAction* action2, COREAutonAction* action3) :
+        m_children(), m_actions(), m_timeout(timeout) {
     if(action1 != nullptr) {
         shared_ptr<COREAutonAction> pointer(action1);
         m_actions.push_back(pointer);
@@ -22,11 +23,11 @@ Node::Node(COREAutonAction* action1, COREAutonAction* action2, COREAutonAction* 
 }
 
 /*
- * Create a node with given action. These actions will all be run in parallel to each other.
- * Nullptrs will not be added as actions, they will be ignored
+ * Create a node with given actions and timeout. These actions will all be run in parallel to each other.
+ * Nullptrs will not be added as actions, they will be ignored.
  */
-Node::Node(shared_ptr<COREAutonAction> action1, shared_ptr<COREAutonAction> action2,
-           shared_ptr<COREAutonAction> action3) : m_children(), m_actions() {
+Node::Node(double timeout, shared_ptr<COREAutonAction> action1, shared_ptr<COREAutonAction> action2,
+           shared_ptr<COREAutonAction> action3) : m_children(), m_actions(), m_timeout(timeout) {
     if(!action1) {
         m_actions.push_back(action1);
     }
@@ -83,9 +84,13 @@ void Node::addCondition(bool(* startCondition)()) {
 }
 
 /*
- * Returns true if all actions are complete and all child nodes are complete
+ * Returns true if all actions are complete and all child nodes are complete or if timeout has been exceeded
  */
 bool Node::complete() {
+    if(m_timer.Get() > m_timeout) {
+        CORELog::logInfo("Timeout of: " + to_string(m_timeout) + " exceeded in node!");
+        return true;
+    }
     if(m_actions.empty()) {
         for(auto child : m_children) {
             if(!child->complete()) {
@@ -105,9 +110,18 @@ void Node::reset() {
     for(auto child : m_children) {
         child->reset();
     }
+    m_timer.Reset();
+    m_timer.Start();
     m_actions.clear();
     m_children.clear();
     m_actionsInitialized = false;
+}
+
+/*
+ * Set the timeout for this node to a given duration in seconds
+ */
+void Node::setTimeout(double timeout) {
+    m_timeout = timeout;
 }
 
 /**
@@ -155,12 +169,9 @@ void Node::act(bool lastNodeDone) {
  * Initialize an autonomous routine with given name, first node, and whether this autonomous should be the default
  * selected autonomous on Smart Dashboard
  */
-COREAuton::COREAuton(string name, Node* firstNode, bool defaultAuton) {
+COREAuton::COREAuton(string name, bool defaultAuton) {
     m_name = name;
     m_defaultAuton = defaultAuton;
-    if(firstNode != nullptr) {
-        m_firstNode.push_back(firstNode);
-    }
     COREScheduler::addAuton(this);
 }
 
@@ -210,7 +221,7 @@ bool COREAuton::complete() {
  */
 void COREAuton::reset() {
     for(auto node : m_firstNode) {
-        if(!node) {
+        if(node) {
             node->reset();
         }
     }

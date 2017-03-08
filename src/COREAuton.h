@@ -32,8 +32,8 @@ namespace CORE {
 
     class Node {
     public:
-        Node(COREAutonAction* action1, COREAutonAction* action2 = nullptr, COREAutonAction* action3 = nullptr);
-        Node(shared_ptr<COREAutonAction> action1, shared_ptr<COREAutonAction> action2 = nullptr,
+        Node(double timeout, COREAutonAction* action1, COREAutonAction* action2 = nullptr, COREAutonAction* action3 = nullptr);
+        Node(double timeout, shared_ptr<COREAutonAction> action1, shared_ptr<COREAutonAction> action2 = nullptr,
              shared_ptr<COREAutonAction> action3 = nullptr);
         void addNext(Node* childNode);
         void addNext(shared_ptr<Node> childNode);
@@ -42,6 +42,7 @@ namespace CORE {
         void addCondition(bool(* startCondition)());
         bool complete();
         void reset();
+        void setTimeout(double timeout);
         void act(bool lastNodeDone);
     private:
         vector<shared_ptr<Node>> m_children;
@@ -49,11 +50,13 @@ namespace CORE {
         bool m_startConditonGiven = false;
         bool m_actionsInitialized = false;
         bool (* m_startCondition)();
+        double m_timeout;
+        CORETimer m_timer;
     };
 
     class COREAuton {
     public:
-        COREAuton(string name, Node* firstNode, bool defaultAuton = false);
+        COREAuton(string name, bool defaultAuton = false);
         void putToDashboard(shared_ptr<SendableChooser<COREAuton*>> chooser);
 
         inline COREAuton* getInstance() {
