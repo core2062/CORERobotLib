@@ -36,10 +36,13 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
 	PathSegment::Sample lookaheadPoint = m_path.getLookaheadPoint(robotPos.getTranslation(),
 			distanceFromPath + m_fixedLookahead);
 	std::pair<bool, Circle> circle = joinPath(pos, lookaheadPoint.translation);
+	std::cout << "Look X: " << lookaheadPoint.translation.getX() << "  Look Y: " << lookaheadPoint.translation.getY() << std::endl;
+
 
 	double speed = lookaheadPoint.speed;
 	if(m_reversed){
-		speed *= 1;
+		std::cout << "Reversed: " << speed << std::endl;
+		speed *= -1;
 	}
 
 	double dt = now - m_lastTime;
@@ -56,20 +59,20 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
 	}
 
 	double remainingDistance = m_path.getRemainingLength();
-//	std::cout << "Remain: " << remainingDistance << std::endl;
+	std::cout << "Remain: " << remainingDistance << std::endl;
 	double maxAllowedSpeed = sqrt(2 * m_maxAccel * remainingDistance);
-	if (abs(speed) > maxAllowedSpeed){
-		speed = maxAllowedSpeed * (speed / abs(speed));
+	if (fabs(speed) > maxAllowedSpeed){
+		speed = maxAllowedSpeed * (speed / fabs(speed));
 	}
 	double minSpeed = 20.0;
-	if (abs(speed) < minSpeed){
-		speed = minSpeed * (speed / abs(speed));
+	if (fabs(speed) < minSpeed){
+		speed = minSpeed * (speed / fabs(speed));
 	}
 
 	Position2d::Delta rv(0,0,0);
 	if(circle.first){
 		rv = Position2d::Delta(speed, 0,
-				((circle.second.turnRight) ? -1 : 1) * abs(speed) / circle.second.radius);
+				((circle.second.turnRight) ? -1 : 1) * fabs(speed) / circle.second.radius);
 	} else {
 		rv = Position2d::Delta(speed, 0, 0);
 	}

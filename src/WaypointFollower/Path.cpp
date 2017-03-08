@@ -43,7 +43,7 @@ double Path::update(Translation2d pos) {
 	for(unsigned int i = 0; i < m_segments.size(); i++){
 //		PathSegment segment = m_segments[i];
 		PathSegment::ClosestPointReport closestPointReport = m_segments[i].getClosestPoint(pos);
-//		std::cout << "Index " << closestPointReport.index << std::endl;
+		std::cout << "Index " << closestPointReport.index << std::endl;
 		if (closestPointReport.index >= .99){
 			m_segments.erase(m_segments.begin() + i);
 			if(m_waypoints.size() > 0){
@@ -152,7 +152,7 @@ std::pair<bool, Translation2d> Path::getFirstCircleSegmentIntersection(
 			(det * dy + ((dy < 0) ? -1 : 1) * dx * sqrtDiscriminant) / drSquared + center.getX(),
 			(-det * dx + abs(dy) * sqrtDiscriminant) / drSquared + center.getY());
 	Translation2d negSolution = Translation2d(
-			(det * dy + ((dy < 0) ? -1 : 1) * dx * sqrtDiscriminant) / drSquared + center.getX(),
+			(det * dy - ((dy < 0) ? -1 : 1) * dx * sqrtDiscriminant) / drSquared + center.getX(),
 			(-det * dx - abs(dy) * sqrtDiscriminant) / drSquared + center.getY());
 
 	double posDot = segment.dotProduct(posSolution);
