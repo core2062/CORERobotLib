@@ -9,32 +9,12 @@ using namespace CORE;
 Node::Node(double timeout, COREAutonAction* action1, COREAutonAction* action2, COREAutonAction* action3) :
         m_children(), m_actions(), m_timeout(timeout) {
     if(action1 != nullptr) {
-        shared_ptr<COREAutonAction> pointer(action1);
-        m_actions.push_back(pointer);
-    }
-    if(action2 != nullptr) {
-        shared_ptr<COREAutonAction> pointer(action2);
-        m_actions.push_back(pointer);
-    }
-    if(action3 != nullptr) {
-        shared_ptr<COREAutonAction> pointer(action3);
-        m_actions.push_back(pointer);
-    }
-}
-
-/*
- * Create a node with given actions and timeout. These actions will all be run in parallel to each other.
- * Nullptrs will not be added as actions, they will be ignored.
- */
-Node::Node(double timeout, shared_ptr<COREAutonAction> action1, shared_ptr<COREAutonAction> action2,
-           shared_ptr<COREAutonAction> action3) : m_children(), m_actions(), m_timeout(timeout) {
-    if(!action1) {
         m_actions.push_back(action1);
     }
-    if(!action2) {
+    if(action2 != nullptr) {
         m_actions.push_back(action2);
     }
-    if(!action3) {
+    if(action3 != nullptr) {
         m_actions.push_back(action3);
     }
 }
@@ -43,14 +23,6 @@ Node::Node(double timeout, shared_ptr<COREAutonAction> action1, shared_ptr<COREA
  * Add a node to this node which will be run sequentially after this node completes all of its actions
  */
 void Node::addNext(Node* childNode) {
-    shared_ptr<Node> pointer(childNode);
-    m_children.push_back(pointer);
-}
-
-/*
- * Add a node to this node which will be run sequentially after this node completes all of its actions
- */
-void Node::addNext(shared_ptr<Node> childNode) {
     m_children.push_back(childNode);
 }
 
@@ -59,16 +31,6 @@ void Node::addNext(shared_ptr<Node> childNode) {
  */
 void Node::addAction(COREAutonAction* leaf) {
     if(leaf != nullptr) {
-        shared_ptr<COREAutonAction> pointer(leaf);
-        m_actions.push_back(pointer);
-    }
-}
-
-/*
- * Add an action to this node which will be run in parallel to other actions in this node
- */
-void Node::addAction(shared_ptr<COREAutonAction> leaf) {
-    if(!leaf) {
         m_actions.push_back(leaf);
     }
 }
@@ -89,6 +51,9 @@ void Node::addCondition(bool(* startCondition)()) {
 bool Node::complete() {
     if(m_timer.Get() > m_timeout) {
         CORELog::logInfo("Timeout of: " + to_string(m_timeout) + " exceeded in node!");
+        for(auto action : m_actions) {
+            action->actionEnd();
+        }
         return true;
     }
     if(m_actions.empty()) {
@@ -163,6 +128,17 @@ void Node::act(bool lastNodeDone) {
             child->act(true);
         }
     }
+}
+
+Node::~Node() {
+    for (auto i = m_actions.begin(); i != m_actions.end(); i++){
+        delete *i;
+    }
+    m_actions.clear();
+    for (auto i = m_children.begin(); i != m_children.end(); i++){
+        delete *i;
+    }
+    m_children.clear();
 }
 
 /*
@@ -243,3 +219,12 @@ void COREAuton::addFirstNode(Node* firstNode) {
 string COREAuton::getName() {
     return m_name;
 }
+
+COREAuton::~COREAuton() {
+    for (auto i = m_firstNode.begin(); i != m_firstNode.end(); i++){
+        delete *i;
+    }
+    m_firstNode.clear();
+}
+
+
