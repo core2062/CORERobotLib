@@ -12,16 +12,18 @@ Path::Path(){
 }
 */
 
-Path::Path(std::vector<Waypoint> waypoints, bool flipX, bool flipY) {
+Path::Path(std::vector<Waypoint> waypoints, bool flipY, bool flipX) {
 	m_waypoints = waypoints;
 	for (unsigned int i = 0; i < m_waypoints.size() - 1; ++i){
 		if(flipX && flipY){
 			m_segments.push_back(
 					PathSegment(m_waypoints[i].position.inverse(), m_waypoints[i+1].position.inverse(), m_waypoints[i].speed));
 		}else if(flipX){
+			std::cout << "Flipped X" << std::endl;
 			m_segments.push_back(
 					PathSegment(m_waypoints[i].position.flipX(), m_waypoints[i+1].position.flipX(), m_waypoints[i].speed));
 		}else if(flipY){
+			std::cout << "Flipped Y" << std::endl;
 			m_segments.push_back(
 					PathSegment(m_waypoints[i].position.flipY(), m_waypoints[i+1].position.flipY(), m_waypoints[i].speed));
 		}else{
@@ -43,7 +45,7 @@ double Path::update(Translation2d pos) {
 	for(unsigned int i = 0; i < m_segments.size(); i++){
 //		PathSegment segment = m_segments[i];
 		PathSegment::ClosestPointReport closestPointReport = m_segments[i].getClosestPoint(pos);
-		std::cout << "Index " << closestPointReport.index << std::endl;
+//		std::cout << "Index " << closestPointReport.index << std::endl;
 		if (closestPointReport.index >= .99){
 			m_segments.erase(m_segments.begin() + i);
 			if(m_waypoints.size() > 0){

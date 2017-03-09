@@ -9,5 +9,5 @@
 
 class PathLoader{
 public:
-	static Path * loadPath(std::string fileName, double speedScale = 1.0, bool flipX = false, bool flipY = false);
+	static Path * loadPath(std::string fileName, double speedScale = 1.0, bool flipY = false, bool flipX = false);
 };

@@ -1,6 +1,6 @@
 #include "PathLoader.h"
 
-Path * PathLoader::loadPath(std::string fileName, double speedScale, bool flipX, bool flipY) {
+Path * PathLoader::loadPath(std::string fileName, double speedScale, bool flipY, bool flipX) {
 	std::cout << "Loading File: " << fileName << std::endl;
 	std::vector<Waypoint> points;
     std::string line;
@@ -48,9 +48,9 @@ Path * PathLoader::loadPath(std::string fileName, double speedScale, bool flipX,
         }
         else{
         	std::cout << "File: " << fileName << " was empty!" << std::endl;
-        	return new Path({Waypoint({-1,-1}, -1)}, flipX, flipY);
+        	return new Path({Waypoint({-1,-1}, -1)}, flipY, flipX);
         }
     }
     std::cout << "Failed to open: " << fileName << std::endl;
-    return new Path({Waypoint({-1,-1}, -1)}, flipX, flipY);
+    return new Path({Waypoint({-1,-1}, -1)}, flipY, flipX);
 }

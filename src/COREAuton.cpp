@@ -68,8 +68,6 @@ void Node::reset() {
     for(auto child : m_children) {
         child->reset();
     }
-    m_timer.Reset();
-    m_timer.Start();
     m_actions.clear();
     m_children.clear();
     m_actionsInitialized = false;
@@ -91,10 +89,15 @@ void Node::act(bool lastNodeDone) {
     bool shouldAct = (m_startConditonGiven && m_startCondition && !lastNodeDone)
                      || (!m_startConditonGiven && lastNodeDone);
     if(!m_actionsInitialized && shouldAct) {
+
+        m_timer.Reset();
+        m_timer.Start();
+        std::cout << "Timeout Timer Started" << std::endl;
+
         for(auto action : m_actions) {
             action->actionInit();
-            m_actionsInitialized = true;
         }
+        m_actionsInitialized = true;
     }
     if(!m_actions.empty() && (m_timer.Get() > m_timeout)) {
         CORELog::logInfo("Timeout of: " + to_string(m_timeout) + " exceeded in node!");
