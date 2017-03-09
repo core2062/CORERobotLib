@@ -5,6 +5,11 @@
 #include "InterpolatingMap.h"
 #include "CANTalon.h"
 #include "AHRS.h"
+#include "../COREHardware/CORETimer.h"
+#include "../CORELog.h"
+#include <thread>
+
+using namespace CORE;
 
 class TankTracker{
 protected:
@@ -12,16 +17,22 @@ protected:
 	Position2d::Delta m_velocity = {0,0,0};
 
 private:
+    const double m_targetLoopTime = 0.01;
+    mutex m_loopLock;
+	mutex m_timerLock;
 	double m_leftPrev = 0;
 	double m_rightPrev = 0;
+    CORETimer m_loopTimer;
 	CANTalon * m_left;
 	CANTalon * m_right;
 	AHRS * m_gyro;
-
+	thread * m_mainLoop;
+	static TankTracker * m_instance;
+	TankTracker();
 
 public:
-	TankTracker(CANTalon * left, CANTalon * right, AHRS * gyro);
-
+	static TankTracker* GetInstance();
+	void init(CANTalon * left, CANTalon * right, AHRS * gyro);
 	~TankTracker(){
 		m_left = nullptr;
 		m_right = nullptr;
@@ -31,6 +42,7 @@ public:
 	void reset(double time, Position2d initial);
 
 	void start();
+    void stop();
 
 	void loop();
 
