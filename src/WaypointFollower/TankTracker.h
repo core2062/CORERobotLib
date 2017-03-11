@@ -19,7 +19,7 @@ protected:
 	Position2d::Delta m_velocity = {0,0,0};
 
 private:
-    const double m_targetLoopHz = 100; //If this is changed, be sure to adjust NavX constructor accordingly
+    const double m_targetLoopHz = 200; //If this is changed, be sure to adjust NavX constructor accordingly
     double m_targetLoopTime;
     atomic<bool> m_loopEnabled;
     mutex m_loopLock;

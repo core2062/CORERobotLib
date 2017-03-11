@@ -44,7 +44,7 @@ Path * PathLoader::loadPath(std::string fileName, double speedScale, bool flipY,
         	for(auto i : points){
         		std::cout << i.position.getX() << " " << i.position.getY() << std::endl;
         	}
-        	return new Path(points, flipX, flipY);
+        	return new Path(points, flipY, flipX);
         }
         else{
         	std::cout << "File: " << fileName << " was empty!" << std::endl;
