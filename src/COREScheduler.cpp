@@ -38,7 +38,7 @@ bool COREVariableControlledSubsystem::setController(
 vector<CORESubsystem*> COREScheduler::m_subsystems;
 vector<COREAuton*> COREScheduler::m_autons;
 vector<CORETask*> COREScheduler::m_tasks;
-shared_ptr<SendableChooser<COREAuton*>> COREScheduler::m_autonChooser;
+SendableChooser<COREAuton*>* COREScheduler::m_autonChooser;
 
 COREAuton* COREScheduler::m_selectedAuton;
 CORETimer COREScheduler::m_autonTimer;
@@ -70,11 +70,11 @@ void COREScheduler::robotInit() {
     for(auto task : m_tasks) {
         task->robotInitTask();
     }
-    m_autonChooser = make_shared<SendableChooser<COREAuton*>>();
+    m_autonChooser = new SendableChooser<COREAuton*>();
     for(auto auton : m_autons) {
         auton->putToDashboard(m_autonChooser);
     }
-    SmartDashboard::PutData("Autonomous", m_autonChooser.get());
+    SmartDashboard::PutData("Autonomous", m_autonChooser);
     //TODO: Log -> RobotInit Complete
 }
 
@@ -87,13 +87,9 @@ void COREScheduler::autonInit() {
         }
     }
     if(!m_autons.empty()) {
-#ifdef __arm__
         m_selectedAuton = m_autonChooser->GetSelected();
-#else
-        m_selectedAuton = m_autons[0];
-        //TODO: Simulated auto switcher
-#endif
         m_selectedAuton->autonInit();
+        CORELog::logInfo("Starting " + m_selectedAuton->getName() + " autonomous");
     } else {
         CORELog::logWarning("No autonomous routines added!");
         m_selectedAuton = nullptr;
@@ -127,6 +123,12 @@ bool COREScheduler::auton() {
         CORELog::logWarning("No autonomous selected!");
         return true;
     }
+}
+
+void COREScheduler::autonEnd() {
+	for(auto task : m_tasks) {
+		task->autonEndTask();
+	}
 }
 
 void COREScheduler::teleopInit() {

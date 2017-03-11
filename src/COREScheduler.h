@@ -77,7 +77,7 @@ namespace CORE {
 	private:
 		static vector<COREAuton*> m_autons;
 		static vector<CORETask*> m_tasks;
-		static shared_ptr<SendableChooser<COREAuton*>> m_autonChooser;
+		static SendableChooser<COREAuton*>* m_autonChooser;
 		static vector<CORESubsystem*> m_subsystems;
 		static COREAuton* m_selectedAuton;
 		static CORETimer m_autonTimer;
@@ -88,6 +88,7 @@ namespace CORE {
 		static void robotInit();
 		static void autonInit();
 		static bool auton();
+		static void autonEnd();
 		static void teleopInit();
 		static void teleop();
 		static void teleopEnd();
