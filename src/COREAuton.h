@@ -69,7 +69,7 @@ namespace CORE {
         void autonInit();
         bool complete();
         void reset();
-        ~COREAuton();
+        virtual ~COREAuton();
     protected:
         void addFirstNode(Node* firstNode);
         virtual void addNodes() = 0;
