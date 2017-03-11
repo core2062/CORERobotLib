@@ -1,3 +1,5 @@
+/*
+	//TODO: Rewrite everything
 #pragma once
 
 #include <vector>
@@ -31,13 +33,13 @@ namespace CORE {
 //                double base = (abs(m_steerMotor->m_CANTalonController->GetEncPosition()) -
 //                               (int) (abs(m_steerMotor->m_CANTalonController->GetEncPosition())) %
 //                               (int) (360.0 / m_ticksToRotations));
-                return /*(base * direction) +*/ (angle / m_ticksToRotations);
+                return (base * direction) + (angle / m_ticksToRotations);
 
-                /*
+
                  int direction = encoder->Get()/abs(encoder->Get());
 				double base = (abs(encoder->Get()) - (abs(encoder->Get())) % (int)(360/encoderRatio));
 				return base * direction + angle/encoderRatio;
-                */
+
             }
 
             double getMagnitude() {
@@ -48,13 +50,13 @@ namespace CORE {
                 m_setMagnitude = setMagnitude;
             }
 
-/*            double getAngle() {
+            double getAngle() {
                 return m_setAngle;
             }
 
             void setAngle(double setAngle) {
                 m_setAngle = setAngle;
-            }*/
+            }
 
             void update() {
                 m_driveMotor->Set(m_setMagnitude * m_setDirection);
@@ -110,3 +112,4 @@ namespace CORE {
         shared_ptr<SwerveModule> m_leftFrontModule, m_leftBackModule, m_rightBackModule, m_rightFrontModule;
     };
 }
+*/

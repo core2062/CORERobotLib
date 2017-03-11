@@ -1,3 +1,4 @@
+/*
 #include "CORESwerveDrive.h"
 
 using namespace CORE;
@@ -105,10 +106,10 @@ void CORESwerve::update() {
             b = m_y - m_rot * i->position.unit().x;
             i->m_setMagnitude = sqrt(pow(a, 2) + pow(b, 2));
             double setAngle = arctan(a, b);
-            /*if (abs(setAngle - i->getCurrentAngle()) > 180){
+            if (abs(setAngle - i->getCurrentAngle()) > 180){
                 setAngle = i->clamp(setAngle - 180);
                 i->m_setDirection = -1;
-            }*/
+            }
             i->m_setAngle = setAngle;
             i->m_setMagnitude = i->m_setMagnitude * m_throttle;
             if(fabs(i->m_setMagnitude) > max) {
@@ -129,3 +130,4 @@ void CORESwerve::update() {
         i->update();
     }
 }
+*/
