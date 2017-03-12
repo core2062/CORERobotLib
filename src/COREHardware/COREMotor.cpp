@@ -30,6 +30,10 @@ double COREMotor::Get() {
     return m_motorValue;
 }
 
+double COREMotor::GetLast() {
+	return m_lastMotorValue;
+}
+
 void COREMotor::setReversed(bool reverse) {
     m_reversed = reverse;
 }

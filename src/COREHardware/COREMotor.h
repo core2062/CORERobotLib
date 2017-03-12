@@ -36,6 +36,7 @@ namespace CORE {
         COREMotor(int port, controllerType controller = CANTALON, controlMode controlMethod = PERCENTAGE);
         void Set(double motorSetValue);
         double Get();
+        double GetLast();
         void setReversed(bool reverse = true);
         bool getReversed();
         void setControlMode(controlMode controlMethod);
