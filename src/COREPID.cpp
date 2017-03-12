@@ -200,8 +200,10 @@ COREPID::COREPID(double pProfile1Value, double iProfile1Value, double dProfile1V
     }
     for(int i = 1; i <= 2; i++) {
         for(auto type : m_PIDTypes) {
-            getPIDMode(type, i)->riemannSum.resize(integralAccuracy);
-            getPIDMode(type, i)->riemannSum[0] = 0;
+            getPIDMode(type, i)->riemannSum.resize(integralAccuracy == 0 ? 20 : integralAccuracy);
+            for(auto j : getPIDMode(type, i)->riemannSum) {
+            	j = 0;
+            }
             getPIDMode(type, i)->lastOutput = 0;
             getPIDMode(type, i)->proportional = 0;
             getPIDMode(type, i)->integral = 0;
@@ -273,14 +275,17 @@ double COREPID::calculate(int profile) {
  */
 void COREPID::setPos(double positionSetPoint) {
     m_pos.setPoint = positionSetPoint;
+    m_pos.enabled = true;
 }
 
 void COREPID::setVel(double velocitySetPoint) {
     m_vel.setPoint = velocitySetPoint;
+    m_vel.enabled = true;
 }
 
 void COREPID::setAng(double angleSetPoint) {
     m_ang.setPoint = angleSetPoint;
+    m_ang.enabled = true;
 }
 
 /**
@@ -409,7 +414,7 @@ double COREPID::getDerivative(PIDType pidType, int profile) {
 }
 
 void COREPID::preLoopTask() {
-    if(m_inputDevice != nullptr) {
+    if(m_inputDevice) {
         switch(m_pidType) {
             case POS:
                 setActualPos(m_inputDevice->ControllerGetPos());
@@ -433,5 +438,7 @@ void COREPID::preLoopTask() {
 }
 
 void COREPID::postLoopTask() {
-    m_outputDevice->ControllerSet(calculate());
+    if(m_outputDevice) {
+    	m_outputDevice->ControllerSet(calculate());
+    }
 }

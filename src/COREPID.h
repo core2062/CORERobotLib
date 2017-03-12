@@ -69,7 +69,7 @@ namespace CORE {
             double setPoint, actual;
             bool enabled;
         } m_pos, m_vel, m_ang;
-        PIDProfile* m_currentProfile = getPIDProfile();
+        PIDProfile* m_currentProfile;
         double m_ticksToDegrees = 1;
         double m_time = 0;
         int m_defaultProfile = 1;
