@@ -11,6 +11,8 @@
 #include "COREController.h"
 #include "COREHardware/CORESensor.h"
 
+using namespace std;
+
 namespace CORE {
     enum PIDType {
         POS,

@@ -2,9 +2,10 @@
 
 using namespace CORE;
 
-gameMode CORERobot::m_mode = DISABLE;
-gameAlliance CORERobot::m_alliance = INVALID;
+CORERobot::gameMode CORERobot::m_mode = CORERobot::DISABLE;
+CORERobot::gameAlliance CORERobot::m_alliance = CORERobot::INVALID;
 int CORERobot::m_station = 0;
+bool CORERobot::m_isCompetition = false;
 
 void CORERobot::updateRobotState() {
 	if(DriverStation::GetInstance().IsDisabled()) {
@@ -28,6 +29,7 @@ void CORERobot::updateRobotState() {
 	}
 
 	m_station = DriverStation::GetInstance().GetLocation();
+	m_isCompetition = DriverStation::GetInstance().IsFMSAttached();
 }
 
 CORERobot::CORERobot() : CORESubsystem("Robot") {
@@ -105,14 +107,18 @@ CORERobot::~CORERobot() {
 	COREScheduler::cleanUp();
 }
 
-gameMode CORERobot::getMode(){
+CORERobot::gameMode CORERobot::getMode(){
 	return m_mode;
 }
 
-gameAlliance CORERobot::getAlliance() {
+CORERobot::gameAlliance CORERobot::getAlliance() {
 	return m_alliance;
 }
 
 int CORERobot::getStation() {
 	return m_station;
+}
+
+bool CORERobot::IsCompetition() {
+	return m_isCompetition;
 }

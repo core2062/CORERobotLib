@@ -16,13 +16,13 @@ void CORELog::writeLastDuration() {
 string CORELog::getRobotMode() {
     string robotModeName;
     switch(CORERobot::getMode()) {
-        case DISABLE:
+        case CORERobot::DISABLE:
             robotModeName = "DISABLED";
             break;
-        case AUTON:
+        case CORERobot::AUTON:
             robotModeName = "AUTON";
             break;
-        case TELEOP:
+        case CORERobot::TELEOP:
             robotModeName = "TELEOP";
             break;
         default:
@@ -80,10 +80,10 @@ void CORELog::robotInit() {
     if(DriverStation::GetInstance().IsFMSAttached()) {
         string alliance;
         switch(CORERobot::getAlliance()) {
-            case RED:
+            case CORERobot::RED:
                 alliance = "Red";
                 break;
-            case BLUE:
+            case CORERobot::BLUE:
                 alliance = "Blue";
                 break;
             default:

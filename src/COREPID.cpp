@@ -2,6 +2,8 @@
 
 using namespace CORE;
 
+using namespace std;
+
 /**
  * Returns the pointer to the struct of the profile number given
  * @param profile The profile number to get
@@ -164,6 +166,7 @@ COREPID::COREPID(ControllerInput* inputDevice, ControllerOutput* outputDevice, P
                  double pProfile1Value, double iProfile1Value, double dProfile1Value, double fProfile1Value,
                  double pProfile2Value, double iProfile2Value, double dProfile2Value, double fProfile2Value,
                  int integralAccuracy) {
+	m_currentProfile = getPIDProfile(1);
 	shared_ptr<ControllerInput> inputDevicePointer(inputDevice);
 	shared_ptr<ControllerOutput> outputDevicePointer(outputDevice);
 	COREPID(inputDevicePointer, outputDevicePointer, pidType, pProfile1Value, iProfile1Value, dProfile1Value, fProfile1Value,
@@ -201,8 +204,8 @@ COREPID::COREPID(double pProfile1Value, double iProfile1Value, double dProfile1V
     for(int i = 1; i <= 2; i++) {
         for(auto type : m_PIDTypes) {
             getPIDMode(type, i)->riemannSum.resize(integralAccuracy == 0 ? 20 : integralAccuracy);
-            for(auto j : getPIDMode(type, i)->riemannSum) {
-            	j = 0;
+            for(int j = 0; j < (int)getPIDMode(type, i)->riemannSum.size(); j++) {
+            	getPIDMode(type, i)->riemannSum[j] = 0;
             }
             getPIDMode(type, i)->lastOutput = 0;
             getPIDMode(type, i)->proportional = 0;

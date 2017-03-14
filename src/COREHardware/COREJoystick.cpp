@@ -1,4 +1,5 @@
 #include "COREJoystick.h"
+#include "../CORERobot.h"
 
 using namespace CORE;
 
@@ -173,6 +174,10 @@ void COREJoystick::preLoopTask() {
     m_lastButtonCache = m_buttonCache;
     for(auto button : m_buttonCache) {
     	bool isActive;
+		if(CORERobot::getMode() == CORERobot::AUTON || CORERobot::getMode() == CORERobot::DISABLE) {
+			m_buttonCache[button.first] = OFF;
+			continue;
+		}
     	if(button.first > -1) {
 			isActive = m_joystick.GetRawButton(button.first);
     	} else {
@@ -193,6 +198,10 @@ void COREJoystick::preLoopTask() {
 		}
     }
     for(auto axis : m_axisCache) {
+    	if(CORERobot::getMode() == CORERobot::AUTON || CORERobot::getMode() == CORERobot::DISABLE) {
+    		m_axisCache[axis.first] = 0;
+			continue;
+		}
         m_axisCache[axis.first] = m_joystick.GetRawAxis(axis.first);
     }
 }
