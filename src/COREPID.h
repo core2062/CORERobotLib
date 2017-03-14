@@ -27,14 +27,14 @@ namespace CORE {
         COREPID(shared_ptr<ControllerInput> inputDevice, shared_ptr<ControllerOutput> outputDevice, PIDType pidType, double pProfile1Value,
                         double iProfile1Value, double dProfile1Value, double fProfile1Value = 1, double pProfile2Value = 0,
                         double iProfile2Value = 0, double dProfile2Value = 1, double fProfile2Value = 0,
-                        int integralAccuracy = 1);
+                        int integralAccuracy = 5);
         COREPID(ControllerInput* inputDevice, ControllerOutput* outputDevice, PIDType pidType, double pProfile1Value,
                 double iProfile1Value, double dProfile1Value, double fProfile1Value = 1, double pProfile2Value = 0,
                 double iProfile2Value = 0, double dProfile2Value = 1, double fProfile2Value = 0,
-                int integralAccuracy = 1);
+                int integralAccuracy = 5);
         COREPID(double pProfile1Value, double iProfile1Value, double dProfile1Value, double fProfile1Value = 1,
                 double pProfile2Value = 0, double iProfile2Value = 0, double dProfile2Value = 1,
-                double fProfile2Value = 0, int integralAccuracy = 1);
+                double fProfile2Value = 0, int integralAccuracy = 5);
         double calculate(int profile = -1);
         void setPos(double positionSetPoint);
         void setVel(double velocitySetPoint);
@@ -58,6 +58,7 @@ namespace CORE {
         double getProportional(PIDType pidType, int profile = -1);
         double getIntegral(PIDType pidType, int profile = -1);
         double getDerivative(PIDType pidType, int profile = -1);
+        void putToDashboard();
         void preLoopTask() override;
         void postLoopTask() override;
     private:

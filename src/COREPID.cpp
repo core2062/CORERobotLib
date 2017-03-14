@@ -416,6 +416,11 @@ double COREPID::getDerivative(PIDType pidType, int profile) {
     return getPIDMode(pidType, profile)->derivative;
 }
 
+void COREPID::putToDashboard() {
+	double error =  m_pos.setPoint - m_pos.actual;
+	SmartDashboard::PutNumber("PID Error", error);
+}
+
 void COREPID::preLoopTask() {
     if(m_inputDevice) {
         switch(m_pidType) {
