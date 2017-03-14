@@ -13,11 +13,6 @@
 
 using namespace std;
 namespace CORE {
-    enum robotMode {
-        DISABLED,
-        TELEOP,
-        AUTON
-    };
     class CORELog {
     public:
         enum loggingLevel {
@@ -41,7 +36,6 @@ namespace CORE {
         static ofstream m_file;
         static vector<string> m_fileCache;
         static string m_fileName;
-        static robotMode m_robotMode;
         static CORETimer m_matchTimer;
         static loggingLevel m_consoleLoggingLevel;
     };

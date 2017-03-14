@@ -1,6 +1,6 @@
 #include "COREMotionProfile.h"
 
-CORE::COREMotionProfile::COREMotionProfile(CORE::ControllerInput* inputDevice, CORE::ControllerOutput* outputDevice,
+CORE::COREMotionProfile::COREMotionProfile(shared_ptr<ControllerInput> inputDevice, shared_ptr<ControllerOutput> outputDevice,
                                            double maxVel, double maxAccel) : m_actualVelocity(0), m_maxOutputSpeed(0),
                                                                              m_timeToAccel(0), m_ticksToAccel(0) {
     m_inputDevice = inputDevice;
@@ -9,6 +9,14 @@ CORE::COREMotionProfile::COREMotionProfile(CORE::ControllerInput* inputDevice, C
     m_maxAccel = maxAccel;
     m_timer.Reset();
     m_timer.Start();
+}
+
+CORE::COREMotionProfile::COREMotionProfile(CORE::ControllerInput* inputDevice, CORE::ControllerOutput* outputDevice,
+                                           double maxVel, double maxAccel) : m_actualVelocity(0), m_maxOutputSpeed(0),
+                                                                             m_timeToAccel(0), m_ticksToAccel(0) {
+	shared_ptr<ControllerInput> inputDevicePointer(inputDevice);
+	shared_ptr<ControllerOutput> outputDevicePointer(outputDevice);
+	COREMotionProfile(inputDevice, outputDevice, maxVel, maxAccel);
 }
 
 CORE::COREMotionProfile::COREMotionProfile(double maxVel, double maxAccel) : m_actualVelocity(0), m_maxOutputSpeed(0),
@@ -38,37 +46,40 @@ double CORE::COREMotionProfile::getMaxAccel() {
 }
 
 void CORE::COREMotionProfile::Set(double setPoint) {
-    COREController::Set(setPoint);
-    m_actualVelocity = m_inputDevice->ControllerGetVel();
-    m_timeToAccel = (m_maxVel - m_actualVelocity) / m_maxAccel;
+    COREMotionController::Set(setPoint);
+    //m_actualVelocity = m_inputDevice->ControllerGetVel();
+    m_timeToAccel = (m_maxVel - m_actualVelocity) / (m_maxAccel == 0 ? 1 : m_maxAccel);
     m_ticksToAccel = m_actualPosition + 0.5 * m_maxAccel * (m_timeToAccel * m_timeToAccel);
     m_maxOutputSpeed = 1;
     if((m_ticksToAccel * 2) > (m_setPoint - m_actualPosition)) {
-        m_maxOutputSpeed = ((m_setPoint - m_actualPosition) * 0.5) / m_ticksToAccel;
+        m_maxOutputSpeed = (m_ticksToAccel == 0 ? 0 : ((m_setPoint - m_actualPosition) * 0.5) / m_ticksToAccel);
     }
     m_timer.Reset();
     m_timer.Start();
 }
 
 double CORE::COREMotionProfile::Get() {
-    return COREController::Get();
+    return m_output;
 }
 
 void CORE::COREMotionProfile::setActual(double actualPosition) {
-    COREController::setActual(actualPosition);
+    COREMotionController::setActual(actualPosition);
 }
 
 double CORE::COREMotionProfile::getActual() {
-    return COREController::getActual();
+    return COREMotionController::getActual();
 }
 
 void CORE::COREMotionProfile::update(int profile) {
     if(m_actualPosition < m_ticksToAccel) {
-        m_outputDevice->ControllerSet(m_timer.Get() / m_timeToAccel);
+        //m_outputDevice->ControllerSet(m_timeToAccel == 0 ? 0 : (m_timer.Get() / m_timeToAccel));
+        m_output = (m_timeToAccel == 0 ? 0 : (m_timer.Get() / m_timeToAccel));
     } else if(m_actualPosition > (m_setPoint - m_ticksToAccel)) {
-        m_outputDevice->ControllerSet(m_maxOutputSpeed - (m_timer.Get() / m_timeToAccel));
+        //m_outputDevice->ControllerSet(m_maxOutputSpeed - (m_timeToAccel == 0 ? 0 : (m_timer.Get() / m_timeToAccel)));
+        m_output = (m_maxOutputSpeed - (m_timeToAccel == 0 ? 0 : (m_timer.Get() / m_timeToAccel)));
     } else {
-        m_outputDevice->ControllerSet(m_maxOutputSpeed);
+        //m_outputDevice->ControllerSet(m_maxOutputSpeed);
+        m_output = m_maxOutputSpeed;
         m_timer.Reset();
         m_timer.Start();
     }

@@ -40,6 +40,8 @@ public:
     inline bool GetRawButton(int num) { return false; }
 
     inline std::string GetJoystickName() { return "NULL"; }
+
+    inline int GetPOV() { return 0; }
 };
 
 class SampleRobot {
@@ -172,5 +174,40 @@ public:
 
 private:
     static Preferences* m_instance;
+};
+
+class DoubleSolenoid {
+public:
+    enum Value { kOff, kForward, kReverse };
+    DoubleSolenoid(int _, int __, int ___) {}
+    inline void Set(Value _) {}
+    inline Value Get() { return kOff; };
+};
+
+class Servo {
+public:
+    Servo(int _);
+    inline void Set(double _) {}
+};
+
+class Timer {
+public:
+    static double GetFPGATimestamp() { return 0; }
+};
+
+class LiveWindow {
+public:
+public:
+    static inline LiveWindow* GetInstance() {
+        if(!m_instance) {
+            m_instance = new LiveWindow;
+        }
+        return m_instance;
+    }
+
+    inline void Run() {}
+
+private:
+    static LiveWindow* m_instance;
 };
 #endif

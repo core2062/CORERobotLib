@@ -10,24 +10,35 @@ CORESubsystem::CORESubsystem(string name) {
 
 }
 
-CORETask::CORETask() :
-        m_disabled(false) {
-    shared_ptr<CORETask> pointer(this);
-    COREScheduler::addTask(pointer);
+COREController::COREController() : CORETask() {
+
 }
 
-void CORETask::disableTasks(bool disable) {
-    m_disabled = disable;
+COREVariableControlledSubsystem::COREVariableControlledSubsystem(string name) : CORESubsystem(name) {
 }
 
-bool CORETask::isDisabled() {
-    return m_disabled;
+void COREVariableControlledSubsystem::teleop() {
+	if(m_currentController != nullptr){
+		//if(m_currentController->isEnabled()){
+			m_currentController->enabledLoop();
+		//}
+	}
+}
+
+bool COREVariableControlledSubsystem::setController(
+		COREController* controller) {
+	if(controller == nullptr){
+		m_currentController = nullptr;
+		return false;
+	}
+	m_currentController = controller;
+	return true;
 }
 
 vector<CORESubsystem*> COREScheduler::m_subsystems;
 vector<COREAuton*> COREScheduler::m_autons;
-vector<shared_ptr<CORETask>> COREScheduler::m_tasks;
-shared_ptr<SendableChooser<COREAuton*>> COREScheduler::m_autonChooser;
+vector<CORETask*> COREScheduler::m_tasks;
+SendableChooser<COREAuton*>* COREScheduler::m_autonChooser;
 
 COREAuton* COREScheduler::m_selectedAuton;
 CORETimer COREScheduler::m_autonTimer;
@@ -46,42 +57,39 @@ void COREScheduler::addAuton(COREAuton* auton) {
     CORELog::logInfo(auton->getName() + " autonomous added");
 }
 
-void COREScheduler::addTask(shared_ptr<CORETask> task) {
+void COREScheduler::addTask(CORETask* task) {
     m_tasks.push_back(task);
 }
 
 void COREScheduler::robotInit() {
     CORELog::robotInit();
-    COREConstantsManager::robotInit();
+    COREConstantsManager::updateConstants();
     for(auto subsystem : m_subsystems) {
         subsystem->robotInit();
     }
     for(auto task : m_tasks) {
         task->robotInitTask();
     }
-    m_autonChooser = make_shared<SendableChooser<COREAuton*>>();
+    m_autonChooser = new SendableChooser<COREAuton*>();
     for(auto auton : m_autons) {
         auton->putToDashboard(m_autonChooser);
     }
-    SmartDashboard::PutData("Autonomous", m_autonChooser.get());
+    SmartDashboard::PutData("Autonomous", m_autonChooser);
     //TODO: Log -> RobotInit Complete
 }
 
 void COREScheduler::autonInit() {
     CORELog::autonInit();
+    COREConstantsManager::updateConstants();
     for(auto task : m_tasks) {
         if(!task->isDisabled()) {
             task->autonInitTask();
         }
     }
     if(!m_autons.empty()) {
-#ifdef __arm__
         m_selectedAuton = m_autonChooser->GetSelected();
-#else
-        m_selectedAuton = m_autons[0];
-        //TODO: Simulated auto switcher
-#endif
         m_selectedAuton->autonInit();
+        CORELog::logInfo("Starting " + m_selectedAuton->getName() + " autonomous");
     } else {
         CORELog::logWarning("No autonomous routines added!");
         m_selectedAuton = nullptr;
@@ -91,6 +99,7 @@ void COREScheduler::autonInit() {
 }
 
 bool COREScheduler::auton() {
+	COREHardwareManager::updateEncoders();
     for(auto task : m_tasks) {
         if(!task->isDisabled()) {
             task->preLoopTask();
@@ -116,6 +125,12 @@ bool COREScheduler::auton() {
     }
 }
 
+void COREScheduler::autonEnd() {
+	for(auto task : m_tasks) {
+		task->autonEndTask();
+	}
+}
+
 void COREScheduler::teleopInit() {
     CORELog::teleopInit();
     COREConstantsManager::updateConstants();
@@ -131,6 +146,7 @@ void COREScheduler::teleopInit() {
 }
 
 void COREScheduler::teleop() {
+	COREHardwareManager::updateEncoders();
     for(auto task : m_tasks) {
         if(!task->isDisabled()) {
             task->preLoopTask();
@@ -177,4 +193,23 @@ void COREScheduler::test() {
         subsystem->test();
     }
     //TODO: Do something
+}
+
+void COREScheduler::cleanUp() {
+	CORELog::logInfo("Cleaning up COREScheduler!");
+	delete m_selectedAuton;
+	for (auto i = m_autons.begin(); i != m_autons.end(); i++){
+		delete *i;
+	}
+	m_autons.clear();
+	for (auto i = m_tasks.begin(); i != m_tasks.end(); i++){
+		delete *i;
+	}
+	m_tasks.clear();
+	for (auto i = m_subsystems.begin(); i != m_subsystems.end(); i++){
+		delete *i;
+	}
+	m_subsystems.clear();
+	COREHardwareManager::cleanUp();
+	COREConstantsManager::cleanUp();
 }

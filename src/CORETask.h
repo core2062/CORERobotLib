@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 namespace CORE {
     class CORETask {
     private:
@@ -8,6 +10,7 @@ namespace CORE {
         CORETask();
         virtual void robotInitTask() {}
         virtual void autonInitTask() {}
+        virtual void autonEndTask() {}
         virtual void teleopInitTask() {}
         virtual void preLoopTask() {}
         virtual void postLoopTask() {}

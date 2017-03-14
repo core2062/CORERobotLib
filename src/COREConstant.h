@@ -12,6 +12,8 @@ using namespace std;
 namespace CORE {
     class ICOREConstant {
         friend class COREConstantsManager;
+    public:
+        virtual ~ICOREConstant() {}
     private:
         virtual string getName() = 0;
         virtual void updateConstant() = 0;
@@ -19,9 +21,9 @@ namespace CORE {
 
     class COREConstantsManager {
     public:
-        static void robotInit();
         static void updateConstants();
         static void addConstant(ICOREConstant* instance);
+        static void cleanUp();
     private:
         static vector<ICOREConstant*> m_constants;
         static string m_defaultConstantsFile; //TODO: Put constants to CSV file

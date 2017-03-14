@@ -1,6 +1,9 @@
 #pragma once
 
 #include "COREHardware/CORETimer.h"
+#include <memory>
+
+using namespace std;
 
 /*#include "COREController/COREPID.h"
 #include "COREController/COREPosPID.h"
@@ -50,17 +53,17 @@ namespace CORE {
         virtual ~ControllerOutput() {}
     };
 
-    class COREController {
+    class COREMotionController {
     public:
         virtual void Set(double setPoint);
         virtual double Get();
         virtual void setActual(double actualPosition);
         virtual double getActual();
-        virtual ~COREController() {}
+        virtual ~COREMotionController() {}
     protected:
         virtual void update(int profile = -1) = 0;
-        ControllerInput* m_inputDevice;
-        ControllerOutput* m_outputDevice;
+        shared_ptr<ControllerInput> m_inputDevice;
+        shared_ptr<ControllerOutput> m_outputDevice;
         double m_actualPosition = 0;
         double m_setPoint = 0;
     };

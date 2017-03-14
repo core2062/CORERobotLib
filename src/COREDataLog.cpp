@@ -1,47 +1,109 @@
+#include "COREDataLog.h"
+
+using namespace CORE;
 
 
-/*
-CORE::COREDataLog::COREDataLog(string name) {
-    m_name = name;
+//template<class T>
+//COREDataPoint<T>::COREDataPoint(T var) {
+//	m_value = new T(var);
+//}
+//
+//template<class T>
+//COREDataPoint<T>::COREDataPoint(T* var) {
+//	m_value = var;
+//}
+//
+//template<class T>
+//std::string COREDataPoint<T>::getValue() {
+//	return std::to_string(*m_value);
+//}
+//
+//template<>
+//std::string COREDataPoint<std::string>::getValue() {
+//	return *m_value;
+//}
+//
+//template<>
+//std::string COREDataPoint<bool>::getValue() {
+//	return (*m_value)?"True":"False";
+//}
+//
+//template<>
+//std::string COREDataPoint<Timer>::getValue() {
+//	return std::to_string(m_value->Get());
+//}
+//
+//template<class T>
+//void COREDataPoint<T>::setValue(T const& val) {
+//	delete m_value;
+//	m_value = new T(val);
+//}
+//
+std::string CORETimeDataPoint::getValue() {
+	return std::to_string(Timer::GetFPGATimestamp());
 }
 
-void CORE::COREDataLog::putNumber(double value) {
-    SmartDashboard::PutNumber(m_name, value);
+COREDataLogger::COREDataLogger(
+		std::initializer_list<std::string> headers) {
+	std::string firstLine;
+	for (auto i : headers){
+		firstLine += i;
+		firstLine += ',';
+	}
+	firstLine.erase(firstLine.end() - 1);
+	m_lines.push_back(firstLine);
 }
 
-double CORE::COREDataLog::getNumber() {
-    return SmartDashboard::GetNumber(m_name, m_defaultNumber);
+void COREDataLogger::putData(std::initializer_list<ICOREDataPoint*> data) {
+	std::string newLine;
+	for (auto i : data){
+		newLine += i->getValue();
+		newLine += ',';
+	}
+	newLine.erase(newLine.end() - 1);
+	m_lines.push_back(newLine);
 }
 
-void CORE::COREDataLog::putString(string value) {
-    SmartDashboard::PutString(m_name, value);
+bool COREDataLogger::save(std::string filename) {
+	std::string fullName = "/home/lvuser/COREDataLogs/" + filename;
+	std::remove(fullName.c_str());
+	std::ofstream outputFile;
+	outputFile.open(fullName, std::ofstream::trunc);
+	if(outputFile.is_open()){
+		for(auto i : m_lines){
+			outputFile << i;
+			outputFile << "\r\n";
+			std::cout << i; std::cout << "\r\n";
+		}
+		outputFile.close();
+		return true;
+	}else{
+		std::cout << "ERRRRROOOOOOOOOOOOOOOR" << std::endl;
+		return false;
+	}
 }
 
-string CORE::COREDataLog::getString() {
-    return SmartDashboard::GetString(m_name, m_defaultString);
+
+COREContinuousLogger::COREContinuousLogger(
+		std::initializer_list<std::string> headers,
+		std::initializer_list<ICOREDataPoint*> datas, int counts) : COREDataLogger(headers){
+	m_datas = datas;
+	m_counterStart = counts;
+	m_counter = m_counterStart;
 }
 
-void CORE::COREDataLog::putBoolean(bool value) {
-    SmartDashboard::PutBoolean(m_name, value);
+void COREContinuousLogger::postLoopTask() {
+	if(m_counter <= 0){
+		std::string newLine;
+		for (auto i : m_datas){
+			newLine += i->getValue();
+			newLine += ',';
+		}
+		newLine.erase(newLine.end() - 1);
+		m_lines.push_back(newLine);
+		m_counter = m_counterStart;
+	}else{
+		m_counter--;
+	}
 }
 
-bool CORE::COREDataLog::getBoolean() {
-    return SmartDashboard::GetBoolean(m_name, m_defaultBoolean);
-}
-
-string CORE::COREDataLog::getName() {
-    return m_name;
-}
-
-void CORE::COREDataLog::setDefaultNumber(double value) {
-    m_defaultNumber = value;
-}
-
-void CORE::COREDataLog::setDefaultString(string value) {
-    m_defaultString = value;
-}
-
-void CORE::COREDataLog::setDefaultBoolean(bool value) {
-    m_defaultBoolean = value;
-}
-*/

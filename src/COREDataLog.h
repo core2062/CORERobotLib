@@ -2,89 +2,98 @@
 
 #include <WPILib.h>
 #include <vector>
+#include "CORETask.h"
+#include <fstream>
 
 using namespace std;
 
 namespace CORE {
-    class ICOREDataLogger {
-    public:
-        virtual string getName() = 0;
-        virtual void updateConstant(Preferences* prefs) = 0;
-    };
 
-    template<class T>
-    class COREDataLogger : public ICOREDataLogger {
-    public:
-        COREDataLogger(string name, T defaultValue);
-        string getName();
-        void updateConstant(Preferences* prefs);
-        T value;
-    private:
-        string m_name;
-    };
+	class ICOREDataPoint{
+	public:
+		virtual std::string getValue(){return "?";};
+		virtual ~ICOREDataPoint(){};
+	};
 
-    template<>
-    class COREDataLogger<double> : public ICOREDataLogger {
-    public:
-        COREDataLogger(string name, double defaultValue);
-        string getName();
-        void updateConstant(Preferences* prefs);
-        double value;
-    private:
-        string m_name;
-    };
+	template<class T>
+	class COREDataPoint : public ICOREDataPoint{
+	public:
+		COREDataPoint(T var){
+			m_value = new T(var);
+		}
+		COREDataPoint(T * var);
 
-    template<>
-    class COREDataLogger<string> : public ICOREDataLogger {
-    public:
-        COREDataLogger(string name, string defaultValue);
-        string getName();
-        void updateConstant(Preferences* prefs);
-        string value;
-    private:
-        string m_name;
-    };
+		std::string getValue();
+		void setValue(T val);
+	private:
+		T * m_value;
+	};
 
-    template<>
-    class COREDataLogger<bool> : public ICOREDataLogger {
-    public:
-        COREDataLogger(string name, bool defaultValue);
-        string getName();
-        void updateConstant(Preferences* prefs);
-        bool value;
-    private:
-        string m_name;
-    };
+	template<>
+	std::string COREDataPoint<std::string>::getValue();
 
-    class COREDataLoggerManager {
-    public:
-        static void robotInit();
-        static void updateConstants();
-        static void addLogger(ICOREDataLogger* instance);
-    private:
-        static vector<ICOREDataLogger*> m_constants;
-        static string m_defaultConstantsFile; //TODO: Put constants to CSV file
-        static Preferences* m_prefs;
-    };
+	template<>
+	std::string COREDataPoint<bool>::getValue();
 
+	template<>
+	std::string COREDataPoint<Timer>::getValue();
 
-    /*class COREDataLog {
-    public:
-        COREDataLog(string name);
-        void putNumber(double value);
-        double getNumber();
-        void putString(string value);
-        string getString();
-        void putBoolean(bool value);
-        bool getBoolean();
-        string getName();
-        void setDefaultNumber(double value);
-        void setDefaultString(string value);
-        void setDefaultBoolean(bool value);
-    private:
-        string m_name;
-        double m_defaultNumber = 0;
-        string m_defaultString = "NULL";
-        bool m_defaultBoolean = false;
-    };*/
+	class CORETimeDataPoint : public ICOREDataPoint{
+	public:
+		std::string getValue() override;
+	};
+
+	static CORETimeDataPoint matchTime;
+
+	class COREDataLogger{
+	public:
+		COREDataLogger(std::initializer_list<std::string> headers);
+
+		void putData(std::initializer_list<ICOREDataPoint*> data);
+		bool save(std::string filename);
+	protected:
+		std::vector<std::string> m_lines;
+	};
+
+	class COREContinuousLogger : public COREDataLogger, CORETask{
+	public:
+		COREContinuousLogger(std::initializer_list<std::string> headers,
+				std::initializer_list<ICOREDataPoint*> datas, int counts);
+		void postLoopTask();
+	private:
+		std::vector<ICOREDataPoint*> m_datas;
+		int m_counter;
+		int m_counterStart;
+	};
+}
+
+template<class T>
+inline CORE::COREDataPoint<T>::COREDataPoint(T* var) {
+	m_value = var;
+}
+
+template<class T>
+inline std::string CORE::COREDataPoint<T>::getValue() {
+	return std::to_string(*m_value);
+}
+
+template<class T>
+inline void CORE::COREDataPoint<T>::setValue(T val) {
+	delete m_value;
+	m_value = new T(val);
+}
+
+template<>
+inline std::string CORE::COREDataPoint<std::string>::getValue() {
+	return *m_value;
+}
+
+template<>
+inline std::string CORE::COREDataPoint<bool>::getValue() {
+	return (*m_value)?"True":"False";
+}
+
+template<>
+inline std::string CORE::COREDataPoint<Timer>::getValue() {
+	return std::to_string(m_value->Get());
 }

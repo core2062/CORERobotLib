@@ -1,9 +1,10 @@
 #pragma once
 
-#include <cmath>
+#include <math.h>
 #include <iostream>
 
 #define PI 3.141592653589793
+#define kE .000000001
 
 using namespace std;
 
@@ -31,34 +32,34 @@ namespace CORE {
         return -1;
     }
 
-    class Vector {
-    public:
-        double x = 0.0;
-        double y = 0.0;
+	inline double hypot(double x, double y){
+		return sqrt(x*x+y*y);
+	}
 
-        Vector(double newX = 0.0, double newY = 0.0) {
-            x = newX;
-            y = newY;
-        }
+	class Vector {
+	public:
+		double x = 0.0;
+		double y = 0.0;
 
-        void operator=(double val[2]) {
-            x = val[0];
-            y = val[1];
-        }
-
-        double length() {
-            return std::sqrt(std::pow(x, 2) + std::pow(y, 2));
-        }
-
-        double angle() {
-            return (std::atan2(x, y) * 180) / 3.1415;
-        }
-
-        Vector unit() {
-            Vector v;
-            v.x = x / length();
-            v.y = y / length();
-            return v;
-        }
-    };
+		Vector(double newX = 0.0, double newY = 0.0) {
+			x = newX;
+			y = newY;
+		}
+		void operator= (double val[2]) {
+			x = val[0];
+			y = val[1];
+		}
+		double length() {
+			return sqrt(pow(x,2) + pow(y,2));
+		}
+		double angle() {
+			return (atan2(x,y)*180)/3.1415;
+		}
+		Vector unit() {
+			Vector v;
+			v.x = x/length();
+			v.y = y/length();
+			return v;
+		}
+	};
 }
