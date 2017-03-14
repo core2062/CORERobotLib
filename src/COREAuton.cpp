@@ -1,6 +1,7 @@
 #include "COREAuton.h"
 
 using namespace CORE;
+using namespace std;
 
 /*
  * Create a node with given actions and timeout. These actions will all be run in parallel to each other.
@@ -8,6 +9,7 @@ using namespace CORE;
  */
 Node::Node(double timeout, COREAutonAction* action1, COREAutonAction* action2, COREAutonAction* action3) :
         m_children(), m_actions(), m_timeout(timeout) {
+	m_startCondition = nullptr;
     if(action1 != nullptr) {
         m_actions.push_back(action1);
     }
@@ -227,11 +229,45 @@ string COREAuton::getName() {
     return m_name;
 }
 
+/*
+ * Automatically deletes all nodes and their actions on deletion of the autonomous routine
+ */
 COREAuton::~COREAuton() {
     for (auto i = m_firstNode.begin(); i != m_firstNode.end(); i++){
         delete *i;
     }
     m_firstNode.clear();
+}
+
+/*
+ * Default autonomous action. Does absolutely nothing
+ */
+DoNothingAuton::DoNothingAuton() : COREAuton("Do Nothing", true) {
+
+}
+
+void DoNothingAuton::addNodes() {
+
+}
+
+/*
+ * Takes a duration in seconds to wait for
+ */
+WaitAction::WaitAction(double duration) {
+	m_duration = duration;
+}
+
+void WaitAction::actionInit() {
+	m_timer.Reset();
+	m_timer.Start();
+}
+
+COREAutonAction::actionStatus WaitAction::action() {
+	if(m_timer.Get() > m_duration) {
+		return COREAutonAction::END;
+	} else {
+		return COREAutonAction::CONTINUE;
+	}
 }
 
 

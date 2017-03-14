@@ -1,4 +1,5 @@
 #include "COREScheduler.h"
+#include "COREAuton.h"
 
 using namespace CORE;
 using namespace std;
@@ -71,6 +72,7 @@ void COREScheduler::robotInit() {
         task->robotInitTask();
     }
     m_autonChooser = new SendableChooser<COREAuton*>();
+    addAuton(&CORE::DoNothingAuton);
     for(auto auton : m_autons) {
         auton->putToDashboard(m_autonChooser);
     }
