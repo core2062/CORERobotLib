@@ -6,7 +6,6 @@ using namespace std;
 
 CORESubsystem::CORESubsystem(string name) {
     m_name = name;
-//    shared_ptr<CORESubsystem> pointer(this);
     COREScheduler::addSubsystem(this);
 
 }
@@ -72,7 +71,7 @@ void COREScheduler::robotInit() {
         task->robotInitTask();
     }
     m_autonChooser = new SendableChooser<COREAuton*>();
-    addAuton(&CORE::DoNothingAuton);
+    m_autonChooser->AddDefault("Do Nothing", nullptr);
     for(auto auton : m_autons) {
         auton->putToDashboard(m_autonChooser);
     }
@@ -90,6 +89,9 @@ void COREScheduler::autonInit() {
     }
     if(!m_autons.empty()) {
         m_selectedAuton = m_autonChooser->GetSelected();
+        if(m_selectedAuton == nullptr) {
+        	return;
+        }
         m_selectedAuton->autonInit();
         CORELog::logInfo("Starting " + m_selectedAuton->getName() + " autonomous");
     } else {

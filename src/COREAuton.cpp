@@ -240,17 +240,6 @@ COREAuton::~COREAuton() {
 }
 
 /*
- * Default autonomous action. Does absolutely nothing
- */
-DoNothingAuton::DoNothingAuton() : COREAuton("Do Nothing", true) {
-
-}
-
-void DoNothingAuton::addNodes() {
-
-}
-
-/*
  * Takes a duration in seconds to wait for
  */
 WaitAction::WaitAction(double duration) {

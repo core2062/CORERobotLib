@@ -14,6 +14,8 @@
 
 using namespace std;
 
+using namespace CORE;
+
 namespace CORE {
     class COREAuton;
 

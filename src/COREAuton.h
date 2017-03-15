@@ -79,11 +79,6 @@ namespace CORE {
         vector<Node*> m_firstNode;
     };
 
-    class DoNothingAuton : public COREAuton {
-    	DoNothingAuton();
-    	void addNodes();
-    };
-
     class WaitAction : public COREAutonAction {
     public:
     	WaitAction(double duration);
