@@ -1,6 +1,7 @@
 #include "PathLoader.h"
+#include <algorithm>
 
-Path * PathLoader::loadPath(std::string fileName, double speedScale, bool flipY, bool flipX) {
+Path * PathLoader::loadPath(std::string fileName, double speedScale, bool flipY, bool flipX, bool reversePath) {
 	std::cout << "Loading File: " << fileName << std::endl;
 	std::vector<Waypoint> points;
     std::string line;
@@ -15,7 +16,7 @@ Path * PathLoader::loadPath(std::string fileName, double speedScale, bool flipY,
     				line.erase(line.find('\n'), 1);
     			}
     			DataPoint p;
-    			std::size_t comma = line.find(',');
+    			//std::size_t comma = line.find(',');
     			double * numToSet = &p.x;
     			while (line.find(',') != std::string::npos) {
     				std::size_t comma = line.find(',');
@@ -41,6 +42,10 @@ Path * PathLoader::loadPath(std::string fileName, double speedScale, bool flipY,
     			points.push_back(wp);
     		}
             if(!points.empty()){
+            	if (reversePath){
+            		std::reverse(points.begin(), points.end());
+            	}
+
             	std::cout << fileName << " has " << points.size() << " points" << std::endl;
             	for(auto i : points){
             		std::cout << i.position.getX() << " " << i.position.getY() << std::endl;
