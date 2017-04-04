@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Position2d.h"
+#include "COREConstant.h"
 
 struct VelocityPair{
 	double left;
@@ -17,4 +18,7 @@ public:
 	static Position2d integrateForwardKinematics(Position2d pos, double leftDelta, double rightDelta, Rotation2d heading);
 
 	static VelocityPair inverseKinematics(Position2d::Delta vel);
+
+	static CORE::COREConstant<double> wheelDiameter;
+	static CORE::COREConstant<double> scrubFactor;
 };
