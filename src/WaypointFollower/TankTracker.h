@@ -28,10 +28,10 @@ private:
 	double m_leftPrev = 0;
 	double m_rightPrev = 0;
     CORETimer m_loopTimer;
-	CANTalon * m_left;
-	CANTalon * m_right;
-	AHRS * m_gyro;
-	thread * m_mainLoop;
+	CANTalon * m_left = nullptr;
+	CANTalon * m_right = nullptr;
+	AHRS * m_gyro = nullptr;
+	thread * m_mainLoop = nullptr;
 	static TankTracker * m_instance;
 	TankTracker();
 	void start();

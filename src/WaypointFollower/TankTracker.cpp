@@ -134,7 +134,7 @@ std::pair<double, double> TankTracker::getEncoderSpeed() {
 }
 
 Rotation2d TankTracker::getGyroAngle() {
-	double degrees = m_gyro->GetYaw();
+	double degrees = m_gyro->GetAngle();
 	return Rotation2d::fromDegrees(degrees);
 }
 
