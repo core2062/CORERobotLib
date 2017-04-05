@@ -14,10 +14,11 @@ private:
 	bool m_reversed;
 	double m_pathCompletionTolerance;
 	bool m_hasRun = false;
+	bool m_gradualStop = true;
 
 public:
 	AdaptivePursuit(double fixedLookahead, double maxAccel, double nominalDt, Path path,
-			bool reversed, double pathCompletionTolerance);
+			bool reversed, double pathCompletionTolerance, bool gradualStop = true);
 
 	bool isDone();
 

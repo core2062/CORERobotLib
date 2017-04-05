@@ -2,7 +2,7 @@
 
 AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel,
 		double nominalDt, Path path, bool reversed,
-		double pathCompletionTolerance):
+		double pathCompletionTolerance, bool gradualStop):
 		m_lastCommand(0,0,0){
 	m_fixedLookahead = fixedLookahead;
 	m_maxAccel = maxAccel;
@@ -11,6 +11,7 @@ AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel,
 	m_reversed = reversed;
 	m_pathCompletionTolerance = pathCompletionTolerance;
 	m_lastTime = 0.0;
+	m_gradualStop = gradualStop;
 
 }
 
@@ -60,9 +61,11 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
 
 	double remainingDistance = m_path.getRemainingLength();
 //	std::cout << "Remain: " << remainingDistance << std::endl;
-	double maxAllowedSpeed = sqrt(2 * m_maxAccel * remainingDistance);
-	if (fabs(speed) > maxAllowedSpeed){
-		speed = maxAllowedSpeed * (speed / fabs(speed));
+	if(m_gradualStop){
+		double maxAllowedSpeed = sqrt(2 * m_maxAccel * remainingDistance);
+		if (fabs(speed) > maxAllowedSpeed){
+			speed = maxAllowedSpeed * (speed / fabs(speed));
+		}
 	}
 	double minSpeed = 20.0;
 	if (fabs(speed) < minSpeed){
