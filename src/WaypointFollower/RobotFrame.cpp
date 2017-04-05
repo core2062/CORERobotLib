@@ -8,6 +8,9 @@ RobotFrame::RobotFrame(Position2d other) :
 		Position2d(other)
 {}
 
+RobotFrame::RobotFrame():
+		Position2d(){}
+
 Position2d RobotFrame::getLatest() {
 	Position2d absPos = Position2d(TankTracker::GetInstance()->getLatestFieldToVehicle());
 	return absPos.transformBy(*this);
