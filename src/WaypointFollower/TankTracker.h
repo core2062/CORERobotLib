@@ -20,7 +20,7 @@ protected:
 
 private:
     const double m_targetLoopHz = 200; //If this is changed, be sure to adjust NavX constructor accordingly
-    double m_targetLoopTime;
+    double m_targetLoopTime = 0.01;
     atomic<bool> m_loopEnabled;
     mutex m_loopLock;
     mutex m_dataLock;

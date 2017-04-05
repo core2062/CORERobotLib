@@ -60,7 +60,7 @@ namespace CORE {
 
             void update() {
                 m_driveMotor->Set(m_setMagnitude * m_setDirection);
-                //m_steerMotor->setPos(m_setAngle /*getSetValue(m_setAngle)*/);
+                //m_steerMotor->setPos(m_setAngle /*getSetValue(m_setAngle));
                 cout << "Set Angle: " << m_setAngle << endl;
                 cout << "Set Speed: " << m_setMagnitude * m_setDirection << endl;
             }
