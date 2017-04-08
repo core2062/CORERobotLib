@@ -17,5 +17,5 @@ struct DataPoint {
 
 class PathLoader{
 public:
-	static Path * loadPath(std::string fileName, double speedScale = 1.0, bool flipY = false, bool flipX = false, bool reversePath = true);
+	static Path * loadPath(std::string fileName, double speedScale = 1.0, bool flipY = false, bool flipX = false, bool reversePath = false);
 };
