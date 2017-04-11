@@ -13,10 +13,15 @@ RobotFrame::RobotFrame():
 
 Position2d RobotFrame::getLatest() {
 	Position2d absPos = Position2d(TankTracker::GetInstance()->getLatestFieldToVehicle());
-	return absPos.transformBy(*this);
+	std::cout << "Y: " << absPos.getTranslation().getY() << std::endl;
+	absPos.setTranslation(Translation2d(absPos.getTranslation().getX() - getTranslation().getX(), absPos.getTranslation().getY() - getTranslation().getY()));
+	absPos.setRotation(absPos.getRotation().rotateBy(getRotation()));
+	return absPos;
 }
 
 Position2d RobotFrame::getPos(double time) {
 	Position2d absPos = Position2d(TankTracker::GetInstance()->getFieldToVehicle(time));
-	return absPos.transformBy(*this);
+	absPos.setTranslation(Translation2d(absPos.getTranslation().getX() - getTranslation().getX(), absPos.getTranslation().getY() - getTranslation().getY()));
+	absPos.setRotation(absPos.getRotation().rotateBy(getRotation()));
+	return absPos;
 }

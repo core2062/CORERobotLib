@@ -39,6 +39,7 @@ void TankTracker::reset(double time, Position2d initial) {
 	m_dataLock.lock();
 	m_data = InterpolatingTreeMap(100);
 	m_data.put(InterpolatingDouble(Timer::GetFPGATimestamp()), initial);
+	m_data.put(InterpolatingDouble(Timer::GetFPGATimestamp()+.00001), initial);
 	m_velocity = Position2d::Delta(0,0,0);
 	m_dataLock.unlock();
 }
