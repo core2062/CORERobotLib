@@ -42,10 +42,10 @@ Path * PathLoader::loadPath(std::string fileName, double speedScale, bool flipY,
     			points.push_back(wp);
     		}
             if(!points.empty()){
-            	if (reversePath){
-            		std::reverse(points.begin(), points.end());
-            		std::cout << "Reversing Path" << std::endl;
-            	}
+//            	if (reversePath){
+//            		std::reverse(points.begin(), points.end());
+//            		std::cout << "Reversing Path" << std::endl;
+//            	}
 
             	std::cout << fileName << " has " << points.size() << " points" << std::endl;
             	for(auto i : points){
