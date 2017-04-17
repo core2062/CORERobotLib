@@ -1,7 +1,7 @@
 #include "TankKinematics.h"
 
 CORE::COREConstant<double> TankKinematics::wheelDiameter("Wheel Diameter", 3.949);
-CORE::COREConstant<double> TankKinematics::scrubFactor("Scrub Factor", .05);
+CORE::COREConstant<double> TankKinematics::scrubFactor("Scrub Factor", .15);
 
 VelocityPair::VelocityPair(double l, double r) {
 	left = l;
