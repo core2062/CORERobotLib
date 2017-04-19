@@ -1,12 +1,18 @@
 #include "PathLoader.h"
 #include <algorithm>
+#include "CORELog.h"
 
 Path * PathLoader::loadPath(std::string fileName, double speedScale, bool flipY, bool flipX, bool reversePath) {
 	std::cout << "Loading File: " << fileName << std::endl;
 	std::vector<Waypoint> points;
     std::string line;
-    std::string fileStarter = "/home/lvuser/COREAutoPaths/";
+    std::string fileStarter = "/media/sda1/COREAutoPaths/";
     std::ifstream inFile(fileStarter + fileName);
+    if(!inFile.is_open()){
+    	CORE::CORELog::logWarning("Path " + fileStarter + " not found on USB!");
+    	fileStarter = "/home/lvuser/COREAutoPaths/";
+    	inFile = std::ifstream(fileStarter + fileName);
+    }
     if (inFile.is_open()) {
     		while (std::getline(inFile, line)) {
     			while (line.find('\r') != std::string::npos) {
@@ -41,6 +47,7 @@ Path * PathLoader::loadPath(std::string fileName, double speedScale, bool flipY,
     			wp.event = p.event;
     			points.push_back(wp);
     		}
+
             if(!points.empty()){
 //            	if (reversePath){
 //            		std::reverse(points.begin(), points.end());
@@ -64,4 +71,9 @@ Path * PathLoader::loadPath(std::string fileName, double speedScale, bool flipY,
 
     std::cout << "Failed to open: " << fileName << std::endl;
     return new Path({Waypoint({-1,-1}, -1)}, flipY, flipX);
+
+    if (!inFile.is_open()){
+    	 fileStarter = "ftp://roborio-2062-frc.local/media/sda1";
+    	//TODO Add anything more that is needed
+    }
 }

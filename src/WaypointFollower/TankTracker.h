@@ -10,6 +10,7 @@
 #include "../CORETask.h"
 #include "WPILib.h"
 #include <thread>
+#include "COREDataLog.h"
 
 using namespace CORE;
 
@@ -37,8 +38,10 @@ private:
 	void start();
     void stop();
 	void addData(double time, Position2d data, Position2d::Delta vel);
+	COREDataLogger log;
 
 public:
+	bool doLog = false;
 	static TankTracker* GetInstance();
 	void init(CANTalon * left, CANTalon * right, AHRS * gyro);
 	~TankTracker();

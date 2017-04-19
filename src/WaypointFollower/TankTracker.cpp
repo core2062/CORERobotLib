@@ -2,7 +2,8 @@
 
 TankTracker* TankTracker::m_instance = nullptr;
 
-TankTracker::TankTracker() {
+TankTracker::TankTracker():
+	log({"X","Y","T"}){
 
 }
 
@@ -115,6 +116,11 @@ void TankTracker::addData(double time, Position2d data, Position2d::Delta vel) {
 	m_dataLock.lock();
 	m_data.put(InterpolatingDouble(time), data);
 	m_velocity = vel;
+	if(doLog){
+		log.putData({new COREDataPoint<double>(data.getTranslation().getX()),
+			new COREDataPoint<double>(data.getTranslation().getY()),
+			new COREDataPoint<double>(data.getRotation().getDegrees())});
+	}
 	m_dataLock.unlock();
 }
 
@@ -140,11 +146,16 @@ Rotation2d TankTracker::getGyroAngle() {
 }
 
 void TankTracker::autonInitTask() {
+	doLog = true;
 	start();
 }
 
 void TankTracker::autonEndTask() {
 	stop();
+	doLog = false;
+	m_dataLock.lock();
+	log.save("AutonLog");
+	m_dataLock.unlock();
 }
 
 void TankTracker::teleopInitTask() {
