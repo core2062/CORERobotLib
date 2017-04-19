@@ -7,6 +7,8 @@
 #include <vector>
 #include <stdlib.h>
 
+using namespace std;
+
 struct DataPoint {
 	double x = 0;
 	double y = 0;
