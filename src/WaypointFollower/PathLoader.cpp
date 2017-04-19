@@ -3,7 +3,7 @@
 #include "CORELog.h"
 
 Path * PathLoader::loadPath(std::string fileName, double speedScale, bool flipY, bool flipX, bool reversePath) {
-	std::cout << "Loading File: " << fileName << std::endl;
+	CORE::CORELog::logInfo("Loading File: " + fileName);
 	std::vector<Waypoint> points;
     std::string line;
     std::string fileStarter = "/media/sda1/COREAutoPaths/";
@@ -11,7 +11,7 @@ Path * PathLoader::loadPath(std::string fileName, double speedScale, bool flipY,
     if(!inFile.is_open()){
     	CORE::CORELog::logWarning("Path " + fileStarter + " not found on USB!");
     	fileStarter = "/home/lvuser/COREAutoPaths/";
-    	inFile = std::ifstream(fileStarter + fileName);
+    	inFile.open(fileStarter + fileName);
     }
     if (inFile.is_open()) {
     		while (std::getline(inFile, line)) {
@@ -53,7 +53,7 @@ Path * PathLoader::loadPath(std::string fileName, double speedScale, bool flipY,
 //            		std::reverse(points.begin(), points.end());
 //            		std::cout << "Reversing Path" << std::endl;
 //            	}
-
+            	CORE::CORELog::logInfo(fileName + " was loaded");
             	std::cout << fileName << " has " << points.size() << " points" << std::endl;
             	for(auto i : points){
             		std::cout << i.position.getX() << " " << i.position.getY() << std::endl;
@@ -61,19 +61,14 @@ Path * PathLoader::loadPath(std::string fileName, double speedScale, bool flipY,
             	return new Path(points, flipY, flipX);
             }
             else{
-            	std::cout << "File: " << fileName << " was empty!" << std::endl;
+            	CORE::CORELog::logError(fileName + " was empty!");
             	return new Path({Waypoint({-1,-1}, -1)}, flipY, flipX);
             }
     	}
     	else {
-    		std::cout << "Could not find file: " << fileStarter + fileName << std::endl;
+    		CORE::CORELog::logError("Could not find " + fileName + " in either directory");
     	}
 
     std::cout << "Failed to open: " << fileName << std::endl;
     return new Path({Waypoint({-1,-1}, -1)}, flipY, flipX);
-
-    if (!inFile.is_open()){
-    	 fileStarter = "ftp://roborio-2062-frc.local/media/sda1";
-    	//TODO Add anything more that is needed
-    }
 }
