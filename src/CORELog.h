@@ -20,8 +20,11 @@ namespace CORE {
             WARNING = 1,
             ERROR = 2
         };
+        static void logInfo(ostringstream& message);
         static void logInfo(string message);
+        static void logWarning(ostringstream& message);
         static void logWarning(string message);
+        static void logError(ostringstream& message);
         static void logError(string message);
         static void updateLog();
         static string getName();
@@ -32,6 +35,7 @@ namespace CORE {
         static void setConsoleLoggingLevel(loggingLevel level);
     private:
         static void writeLastDuration();
+        static string getFileName();
         static string getRobotMode();
         static ofstream m_file;
         static vector<string> m_fileCache;

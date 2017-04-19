@@ -13,6 +13,31 @@ void CORELog::writeLastDuration() {
     logInfo(getRobotMode() + " lasted " + to_string(m_matchTimer.Get()) + " seconds");
 }
 
+string CORELog::getFileName() {
+    time_t currentTime = time(0);
+    struct tm* now = localtime(&currentTime);
+	string fileName = "";
+    if(CORERobot::IsCompetition()) {
+        string alliance;
+        switch(CORERobot::getAlliance()) {
+            case CORERobot::RED:
+                alliance = "Red";
+                break;
+            case CORERobot::BLUE:
+                alliance = "Blue";
+                break;
+            default:
+                alliance = "Invalid";
+                break;
+        }
+        fileName += alliance + " Alliance - Station "
+                     + to_string(CORERobot::getStation()) + " - ";
+    }
+    fileName += to_string(now->tm_mon) + "-" + to_string(now->tm_mday) + "--" + to_string(now->tm_hour)
+                  + "-" + to_string(now->tm_min) + ".txt";
+    return fileName;
+}
+
 string CORELog::getRobotMode() {
     string robotModeName;
     switch(CORERobot::getMode()) {
@@ -32,12 +57,20 @@ string CORELog::getRobotMode() {
     return robotModeName;
 }
 
+void CORELog::logInfo(ostringstream& message) {
+	logInfo(message.str());
+}
+
 void CORELog::logInfo(string message) {
     m_fileCache.push_back("[INFO - " + getRobotMode() + "] - " + to_string(round(m_matchTimer.Get() * 1000.0) / 1000.0)
                           + " " + message + "\n");
     if(m_consoleLoggingLevel <= INFO) {
         cout << "INFO: " << message << "\n";
     }
+}
+
+void CORELog::logWarning(ostringstream& message) {
+	logWarning(message.str());
 }
 
 void CORELog::logWarning(string message) {
@@ -47,6 +80,10 @@ void CORELog::logWarning(string message) {
     if(m_consoleLoggingLevel <= WARNING) {
         cout << "WARNING: " << message << "\n";
     }
+}
+
+void CORELog::logError(ostringstream& message) {
+	logError(message.str());
 }
 
 void CORELog::logError(string message) {
@@ -74,29 +111,15 @@ string CORELog::getName() {
 
 void CORELog::robotInit() {
     m_consoleLoggingLevel = INFO;
-    time_t currentTime = time(0);
-    struct tm* now = localtime(&currentTime);
-    m_fileName = "/home/lvuser/CORELogs/";
-    if(DriverStation::GetInstance().IsFMSAttached()) {
-        string alliance;
-        switch(CORERobot::getAlliance()) {
-            case CORERobot::RED:
-                alliance = "Red";
-                break;
-            case CORERobot::BLUE:
-                alliance = "Blue";
-                break;
-            default:
-                alliance = "Invalid";
-                break;
-        }
-        m_fileName = alliance + " Alliance - Station "
-                     + to_string(CORERobot::getStation()) + " - ";
+    m_fileName = "/media/sda1/CORELogs/" + getFileName();
+    m_file.open(m_fileName);
+    if(!m_file.is_open()) {
+    	logWarning("Unable to open " + m_fileName + ", defaulting to internal storage!");
+    	m_file.close();
+    	m_fileName = "/home/lvuser/CORELogs/" + getFileName();
+    	ifstream m_file(m_fileName);
     }
-    m_fileName += to_string(now->tm_mon) + "-" + to_string(now->tm_mday) + "--" + to_string(now->tm_hour)
-                  + "-" + to_string(now->tm_min) + ".txt";
-//    m_file.open(m_fileName);
-    cout << "INFO: Log file written to: /home/lvuser/CORELogs/" << m_fileName << endl;
+    logInfo("Log file written to: " + m_fileName);
     m_fileCache.clear();
     m_matchTimer.Reset();
     m_matchTimer.Start();
