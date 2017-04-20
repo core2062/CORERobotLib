@@ -65,8 +65,10 @@ void TankTracker::start() {
 }
 
 void TankTracker::stop() {
-	m_loopEnabled = false;
-	m_mainLoop->join();
+	if(m_loopEnabled && m_mainLoop){
+		m_loopEnabled = false;
+		m_mainLoop->join();
+	}
 }
 
 void TankTracker::loop() {
@@ -155,16 +157,16 @@ void TankTracker::autonEndTask() {
 }
 
 void TankTracker::teleopInitTask() {
-	start();
+	stop();
 	doLog = false;
     time_t currentTime = time(0);
     struct tm* now = localtime(&currentTime);
     std::string name = "AutonLog";
     name += to_string(now->tm_mon) + "-" + to_string(now->tm_mday) + "--" + to_string(now->tm_hour)
                   + "-" + to_string(now->tm_min) + ".csv";
-	m_dataLock.lock();
+//	m_dataLock.lock();
 	log.save(name);
-	m_dataLock.unlock();
+//	m_dataLock.unlock();
 }
 
 void TankTracker::postLoopTask() {

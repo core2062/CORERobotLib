@@ -62,14 +62,14 @@ double Path::update(Translation2d pos) {
 
 			rv = closestPointReport.distance;
 
-			if(m_segments.size() >= i + 2){
+			if(m_segments.size() > i + 1){
 				PathSegment::ClosestPointReport nextClosestPointReport = m_segments[i+1].getClosestPoint(pos);
 				if(nextClosestPointReport.index > 0
 						&& nextClosestPointReport.index < .99
 						&& nextClosestPointReport.distance < rv){
 					m_segments[i+1].updateStart(nextClosestPointReport.closestPoint);
 					rv = nextClosestPointReport.distance;
-					m_segments.erase(m_segments.begin());
+					m_segments.erase(m_segments.begin() + i);
 					if(m_waypoints.size() > 0){
 						if(m_waypoints[0].event != ""){
 							m_events.push_back(m_waypoints[0].event);

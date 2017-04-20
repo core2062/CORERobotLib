@@ -65,6 +65,9 @@ void COREDataLogger::putData(std::initializer_list<ICOREDataPoint*> data) {
 }
 
 bool COREDataLogger::save(std::string filename) {
+	if(m_lines.empty()){
+		return false;
+	}
 	std::string fullName = "/media/sda1/COREDataLogs/" + filename;
 	std::remove(fullName.c_str());
 	std::ofstream outputFile;
