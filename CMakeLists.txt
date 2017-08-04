@@ -1,58 +1,36 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.6)
 
 project(CORERobotLib)
 
-# Team number
-set(TEAM_NUMBER 2062)
+set(CMAKE_CXX_STANDARD 14)
 
-# Robot target
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -g")
+add_subdirectory(CORERobotLib)
+add_subdirectory(3rdparty/googletest/googletest)
 
-add_subdirectory(ARM)
-
-set(WPILIB_HOME $ENV{HOME}/wpilib/cpp/current)
-set(${PROJECT_NAME} ARM_${PROJECT_NAME})
-
-set(CMAKE_C_COMPILER gcc)
-set(CMAKE_CXX_COMPILER g++)
-
-#include_directories(${PROJECT_SOURCE_DIR}/3rdparty/CANTalon/include)
-#include_directories(${PROJECT_SOURCE_DIR}/3rdparty/NavX/include)
-
-include_directories(${PROJECT_SOURCE_DIR}/src/Fake_WPILib)
-#include_directories(${WPILIB_HOME}/include)
-
-# For quick list run
-# find src -iname "*.cpp"
-# in project root
 set(SOURCE_FILES
-        ${PROJECT_SOURCE_DIR}/main.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREAuton.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREConstant.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREDataLog.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREDrive/COREEtherDrive.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREDrive/CORESwerveDrive.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREDrive.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREHardware/COREEncoder.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREHardware/COREJoystick.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREHardware/COREMotor.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREHardware/CORESensor.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREHardware/CORETimer.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREHardware.cpp
-        ${PROJECT_SOURCE_DIR}/src/CORELog.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREController/COREMotionProfile.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREPID.cpp
-        ${PROJECT_SOURCE_DIR}/src/CORERobot.cpp
-        ${PROJECT_SOURCE_DIR}/src/COREScheduler.cpp
-        ${PROJECT_SOURCE_DIR}/src/Fake_WPILib/WPILib.cpp)
+        $<TARGET_OBJECTS:CORELogging>
+        $<TARGET_OBJECTS:COREControl>
+        $<TARGET_OBJECTS:COREUtilities>
+        $<TARGET_OBJECTS:COREHardware>
+        $<TARGET_OBJECTS:COREFramework>
+        $<TARGET_OBJECTS:COREDrive>
+        $<TARGET_OBJECTS:WaypointFollower>)
 
+include_directories(${PROJECT_SOURCE_DIR}/src)
 
-        # Deploy target
+add_library(${PROJECT_NAME} ${SOURCE_FILES})
 
-include_directories(src)
+if(${CMAKE_SYSTEM_PROCESSOR} STREQUAL arm)
+    find_library(WPILIB_LOCATION NAMES wpilibc PATHS ${PROJECT_SOURCE_DIR}/3rdparty/wpilib/Linux/arm/)
+    find_library(CTRE_LOCATION NAMES CTRLib PATHS ${PROJECT_SOURCE_DIR}/3rdparty/CTRE/Linux/arm/)
+    find_library(NAVX-MXP_LOCATION NAMES navx_frc_cpp PATHS ${PROJECT_SOURCE_DIR}/3rdparty/navx-mxp/Linux/arm/)
+    include_directories(${PROJECT_SOURCE_DIR}/3rdparty/wpilib/include)
+    include_directories(${PROJECT_SOURCE_DIR}/3rdparty/CTRE/include)
+    include_directories(${PROJECT_SOURCE_DIR}/3rdparty/navx-mxp/include)
+else()
+    message(NOT YET IMPLEMENTED)
+endif()
 
-add_executable(${PROJECT_NAME} ${SOURCE_FILES})
-target_link_libraries(${PROJECT_NAME})
+target_link_libraries(${PROJECT_NAME} ${WPILIB_LOCATION} ${CTRE_LOCATION} ${NAVX-MXP_LOCATION})
 
-
-#add_frc_deploy(deploy ${TEAM_NUMBER} $<TARGET_FILE:${PROJECT_NAME}>)
+include_directories(${gtest_SOURCE_DIR}/include)

@@ -1,0 +1,11 @@
+add_subdirectory(COREControl)
+add_subdirectory(COREDrive)
+add_subdirectory(COREFramework)
+add_subdirectory(COREHardware)
+add_subdirectory(CORELogging)
+add_subdirectory(COREUtilities)
+add_subdirectory(WaypointFollower)
+
+if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL arm)
+    add_subdirectory(CORESimulation)
+endif()

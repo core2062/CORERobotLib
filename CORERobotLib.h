@@ -2,17 +2,16 @@
  * By CORE 2062
  */
 
-#include "src/COREPID.h"
-#include "src/COREScheduler.h"
-#include "src/COREHardware.h"
-#include "src/CORERobot.h"
-#include "src/COREMath.h"
-#include "src/CORELog.h"
-#include "src/COREAuton.h"
-#include "src/COREConstant.h"
-#include "src/COREDrive.h"
-//#include "src/COREDrive/CORESwerveDrive.h" //TODO: Rewrite swerve code
+#include "COREControl/COREPID.h"
+#include "COREFramework/COREScheduler.h"
+#include "COREHardware/COREHardware.h"
+#include "COREFramework/CORERobot.h"
+#include "COREUtilities/COREMath.h"
+#include "CORELogging/CORELog.h"
+#include "COREFramework/COREAuton.h"
+#include "COREUtilities/COREConstant.h"
+#include "COREDrive/COREDrive.h"
 #include "src/COREDrive/COREEtherDrive.h"
 #include "src/COREController/COREMotionProfile.h"
-#include "src/COREDataLog.h"
+#include "CORELogging/COREDataLog.h"
 #include "src/WaypointFollower/WaypointFollower.h"
