@@ -173,3 +173,9 @@ sysProps.xml
 **/CMakeFiles/
 Makefile
 **/.idea/
+CMakeCache.txt
+*.a
+cmake_install.cmake
+CTestTestfile.cmake
+test/COREUtilities_Test
+test/Testing
