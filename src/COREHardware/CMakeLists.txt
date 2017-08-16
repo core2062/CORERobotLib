@@ -1,14 +1,17 @@
 cmake_minimum_required(VERSION 3.6)
 
-set(NAME COREUtilities)
+set(NAME COREHardware)
 
 set(CMAKE_CXX_STANDARD 14)
 
 set(SOURCE_FILES
-        COREConstant.cpp
-        CORETimer.cpp)
+        COREHardware.cpp
+        COREEncoder.cpp
+        COREJoystick.cpp
+        COREMotor.cpp
+        CORESensor.cpp)
 
-include_directories(${PROJECT_SOURCE_DIR}/CORERobotLib)
+include_directories(${PROJECT_SOURCE_DIR}/src)
 
 include_directories(${PROJECT_SOURCE_DIR}/3rdparty/wpilib/include)
 include_directories(${PROJECT_SOURCE_DIR}/3rdparty/CTRE/include)

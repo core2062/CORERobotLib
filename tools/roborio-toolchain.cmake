@@ -5,6 +5,8 @@ set(CMAKE_SYSTEM_PROCESSOR arm)
 SET(CMAKE_C_COMPILER   /usr/bin/arm-frc-linux-gnueabi-gcc)
 SET(CMAKE_CXX_COMPILER /usr/bin/arm-frc-linux-gnueabi-gcc)
 
+set(CMAKE_CXX_FLAGS -fPIC)
+
 # search for programs in the build host directories
 SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 # for libraries and headers in the target directories

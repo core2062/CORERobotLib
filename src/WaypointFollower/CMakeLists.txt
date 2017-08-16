@@ -1,15 +1,23 @@
 cmake_minimum_required(VERSION 3.6)
 
-set(NAME COREDrive)
+set(NAME WaypointFollower)
 
 set(CMAKE_CXX_STANDARD 14)
 
 set(SOURCE_FILES
-        COREDrive.cpp
-        COREEtherDrive.cpp
-        CORESwerveDrive.cpp)
+        AdaptivePursuit.cpp
+        InterpolatingMap.cpp
+        Path.cpp
+        PathLoader.cpp
+        PathSegment.cpp
+        Position2d.cpp
+        RobotFrame.cpp
+        Rotation2d.cpp
+        TankKinematics.cpp
+        TankTracker.cpp
+        Translation2d.cpp)
 
-include_directories(${PROJECT_SOURCE_DIR}/CORERobotLib)
+include_directories(${PROJECT_SOURCE_DIR}/src)
 
 include_directories(${PROJECT_SOURCE_DIR}/3rdparty/wpilib/include)
 include_directories(${PROJECT_SOURCE_DIR}/3rdparty/CTRE/include)
@@ -23,4 +31,3 @@ add_library(${NAME} OBJECT ${SOURCE_FILES})
 #target_link_libraries(${NAME}_Tests gtest gtest_main)
 #
 #add_test(${NAME}_Tests CORELogging_Tests)
-

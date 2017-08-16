@@ -1,23 +1,16 @@
 cmake_minimum_required(VERSION 3.6)
 
-set(NAME WaypointFollower)
+set(NAME COREFramework)
 
 set(CMAKE_CXX_STANDARD 14)
 
 set(SOURCE_FILES
-        AdaptivePursuit.cpp
-        InterpolatingMap.cpp
-        Path.cpp
-        PathLoader.cpp
-        PathSegment.cpp
-        Position2d.cpp
-        RobotFrame.cpp
-        Rotation2d.cpp
-        TankKinematics.cpp
-        TankTracker.cpp
-        Translation2d.cpp)
+        COREAuton.cpp
+        CORERobot.cpp
+        COREScheduler.cpp
+        CORETask.cpp)
 
-include_directories(${PROJECT_SOURCE_DIR}/CORERobotLib)
+include_directories(${PROJECT_SOURCE_DIR}/src)
 
 include_directories(${PROJECT_SOURCE_DIR}/3rdparty/wpilib/include)
 include_directories(${PROJECT_SOURCE_DIR}/3rdparty/CTRE/include)

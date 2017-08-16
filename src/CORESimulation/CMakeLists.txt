@@ -6,6 +6,6 @@ set(SOURCE_FILES
         CANTalon.cpp
         WPILib.cpp)
 
-include_directories(${PROJECT_SOURCE_DIR}/CORERobotLib)
+include_directories(${PROJECT_SOURCE_DIR}/src)
 
 add_library(CORESimulation OBJECT ${SOURCE_FILES})

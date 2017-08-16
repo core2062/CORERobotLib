@@ -58,7 +58,7 @@ string CORELog::getRobotMode() {
 }
 
 void CORELog::logInfo(ostringstream& message) {
-	logInfo(message.str());
+//	logInfo(message.str());
 }
 
 void CORELog::logInfo(string message) {
@@ -70,7 +70,7 @@ void CORELog::logInfo(string message) {
 }
 
 void CORELog::logWarning(ostringstream& message) {
-	logWarning(message.str());
+//	logWarning(message.str());
 }
 
 void CORELog::logWarning(string message) {
@@ -83,7 +83,7 @@ void CORELog::logWarning(string message) {
 }
 
 void CORELog::logError(ostringstream& message) {
-	logError(message.str());
+//	logError(message.str());
 }
 
 void CORELog::logError(string message) {

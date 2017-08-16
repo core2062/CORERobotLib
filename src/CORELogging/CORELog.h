@@ -9,8 +9,6 @@
 #include <cmath>
 #include "COREUtilities/CORETimer.h"
 
-#include <WPILib.h>
-
 using namespace std;
 namespace CORE {
     class CORELog {
