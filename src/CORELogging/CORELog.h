@@ -6,10 +6,13 @@
 #include <memory>
 #include <ctime>
 #include <fstream>
+#include <iostream>
 #include <cmath>
 #include "COREUtilities/CORETimer.h"
+#include "COREDashboard/COREDriverstation.h"
 
 using namespace std;
+
 namespace CORE {
     class CORELog {
     public:

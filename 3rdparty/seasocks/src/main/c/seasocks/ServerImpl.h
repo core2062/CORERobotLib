@@ -1,4 +1,4 @@
-// Copyright (c) 2013, Matt Godbolt
+// Copyright (c) 2013-2017, Matt Godbolt
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -34,6 +34,7 @@ namespace seasocks {
 class Connection;
 class Request;
 class Response;
+class Server;
 
 // Internal implementation used to give access to internals to Connections.
 class ServerImpl {
@@ -49,6 +50,8 @@ public:
     virtual std::shared_ptr<Response> handle(const Request &request) = 0;
     virtual std::string getStatsDocument() const = 0;
     virtual void checkThread() const = 0;
+    virtual Server &server() = 0;
+    virtual size_t clientBufferSize() const = 0;
 };
 
 }

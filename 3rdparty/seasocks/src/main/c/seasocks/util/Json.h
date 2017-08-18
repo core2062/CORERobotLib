@@ -1,4 +1,4 @@
-// Copyright (c) 2013, Matt Godbolt
+// Copyright (c) 2013-2017, Matt Godbolt
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without 
@@ -40,9 +40,9 @@ namespace seasocks {
 
 inline void jsonToStream(std::ostream& /*str*/) {}
 
-void jsonToStream(std::ostream& /*str*/, const char* t);
+void jsonToStream(std::ostream& str, const char* t);
 
-void jsonToStream(std::ostream& /*str*/, bool b);
+void jsonToStream(std::ostream& str, bool b);
 
 inline void jsonToStream(std::ostream& str, const std::string& t) {
     jsonToStream(str, t.c_str());
@@ -120,7 +120,7 @@ void jsonKeyPairToStream(std::ostream& str, const std::string& key, const T& val
 }
 
 template<typename T>
-void jsonKeyPairToStream(std::ostream& /*str*/, const T&) {
+void jsonKeyPairToStream(std::ostream&, const T&) {
     static_assert(!std::is_same<T, T>::value,  // To make the assertion depend on T
             "Requires an even number of parameters. If you're trying to build a map from an existing std::map or similar, use makeMapFromContainer");
 }
@@ -145,7 +145,7 @@ static_assert(is_jsonable<JsonnedString>::value, "Internal stream problem");
 
 struct EpochTimeAsLocal {
     time_t t;
-    EpochTimeAsLocal(time_t t) : t(t) {}
+    EpochTimeAsLocal(time_t time) : t(time) {}
     void jsonToStream(std::ostream &o) const;
 };
 static_assert(is_jsonable<EpochTimeAsLocal>::value, "Internal stream problem");

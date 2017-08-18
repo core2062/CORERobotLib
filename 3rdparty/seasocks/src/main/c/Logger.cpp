@@ -1,4 +1,4 @@
-// Copyright (c) 2013, Matt Godbolt
+// Copyright (c) 2013-2017, Matt Godbolt
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without 
@@ -32,7 +32,7 @@
 
 namespace seasocks {
 
-const int MAX_MESSAGE_LENGTH = 1024;
+constexpr int MAX_MESSAGE_LENGTH = 1024;
 
 #define PRINT_TO_MESSAGEBUF() \
     char messageBuf[MAX_MESSAGE_LENGTH]; \
@@ -44,33 +44,35 @@ const int MAX_MESSAGE_LENGTH = 1024;
 void Logger::debug(const char* message, ...) {
 #ifdef LOG_DEBUG_INFO
     PRINT_TO_MESSAGEBUF();
-    log(DEBUG, messageBuf);
+    log(Level::DEBUG, messageBuf);
+#else
+    (void)message;
 #endif
 }
 
 void Logger::access(const char* message, ...) {
     PRINT_TO_MESSAGEBUF();
-    log(ACCESS, messageBuf);
+    log(Level::ACCESS, messageBuf);
 }
 
 void Logger::info(const char* message, ...) {
     PRINT_TO_MESSAGEBUF();
-    log(INFO, messageBuf);
+    log(Level::INFO, messageBuf);
 }
 
 void Logger::warning(const char* message, ...) {
     PRINT_TO_MESSAGEBUF();
-    log(WARNING, messageBuf);
+    log(Level::WARNING, messageBuf);
 }
 
 void Logger::error(const char* message, ...) {
     PRINT_TO_MESSAGEBUF();
-    log(ERROR, messageBuf);
+    log(Level::ERROR, messageBuf);
 }
 
 void Logger::severe(const char* message, ...) {
     PRINT_TO_MESSAGEBUF();
-    log(SEVERE, messageBuf);
+    log(Level::SEVERE, messageBuf);
 }
 
 }  // namespace seasocks

@@ -1,4 +1,4 @@
-// Copyright (c) 2013, Matt Godbolt
+// Copyright (c) 2013-2015, Matt Godbolt
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without 
@@ -33,20 +33,15 @@
 
 namespace seasocks {
 
+class ResponseWriter;
+
 class Response {
 public:
     virtual ~Response() {}
-    virtual ResponseCode responseCode() const = 0;
+    virtual void handle(std::shared_ptr<ResponseWriter> writer) = 0;
 
-    virtual const char* payload() const = 0;
-    virtual size_t payloadSize() const = 0;
-
-    virtual std::string contentType() const = 0;
-
-    virtual bool keepConnectionAlive() const = 0;
-
-    typedef std::multimap<std::string, std::string> Headers;
-    virtual Headers getAdditionalHeaders() const = 0;
+    // Called when the connection this response is being sent on is closed.
+    virtual void cancel() = 0;
 
     static std::shared_ptr<Response> unhandled();
 

@@ -1,4 +1,5 @@
 add_subdirectory(COREControl)
+add_subdirectory(COREDashboard)
 add_subdirectory(COREDrive)
 add_subdirectory(COREFramework)
 add_subdirectory(COREHardware)

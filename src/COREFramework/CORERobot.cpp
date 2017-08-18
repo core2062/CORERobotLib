@@ -2,36 +2,6 @@
 
 using namespace CORE;
 
-CORERobot::gameMode CORERobot::m_mode = CORERobot::DISABLE;
-CORERobot::gameAlliance CORERobot::m_alliance = CORERobot::INVALID;
-int CORERobot::m_station = 0;
-bool CORERobot::m_isCompetition = false;
-
-void CORERobot::updateRobotState() {
-	if(DriverStation::GetInstance().IsDisabled()) {
-		m_mode = DISABLE;
-	} else if(DriverStation::GetInstance().IsAutonomous()) {
-		m_mode = AUTON;
-	} else if(DriverStation::GetInstance().IsOperatorControl()) {
-		m_mode = TELEOP;
-	} else if(DriverStation::GetInstance().IsTest()) {
-		m_mode = TEST;
-	} else {
-		m_mode = DISABLE;
-	}
-
-	if(DriverStation::GetInstance().GetAlliance() == DriverStation::kRed) {
-		m_alliance = RED;
-	} else if(DriverStation::GetInstance().GetAlliance() == DriverStation::kBlue) {
-		m_alliance = BLUE;
-	} else if(DriverStation::GetInstance().GetAlliance() == DriverStation::kInvalid) {
-		m_alliance = INVALID;
-	}
-
-	m_station = DriverStation::GetInstance().GetLocation();
-	m_isCompetition = DriverStation::GetInstance().IsFMSAttached();
-}
-
 CORERobot::CORERobot() : CORESubsystem("Robot") {
 
 }
@@ -56,17 +26,17 @@ void CORERobot::setLoopTime(double loopTime) {
 }
 
 void CORERobot::RobotInit() {
-	updateRobotState();
+	COREDriverstation::updateRobotState();
     COREScheduler::robotInit();
 }
 
 void CORERobot::Disabled() {
-	updateRobotState();
+    COREDriverstation::updateRobotState();
     COREScheduler::disabled();
 }
 
 void CORERobot::Autonomous() {
-	updateRobotState();
+    COREDriverstation::updateRobotState();
 	autonInit();
     bool autonComplete = false;
     COREScheduler::autonInit();
@@ -80,7 +50,7 @@ void CORERobot::Autonomous() {
 }
 
 void CORERobot::OperatorControl() {
-	updateRobotState();
+    COREDriverstation::updateRobotState();
     COREScheduler::teleopInit();
     m_loopTimer.Reset();
     m_loopTimer.Start();
@@ -92,7 +62,7 @@ void CORERobot::OperatorControl() {
 }
 
 void CORERobot::Test() {
-	updateRobotState();
+    COREDriverstation::updateRobotState();
 	m_loopTimer.Reset();
 	m_loopTimer.Start();
     while(IsEnabled()) {
@@ -105,20 +75,4 @@ void CORERobot::Test() {
 CORERobot::~CORERobot() {
 	CORELog::logInfo("Cleaning up CORERobot!");
 	COREScheduler::cleanUp();
-}
-
-CORERobot::gameMode CORERobot::getMode(){
-	return m_mode;
-}
-
-CORERobot::gameAlliance CORERobot::getAlliance() {
-	return m_alliance;
-}
-
-int CORERobot::getStation() {
-	return m_station;
-}
-
-bool CORERobot::IsCompetition() {
-	return m_isCompetition;
 }

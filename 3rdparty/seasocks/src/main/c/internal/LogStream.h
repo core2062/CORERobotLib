@@ -1,4 +1,4 @@
-// Copyright (c) 2013, Matt Godbolt
+// Copyright (c) 2013-2017, Matt Godbolt
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without 
@@ -32,9 +32,9 @@
 
 #define LS_LOG(LOG, LEVEL, STUFF) \
 { \
-    std::ostringstream o; \
-    o << STUFF; \
-    (LOG)->log(Logger::LEVEL, o.str().c_str()); \
+    std::ostringstream os_; \
+    os_ << STUFF; \
+    (LOG)->log(Logger::Level::LEVEL, os_.str().c_str()); \
 }
 
 #define LS_DEBUG(LOG, STUFF)     LS_LOG(LOG, DEBUG, STUFF)

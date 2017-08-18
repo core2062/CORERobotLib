@@ -1,4 +1,4 @@
-// Copyright (c) 2013, Matt Godbolt
+// Copyright (c) 2013-2017, Matt Godbolt
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without 
@@ -31,7 +31,7 @@ namespace seasocks {
 
 class IgnoringLogger : public Logger {
 public:
-    virtual void log(Level level, const char* message) {
+    virtual void log(Level /*level*/, const char* /*message*/) {
     }
 };
 

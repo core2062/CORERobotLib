@@ -1,4 +1,4 @@
-// Copyright (c) 2013, Matt Godbolt
+// Copyright (c) 2013-2017, Matt Godbolt
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without 
@@ -27,6 +27,7 @@
 
 #include "seasocks/Logger.h"
 
+#include <cstdint>
 #include <memory>
 #include <string>
 #include <vector>
@@ -40,24 +41,29 @@ class HybiPacketDecoder {
 public:
     HybiPacketDecoder(Logger& logger, const std::vector<uint8_t>& buffer);
 
-    enum {
-        OPCODE_CONT = 0x0,  // Deprecated in latest hybi spec, here anyway.
-        OPCODE_TEXT = 0x1,
-        OPCODE_BINARY = 0x2,
-        OPCODE_CLOSE = 0x8,
-        OPCODE_PING = 0x9,
-        OPCODE_PONG = 0xA,
+    enum class Opcode : uint8_t {
+        Cont = 0x0,  // Deprecated in latest hybi spec, here anyway.
+        Text = 0x1,
+        Binary = 0x2,
+        Close = 0x8,
+        Ping = 0x9,
+        Pong = 0xA,
     };
 
-    enum MessageState {
+    enum class MessageState {
         NoMessage,
         TextMessage,
         BinaryMessage,
         Error,
         Ping,
+        Pong,
         Close
     };
-    MessageState decodeNextMessage(std::vector<uint8_t>& messageOut);
+    MessageState decodeNextMessage(std::vector<uint8_t>& messageOut, bool& deflateNeeded);
+    MessageState decodeNextMessage(std::vector<uint8_t>& messageOut) {
+        bool ignore;
+        return decodeNextMessage(messageOut, ignore);
+    }
 
     size_t numBytesDecoded() const;
 };

@@ -3,7 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
-#include "COREFramework/CORETask.h"
+//#include "COREFramework/CORETask.h"
 #include "COREUtilities/CORETimer.h"
 
 using namespace std;
@@ -57,7 +57,7 @@ namespace CORE {
 		std::vector<std::string> m_lines;
 	};
 
-	class COREContinuousLogger : public COREDataLogger, CORETask{
+	class COREContinuousLogger : public COREDataLogger{
 	public:
 		COREContinuousLogger(std::initializer_list<std::string> headers,
 				std::initializer_list<ICOREDataPoint*> datas, int counts);

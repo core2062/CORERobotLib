@@ -1,4 +1,4 @@
-// Copyright (c) 2013, Matt Godbolt
+// Copyright (c) 2013-2017, Matt Godbolt
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without 
@@ -45,9 +45,9 @@ class PathHandler : public CrackedUriPageHandler {
     std::vector<CrackedUriPageHandler::Ptr> _handlers;
 
 public:
-    PathHandler(const std::string &path) : _path(path) {}
+    PathHandler(const std::string &path) : _path(path),_handlers() {}
     template<typename... Args>
-    PathHandler(const std::string &path, Args&&... args) : _path(path) {
+    PathHandler(const std::string &path, Args&&... args) : _path(path),_handlers() {
         addMany(std::forward<Args>(args)...);
     }
 

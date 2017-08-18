@@ -1,5 +1,5 @@
 #include "CORETask.h"
-#include "COREScheduler.h"
+#include "COREFramework/COREScheduler.h"
 
 using namespace CORE;
 

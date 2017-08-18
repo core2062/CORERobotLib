@@ -174,7 +174,8 @@ void COREJoystick::preLoopTask() {
     m_lastButtonCache = m_buttonCache;
     for(auto button : m_buttonCache) {
     	bool isActive;
-		if(CORERobot::getMode() == CORERobot::AUTON || CORERobot::getMode() == CORERobot::DISABLE) {
+		if(COREDriverstation::getMode() == COREDriverstation::AUTON
+		   || COREDriverstation::getMode() == COREDriverstation::DISABLE) {
 			m_buttonCache[button.first] = OFF;
 			continue;
 		}
@@ -198,7 +199,8 @@ void COREJoystick::preLoopTask() {
 		}
     }
     for(auto axis : m_axisCache) {
-    	if(CORERobot::getMode() == CORERobot::AUTON || CORERobot::getMode() == CORERobot::DISABLE) {
+    	if(COREDriverstation::getMode() == COREDriverstation::AUTON
+           || COREDriverstation::getMode() == COREDriverstation::DISABLE) {
     		m_axisCache[axis.first] = 0;
 			continue;
 		}

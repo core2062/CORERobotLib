@@ -1,4 +1,4 @@
-// Copyright (c) 2013, Matt Godbolt
+// Copyright (c) 2013-2017, Matt Godbolt
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -23,6 +23,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
+#include "internal/Config.h"
 #include "internal/LogStream.h"
 
 #include "seasocks/Connection.h"
@@ -40,6 +41,7 @@
 #include <sys/ioctl.h>
 #include <sys/socket.h>
 #include <sys/syscall.h>
+#include <sys/un.h>
 
 #include <memory>
 #include <stdexcept>
@@ -50,7 +52,7 @@ namespace {
 
 struct EventBits {
     uint32_t bits;
-    explicit EventBits(uint32_t bits) : bits(bits) {}
+    explicit EventBits(uint32_t b) : bits(b) {}
 };
 
 std::ostream& operator <<(std::ostream& o, const EventBits& b) {
@@ -76,20 +78,23 @@ std::ostream& operator <<(std::ostream& o, const EventBits& b) {
     return o;
 }
 
-const int EpollTimeoutMillis = 500;  // Twice a second is ample.
-const int DefaultLameConnectionTimeoutSeconds = 10;
-int gettid() {
-    return syscall(SYS_gettid);
+constexpr int EpollTimeoutMillis = 500;  // Twice a second is ample.
+constexpr int DefaultLameConnectionTimeoutSeconds = 10;
+pid_t gettid() {
+    return static_cast<pid_t>(syscall(SYS_gettid));
 }
 
 }
 
 namespace seasocks {
 
+constexpr size_t Server::DefaultClientBufferSize;
+
 Server::Server(std::shared_ptr<Logger> logger)
 : _logger(logger), _listenSock(-1), _epollFd(-1), _eventFd(-1),
   _maxKeepAliveDrops(0),
   _lameConnectionTimeoutSeconds(DefaultLameConnectionTimeoutSeconds),
+  _clientBufferSize(DefaultClientBufferSize),
   _nextDeadConnectionCheck(0), _threadId(0), _terminate(false),
   _expectedTerminate(false) {
 
@@ -198,6 +203,11 @@ bool Server::startListening(uint32_t hostAddr, int port) {
         return false;
     }
 
+    auto port16 = static_cast<uint16_t>(port);
+    if (port != port16) {
+        LS_ERROR(_logger, "Invalid port: " << port);
+        return false;
+    }
     _listenSock = socket(AF_INET, SOCK_STREAM, 0);
     if (_listenSock == -1) {
         LS_ERROR(_logger, "Unable to create listen socket: " << getLastError());
@@ -208,7 +218,7 @@ bool Server::startListening(uint32_t hostAddr, int port) {
     }
     sockaddr_in sock;
     memset(&sock, 0, sizeof(sock));
-    sock.sin_port = htons(port);
+    sock.sin_port = htons(port16);
     sock.sin_addr.s_addr = htonl(hostAddr);
     sock.sin_family = AF_INET;
     if (bind(_listenSock, reinterpret_cast<const sockaddr*>(&sock), sizeof(sock)) == -1) {
@@ -232,6 +242,43 @@ bool Server::startListening(uint32_t hostAddr, int port) {
     return true;
 }
 
+bool Server::startListeningUnix(const char* socketPath) {
+    struct sockaddr_un sock;
+
+    _listenSock = socket(AF_UNIX, SOCK_STREAM, 0);
+    if (_listenSock == -1) {
+        LS_ERROR(_logger, "Unable to create unix listen socket: " << getLastError());
+        return false;
+    }
+    if (!configureSocket(_listenSock)) {
+        return false;
+    }
+
+    memset(&sock, 0, sizeof(struct sockaddr_un));
+    sock.sun_family = AF_UNIX;
+    strncpy(sock.sun_path, socketPath, sizeof(sock.sun_path) - 1);
+
+    if (bind(_listenSock, reinterpret_cast<const sockaddr*>(&sock), sizeof(sock)) == -1) {
+        LS_ERROR(_logger, "Unable to bind unix socket (" << socketPath << "): " << getLastError());
+        return false;
+    }
+
+    if (listen(_listenSock, 5) == -1) {
+        LS_ERROR(_logger, "Unable to listen on unix socket: " << getLastError());
+        return false;
+    }
+
+    epoll_event event = { EPOLLIN, { this } };
+    if (epoll_ctl(_epollFd, EPOLL_CTL_ADD, _listenSock, &event) == -1) {
+        LS_ERROR(_logger, "Unable to add unix listen socket to epoll: " << getLastError());
+        return false;
+    }
+
+    LS_INFO(_logger, "Listening on unix socket: http://unix:" << socketPath);
+
+    return true;
+}
+
 void Server::handlePipe() {
     uint64_t dummy;
     while (::read(_eventFd, &dummy, sizeof(dummy)) != -1) {
@@ -248,15 +295,15 @@ Server::NewState Server::handleConnectionEvents(Connection* connection, uint32_t
     if (events & ~(EPOLLIN|EPOLLOUT|EPOLLHUP|EPOLLERR)) {
         LS_WARNING(_logger, "Got unhandled epoll event (" << EventBits(events) << ") on connection: "
                 << formatAddress(connection->getRemoteAddress()));
-        return Close;
+        return NewState::Close;
     } else if (events & EPOLLERR) {
         LS_INFO(_logger, "Error on socket (" << EventBits(events) << "): "
                 << formatAddress(connection->getRemoteAddress()));
-        return Close;
+        return NewState::Close;
     } else if (events & EPOLLHUP) {
         LS_DEBUG(_logger, "Graceful hang-up (" << EventBits(events) << ") of socket: "
                 << formatAddress(connection->getRemoteAddress()));
-        return Close;
+        return NewState::Close;
     } else {
         if (events & EPOLLOUT) {
             connection->handleDataReadyForWrite();
@@ -265,11 +312,11 @@ Server::NewState Server::handleConnectionEvents(Connection* connection, uint32_t
             connection->handleDataReadyForRead();
         }
     }
-    return KeepOpen;
+    return NewState::KeepOpen;
 }
 
 void Server::checkAndDispatchEpoll(int epollMillis) {
-    const int maxEvents = 256;
+    constexpr int maxEvents = 256;
     epoll_event events[maxEvents];
 
     std::list<Connection*> toBeDeleted;
@@ -282,7 +329,7 @@ void Server::checkAndDispatchEpoll(int epollMillis) {
     }
     if (numEvents == maxEvents) {
         static time_t lastWarnTime = 0;
-        time_t now = time(NULL);
+        time_t now = time(nullptr);
         if (now - lastWarnTime >= 60) {
             LS_WARNING(_logger, "Full event queue; may start starving connections. "
                     "Will warn at most once a minute");
@@ -308,7 +355,7 @@ void Server::checkAndDispatchEpoll(int epollMillis) {
             handlePipe();
         } else {
             auto connection = reinterpret_cast<Connection*>(events[i].data.ptr);
-            if (handleConnectionEvents(connection, events[i].events) == Close) {
+            if (handleConnectionEvents(connection, events[i].events) == NewState::Close) {
                 toBeDeleted.push_back(connection);
             }
         }
@@ -387,27 +434,32 @@ Server::PollResult Server::poll(int millis) {
 }
 
 void Server::processEventQueue() {
-    for (;;) {
-        std::shared_ptr<Runnable> runnable = popNextRunnable();
-        if (!runnable) break;
-        runnable->run();
-    }
-    time_t now = time(NULL);
-    if (now >= _nextDeadConnectionCheck) {
-        std::list<Connection*> toRemove;
-        for (auto it = _connections.cbegin(); it != _connections.cend(); ++it) {
-            time_t numSecondsSinceConnection = now - it->second;
-            auto connection = it->first;
-            if (connection->bytesReceived() == 0 && numSecondsSinceConnection >= _lameConnectionTimeoutSeconds) {
-                LS_INFO(_logger, formatAddress(connection->getRemoteAddress())
-                        << " : Killing lame connection - no bytes received after " << numSecondsSinceConnection << "s");
-                toRemove.push_back(connection);
-            }
-        }
-        for (auto it = toRemove.begin(); it != toRemove.end(); ++it) {
-            delete *it;
+    runExecutables();
+    time_t now = time(nullptr);
+    if (now < _nextDeadConnectionCheck) return;
+    std::list<Connection*> toRemove;
+    for (auto it = _connections.cbegin(); it != _connections.cend(); ++it) {
+        time_t numSecondsSinceConnection = now - it->second;
+        auto connection = it->first;
+        if (connection->bytesReceived() == 0
+            && numSecondsSinceConnection >= _lameConnectionTimeoutSeconds) {
+            LS_INFO(_logger, formatAddress(connection->getRemoteAddress())
+                    << " : Killing lame connection - no bytes received after "
+                             << numSecondsSinceConnection << "s");
+            toRemove.push_back(connection);
         }
     }
+    for (auto it = toRemove.begin(); it != toRemove.end(); ++it) {
+        delete *it;
+    }
+}
+
+void Server::runExecutables() {
+    decltype(_pendingExecutables) copy;
+    std::unique_lock<decltype(_pendingExecutableMutex)> lock(_pendingExecutableMutex);
+    copy.swap(_pendingExecutables);
+    lock.unlock();
+    for (auto &&ex : copy) ex();
 }
 
 void Server::handleAccept() {
@@ -433,7 +485,7 @@ void Server::handleAccept() {
         ::close(fd);
         return;
     }
-    _connections.insert(std::make_pair(newConnection, time(NULL)));
+    _connections.insert(std::make_pair(newConnection, time(nullptr)));
 }
 
 void Server::remove(Connection* connection) {
@@ -491,8 +543,12 @@ std::shared_ptr<WebSocket::Handler> Server::getWebSocketHandler(const char* endp
 }
 
 void Server::execute(std::shared_ptr<Runnable> runnable) {
-    std::unique_lock<decltype(_pendingRunnableMutex)> lock(_pendingRunnableMutex);
-    _pendingRunnables.push_back(runnable);
+    execute([runnable]{ runnable->run(); });
+}
+
+void Server::execute(std::function<void()> toExecute) {
+    std::unique_lock<decltype(_pendingExecutableMutex)> lock(_pendingExecutableMutex);
+    _pendingExecutables.emplace_back(std::move(toExecute));
     lock.unlock();
 
     uint64_t one = 1;
@@ -501,16 +557,6 @@ void Server::execute(std::shared_ptr<Runnable> runnable) {
             LS_ERROR(_logger, "Unable to post a wake event: " << getLastError());
         }
     }
-}
-
-std::shared_ptr<Server::Runnable> Server::popNextRunnable() {
-    std::lock_guard<decltype(_pendingRunnableMutex)> lock(_pendingRunnableMutex);
-    std::shared_ptr<Runnable> runnable;
-    if (!_pendingRunnables.empty()) {
-        runnable = _pendingRunnables.front();
-        _pendingRunnables.pop_front();
-    }
-    return runnable;
 }
 
 std::string Server::getStatsDocument() const {
@@ -547,6 +593,15 @@ void Server::setMaxKeepAliveDrops(int maxKeepAliveDrops) {
     _maxKeepAliveDrops = maxKeepAliveDrops;
 }
 
+void Server::setPerMessageDeflateEnabled(bool enabled) {
+    if (!Config::deflateEnabled) {
+        LS_ERROR(_logger, "Ignoring request to enable deflate as Seasocks was compiled without support");
+        return;
+    }
+    LS_INFO(_logger, "Setting per-message deflate to " << (enabled ? "enabled" : "disabled"));
+    _perMessageDeflateEnabled = enabled;
+}
+
 void Server::checkThread() const {
     auto thisTid = gettid();
     if (thisTid != _threadId) {
@@ -563,6 +618,11 @@ std::shared_ptr<Response> Server::handle(const Request &request) {
         if (result != Response::unhandled()) return result;
     }
     return Response::unhandled();
+}
+
+void Server::setClientBufferSize(size_t bytesToBuffer) {
+    LS_INFO(_logger, "Setting client buffer size to " << bytesToBuffer << " bytes");
+    _clientBufferSize = bytesToBuffer;
 }
 
 }  // namespace seasocks

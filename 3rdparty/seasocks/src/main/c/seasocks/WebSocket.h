@@ -1,4 +1,4 @@
-// Copyright (c) 2013, Matt Godbolt
+// Copyright (c) 2013-2017, Matt Godbolt
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without 
@@ -27,6 +27,7 @@
 
 #include "seasocks/Request.h"
 
+#include <string>
 #include <vector>
 
 namespace seasocks {
@@ -39,6 +40,12 @@ public:
      * thread externally.
      */
     virtual void send(const char* data) = 0;
+    /**
+     * Send the given text data. Must be called on the seasocks thread.
+     * See Server::execute for how to run work on the seasocks
+     * thread externally.
+     */
+    void send(const std::string& data) { send(data.c_str()); }
     /**
      * Send the given binary data. Must be called on the seasocks thread.
      * See Server::execute for how to run work on the seasocks
@@ -66,11 +73,11 @@ public:
         /**
          * Called on the seasocks thread with upon receipt of a full text WebSocket message.
          */
-        virtual void onData(WebSocket* connection, const char* data) {}
+        virtual void onData(WebSocket*, const char*) {}
         /**
          * Called on the seasocks thread with upon receipt of a full binary WebSocket message.
          */
-        virtual void onData(WebSocket* connection, const uint8_t* data, size_t length) {}
+        virtual void onData(WebSocket*, const uint8_t*, size_t) {}
         /**
          * Called on the seasocks thread when the socket has been
          */

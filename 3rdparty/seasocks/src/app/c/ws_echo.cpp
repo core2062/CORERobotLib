@@ -1,4 +1,4 @@
-// Copyright (c) 2013, Matt Godbolt
+// Copyright (c) 2013-2017, Matt Godbolt
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without 
@@ -41,7 +41,7 @@ using namespace seasocks;
 
 class EchoHandler: public WebSocket::Handler {
 public:
-    virtual void onConnect(WebSocket* connection) {
+    virtual void onConnect(WebSocket* /*connection*/) {
     }
 
     virtual void onData(WebSocket* connection, const uint8_t* data, size_t length) {
@@ -52,12 +52,12 @@ public:
     connection->send(data); // text
     }
 
-    virtual void onDisconnect(WebSocket* connection) {
+    virtual void onDisconnect(WebSocket* /*connection*/) {
     }
 };
 
-int main(int argc, const char* argv[]) {
-    std::shared_ptr<Logger> logger(new PrintfLogger(Logger::DEBUG));
+int main(int /*argc*/, const char* /*argv*/[]) {
+    std::shared_ptr<Logger> logger(new PrintfLogger(Logger::Level::DEBUG));
 
     Server server(logger);
     std::shared_ptr<EchoHandler> handler(new EchoHandler());

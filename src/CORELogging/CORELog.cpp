@@ -1,5 +1,4 @@
 #include "CORELog.h"
-#include "COREFramework/CORERobot.h"
 
 using namespace CORE;
 
@@ -17,13 +16,13 @@ string CORELog::getFileName() {
     time_t currentTime = time(0);
     struct tm* now = localtime(&currentTime);
 	string fileName = "";
-    if(CORERobot::IsCompetition()) {
+    if(COREDriverstation::IsCompetition()) {
         string alliance;
-        switch(CORERobot::getAlliance()) {
-            case CORERobot::RED:
+        switch(COREDriverstation::getAlliance()) {
+            case COREDriverstation::RED:
                 alliance = "Red";
                 break;
-            case CORERobot::BLUE:
+            case COREDriverstation::BLUE:
                 alliance = "Blue";
                 break;
             default:
@@ -31,7 +30,7 @@ string CORELog::getFileName() {
                 break;
         }
         fileName += alliance + " Alliance - Station "
-                     + to_string(CORERobot::getStation()) + " - ";
+                     + to_string(COREDriverstation::getStation()) + " - ";
     }
     fileName += to_string(now->tm_mon) + "-" + to_string(now->tm_mday) + "--" + to_string(now->tm_hour)
                   + "-" + to_string(now->tm_min) + ".txt";
@@ -40,14 +39,14 @@ string CORELog::getFileName() {
 
 string CORELog::getRobotMode() {
     string robotModeName;
-    switch(CORERobot::getMode()) {
-        case CORERobot::DISABLE:
+    switch(COREDriverstation::getMode()) {
+        case COREDriverstation::DISABLE:
             robotModeName = "DISABLED";
             break;
-        case CORERobot::AUTON:
+        case COREDriverstation::AUTON:
             robotModeName = "AUTON";
             break;
-        case CORERobot::TELEOP:
+        case COREDriverstation::TELEOP:
             robotModeName = "TELEOP";
             break;
         default:

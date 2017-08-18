@@ -1,4 +1,4 @@
-// Copyright (c) 2013, Matt Godbolt
+// Copyright (c) 2013-2017, Matt Godbolt
 // All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without 
@@ -22,8 +22,6 @@
 // CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
 // POSSIBILITY OF SUCH DAMAGE.
-
-#include "internal/Version.h"
 
 #include "seasocks/PrintfLogger.h"
 #include "seasocks/Server.h"
@@ -62,7 +60,7 @@ int main(int argc, char* const argv[]) {
     }
 
     auto logger = std::make_shared<PrintfLogger>(
-            verbose ? Logger::DEBUG : Logger::ACCESS);
+            verbose ? Logger::Level::DEBUG : Logger::Level::ACCESS);
     Server server(logger);
     auto root = argv[optind];
     server.serve(root, port);
