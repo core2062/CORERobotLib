@@ -7,7 +7,10 @@ set(CMAKE_CXX_STANDARD 14)
 set(SOURCE_FILES
         COREConstant.cpp
         CORETimer.cpp
-        CORENamedObject.cpp)
+        CORENamedObject.cpp
+        Rotation2d.cpp
+        Translation2d.cpp
+        Position2d.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 

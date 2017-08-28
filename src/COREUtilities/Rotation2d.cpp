@@ -1,5 +1,7 @@
 #include "Rotation2d.h"
 
+using namespace CORE;
+
 Rotation2d::Rotation2d() {
 	m_cos = 1;
 	m_sin = 0;
@@ -23,11 +25,11 @@ Rotation2d Rotation2d::fromRadians(double radians) {
 }
 
 Rotation2d Rotation2d::fromDegrees(double degrees) {
-	return fromRadians(CORE::toRadians(degrees));
+	return fromRadians(toRadians(degrees));
 }
 
 void Rotation2d::normalize() {
-	double mag =	CORE::hypot(m_cos, m_sin);
+	double mag = pathogram(m_cos, m_sin);
 	if (mag > kE){
 		m_sin /= mag;
 		m_cos /= mag;
@@ -51,6 +53,11 @@ double Rotation2d::getRadians() {
 
 double Rotation2d::getDegrees() {
 	return CORE::toDegrees(getRadians());
+}
+
+double Rotation2d::getCompassDegrees() {
+    double degrees = 450 - getDegrees();
+    return degrees >= 360 ? degrees - 360 : degrees;
 }
 
 Rotation2d Rotation2d::rotateBy(Rotation2d other) {

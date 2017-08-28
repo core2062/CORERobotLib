@@ -11,7 +11,7 @@ Translation2d::Translation2d(double x, double y) {
 }
 
 double Translation2d::norm() {
-	return CORE::hypot(m_x, m_y);
+	return CORE::pathogram(m_x, m_y);
 }
 
 double Translation2d::getX() {

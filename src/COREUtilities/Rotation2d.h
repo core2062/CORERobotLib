@@ -21,6 +21,7 @@ public:
 
 	double getRadians();
 	double getDegrees();
+	double getCompassDegrees();
 
 	Rotation2d rotateBy(Rotation2d other);
 	Rotation2d inverse();

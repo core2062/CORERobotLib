@@ -6,7 +6,7 @@
 using namespace std;
 
 /*#include "COREControl/COREPID.h"
-#include "COREControl/COREPosPID.h"
+#include "COREControl/COREPositionPID.h"
 #include "COREControl/COREVelPID.h"
 #include "COREControl/COREAngPID.h"*/
 

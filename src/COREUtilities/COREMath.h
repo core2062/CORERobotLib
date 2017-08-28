@@ -32,8 +32,8 @@ namespace CORE {
         return -1;
     }
 
-	inline double hypot(double x, double y){
-		return sqrt(x*x+y*y);
+	inline double pathogram(double x, double y){
+		return sqrt(x*x + y*y);
 	}
 
 	class Vector {
