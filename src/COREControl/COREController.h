@@ -61,7 +61,6 @@ namespace CORE {
         virtual double getActual();
         virtual ~COREMotionController() {}
     protected:
-        virtual void update(int profile = -1) = 0;
         shared_ptr<ControllerInput> m_inputDevice;
         shared_ptr<ControllerOutput> m_outputDevice;
         double m_actualPosition = 0;

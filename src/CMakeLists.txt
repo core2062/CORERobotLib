@@ -6,6 +6,7 @@ add_subdirectory(COREHardware)
 add_subdirectory(CORELogging)
 add_subdirectory(COREUtilities)
 add_subdirectory(WaypointFollower)
+add_subdirectory(COREData)
 
 if(NOT ${CMAKE_SYSTEM_PROCESSOR} STREQUAL arm)
     add_subdirectory(CORESimulation)

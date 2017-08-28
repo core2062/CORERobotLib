@@ -2,14 +2,19 @@
 
 using namespace CORE;
 
-COREDashboard::COREDashboard() : m_server(make_shared<m_logger>()) {
-    m_server.addWebSocketHandler("/data", make_shared<COREConnectionHandler>());
-    m_serveThread = make_shared<thread>([&]{m_server.serve("CORE-Web-Interface/www", 5810);});
+shared_ptr<thread> COREDashboard::m_serveThread;
+Server * COREDashboard::m_server;
+
+void COREDashboard::robotInit() {
+    m_server = new Server(make_shared<m_logger>());
+    m_server->addWebSocketHandler("/data", make_shared<COREDataConnectionHandler>());
+    m_serveThread = make_shared<thread>([&]{m_server->serve("CORE-Web-Interface/www", 5810);});
 }
 
 COREDashboard::~COREDashboard() {
-    m_server.terminate();
+    m_server->terminate();
     m_serveThread->join();
+    delete m_server;
 }
 
 void COREDashboard::m_logger::log(Logger::Level level, const char *message) {
@@ -20,4 +25,8 @@ void COREDashboard::m_logger::log(Logger::Level level, const char *message) {
     } else if(level == Level::INFO /*|| level == Level::ACCESS || level == Level::DEBUG*/) {
         CORELog::logInfo("COREDashboard: " + string(message));
     }
+}
+
+void COREDashboard::postLoopTask() {
+    m_server->execute(COREDataConnectionHandler::send);
 }

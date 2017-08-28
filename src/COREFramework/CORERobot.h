@@ -6,6 +6,7 @@
 #include "COREScheduler.h"
 #include "COREUtilities/CORETimer.h"
 #include "CORELogging/CORELog.h"
+#include "COREHardware/COREHardware.h"
 
 #define START_SIMULATED_ROBOT_CLASS(_ClassName_)                             \
 	int main() {                                                             \
@@ -24,7 +25,6 @@ namespace CORE {
         void setLoopTime(double loopTime);
         void RobotInit();
         void Disabled();
-        virtual void autonInit(){};
         void Autonomous();
         void OperatorControl();
         void Test();

@@ -19,7 +19,7 @@ namespace CORE {
         double Get() override;
         void setActual(double actualPosition) override;
         double getActual() override;
-        void update(int profile) override;
+        void update(int profile) /*override*/;
     private:
         double m_maxVel = -1;
         double m_maxAccel = -1;

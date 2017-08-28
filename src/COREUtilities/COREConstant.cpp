@@ -15,8 +15,8 @@ void COREConstantsManager::addConstant(ICOREConstant* instance) {
 }
 
 void COREConstantsManager::cleanUp() {
-	for (auto i = m_constants.begin(); i != m_constants.end(); i++){
-		delete *i;
+	for (auto &constant : m_constants) {
+		delete constant;
 	}
 	m_constants.clear();
 }

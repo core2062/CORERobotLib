@@ -1,6 +1,6 @@
 #pragma once
 
-#ifndef SIM
+#ifndef FAKE
 #include "WPILib.h"
 #endif
 

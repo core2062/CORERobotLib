@@ -4,7 +4,8 @@ set(CMAKE_CXX_STANDARD 14)
 
 set(SOURCE_FILES
         CANTalon.cpp
-        WPILib.cpp)
+        WPILib.cpp
+        CORESimRobot.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 

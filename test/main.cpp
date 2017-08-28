@@ -1,15 +1,40 @@
 #include <unistd.h>
+#include <COREData/COREData.h>
+#include <cxxabi.h>
 #include "COREDashboard/COREDashboard.h"
+#include "CORESimulation/CORESimRobot.h"
 
-void Wait(double _) {
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
-    Wait(_*1000);
-#else
-    usleep(_ * 1000000);
-#endif
-}
+class testSubsystem : public CORESubsystem {
+public:
+    testSubsystem() : data("test group", "test", true), data2("test group", "testVal"), testVal(0) {
+
+    }
+
+    void robotInit() {
+
+    }
+
+    void teleopInit() {
+
+    }
+
+    void teleop() {
+        data.Set(testVal);
+        data2.Set("Yo " + to_string(testVal));
+        testVal++;
+    }
+
+private:
+    CORE::COREData<int> data;
+    CORE::COREData<string> data2;
+    int testVal;
+};
 
 int main() {
     CORE::COREDashboard dashboard;
+    auto subsystem = new testSubsystem();
+
+    CORE::SIM::CORESimRobot robot;
+    robot.OperatorControl();
     Wait(100);
 }

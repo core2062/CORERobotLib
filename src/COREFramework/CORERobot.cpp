@@ -37,7 +37,6 @@ void CORERobot::Disabled() {
 
 void CORERobot::Autonomous() {
     COREDriverstation::updateRobotState();
-	autonInit();
     bool autonComplete = false;
     COREScheduler::autonInit();
     m_loopTimer.Reset();

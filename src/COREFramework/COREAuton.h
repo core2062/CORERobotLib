@@ -7,7 +7,7 @@
 #include <memory>
 #include <iostream>
 
-#include <WPILib.h>
+//#include <WPILib.h>
 #include "COREUtilities/CORETimer.h"
 #include "COREScheduler.h"
 #include "CORELogging/CORELog.h"
@@ -54,7 +54,7 @@ namespace CORE {
     class COREAuton {
     public:
         COREAuton(string name, bool defaultAuton = false);
-        void putToDashboard(SendableChooser<COREAuton*>* chooser);
+        void putToDashboard(/*SendableChooser<COREAuton*>* chooser*/);
 
         inline COREAuton* getInstance() {
             return this;

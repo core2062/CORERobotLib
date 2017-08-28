@@ -8,7 +8,7 @@ int COREDriverstation::m_station = 0;
 bool COREDriverstation::m_isCompetition = false;
 
 void COREDriverstation::updateRobotState() {
-#ifdef SIM
+#ifdef FAKE
     //TODO: Get robot state from webdashboard
     m_mode = DISABLE;
     m_alliance = RED;

@@ -2,6 +2,8 @@
 
 #include "CORELogging/CORELog.h"
 #include "COREConnectionHandler.h"
+#include "COREData/COREDataConnectionHandler.h"
+#include "COREFramework/CORETask.h"
 #include "seasocks/Server.h"
 #include "seasocks/PrintfLogger.h"
 #include "seasocks/Logger.h"
@@ -13,16 +15,17 @@ using namespace seasocks;
 using namespace std;
 
 namespace CORE {
-    class COREDashboard {
+    class COREDashboard : public CORETask {
     private:
         class m_logger : public seasocks::Logger {
         public:
             void log(Level level, const char *message) override;
         };
-        shared_ptr<thread> m_serveThread;
-        Server m_server;
+        static shared_ptr<thread> m_serveThread;
+        static Server * m_server;
     public:
-        COREDashboard();
+        static void robotInit();
+        void postLoopTask() override;
         ~COREDashboard();
     };
 }

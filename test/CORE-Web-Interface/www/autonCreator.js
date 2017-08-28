@@ -16,6 +16,8 @@ var robotCenterIn = 19;
 var splines = [];
 var samples = 5;
 
+var autonWebSocket = new WebSocket("ws://" + document.location.host + "/auton");
+
 function Robot(x, y, rot){
 	this.x = x;
 	this.y = y;
@@ -162,6 +164,33 @@ function autonCreatorLoop(){
 	}
 
 	fieldContext.stroke();
+
+    if(fieldMouseFalling.r) { //TODO: Better condition than this, maybe a button?
+    	var pathFile = new Object();
+    	pathFile.pathName = "Undefined"
+		pathFile.points = [];
+        for(var s in splines){
+            for(var i = 0; i < 1; i += inc){
+                c = splines[s].coord(i);
+                var point = new Object();
+                point.name = c.name;
+                point.x = c.x.toFixed(2);
+                point.y = c.y.toFixed(2);
+                point.s = 100/*c.speed.toFixed(2)*/;
+                pathFile.points.push(point);
+            }
+            c = splines[s].coord(1);
+            var point = new Object();
+            point.name = c.name;
+            point.x = c.x.toFixed(2);
+            point.y = c.y.toFixed(2);
+            point.s = 100/*c.speed.toFixed(2)*/;
+            pathFile.points.push(point);
+        }
+        autonWebSocket.send(pathFile);
+        console.log("Sent path file");
+    }
+
 	var flowWidth = 100;
 	flowContext.clearRect(0,0,flowWidth,windowHeight);
 	flowContext.fillRect(0,0, flowWidth, windowHeight)

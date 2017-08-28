@@ -13,7 +13,7 @@
 
 #endif
 
-#warning Using Fake WPILib
+//#warning Using Fake WPILib
 
 using namespace std;
 

@@ -7,7 +7,8 @@ set(CMAKE_CXX_STANDARD 14)
 set(SOURCE_FILES
         COREController.cpp
         COREMotionProfile.cpp
-        COREPID.cpp)
+        COREPID.cpp
+        COREPosPID.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 

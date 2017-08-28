@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(SOURCE_FILES
         COREConstant.cpp
         CORETimer.cpp
-        )
+        CORENamedObject.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 

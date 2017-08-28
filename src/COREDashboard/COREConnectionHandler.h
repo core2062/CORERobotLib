@@ -1,6 +1,6 @@
 #pragma once
 
-#include <seasocks/Server.h>
+#include "seasocks/Server.h"
 #include "CORELogging/CORELog.h"
 #include <string>
 

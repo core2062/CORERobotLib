@@ -9,7 +9,6 @@
 #include "COREUtilities/COREMath.h"
 #include "CORELogging/CORELog.h"
 #include "COREControl/COREController.h"
-#include "COREHardware/CORESensor.h"
 
 using namespace std;
 
@@ -22,7 +21,7 @@ namespace CORE {
         ANG_VEL
     };
 
-    class COREPID : public CORETask, public COREContinuous {
+    class COREPID : public CORETask {
     public:
         COREPID(shared_ptr<ControllerInput> inputDevice, shared_ptr<ControllerOutput> outputDevice, PIDType pidType, double pProfile1Value,
                         double iProfile1Value, double dProfile1Value, double fProfile1Value = 1, double pProfile2Value = 0,
