@@ -13,6 +13,7 @@ public:
 
 	static Rotation2d fromRadians(double radians);
 	static Rotation2d fromDegrees(double degrees);
+	static Rotation2d fromCompassDegrees(double compassDegrees);
 
 	void normalize();
 

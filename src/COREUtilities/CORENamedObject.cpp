@@ -1,4 +1,5 @@
 #include "CORENamedObject.h"
+#include "COREFramework/COREScheduler.h"
 
 using namespace CORE;
 
@@ -8,6 +9,10 @@ using namespace CORE;
  */
 string CORE::CORENamedObject::getName() {
     return m_name;
+}
+
+CORENamedObject::CORENamedObject() {
+    //CORE::COREScheduler::addRobotInitCallBack(this, &CORENamedObject::robotInitTask);
 }
 
 /**

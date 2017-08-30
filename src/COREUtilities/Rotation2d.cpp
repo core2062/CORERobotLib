@@ -28,6 +28,12 @@ Rotation2d Rotation2d::fromDegrees(double degrees) {
 	return fromRadians(toRadians(degrees));
 }
 
+Rotation2d Rotation2d::fromCompassDegrees(double compassDegrees) {
+	double degrees = 90 - compassDegrees;
+	degrees = degrees < 0 ? 360 + degrees : degrees;
+	return fromRadians(toRadians(degrees));
+}
+
 void Rotation2d::normalize() {
 	double mag = pathogram(m_cos, m_sin);
 	if (mag > kE){

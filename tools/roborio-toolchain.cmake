@@ -2,10 +2,13 @@ SET(CMAKE_SYSTEM_NAME Linux)
 SET(CMAKE_SYSTEM_VERSION 1)
 set(CMAKE_SYSTEM_PROCESSOR arm)
 
-SET(CMAKE_C_COMPILER   /usr/bin/arm-frc-linux-gnueabi-gcc)
-SET(CMAKE_CXX_COMPILER /usr/bin/arm-frc-linux-gnueabi-gcc)
-
-set(CMAKE_CXX_FLAGS -fPIC)
+if(WIN32)
+    set(CMAKE_C_COMPILER C:/frc/bin/arm-frc-linux-gnueabi-gcc.exe)
+    set(CMAKE_CXX_COMPILER C:/frc/bin/arm-frc-linux-gnueabi-g++.exe)
+else()
+    set(CMAKE_C_COMPILER /usr/bin/arm-frc-linux-gnueabi-gcc)
+    set(CMAKE_CXX_COMPILER /usr/bin/arm-frc-linux-gnueabi-g++)
+endif()
 
 # search for programs in the build host directories
 SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)

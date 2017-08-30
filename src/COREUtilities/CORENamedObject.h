@@ -11,10 +11,11 @@
 using namespace std;
 
 namespace CORE {
-    class CORENamedObject : public CORETask {
+    class CORENamedObject {
     public:
+        CORENamedObject();
         string getName();
-        void robotInitTask() override;
+        void robotInitTask();
     private:
         string m_name;
     };

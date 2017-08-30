@@ -1,133 +1,132 @@
-/*
 #include "CORESwerveDrive.h"
+#include "COREUtilities/COREMath.h"
+#include "WPILib.h"
 
 using namespace CORE;
 
-CORESwerve::CORESwerve(double trackWidth, double wheelBase, CORESwerve::SwerveModule &leftFrontModule,
-                       CORESwerve::SwerveModule &leftBackModule, CORESwerve::SwerveModule &rightBackModule,
+CORESwerve::CORESwerve(double trackWidth, double wheelBase,
+                       CORESwerve::SwerveModule &leftFrontModule,
+                       CORESwerve::SwerveModule &leftBackModule,
+                       CORESwerve::SwerveModule &rightBackModule,
                        CORESwerve::SwerveModule &rightFrontModule) :
-        m_leftFrontModule(&leftFrontModule), m_leftBackModule(&leftBackModule),
-        m_rightBackModule(&rightBackModule), m_rightFrontModule(&rightFrontModule) {
+        m_leftFrontModule(&leftFrontModule),
+        m_leftBackModule(&leftBackModule),
+        m_rightBackModule(&rightBackModule),
+        m_rightFrontModule(&rightFrontModule) {
     m_modules.push_back(m_leftFrontModule);
     m_modules.push_back(m_leftBackModule);
     m_modules.push_back(m_rightBackModule);
     m_modules.push_back(m_rightFrontModule);
-    m_trackwidth = trackWidth;
-    m_wheelbase = wheelBase;
-    double x = m_trackwidth * .5;
-    double y = m_wheelbase * .5;
-    m_leftFrontModule->position = {-x, y};
-    m_leftBackModule->position = {-x, -y};
-    m_rightBackModule->position = {x, -y};
-    m_rightFrontModule->position = {x, y};
 }
 
-void CORESwerve::setRotation(double rotation) {
-    m_rot = rotation;
-}
+void CORESwerve::calculate(double forward, double strafeRight, double rotateClockwise) {
+    double r = sqrt(pow(m_wheelbase, 2) + pow(m_trackwidth, 2));
+    double a = strafeRight - rotateClockwise * (m_wheelbase / r);
+    double b = strafeRight + rotateClockwise * (m_wheelbase / r);
+    double c = forward - rotateClockwise * (m_trackwidth / r);
+    double d = forward + rotateClockwise * (m_trackwidth / r);
 
-double CORESwerve::getRotation() {
-    return m_rot;
-}
+    rightFrontModuleSpeed = sqrt(pow(b, 2) + pow(c, 2));
+    leftFrontModuleSpeed = sqrt(pow(b, 2) + pow(d, 2));
+    leftBackModuleSpeed = sqrt(pow(a, 2) + pow(d, 2));
+    rightBackModuleSpeed = sqrt(pow(a, 2) + pow(c, 2));
 
-void CORESwerve::setThrottle(double throttle) {
-    m_throttle = throttle;
-}
+    rightFrontModuleAngle = arctan(b, c);
+    leftFrontModuleAngle = arctan(b, d);
+    leftBackModuleAngle = arctan(a, d);
+    rightBackModuleAngle = arctan(a, c);
 
-double CORESwerve::getThrottle() {
-    return m_throttle;
-}
+    double maxSpeed = rightFrontModuleSpeed;
 
-void CORESwerve::cartesian(double x, double y, double rotation) {
-    m_x = x;
-    m_y = y;
-    m_rot = rotation;
-}
-
-void CORESwerve::cartesian(double x, double y, double rotation, double throttle) {
-    m_x = x;
-    m_y = y;
-    m_rot = rotation;
-    m_throttle = throttle;
-}
-
-void CORESwerve::setX(double x) {
-    m_x = x;
-}
-
-void CORESwerve::setY(double y) {
-    m_y = y;
-}
-
-double CORESwerve::getX() {
-    return m_x;
-}
-
-double CORESwerve::getY() {
-    return m_y;
-}
-
-void CORESwerve::polar(double magnitude, double direction, double rotation) {
-    m_x = magnitude * toDegrees(cos(toRadians(direction)));
-    m_y = magnitude * toDegrees(sin(toRadians(direction)));
-    m_rot = rotation;
-}
-
-void CORESwerve::polar(double magnitude, double direction, double rotation, double throttle) {
-    m_x = magnitude * toDegrees(cos(toRadians(direction)));
-    m_y = magnitude * toDegrees(sin(toRadians(direction)));
-    m_rot = rotation;
-    m_throttle = throttle;
-}
-
-void CORESwerve::setMagnitude(double magnitude) {
-
-}
-
-void CORESwerve::setDirection(double direction) {
-
-}
-
-double CORESwerve::getMagnitude() {
-    return 0;
-}
-
-double CORESwerve::getDirection() {
-    return 0;
-}
-
-void CORESwerve::update() {
-    double max = 0.0;
-    for(auto i : m_modules) {
-        if(fabs(m_x + m_y + m_rot) > .2) {
-            i->m_setDirection = 1;
-            double a, b;
-            a = m_x - m_rot * i->position.unit().y;
-            b = m_y - m_rot * i->position.unit().x;
-            i->m_setMagnitude = sqrt(pow(a, 2) + pow(b, 2));
-            double setAngle = arctan(a, b);
-            if (abs(setAngle - i->getCurrentAngle()) > 180){
-                setAngle = i->clamp(setAngle - 180);
-                i->m_setDirection = -1;
-            }
-            i->m_setAngle = setAngle;
-            i->m_setMagnitude = i->m_setMagnitude * m_throttle;
-            if(fabs(i->m_setMagnitude) > max) {
-                max = fabs(i->m_setMagnitude);
-            }
-        } else {
-            i->m_setMagnitude = 0;
-        }
-        //i->Update();
+    if (leftFrontModuleSpeed > maxSpeed) {
+        maxSpeed = leftFrontModuleSpeed;
+    }
+    if (leftBackModuleSpeed > maxSpeed) {
+        maxSpeed = leftBackModuleSpeed;
+    }
+    if (rightBackModuleSpeed > maxSpeed) {
+        maxSpeed = rightBackModuleSpeed;
+    }
+    if (maxSpeed > 1 && maxSpeed != 0) {
+        rightFrontModuleSpeed /= maxSpeed;
+        leftFrontModuleSpeed /= maxSpeed;
+        leftBackModuleSpeed /= maxSpeed;
+        rightBackModuleSpeed /= maxSpeed;
     }
 
-    if(max > 1.0) {
-        for(auto i : m_modules) {
-            i->m_setMagnitude = i->m_setMagnitude / max;
-        }
+    /*Code to determine if the motors should be set to be in reverse and rotate the wheels accordingly
+    First checks to see if the angle from the driver would require turning more than 90 degrees
+    If it does, set the angle to be the angle plus another 180 degrees, then take the remainder to make sure that the wheels don't make
+    multiple rotations
+    Sets speed to negative (I guess this would make it velocity)*/
+    /*
+    if (fabs(rightFrontModuleAngle - m_rightFrontModule->getAngle()) > 90 &&
+            fabs(rightFrontModuleAngle - m_rightFrontModule->getAngle()) < 270) {
+        rightFrontModuleAngle = fmod((rightFrontModuleAngle + 180), 360);
+        rightFrontModuleSpeed = -rightFrontModuleSpeed;
     }
-    for(auto i : m_modules) {
-        i->update();
+
+    if (fabs(leftFrontModuleAngle - m_leftFrontModule->getAngle()) > 90 &&
+            fabs(leftFrontModuleAngle - m_leftFrontModule->getAngle()) < 270) {
+        leftFrontModuleAngle = fmod((leftFrontModuleAngle + 180), 360);
+        leftFrontModuleSpeed = -leftFrontModuleSpeed;
     }
+
+    if (fabs(leftBackModuleAngle - m_leftBackModule->getAngle()) > 90 &&
+            fabs(leftBackModuleAngle - m_leftBackModule->getAngle()) < 270) {
+        leftBackModuleAngle = fmod((leftBackModuleAngle + 180), 360);
+        leftBackModuleSpeed = -leftBackModuleSpeed;
+    }
+
+    if (fabs(rightBackModuleAngle - m_rightBackModule->getAngle()) > 90 &&
+            fabs(rightBackModuleAngle - m_rightBackModule->getAngle()) < 270) {
+        rightBackModuleAngle = fmod((rightBackModuleAngle + 180), 360);
+        rightBackModuleSpeed = -rightBackModuleSpeed;
+    }
+    */
 }
-*/
+
+double CORESwerve::SwerveModule::getAngle() {
+    //Multiplying by 360 degrees and dividing by five volts
+    return m_steerMotor->getCANTalon()->GetAnalogInRaw() * (360.0 / 1025.0);
+}
+
+void CORESwerve::SwerveModule::setAnglePID(double p, double i, double d) {
+    m_anglePIDController.setProportionalConstant(p);
+    m_anglePIDController.setIntegralConstant(i);
+    m_anglePIDController.setDerivativeConstant(d);
+}
+
+void CORESwerve::tank(double speed, double rot){
+    tank(COREEtherDrive::calculate(speed, rot, .1));
+}
+
+void CORESwerve::tank(VelocityPair speeds){
+    leftFrontModuleAngle = 0;
+    rightFrontModuleAngle = 0;
+    leftBackModuleAngle = 0;
+    rightBackModuleAngle = 0;
+    leftFrontModuleSpeed = speeds.left;
+    leftBackModuleSpeed = speeds.left;
+    rightFrontModuleSpeed = speeds.right;
+    rightBackModuleSpeed = speeds.right;
+}
+
+void CORESwerve::SwerveModule::drive(double magnitude, double direction) {
+    m_steerMotor->Set(m_anglePIDController.calculate(Rotation2d::fromCompassDegrees(getAngle()),
+                                                     Rotation2d::fromCompassDegrees(direction)));
+    m_driveMotor->Set(magnitude);
+
+}
+
+void CORESwerve::update(){
+    SmartDashboard::PutNumber("Left Front Module P value", m_leftFrontModule->m_anglePIDController.getProportional());
+    m_leftFrontModule->drive(leftFrontModuleSpeed, leftFrontModuleAngle);
+    SmartDashboard::PutNumber("Left Front Module Speed", leftFrontModuleSpeed);
+    SmartDashboard::PutNumber("Left Front Module Angle", leftFrontModuleAngle);
+    m_rightFrontModule->drive(rightFrontModuleSpeed, rightFrontModuleAngle);
+    SmartDashboard::PutNumber("Right Front Module Speed", rightFrontModuleSpeed);
+    SmartDashboard::PutNumber("Right Front Module Angle", rightFrontModuleAngle);
+    m_rightBackModule->drive(rightBackModuleSpeed, rightBackModuleAngle);
+    m_leftBackModule->drive(leftBackModuleSpeed, leftBackModuleAngle);
+}

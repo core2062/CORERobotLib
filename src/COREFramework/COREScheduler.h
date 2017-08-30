@@ -15,6 +15,7 @@
 #include "COREUtilities/CORENamedObject.h"
 
 using namespace std;
+using namespace std::placeholders;
 
 using namespace CORE;
 
@@ -89,14 +90,29 @@ namespace CORE {
 		static void addAuton(COREAuton * auton);
 		static void addTask(CORETask* task);
 
-		static void addRobotInitCallBack(function<void()> callBack);
-		static void addAutonInitCallBack(function<void()> callBack);
-		static void addAutonEndCallBack(function<void()> callBack);
-		static void addTeleopInitCallBack(function<void()> callBack);
-		static void addPreLoopCallBack(function<void()> callBack);
-		static void addPostLoopCallBack(function<void()> callBack);
-		static void addTeleopEndCallBack(function<void()> callBack);
-		static void addDisabledCallBack(function<void()> callBack);
+		template<class T>
+		static void addRobotInitCallBack(T* const object, void(T::* const callBack)());
+
+		template<class T>
+		static void addAutonInitCallBack(T* const object, void(T::* const callBack)());
+
+		template<class T>
+		static void addAutonEndCallBack(T* const object, void(T::* const callBack)());
+
+		template<class T>
+		static void addTeleopInitCallBack(T* const object, void(T::* const callBack)());
+
+		template<class T>
+		static void addPreLoopCallBack(T* const object, void(T::* const callBack)());
+
+		template<class T>
+		static void addPostLoopCallBack(T* const object, void(T::* const callBack)());
+
+		template<class T>
+		static void addTeleopEndCallBack(T* const object, void(T::* const callBack)());
+
+		template<class T>
+		static void addDisabledCallBack(T* const object, void(T::* const callBack)());
 
 		static void robotInit();
 		static void autonInit();

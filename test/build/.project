@@ -1,0 +1,1820 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>CORERobotLib_Test@build</name>
+	<comment></comment>
+	<projects></projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.cdt.make.core.makeBuilder</name>
+			<triggers>clean,full,incremental,</triggers>
+			<arguments>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.cleanBuildTarget</key>
+					<value>clean</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.enableCleanBuild</key>
+					<value>true</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.append_environment</key>
+					<value>true</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.stopOnError</key>
+					<value>true</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.enabledIncrementalBuild</key>
+					<value>true</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.build.command</key>
+					<value>/usr/bin/make</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.contents</key>
+					<value>org.eclipse.cdt.make.core.activeConfigSettings</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.build.target.inc</key>
+					<value>all</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.build.arguments</key>
+					<value>-j4</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.buildLocation</key>
+					<value>/mnt/Programming/git/CORE2017/CORERobotLib/test/build</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.useDefaultBuildCmd</key>
+					<value>false</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.environment</key>
+					<value>VERBOSE=1|CMAKE_NO_VERBOSE=1|</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.enableFullBuild</key>
+					<value>true</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.build.target.auto</key>
+					<value>all</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.enableAutoBuild</key>
+					<value>false</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.build.target.clean</key>
+					<value>clean</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.fullBuildTarget</key>
+					<value>all</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.buildArguments</key>
+					<value></value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.build.location</key>
+					<value>/mnt/Programming/git/CORE2017/CORERobotLib/test/build</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.autoBuildTarget</key>
+					<value>all</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.core.errorOutputParser</key>
+					<value>org.eclipse.cdt.core.GmakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser;</value>
+				</dictionary>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.cdt.make.core.ScannerConfigBuilder</name>
+			<arguments/>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.cdt.make.core.makeNature</nature>
+		<nature>org.eclipse.cdt.make.core.ScannerConfigNature</nature>
+		<nature>org.eclipse.cdt.core.ccnature</nature>
+		<nature>org.eclipse.cdt.core.cnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>[Subprojects]</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Subprojects]/Seasocks</name>
+			<type>2</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks</location>
+		</link>
+		<link>
+			<name>[Targets]</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Source Files/CORELogging_Test.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/CORELogging_Test.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Source Files/COREUtilities_Test.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/COREUtilities_Test.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Source Files/COREDashboard_Test.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/COREDashboard_Test.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Source Files/COREControl_Test.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/COREControl_Test.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/COREDataLog.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/CORELogging/CMakeFiles/CORELogging.dir/COREDataLog.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/CORELog.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/CORELogging/CMakeFiles/CORELogging.dir/CORELog.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/COREDashboard.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREDashboard/CMakeFiles/COREDashboard.dir/COREDashboard.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/COREConnectionHandler.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREDashboard/CMakeFiles/COREDashboard.dir/COREConnectionHandler.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/COREDriverstation.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREDashboard/CMakeFiles/COREDashboard.dir/COREDriverstation.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/COREData.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREData/CMakeFiles/COREData.dir/COREData.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/COREDataConnectionHandler.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREData/CMakeFiles/COREData.dir/COREDataConnectionHandler.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/COREConstant.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREUtilities/CMakeFiles/COREUtilities.dir/COREConstant.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/CORETimer.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREUtilities/CMakeFiles/COREUtilities.dir/CORETimer.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/CORENamedObject.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREUtilities/CMakeFiles/COREUtilities.dir/CORENamedObject.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/Rotation2d.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREUtilities/CMakeFiles/COREUtilities.dir/Rotation2d.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/Translation2d.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREUtilities/CMakeFiles/COREUtilities.dir/Translation2d.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/Position2d.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREUtilities/CMakeFiles/COREUtilities.dir/Position2d.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/COREController.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREControl/CMakeFiles/COREControl.dir/COREController.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/COREMotionProfile.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREControl/CMakeFiles/COREControl.dir/COREMotionProfile.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/COREPID.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREControl/CMakeFiles/COREControl.dir/COREPID.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/COREAuton.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREFramework/CMakeFiles/COREFramework.dir/COREAuton.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/CORERobot.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREFramework/CMakeFiles/COREFramework.dir/CORERobot.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/COREScheduler.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREFramework/CMakeFiles/COREFramework.dir/COREScheduler.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/CORETask.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREFramework/CMakeFiles/COREFramework.dir/CORETask.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/CANTalon.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/CORESimulation/CMakeFiles/CORESimulation.dir/CANTalon.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/WPILib.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/CORESimulation/CMakeFiles/CORESimulation.dir/WPILib.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] CORERobotLib_Test/Object Files/CORESimRobot.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/CORESimulation/CMakeFiles/CORESimulation.dir/CORESimRobot.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Source Files/main.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/main.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/COREDataLog.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/CORELogging/CMakeFiles/CORELogging.dir/COREDataLog.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/CORELog.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/CORELogging/CMakeFiles/CORELogging.dir/CORELog.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/COREController.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREControl/CMakeFiles/COREControl.dir/COREController.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/COREMotionProfile.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREControl/CMakeFiles/COREControl.dir/COREMotionProfile.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/COREPID.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREControl/CMakeFiles/COREControl.dir/COREPID.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/COREDashboard.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREDashboard/CMakeFiles/COREDashboard.dir/COREDashboard.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/COREConnectionHandler.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREDashboard/CMakeFiles/COREDashboard.dir/COREConnectionHandler.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/COREDriverstation.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREDashboard/CMakeFiles/COREDashboard.dir/COREDriverstation.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/COREConstant.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREUtilities/CMakeFiles/COREUtilities.dir/COREConstant.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/CORETimer.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREUtilities/CMakeFiles/COREUtilities.dir/CORETimer.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/CORENamedObject.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREUtilities/CMakeFiles/COREUtilities.dir/CORENamedObject.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/Rotation2d.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREUtilities/CMakeFiles/COREUtilities.dir/Rotation2d.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/Translation2d.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREUtilities/CMakeFiles/COREUtilities.dir/Translation2d.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/Position2d.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREUtilities/CMakeFiles/COREUtilities.dir/Position2d.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/COREAuton.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREFramework/CMakeFiles/COREFramework.dir/COREAuton.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/CORERobot.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREFramework/CMakeFiles/COREFramework.dir/CORERobot.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/COREScheduler.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREFramework/CMakeFiles/COREFramework.dir/COREScheduler.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/CORETask.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREFramework/CMakeFiles/COREFramework.dir/CORETask.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/CANTalon.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/CORESimulation/CMakeFiles/CORESimulation.dir/CANTalon.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/WPILib.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/CORESimulation/CMakeFiles/CORESimulation.dir/WPILib.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/CORESimRobot.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/CORESimulation/CMakeFiles/CORESimulation.dir/CORESimRobot.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/COREData.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREData/CMakeFiles/COREData.dir/COREData.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] Main/Object Files/COREDataConnectionHandler.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/src/COREData/CMakeFiles/COREData.dir/COREDataConnectionHandler.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/Connection.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/Connection.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/HybiAccept.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/HybiAccept.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/HybiPacketDecoder.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/HybiPacketDecoder.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/Logger.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/Logger.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/PageRequest.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/PageRequest.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/Response.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/Response.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/Server.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/Server.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/StringUtil.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/StringUtil.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/md5.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/md5/md5.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/Base64.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/internal/Base64.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/Request.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/seasocks/Request.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/ResponseCode.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/seasocks/ResponseCode.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/SynchronousResponse.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/seasocks/SynchronousResponse.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/ResponseBuilder.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/seasocks/ResponseBuilder.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/StreamingResponse.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/seasocks/StreamingResponse.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/sha1.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/sha1/sha1.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/CrackedUri.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/util/CrackedUri.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/Json.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/util/Json.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/PathHandler.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/util/PathHandler.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/RootPageHandler.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/util/RootPageHandler.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/ZlibContextDisabled.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/seasocks/ZlibContextDisabled.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks/Object Files/Embedded.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/web/CMakeFiles/embedded.dir/Embedded.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/Connection.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/Connection.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/HybiAccept.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/HybiAccept.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/HybiPacketDecoder.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/HybiPacketDecoder.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/Logger.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/Logger.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/PageRequest.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/PageRequest.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/Response.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/Response.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/Server.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/Server.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/StringUtil.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/StringUtil.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/md5.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/md5/md5.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/Base64.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/internal/Base64.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/Request.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/seasocks/Request.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/ResponseCode.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/seasocks/ResponseCode.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/SynchronousResponse.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/seasocks/SynchronousResponse.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/ResponseBuilder.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/seasocks/ResponseBuilder.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/StreamingResponse.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/seasocks/StreamingResponse.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/sha1.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/sha1/sha1.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/CrackedUri.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/util/CrackedUri.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/Json.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/util/Json.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/PathHandler.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/util/PathHandler.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/RootPageHandler.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/util/RootPageHandler.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Source Files/ZlibContextDisabled.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/main/c/seasocks/ZlibContextDisabled.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_obj/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/Connection.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/Connection.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/HybiAccept.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/HybiAccept.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/HybiPacketDecoder.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/HybiPacketDecoder.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/Logger.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/Logger.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/PageRequest.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/PageRequest.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/Response.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/Response.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/Server.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/Server.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/StringUtil.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/StringUtil.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/md5.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/md5/md5.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/Base64.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/internal/Base64.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/Request.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/seasocks/Request.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/ResponseCode.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/seasocks/ResponseCode.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/SynchronousResponse.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/seasocks/SynchronousResponse.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/ResponseBuilder.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/seasocks/ResponseBuilder.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/StreamingResponse.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/seasocks/StreamingResponse.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/sha1.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/sha1/sha1.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/CrackedUri.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/util/CrackedUri.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/Json.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/util/Json.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/PathHandler.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/util/PathHandler.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/RootPageHandler.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/util/RootPageHandler.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/ZlibContextDisabled.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/c/CMakeFiles/seasocks_obj.dir/seasocks/ZlibContextDisabled.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] seasocks_so/Object Files/Embedded.cpp.o</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/web/CMakeFiles/embedded.dir/Embedded.cpp.o</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] embedded</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] embedded/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] embedded/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] embedded/Source Files/Embedded.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/web/Embedded.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] embedded/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] embedded/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] embedded/CMake Rules/Embedded.cpp.rule</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/test/build/3rdparty/seasocks/src/main/web/Embedded.cpp.rule</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] embedded/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] embedded/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] streaming_test</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] streaming_test/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] streaming_test/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] streaming_test/Source Files/streaming_test.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/app/c/streaming_test.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] streaming_test/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] streaming_test/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] streaming_test/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] streaming_test/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] async_test</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] async_test/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] async_test/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] async_test/Source Files/async_test.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/app/c/async_test.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] async_test/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] async_test/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] async_test/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] async_test/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] serve</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] serve/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] serve/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] serve/Source Files/serve.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/app/c/serve.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] serve/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] serve/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] serve/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] serve/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ph_test</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ph_test/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ph_test/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ph_test/Source Files/ph_test.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/app/c/ph_test.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ph_test/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ph_test/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ph_test/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ph_test/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_chatroom</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_chatroom/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_chatroom/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_chatroom/Source Files/ws_chatroom.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/app/c/ws_chatroom.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_chatroom/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_chatroom/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_chatroom/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_chatroom/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_echo</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_echo/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_echo/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_echo/Source Files/ws_echo.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/app/c/ws_echo.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_echo/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_echo/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_echo/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_echo/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_test</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_test/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_test/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_test/Source Files/ws_test.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/app/c/ws_test.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_test/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_test/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_test/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_test/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_test_poll</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_test_poll/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_test_poll/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_test_poll/Source Files/ws_test_poll.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/3rdparty/seasocks/src/app/c/ws_test_poll.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_test_poll/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_test_poll/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_test_poll/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[exe] ws_test_poll/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREControl</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREControl/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREControl/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREControl/Source Files/COREController.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREControl/COREController.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREControl/Source Files/COREMotionProfile.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREControl/COREMotionProfile.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREControl/Source Files/COREPID.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREControl/COREPID.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREControl/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREControl/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREControl/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREControl/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDashboard</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDashboard/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDashboard/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDashboard/Source Files/COREDashboard.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREDashboard/COREDashboard.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDashboard/Source Files/COREConnectionHandler.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREDashboard/COREConnectionHandler.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDashboard/Source Files/COREDriverstation.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREDashboard/COREDriverstation.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDashboard/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDashboard/Header Files/COREConnectionHandler.h</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREDashboard/COREConnectionHandler.h</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDashboard/Header Files/COREDriverstation.h</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREDashboard/COREDriverstation.h</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDashboard/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDashboard/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDashboard/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDrive</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDrive/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDrive/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDrive/Source Files/COREDrive.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREDrive/COREDrive.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDrive/Source Files/COREEtherDrive.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREDrive/COREEtherDrive.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDrive/Source Files/CORESwerveDrive.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREDrive/CORESwerveDrive.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDrive/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDrive/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDrive/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREDrive/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREFramework</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREFramework/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREFramework/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREFramework/Source Files/COREAuton.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREFramework/COREAuton.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREFramework/Source Files/CORERobot.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREFramework/CORERobot.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREFramework/Source Files/COREScheduler.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREFramework/COREScheduler.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREFramework/Source Files/CORETask.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREFramework/CORETask.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREFramework/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREFramework/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREFramework/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREFramework/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREHardware</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREHardware/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREHardware/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREHardware/Source Files/COREHardware.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREHardware/COREHardware.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREHardware/Source Files/COREEncoder.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREHardware/COREEncoder.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREHardware/Source Files/COREJoystick.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREHardware/COREJoystick.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREHardware/Source Files/COREMotor.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREHardware/COREMotor.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREHardware/Source Files/CORESensor.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREHardware/CORESensor.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREHardware/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREHardware/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREHardware/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREHardware/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORELogging</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORELogging/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORELogging/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORELogging/Source Files/COREDataLog.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/CORELogging/COREDataLog.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORELogging/Source Files/CORELog.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/CORELogging/CORELog.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORELogging/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORELogging/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORELogging/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORELogging/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREUtilities</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREUtilities/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREUtilities/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREUtilities/Source Files/COREConstant.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREUtilities/COREConstant.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREUtilities/Source Files/CORETimer.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREUtilities/CORETimer.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREUtilities/Source Files/CORENamedObject.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREUtilities/CORENamedObject.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREUtilities/Source Files/Rotation2d.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREUtilities/Rotation2d.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREUtilities/Source Files/Translation2d.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREUtilities/Translation2d.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREUtilities/Source Files/Position2d.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREUtilities/Position2d.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREUtilities/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREUtilities/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREUtilities/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREUtilities/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower/Source Files/AdaptivePursuit.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/WaypointFollower/AdaptivePursuit.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower/Source Files/InterpolatingMap.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/WaypointFollower/InterpolatingMap.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower/Source Files/Path.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/WaypointFollower/Path.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower/Source Files/PathLoader.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/WaypointFollower/PathLoader.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower/Source Files/PathSegment.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/WaypointFollower/PathSegment.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower/Source Files/Position2d.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREUtilities/Position2d.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower/Source Files/RobotFrame.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/WaypointFollower/RobotFrame.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower/Source Files/Rotation2d.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREUtilities/Rotation2d.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower/Source Files/TankKinematics.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/WaypointFollower/TankKinematics.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower/Source Files/TankTracker.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/WaypointFollower/TankTracker.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower/Source Files/Translation2d.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREUtilities/Translation2d.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] WaypointFollower/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREData</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREData/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREData//COREData.inc</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREData/COREData.inc</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREData/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREData/Source Files/COREData.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREData/COREData.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREData/Source Files/COREDataConnectionHandler.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/COREData/COREDataConnectionHandler.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREData/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREData/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREData/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] COREData/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORESimulation</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORESimulation/</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORESimulation/Source Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORESimulation/Source Files/CANTalon.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/CORESimulation/CANTalon.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORESimulation/Source Files/WPILib.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/CORESimulation/WPILib.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORESimulation/Source Files/CORESimRobot.cpp</name>
+			<type>1</type>
+			<location>/mnt/Programming/git/CORE2017/CORERobotLib/src/CORESimulation/CORESimRobot.cpp</location>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORESimulation/Header Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORESimulation/CMake Rules</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORESimulation/Resources</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>[Targets]/[lib] CORESimulation/Object Files</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>

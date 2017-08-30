@@ -260,34 +260,42 @@ void COREScheduler::cleanUp() {
 	COREConstantsManager::cleanUp();
 }
 
-void COREScheduler::addRobotInitCallBack(function<void()> callBack) {
-    m_robotInitCallBacks.push_back(callBack);
+template<class T>
+void COREScheduler::addRobotInitCallBack(T* const object, void(T::* const callBack)()) {
+    m_robotInitCallBacks.emplace_back(bind(callBack, object, _1, _2));
 }
 
-void COREScheduler::addAutonInitCallBack(function<void()> callBack) {
-    m_autonInitCallBacks.push_back(callBack);
+template<class T>
+void COREScheduler::addAutonInitCallBack(T* const object, void(T::* const callBack)()) {
+    m_autonInitCallBacks.emplace_back(bind(callBack, object, _1, _2));
 }
 
-void COREScheduler::addAutonEndCallBack(function<void()> callBack) {
-    m_autonEndCallBacks.push_back(callBack);
+template<class T>
+void COREScheduler::addAutonEndCallBack(T* const object, void(T::* const callBack)()) {
+    m_autonEndCallBacks.emplace_back(bind(callBack, object, _1, _2));
 }
 
-void COREScheduler::addTeleopInitCallBack(function<void()> callBack) {
-    m_teleopInitCallBacks.push_back(callBack);
+template<class T>
+void COREScheduler::addTeleopInitCallBack(T* const object, void(T::* const callBack)()) {
+    m_teleopInitCallBacks.emplace_back(bind(callBack, object, _1, _2));
 }
 
-void COREScheduler::addPreLoopCallBack(function<void()> callBack) {
-    m_preLoopCallBacks.push_back(callBack);
+template<class T>
+void COREScheduler::addPreLoopCallBack(T* const object, void(T::* const callBack)()) {
+    m_preLoopCallBacks.emplace_back(bind(callBack, object, _1, _2));
 }
 
-void COREScheduler::addPostLoopCallBack(function<void()> callBack) {
-    m_postLoopCallBacks.push_back(callBack);
+template<class T>
+void COREScheduler::addPostLoopCallBack(T* const object, void(T::* const callBack)()) {
+    m_postLoopCallBacks.emplace_back(bind(callBack, object, _1, _2));
 }
 
-void COREScheduler::addTeleopEndCallBack(function<void()> callBack) {
-    m_teleopEndCallBacks.push_back(callBack);
+template<class T>
+void COREScheduler::addTeleopEndCallBack(T* const object, void(T::* const callBack)()) {
+    m_teleopEndCallBacks.emplace_back(bind(callBack, object, _1, _2));
 }
 
-void COREScheduler::addDisabledCallBack(function<void()> callBack) {
-    m_disabledCallBacks.push_back(callBack);
+template<class T>
+void COREScheduler::addDisabledCallBack(T* const object, void(T::* const callBack)()) {
+    m_disabledCallBacks.emplace_back(bind(callBack, object, _1, _2));
 }
