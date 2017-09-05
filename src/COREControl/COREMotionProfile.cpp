@@ -70,7 +70,7 @@ double CORE::COREMotionProfile::getActual() {
     return COREMotionController::getActual();
 }
 
-void CORE::COREMotionProfile::update(int profile) {
+void CORE::COREMotionProfile::update() {
     if(m_actualPosition < m_ticksToAccel) {
         //m_outputDevice->ControllerSet(m_timeToAccel == 0 ? 0 : (m_timer.Get() / m_timeToAccel));
         m_output = (m_timeToAccel == 0 ? 0 : (m_timer.Get() / m_timeToAccel));

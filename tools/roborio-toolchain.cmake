@@ -1,17 +1,9 @@
-SET(CMAKE_SYSTEM_NAME Linux)
-SET(CMAKE_SYSTEM_VERSION 1)
-set(CMAKE_SYSTEM_PROCESSOR arm)
-
-if(WIN32)
-    set(CMAKE_C_COMPILER C:/frc/bin/arm-frc-linux-gnueabi-gcc.exe)
-    set(CMAKE_CXX_COMPILER C:/frc/bin/arm-frc-linux-gnueabi-g++.exe)
-else()
-    set(CMAKE_C_COMPILER /usr/bin/arm-frc-linux-gnueabi-gcc)
-    set(CMAKE_CXX_COMPILER /usr/bin/arm-frc-linux-gnueabi-g++)
-endif()
-
-# search for programs in the build host directories
-SET(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
-# for libraries and headers in the target directories
-SET(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY NEVER)
-SET(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE NEVER)
+cmake_minimum_required(VERSION 2.8)
+INCLUDE(CMakeForceCompiler)
+set(ARM_PREFIX arm-frc-linux-gnueabi)
+set(CMAKE_SYSTEM_NAME Linux)
+CMAKE_FORCE_CXX_COMPILER(${ARM_PREFIX}-g++ GNU)
+CMAKE_FORCE_C_COMPILER(${ARM_PREFIX}-gcc GNU)
+set(CMAKE_CXX_FLAGS "-std=c++14 -Wformat=2 -Wall -Wextra -pedantic -Wno-psabi -Wno-unused-but-set-parameter" CACHE STRING "" FORCE)
+set(CMAKE_CXX_FLAGS_DEBUG "-O0 -g3" CACHE STRING "" FORCE)
+set(CMAKE_CXX_FLAGS_RELEASE "-O3" CACHE STRING "" FORCE)

@@ -1,6 +1,7 @@
 #include "COREData.h"
 
 using namespace CORE;
+using namespace nlohmann;
 
 map<string, ICOREData*> COREDataManager::m_data;
 

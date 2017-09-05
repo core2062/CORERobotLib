@@ -10,7 +10,6 @@
 #include "CORELogging/CORELog.h"
 
 using namespace std;
-using namespace nlohmann;
 
 namespace CORE {
     class ICOREData {
@@ -27,7 +26,7 @@ namespace CORE {
     class COREDataManager {
     public:
         static void addData(ICOREData* instance);
-        static void updateData(json jsonData);
+        static void updateData(nlohmann::json jsonData);
         static void cleanUp();
         static string getJSON(bool onlyIfChanged = true);
     private:

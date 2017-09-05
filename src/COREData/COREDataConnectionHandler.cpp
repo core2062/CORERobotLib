@@ -1,6 +1,7 @@
 #include "COREDataConnectionHandler.h"
 
 using namespace CORE;
+using namespace nlohmann;
 
 set<WebSocket *> COREDataConnectionHandler::m_connections;
 CORETimer * COREDataConnectionHandler::timer = new CORETimer();

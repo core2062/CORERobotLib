@@ -5,8 +5,6 @@
 #include "COREFramework/CORETask.h"
 #include "CORELogging/CORELog.h"
 #include "COREUtilities/COREMath.h"
-//#include "../CORERobot.h"
-
 #include <WPILib.h>
 
 using namespace std;

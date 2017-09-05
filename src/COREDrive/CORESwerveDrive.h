@@ -17,10 +17,10 @@ namespace CORE {
         class SwerveModule{
         public:
             SwerveModule(COREMotor* driveMotor, COREMotor* steerMotor) :
-                    m_driveMotor(driveMotor),
-                    m_steerMotor(steerMotor),
                     m_speedPIDController(0,0,0),
-                    m_anglePIDController(0,0,0){
+                    m_anglePIDController(0,0,0),
+                    m_driveMotor(driveMotor),
+                    m_steerMotor(steerMotor) {
             }
             void drive(double magnitude, double direction);
             double getAngle();
