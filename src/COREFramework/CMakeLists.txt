@@ -8,7 +8,8 @@ set(SOURCE_FILES
         COREAuton.cpp
         CORERobot.cpp
         COREScheduler.cpp
-        CORETask.cpp)
+        CORETask.cpp
+        COREHardwareManager.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 

@@ -5,7 +5,7 @@
 #include <vector>
 
 #include "CORELogging/CORELog.h"
-#include <WPILib.h>
+#include <Preferences.h>
 
 using namespace std;
 

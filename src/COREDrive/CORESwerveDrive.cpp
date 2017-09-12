@@ -88,7 +88,7 @@ void CORESwerve::calculate(double forward, double strafeRight, double rotateCloc
 
 double CORESwerve::SwerveModule::getAngle() {
     //Multiplying by 360 degrees and dividing by five volts
-    return m_steerMotor->getCANTalon()->GetAnalogInRaw() * (360.0 / 1025.0);
+    return m_steerMotor->GetAnalogInRaw() * (360.0 / 1025.0);
 }
 
 void CORESwerve::SwerveModule::setAnglePID(double p, double i, double d) {

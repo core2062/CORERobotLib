@@ -1,21 +1,18 @@
 #pragma once
 
-#include <WPILib.h>
 #include <iostream>
 
 #include "COREScheduler.h"
 #include "COREUtilities/CORETimer.h"
+#include "COREDashboard/COREDriverstation.h"
 #include "CORELogging/CORELog.h"
-#include "COREHardware/COREHardware.h"
+#include "COREHardwareManager.h"
 
-#define START_SIMULATED_ROBOT_CLASS(_ClassName_)                             \
-	int main() {                                                             \
-		_ClassName_ *robot = new _ClassName_();                              \
-        robot->RobotInit();                                                  \
-		robot->Autonomous();                                                 \
-	    robot->OperatorControl();                                            \
-	    return 0;                                                         	 \
-	}                                                                        \
+#ifdef NOT_REAL
+#include "WPILib312312.h"
+#else
+#include <WPILib.h>
+#endif                                                          \
 
 namespace CORE {
     class CORERobot : public CORESubsystem, public SampleRobot {

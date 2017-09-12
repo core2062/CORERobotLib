@@ -1,5 +1,5 @@
 #include "COREEncoder.h"
-#include "COREHardware.h"
+#include "COREFramework/COREHardwareManager.h"
 
 using namespace CORE;
 
@@ -14,9 +14,9 @@ COREEncoder::COREEncoder(int portA, int portB, encoderType encoderType, bool rev
     COREHardwareManager::addEncoder(this);
 }
 
-COREEncoder::COREEncoder(shared_ptr<CANTalon> boundCANTalonController, encoderType encoder, bool reversed)
-        : m_encoderType(encoder),
-          m_reversed(reversed) {
+COREEncoder::COREEncoder(shared_ptr<CANTalon> boundCANTalonController, encoderType encoder, bool reversed) :
+        m_encoderType(encoder),
+        m_reversed(reversed) {
     CANTalonController = boundCANTalonController;
     m_portA = -1;
     m_portB = -1;
@@ -69,15 +69,15 @@ void COREEncoder::Reset() {
     SetEncPos(0);
 }
 
-int COREEncoder::GetPortA() {
+int COREEncoder::getPortA() {
     return m_portA;
 }
 
-int COREEncoder::GetPortB() {
+int COREEncoder::getPortB() {
     return m_portB;
 }
 
-bool COREEncoder::IsBoundToCANTalon() {
+bool COREEncoder::isBoundToCANTalon() {
     return m_boundToCANTalon;
 }
 
@@ -97,4 +97,8 @@ void COREEncoder::Update() {
     }
     m_timer.Reset();
     m_timer.Start();
+}
+
+int COREEncoder::getCANTalonID() {
+    return CANTalonController->GetDeviceID();
 }

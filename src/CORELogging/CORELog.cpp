@@ -16,7 +16,7 @@ string CORELog::getFileName() {
     time_t currentTime = time(0);
     struct tm* now = localtime(&currentTime);
 	string fileName = "";
-    if(COREDriverstation::IsCompetition()) {
+    if(COREDriverstation::isCompetition()) {
         string alliance;
         switch(COREDriverstation::getAlliance()) {
             case COREDriverstation::RED:

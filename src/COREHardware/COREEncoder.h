@@ -4,7 +4,8 @@
 #include <memory>
 
 #include <WPILib.h>
-#include "../COREUtilities/CORETimer.h"
+#include "COREUtilities/CORETimer.h"
+#include "COREFramework/COREHardwareManager.h"
 #include "CANTalon.h"
 #include "COREControl/COREController.h"
 
@@ -24,7 +25,7 @@ namespace CORE {
         SRX_ABSOLUTE,
         ANALOG_POT
     };
-    class COREEncoder : public ControllerInput {
+    class COREEncoder : public ICOREEncoder, public ControllerInput {
     public:
         shared_ptr<Encoder> encoder;
         shared_ptr<CANTalon> CANTalonController;
@@ -39,10 +40,11 @@ namespace CORE {
         void setDistance(distanceUnit unit, double ticksToUnit);
         void SetEncPos(int value);
         void Reset();
-        int GetPortA();
-        int GetPortB();
-        bool IsBoundToCANTalon();
+        int getPortA();
+        int getPortB();
+        bool isBoundToCANTalon();
         void Update();
+        int getCANTalonID() override;
     protected:
         CORETimer m_timer;
         bool m_boundToCANTalon = false;

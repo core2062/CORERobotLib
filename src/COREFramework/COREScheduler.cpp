@@ -180,27 +180,9 @@ void COREScheduler::teleopInit() {
 }
 
 void COREScheduler::teleop() {
-//	COREHardwareManager::updateEncoders();
-    for(auto task : m_tasks) {
-        if(!task->isDisabled()) {
-            task->preLoopTask();
-        }
-    }
-    for(auto callBack : m_preLoopCallBacks) {
-        callBack();
-    }
     for(auto subsystem : m_subsystems) {
         subsystem->teleop();
     }
-    for(auto task : m_tasks) {
-        if(!task->isDisabled()) {
-            task->postLoopTask();
-        }
-    }
-    for(auto callBack : m_postLoopCallBacks) {
-        callBack();
-    }
-//    COREHardwareManager::updateMotors();
 }
 
 void COREScheduler::teleopEnd() {
@@ -298,4 +280,28 @@ void COREScheduler::addTeleopEndCallBack(T* const object, void(T::* const callBa
 template<class T>
 void COREScheduler::addDisabledCallBack(T* const object, void(T::* const callBack)()) {
     m_disabledCallBacks.emplace_back(bind(callBack, object, _1, _2));
+}
+
+void COREScheduler::preLoop() {
+    COREHardwareManager::updateEncoders();
+    for(auto task : m_tasks) {
+        if(!task->isDisabled()) {
+            task->preLoopTask();
+        }
+    }
+    for(auto callBack : m_preLoopCallBacks) {
+        callBack();
+    }
+}
+
+void COREScheduler::postLoop() {
+    for(auto task : m_tasks) {
+        if(!task->isDisabled()) {
+            task->postLoopTask();
+        }
+    }
+    for(auto callBack : m_postLoopCallBacks) {
+        callBack();
+    }
+    COREHardwareManager::updateMotors();
 }

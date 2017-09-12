@@ -5,7 +5,7 @@ project(CORERobotLib)
 set(CMAKE_CXX_STANDARD 14)
 
 ### Set compiler to arm cross compiler toolchain
-
+add_definitions(-DARM)
 
 ### Setup seasocks target
 #[[set(UNITTESTS OFF CACHE BOOL "Build unittests." FORCE)

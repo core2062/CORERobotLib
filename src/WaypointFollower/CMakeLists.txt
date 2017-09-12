@@ -10,12 +10,9 @@ set(SOURCE_FILES
         Path.cpp
         PathLoader.cpp
         PathSegment.cpp
-        ../COREUtilities/Position2d.cpp
         RobotFrame.cpp
-        ../COREUtilities/Rotation2d.cpp
         TankKinematics.cpp
-        TankTracker.cpp
-        ../COREUtilities/Translation2d.cpp)
+        TankTracker.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 

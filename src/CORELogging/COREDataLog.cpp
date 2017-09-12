@@ -40,7 +40,7 @@ using namespace CORE;
 //}
 //
 std::string CORETimeDataPoint::getValue() {
-	return std::to_string(CORETimer::GetFPGATimestamp());
+	return std::to_string(CORETimer::getTime());
 }
 
 COREDataLogger::COREDataLogger(

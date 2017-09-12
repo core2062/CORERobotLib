@@ -8,9 +8,7 @@
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
 #include <windows.h>
 #else
-
 #include <unistd.h>
-
 #endif
 
 //#warning Using Fake WPILib
@@ -93,22 +91,6 @@ inline void Wait(double _) {
 #else
     usleep(_ * 1000000);
 #endif
-}
-
-inline bool IsOperatorControl() {
-    return true;
-}
-
-inline bool IsEnabled() {
-    return true;
-}
-
-inline bool IsAutonomous() {
-    return true;
-}
-
-inline bool IsDisabled() {
-    return false;
 }
 
 class Encoder {
@@ -195,19 +177,19 @@ public:
     static double GetFPGATimestamp() { return 0; }
 };
 
-class LiveWindow {
-public:
-public:
-    static inline LiveWindow* GetInstance() {
-        if(!m_instance) {
-            m_instance = new LiveWindow;
-        }
-        return m_instance;
-    }
-
-    inline void Run() {}
-
-private:
-    static LiveWindow* m_instance;
-};
+//class LiveWindow {
+//public:
+//public:
+//    static inline LiveWindow* GetInstance() {
+//        if(!m_instance) {
+//            m_instance = new LiveWindow;
+//        }
+//        return m_instance;
+//    }
+//
+//    inline void Run() {}
+//
+//private:
+//    static LiveWindow* m_instance;
+//};
 #endif

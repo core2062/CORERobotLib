@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <COREData/COREData.h>
 #include <cxxabi.h>
+#include <COREFramework/CORERobot.h>
 #include "COREDashboard/COREDashboard.h"
 #include "CORESimulation/CORESimRobot.h"
 
@@ -34,7 +35,7 @@ int main() {
     CORE::COREDashboard dashboard;
     auto subsystem = new testSubsystem();
 
-    CORE::SIM::CORESimRobot robot;
+    CORE::CORERobot robot;
     robot.OperatorControl();
     Wait(100);
 }

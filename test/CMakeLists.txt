@@ -6,14 +6,19 @@ set(CMAKE_CXX_STANDARD 14)
 
 ### Project Setup
 set(PROJECT_SOURCE_DIR "../")
-add_definitions(-DFAKE)
+add_definitions(-DNOT_REAL)
 
 ### Include directories
 include_directories(${PROJECT_SOURCE_DIR}/src)
 include_directories(${PROJECT_SOURCE_DIR}/src/CORESimulation)
+include_directories(${PROJECT_SOURCE_DIR}/3rdparty/wpilib/include)
 include_directories(${PROJECT_SOURCE_DIR}/3rdparty/Catch/include)
 include_directories(${PROJECT_SOURCE_DIR}/3rdparty/seasocks/src/main/c)
 include_directories(${PROJECT_SOURCE_DIR}/3rdparty/json/src)
+
+#### Google Test
+include_directories(${PROJECT_SOURCE_DIR}/3rdparty/googletest)
+add_subdirectory(${PROJECT_SOURCE_DIR}/3rdparty/googletest ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/googletest)
 
 #### Seasocks
 include_directories(${PROJECT_SOURCE_DIR}/3rdparty/seasocks)
@@ -46,11 +51,16 @@ add_executable(${PROJECT_NAME}
         $<TARGET_OBJECTS:COREData>
         $<TARGET_OBJECTS:COREUtilities>
         $<TARGET_OBJECTS:COREControl>
+#        $<TARGET_OBJECTS:COREHardware>
         $<TARGET_OBJECTS:COREFramework>
         $<TARGET_OBJECTS:CORESimulation>
-        CORELogging_Test.cpp
+#        Test.cpp
+#        CORELogging_Test.cpp
         COREUtilities_Test.cpp
-        COREDashboard_Test.cpp
-        COREControl_Test.cpp)
-target_link_libraries(${PROJECT_NAME} seasocks)
+#        COREDashboard_Test.cpp
+        COREControl_Test.cpp
+        COREFramework_Test.cpp
+        COREDrive_Test.cpp
+        )
+target_link_libraries(${PROJECT_NAME} seasocks gtest gtest_main gmock gmock_main)
 add_test(${PROJECT_NAME} ${PROJECT_NAME})

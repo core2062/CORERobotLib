@@ -4,7 +4,7 @@
 
 #include <vector>
 
-#include "COREHardware/COREHardware.h"
+#include "COREFramework/COREHardwareManager.h"
 #include "COREDrive.h"
 #include "CANTalon.h"
 #include "../COREHardware/CORESensor.h"
@@ -16,7 +16,7 @@ namespace CORE {
     public:
         class SwerveModule{
         public:
-            SwerveModule(COREMotor* driveMotor, COREMotor* steerMotor) :
+            SwerveModule(CANTalon* driveMotor, CANTalon* steerMotor) :
                     m_speedPIDController(0,0,0),
                     m_anglePIDController(0,0,0),
                     m_driveMotor(driveMotor),
@@ -28,8 +28,8 @@ namespace CORE {
             COREPID m_speedPIDController;
             COREAnglePID m_anglePIDController;
         private:
-            COREMotor* m_driveMotor;
-            COREMotor* m_steerMotor;
+            CANTalon* m_driveMotor;
+            CANTalon* m_steerMotor;
 
         };
         CORESwerve(double trackWidth, double wheelBase,

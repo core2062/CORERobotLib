@@ -37,7 +37,7 @@ namespace CORE {
     class COREData : public ICOREData {
     public:
         COREData(const char* name, bool showOnDriverDashboard = false);
-        COREData(const char *group, const char *name, bool showOnDriverDashboard = false);
+        COREData(const char* group, const char* name, bool showOnDriverDashboard = false);
         COREData(const char* name, T defaultValue, bool showOnDriverDashboard = false);
         COREData(const char* groupName, const char* name, T defaultValue, bool showOnDriverDashboard = false);
         COREData(const char* name, T * pointerToSource, bool showOnDriverDashboard = false);

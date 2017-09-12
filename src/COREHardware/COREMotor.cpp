@@ -1,5 +1,5 @@
 #include "COREMotor.h"
-#include "COREHardware.h"
+#include "COREFramework/COREHardwareManager.h"
 
 using namespace std;
 using namespace CORE;
@@ -65,18 +65,6 @@ controlMode COREMotor::getControlMode() {
 
 int COREMotor::getPort() {
     return m_motorPort;
-}
-
-string COREMotor::getName() {
-	std::ostringstream name;
-	if(m_motorControllerType == CANTALON) {
-		m_CANTalonController->GetDescription(name);
-		return name.str();
-	} else {
-		//TODO: Better name
-		return to_string(m_motorPort);
-	}
-
 }
 
 controllerType COREMotor::getControllerType() {

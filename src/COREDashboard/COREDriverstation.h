@@ -1,6 +1,8 @@
 #pragma once
 
-#ifndef FAKE
+#include "CORELogging/CORELog.h"
+
+#ifndef NOT_REAL
 #include "WPILib.h"
 #endif
 
@@ -23,8 +25,15 @@ namespace CORE {
         static gameMode getMode();
         static gameAlliance getAlliance();
         static int getStation();
-        static bool IsCompetition();
+        static bool isEnabled();
+        static bool isOperatorControl();
+        static bool isAutonomous();
+        static bool isCompetition();
         static void updateRobotState();
+#ifdef NOT_REAL
+        static void overrideRobotMode(gameMode newMode);
+        static void overrideAlliance(gameAlliance newAlliance);
+#endif
     private:
         static gameMode m_mode;
         static gameAlliance m_alliance;

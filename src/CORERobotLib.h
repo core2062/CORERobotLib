@@ -1,5 +1,11 @@
 /* CORERobotLib
- * By CORE 2062
+ * FRC Team CORE 2062
+ *
+ * Created by:
+ * Andrew Kempen (akempen001 at gmail.com)
+ *
+ * Contributors:
+ *
  */
 
 #include "COREControl/COREController.h"
@@ -18,7 +24,7 @@
 #include "COREFramework/COREScheduler.h"
 #include "COREFramework/CORETask.h"
 #include "COREHardware/COREEncoder.h"
-#include "COREHardware/COREHardware.h"
+#include "COREFramework/COREHardwareManager.h"
 #include "COREHardware/COREJoystick.h"
 #include "COREHardware/COREMotor.h"
 #include "COREHardware/CORESensor.h"

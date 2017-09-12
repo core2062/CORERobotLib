@@ -1,3 +1,4 @@
+#include <iostream>
 #include "CORETimer.h"
 
 using namespace CORE;
@@ -5,10 +6,9 @@ using namespace std::chrono;
 
 double CORETimer::Get() {
     if(m_started && !m_stopped) {
-        return duration_cast<duration<double>>(
-                high_resolution_clock::now() - m_startTime).count();
+        return getTime() - m_startTime;
     } else if(m_started && m_stopped) {
-        return duration_cast<duration<double>>(m_stopTime - m_startTime).count();
+        return m_stopTime - m_startTime;
     }
     //TODO: Log -> Error, m_timer has not m_started!
     return 0;
@@ -16,7 +16,7 @@ double CORETimer::Get() {
 
 void CORETimer::Reset() {
     m_started = false;
-    m_startTime = high_resolution_clock::now();
+    m_startTime = getTime();
 }
 
 void CORETimer::Stop() {
@@ -24,15 +24,20 @@ void CORETimer::Stop() {
         //TODO: Log -> Error, m_timer m_stopped without starting!
     } else {
         m_stopped = true;
-        m_stopTime = high_resolution_clock::now();
+        m_stopTime = getTime();
     }
 }
 
 void CORETimer::Start() {
     m_started = true;
-    m_startTime = high_resolution_clock::now();
+    m_startTime = getTime();
 }
 
-double CORETimer::GetFPGATimestamp() {
-    return duration_cast<seconds>(high_resolution_clock::now().time_since_epoch()).count();
+double CORETimer::getTime() {
+#ifdef NOT_REAL
+    return duration_cast<microseconds>(high_resolution_clock::now().time_since_epoch()).count() / 1000000.0;
+#else
+    return frc::GetFPGATime();
+#endif
+
 }

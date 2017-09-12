@@ -5,12 +5,16 @@
 #include <iosfwd>
 
 #include "COREFramework/CORETask.h"
+#include "COREFramework/COREHardwareManager.h"
+#include "COREUtilities/CORENamedObject.h"
 #include "COREControl/COREPID.h"
 #include "COREControl/COREController.h"
 #include "COREEncoder.h"
 
+#ifndef NOT_REAL
 #include <WPILib.h>
 #include <CANTalon.h>
+#endif
 
 using namespace std;
 
@@ -31,7 +35,7 @@ namespace CORE {
         FORWARD,
         BACKWARD
     };
-    class COREMotor : public ControllerOutput {
+    class COREMotor : public ICOREMotor, public ControllerOutput, public CORENamedObject {
     public:
         COREMotor(int port, controllerType controller = CANTALON, controlMode controlMethod = PERCENTAGE);
         void Set(double motorSetValue);
@@ -41,8 +45,7 @@ namespace CORE {
         bool getReversed();
         void setControlMode(controlMode controlMethod);
         controlMode getControlMode();
-        int getPort();
-        string getName();
+        int getPort() override;
         controllerType getControllerType();
         void setDeadband(double range);
         void setDeadband(double min, double max);
@@ -54,7 +57,7 @@ namespace CORE {
         shared_ptr<Victor> getVictor();
         shared_ptr<COREEncoder> getEncoder();
         void ControllerSet(double value) override;
-        void Update();
+        void Update() override;
     private:
         shared_ptr<CANTalon> m_CANTalonController = nullptr;
         shared_ptr<Jaguar> m_JaguarController = nullptr;
@@ -64,14 +67,11 @@ namespace CORE {
         double m_lastMotorValue = 0;
         bool m_isFollower = false;
         bool m_reversed = false;
-        double m_trapSum = 0;
         double m_deadBandMin = 0;
         double m_deadBandMax = 0;
         bool m_motorUpdated = false;
         controlMode m_motorControlMode;
         controllerType m_motorControllerType;
-        //CORETimer* m_trapSumTimer;
-        //double m_lastSum = 0;
         int m_motorPort;
         int m_motorSafetyCounter = 0;
         bool m_motorSafetyDisabled = false;

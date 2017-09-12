@@ -1,11 +1,11 @@
-#include "COREHardware.h"
+#include "COREHardwareManager.h"
 
 using namespace CORE;
 
-vector<COREMotor*> COREHardwareManager::m_motors;
-vector<COREEncoder*> COREHardwareManager::m_encoders;
+vector<ICOREMotor*> COREHardwareManager::m_motors;
+vector<ICOREEncoder*> COREHardwareManager::m_encoders;
 
-void COREHardwareManager::addMotor(COREMotor* motor) {
+void COREHardwareManager::addMotor(ICOREMotor* motor) {
     bool error = false;
     int port = motor->getPort();
     for(auto motor : m_motors) {
@@ -43,13 +43,13 @@ void COREHardwareManager::zeroEncoders() {
     }
 }
 
-void COREHardwareManager::addEncoder(COREEncoder* encoder) {
+void COREHardwareManager::addEncoder(ICOREEncoder* encoder) {
     m_encoders.push_back(encoder);
-    if(!encoder->IsBoundToCANTalon()) {
-        CORELog::logInfo("Encoder in ports " + to_string(encoder->GetPortA()) + ", "
-                         + to_string(encoder->GetPortB()) + " added");
+    if(!encoder->isBoundToCANTalon()) {
+        CORELog::logInfo("Encoder in ports " + to_string(encoder->getPortA()) + ", "
+                         + to_string(encoder->getPortB()) + " added");
     } else {
-        CORELog::logInfo("Encoder bound to CAN Talon ID: " + to_string(encoder->CANTalonController->GetDeviceID())
+        CORELog::logInfo("Encoder bound to CAN Talon ID: " + to_string(encoder->getCANTalonID())
                          + " added");
     }
 }
@@ -64,4 +64,8 @@ void COREHardwareManager::cleanUp() {
 		delete *i;
 	}
 	m_encoders.clear();
+}
+
+void COREHardwareManager::preLoopTask() {
+    zeroMotors();
 }

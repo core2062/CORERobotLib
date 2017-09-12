@@ -1,5 +1,5 @@
 #ifndef __arm__
-#include "WPILib.h"
+#include "WPILib312312.h"
 
 Preferences* Preferences::m_instance;
 #endif

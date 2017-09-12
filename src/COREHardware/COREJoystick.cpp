@@ -42,7 +42,7 @@ COREJoystick::COREJoystick(int port, JoystickType expectedJoystickType) :
         m_joystick(port),
         m_joystickPort(port),
 		m_expectedJoystickType(expectedJoystickType) {
-	string actualJoystickName = m_joystick.GetName();
+/*	string actualJoystickName = m_joystick.GetName();
 	switch(m_expectedJoystickType) {
 	case F310_X_MODE:
 		if(actualJoystickName != "Controller (Gamepad F310)") {
@@ -53,7 +53,7 @@ COREJoystick::COREJoystick(int port, JoystickType expectedJoystickType) :
 	case F310_D_MODE:
 
 		break;
-	}
+	}*/
 }
 
 /*

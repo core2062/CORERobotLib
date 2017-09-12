@@ -7,7 +7,7 @@
 #include <functional>
 
 #include "COREAuton.h"
-//#include "COREHardware/COREHardware.h"
+#include "COREHardwareManager.h"
 #include "COREUtilities/COREConstant.h"
 #include "COREDashboard/COREDashboard.h"
 #include "CORETask.h"
@@ -121,6 +121,8 @@ namespace CORE {
 		static void teleopInit();
 		static void teleop();
 		static void teleopEnd();
+        static void preLoop();
+        static void postLoop();
 		static void disabled();
 		static void test();
 		static void cleanUp();
