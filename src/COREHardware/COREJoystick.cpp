@@ -1,5 +1,5 @@
 #include "COREJoystick.h"
-#include "COREFramework/CORERobot.h"
+//#include "COREFramework/CORERobot.h"
 
 using namespace CORE;
 
@@ -200,7 +200,7 @@ void COREJoystick::preLoopTask() {
     }
     for(auto axis : m_axisCache) {
     	if(COREDriverstation::getMode() == COREDriverstation::AUTON
-           || COREDriverstation::getMode() == COREDriverstation::DISABLE) {
+		   || COREDriverstation::getMode() == COREDriverstation::DISABLE) {
     		m_axisCache[axis.first] = 0;
 			continue;
 		}

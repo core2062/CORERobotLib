@@ -5,7 +5,8 @@
 #include "COREFramework/CORETask.h"
 #include "CORELogging/CORELog.h"
 #include "COREUtilities/COREMath.h"
-#include <WPILib.h>
+
+#include "Joystick.h"
 
 using namespace std;
 using namespace CORE;
@@ -126,6 +127,9 @@ namespace CORE {
 				0, //LEFT_TRIGGER
 				0  //RIGHT_TRIGGER
 		};
+#ifdef NOT_REAL
+		test::
+#endif
         Joystick m_joystick;
         int m_joystickPort;
         map<JoystickButton, ButtonState> m_lastButtonCache, m_buttonCache;

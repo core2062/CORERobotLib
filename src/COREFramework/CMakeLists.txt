@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 set(SOURCE_FILES
         COREAuton.cpp
-        CORERobot.cpp
+#        CORERobot.cpp
         COREScheduler.cpp
         CORETask.cpp
         COREHardwareManager.cpp)

@@ -6,7 +6,6 @@ using namespace std;
 
 CORESubsystem::CORESubsystem() {
     COREScheduler::addSubsystem(this);
-
 }
 
 COREController::COREController() : CORETask() {
@@ -138,7 +137,7 @@ bool COREScheduler::auton() {
         for(auto callBack : m_postLoopCallBacks) {
             callBack();
         }
-//        COREHardwareManager::updateMotors();
+        COREHardwareManager::updateMotors();
         bool complete = m_selectedAuton->complete();
         if(complete) {
             CORELog::logInfo(m_selectedAuton->getName() + " autonomous complete! Took: "
@@ -213,7 +212,7 @@ void COREScheduler::disabled() {
     for(auto subsystem : m_subsystems) {
         subsystem->disabled();
     }
-//    COREHardwareManager::zeroMotors();
+    COREHardwareManager::zeroMotors();
 }
 
 void COREScheduler::test() {

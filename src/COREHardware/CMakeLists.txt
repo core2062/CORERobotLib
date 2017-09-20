@@ -5,7 +5,7 @@ set(NAME COREHardware)
 set(CMAKE_CXX_STANDARD 14)
 
 set(SOURCE_FILES
-        COREEncoder.cpp
+#        COREEncoder.cpp
         COREJoystick.cpp
         COREMotor.cpp
         CORESensor.cpp)

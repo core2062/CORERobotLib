@@ -49,18 +49,23 @@ add_executable(${PROJECT_NAME}
         $<TARGET_OBJECTS:CORELogging>
         $<TARGET_OBJECTS:COREDashboard>
         $<TARGET_OBJECTS:COREData>
+        $<TARGET_OBJECTS:COREDrive>
         $<TARGET_OBJECTS:COREUtilities>
         $<TARGET_OBJECTS:COREControl>
-#        $<TARGET_OBJECTS:COREHardware>
+        $<TARGET_OBJECTS:COREHardware>
         $<TARGET_OBJECTS:COREFramework>
         $<TARGET_OBJECTS:CORESimulation>
+#        $<TARGET_OBJECTS:WaypointFollower>
 #        Test.cpp
 #        CORELogging_Test.cpp
         COREUtilities_Test.cpp
 #        COREDashboard_Test.cpp
         COREControl_Test.cpp
         COREFramework_Test.cpp
+        COREHardware_Test.cpp
         COREDrive_Test.cpp
+#        SwerveRobot/Robot.cpp
+        SwerveRobot/DriveSubsystem.cpp
         )
 target_link_libraries(${PROJECT_NAME} seasocks gtest gtest_main gmock gmock_main)
 add_test(${PROJECT_NAME} ${PROJECT_NAME})

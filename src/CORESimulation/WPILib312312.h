@@ -29,18 +29,18 @@ public:
     inline void Set(float _) {}
 };
 
-class Joystick {
-public:
-    inline Joystick(int num) {}
-
-    inline double GetRawAxis(int num) { return -1; }
-
-    inline bool GetRawButton(int num) { return false; }
-
-    inline std::string GetJoystickName() { return "NULL"; }
-
-    inline int GetPOV() { return 0; }
-};
+//class Joystick {
+//public:
+//    inline Joystick(int num) {}
+//
+//    inline double GetRawAxis(int num) { return -1; }
+//
+//    inline bool GetRawButton(int num) { return false; }
+//
+//    inline std::string GetJoystickName() { return "NULL"; }
+//
+//    inline int GetPOV() { return 0; }
+//};
 
 class SampleRobot {
 
@@ -53,23 +53,23 @@ public:
     virtual std::string GetSmartDashboardType() const = 0;*/
 };
 
-template<class T>
-class SendableChooser : public Sendable {
-public:
-    virtual ~SendableChooser() = default;
-
-    inline void AddObject(const std::string &name, void* object) {}
-
-    inline void AddDefault(const std::string &name, void* object) {}
-
-    inline void* GetSelected() { return nullptr; }
-};
+//template<class T>
+//class SendableChooser : public Sendable {
+//public:
+//    virtual ~SendableChooser() = default;
+//
+//    inline void AddObject(const std::string &name, void* object) {}
+//
+//    inline void AddDefault(const std::string &name, void* object) {}
+//
+//    inline void* GetSelected() { return nullptr; }
+//};
 
 class SmartDashboard {
 public:
     static inline void init() {}
 
-    static inline void PutData(string key, Sendable* data) {}
+//    static inline void PutData(string key, Sendable* data) {}
 
     //static inline void PutData(NamedSendable *value) {}
     static inline void PutBoolean(string keyName, bool value) {}

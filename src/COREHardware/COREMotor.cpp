@@ -8,13 +8,13 @@ COREMotor::COREMotor(int port, controllerType controller, controlMode controlMet
         m_motorControlMode(controlMethod), m_motorControllerType(controller), m_motorPort(port) {
     if(m_motorControllerType == CORE::CANTALON) {
     	m_CANTalonController = make_shared<CANTalon>(port);
-        m_encoder = make_shared<COREEncoder>(m_CANTalonController, SRX_RELATIVE);
+//        m_encoder = make_shared<COREEncoder>(m_CANTalonController, SRX_RELATIVE);
         m_CANTalonController->DisableSoftPositionLimits();
         setControlMode(controlMethod);
     } else if(m_motorControllerType == CORE::JAGUAR) {
-        m_JaguarController = make_shared<Jaguar>(port);
+//        m_JaguarController = make_shared<Jaguar>(port);
     } else if(m_motorControllerType == CORE::VICTOR) {
-        m_VictorController = make_shared<Victor>(port);
+//        m_VictorController = make_shared<Victor>(port);
     } else {
         CORELog::logError("Non existent motor controller type given");
     }
@@ -124,9 +124,9 @@ void COREMotor::Update() {
     if(m_motorControllerType == CORE::CANTALON) {
         m_CANTalonController->Set(m_motorValue);
     } else if(m_motorControllerType == CORE::JAGUAR) {
-        m_JaguarController->Set(m_motorValue);
+//        m_JaguarController->Set(m_motorValue);
     } else if(m_motorControllerType == CORE::VICTOR) {
-        m_VictorController->Set(m_motorValue);
+//        m_VictorController->Set(m_motorValue);
     } else {
         //TODO: Throw error
     }
@@ -151,23 +151,23 @@ shared_ptr<CANTalon> COREMotor::getCANTalon() {
     return m_CANTalonController;
 }
 
-shared_ptr<Jaguar> COREMotor::getJaguar() {
-    if(!m_JaguarController) {
-        CORELog::logError("Motor in port: " + to_string(m_motorPort) + " returning Jaguar nullptr!");
-    }
-    return m_JaguarController;
-}
-
-shared_ptr<Victor> COREMotor::getVictor() {
-    if(!m_VictorController) {
-        CORELog::logError("Motor in port: " + to_string(m_motorPort) + " returning Victor nullptr!");
-    }
-    return m_VictorController;
-}
-
-shared_ptr<COREEncoder> COREMotor::getEncoder() {
-    if(!m_encoder) {
-        CORELog::logError("Motor in port: " + to_string(m_motorPort) + " returning Encoder nullptr!");
-    }
-    return m_encoder;
-}
+//shared_ptr<Jaguar> COREMotor::getJaguar() {
+//    if(!m_JaguarController) {
+//        CORELog::logError("Motor in port: " + to_string(m_motorPort) + " returning Jaguar nullptr!");
+//    }
+//    return m_JaguarController;
+//}
+//
+//shared_ptr<Victor> COREMotor::getVictor() {
+//    if(!m_VictorController) {
+//        CORELog::logError("Motor in port: " + to_string(m_motorPort) + " returning Victor nullptr!");
+//    }
+//    return m_VictorController;
+//}
+//
+//shared_ptr<COREEncoder> COREMotor::getEncoder() {
+//    if(!m_encoder) {
+//        CORELog::logError("Motor in port: " + to_string(m_motorPort) + " returning Encoder nullptr!");
+//    }
+//    return m_encoder;
+//}

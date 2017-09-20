@@ -5,21 +5,26 @@
 using namespace CORE;
 
 CORESwerve::CORESwerve(double trackWidth, double wheelBase,
-                       CORESwerve::SwerveModule &leftFrontModule,
-                       CORESwerve::SwerveModule &leftBackModule,
-                       CORESwerve::SwerveModule &rightBackModule,
-                       CORESwerve::SwerveModule &rightFrontModule) :
-        m_leftFrontModule(&leftFrontModule),
-        m_leftBackModule(&leftBackModule),
-        m_rightBackModule(&rightBackModule),
-        m_rightFrontModule(&rightFrontModule) {
-    m_modules.push_back(m_leftFrontModule);
-    m_modules.push_back(m_leftBackModule);
-    m_modules.push_back(m_rightBackModule);
-    m_modules.push_back(m_rightFrontModule);
+                       SwerveModule *leftFrontModule,
+                       SwerveModule *leftBackModule,
+                       SwerveModule *rightBackModule,
+                       SwerveModule *rightFrontModule) :
+        m_leftFrontModule(leftFrontModule),
+        m_leftBackModule(leftBackModule),
+        m_rightBackModule(rightBackModule),
+        m_rightFrontModule(rightFrontModule) {
+    m_trackwidth = trackWidth;
+    m_wheelbase = wheelBase;
 }
 
 void CORESwerve::calculate(double forward, double strafeRight, double rotateClockwise) {
+    if(forward == 0 && strafeRight == 0 && rotateClockwise == 0) {
+        rightFrontModuleSpeed = 0;
+        leftFrontModuleSpeed = 0;
+        leftBackModuleSpeed = 0;
+        rightBackModuleSpeed = 0;
+        return;
+    }
     double r = sqrt(pow(m_wheelbase, 2) + pow(m_trackwidth, 2));
     double a = strafeRight - rotateClockwise * (m_wheelbase / r);
     double b = strafeRight + rotateClockwise * (m_wheelbase / r);
@@ -86,9 +91,23 @@ void CORESwerve::calculate(double forward, double strafeRight, double rotateCloc
     */
 }
 
-double CORESwerve::SwerveModule::getAngle() {
+CORESwerve::SwerveModule::SwerveModule(CANTalon *driveMotor, CANTalon *steerMotor, double angleOffset) :
+        m_speedPIDController(0, 0, 0),
+        m_anglePIDController(0, 0, 0),
+        m_driveMotor(driveMotor),
+        m_steerMotor(steerMotor),
+        m_angleOffset(angleOffset) {
+}
+
+
+double CORESwerve::SwerveModule::getAngle(bool raw) {
     //Multiplying by 360 degrees and dividing by five volts
-    return m_steerMotor->GetAnalogInRaw() * (360.0 / 1025.0);
+    double angle = m_steerMotor->GetAnalogInRaw() * (360.0 / 1025.0);
+    if(raw) {
+        return angle;
+    } else {
+        return angle + m_angleOffset;
+    }
 }
 
 void CORESwerve::SwerveModule::setAnglePID(double p, double i, double d) {
@@ -98,35 +117,78 @@ void CORESwerve::SwerveModule::setAnglePID(double p, double i, double d) {
 }
 
 void CORESwerve::tank(double speed, double rot){
-    tank(COREEtherDrive::calculate(speed, rot, .1));
+//    tank(COREEtherDrive::calculate(speed, rot, .1));
 }
 
-void CORESwerve::tank(VelocityPair speeds){
-    leftFrontModuleAngle = 0;
-    rightFrontModuleAngle = 0;
-    leftBackModuleAngle = 0;
-    rightBackModuleAngle = 0;
-    leftFrontModuleSpeed = speeds.left;
-    leftBackModuleSpeed = speeds.left;
-    rightFrontModuleSpeed = speeds.right;
-    rightBackModuleSpeed = speeds.right;
-}
 
-void CORESwerve::SwerveModule::drive(double magnitude, double direction) {
-    m_steerMotor->Set(m_anglePIDController.calculate(Rotation2d::fromCompassDegrees(getAngle()),
-                                                     Rotation2d::fromCompassDegrees(direction)));
+void CORESwerve::SwerveModule::drive(double magnitude, double direction, double dt) {
+    double steerMotorOutput;
+    if(dt == -1) {
+        steerMotorOutput = m_anglePIDController.calculate(Rotation2d::fromCompassDegrees(getAngle()),
+                                         Rotation2d::fromCompassDegrees(direction));
+    } else {
+        steerMotorOutput = m_anglePIDController.calculate(Rotation2d::fromCompassDegrees(getAngle()),
+                                                         Rotation2d::fromCompassDegrees(direction), dt);
+    }
+    m_steerMotor->Set(steerMotorOutput);
     m_driveMotor->Set(magnitude);
 
 }
 
-void CORESwerve::update(){
-    SmartDashboard::PutNumber("Left Front Module P value", m_leftFrontModule->m_anglePIDController.getProportional());
-    m_leftFrontModule->drive(leftFrontModuleSpeed, leftFrontModuleAngle);
-    SmartDashboard::PutNumber("Left Front Module Speed", leftFrontModuleSpeed);
-    SmartDashboard::PutNumber("Left Front Module Angle", leftFrontModuleAngle);
-    m_rightFrontModule->drive(rightFrontModuleSpeed, rightFrontModuleAngle);
-    SmartDashboard::PutNumber("Right Front Module Speed", rightFrontModuleSpeed);
-    SmartDashboard::PutNumber("Right Front Module Angle", rightFrontModuleAngle);
-    m_rightBackModule->drive(rightBackModuleSpeed, rightBackModuleAngle);
-    m_leftBackModule->drive(leftBackModuleSpeed, leftBackModuleAngle);
+string CORESwerve::SwerveModule::print() {
+    string text = "\n\tSteer Motor Speed: " + to_string(m_steerMotor->Get());
+    text += "\n\tSteer Angle Offset: " + to_string(m_angleOffset);
+    text += "\n\tSteer PID:";
+    text += "\n\t\tkP: " + to_string(m_anglePIDController.getProportionalConstant());
+    text += " kI: " + to_string(m_anglePIDController.getIntegralConstant());
+    text += " kD: " + to_string(m_anglePIDController.getDerivativeConstant());
+    text += " kF: " + to_string(m_anglePIDController.getFeedForwardConstant());
+    text += "\n\t\tMistake: " + to_string(m_anglePIDController.getMistake());
+    return text;
+}
+
+void CORESwerve::SwerveModule::setAngleOffset(double angleOffset) {
+    m_angleOffset = angleOffset;
+}
+
+void CORESwerve::SwerveModule::zeroAngle() {
+    m_angleOffset = -getAngle(true);
+}
+
+void CORESwerve::update(double dt){
+    m_leftFrontModule->drive(leftFrontModuleSpeed, leftFrontModuleAngle, dt);
+    m_rightFrontModule->drive(rightFrontModuleSpeed, rightFrontModuleAngle, dt);
+    m_rightBackModule->drive(rightBackModuleSpeed, rightBackModuleAngle, dt);
+    m_leftBackModule->drive(leftBackModuleSpeed, leftBackModuleAngle, dt);
+}
+
+string CORESwerve::print() {
+    string text = "Swerve Drive Status:";
+    text += "\nFront Right Module\n\tRequested Angle: " + to_string(rightFrontModuleAngle) + "\tActual: "
+            + to_string(m_rightFrontModule->getAngle()) + "\n\tRequested Speed: " + to_string(rightFrontModuleSpeed);
+    text += m_rightFrontModule->print();
+    text += "\nFront Left Module\n\tRequested Angle: " + to_string(leftFrontModuleAngle) + "\tActual: "
+            + to_string(m_leftFrontModule->getAngle()) + "\n\tRequested Speed: " + to_string(leftFrontModuleSpeed);
+    text += m_leftFrontModule->print();
+    text += "\nBack Right Module\n\tRequested Angle: " + to_string(rightBackModuleAngle) + "\tActual: "
+            + to_string(m_rightBackModule->getAngle()) + "\n\tRequested Speed: " + to_string(rightBackModuleSpeed);
+    text += m_rightBackModule->print();
+    text += "\nBack Left Module\n\tRequested Angle: " + to_string(leftBackModuleAngle) + "\tActual: "
+            + to_string(m_leftBackModule->getAngle()) + "\n\tRequested Speed: " + to_string(leftBackModuleSpeed);
+    text += m_leftBackModule->print();
+    return text;
+}
+
+void CORESwerve::setSteerPID(double kp, double ki, double kd) {
+    m_leftFrontModule->setAnglePID(kp, ki, kd);
+    m_rightFrontModule->setAnglePID(kp, ki, kd);
+    m_rightBackModule->setAnglePID(kp, ki, kd);
+    m_leftBackModule->setAnglePID(kp, ki, kd);
+}
+
+void CORESwerve::zeroOffsets() {
+	m_leftFrontModule->zeroAngle();
+	m_rightFrontModule->zeroAngle();
+	m_rightBackModule->zeroAngle();
+	m_leftBackModule->zeroAngle();
 }

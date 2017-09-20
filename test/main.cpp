@@ -1,6 +1,4 @@
-#include <unistd.h>
 #include <COREData/COREData.h>
-#include <cxxabi.h>
 #include <COREFramework/CORERobot.h>
 #include "COREDashboard/COREDashboard.h"
 #include "CORESimulation/CORESimRobot.h"
@@ -31,11 +29,25 @@ private:
     int testVal;
 };
 
+class testRobot : public CORERobot {
+public:
+    void robotInit() override {
+
+    }
+    void teleopInit() override {
+
+    }
+    void teleop() override {
+        CORELog::logInfo("looping");
+    }
+public:
+
+};
+
 int main() {
     CORE::COREDashboard dashboard;
     auto subsystem = new testSubsystem();
 
-    CORE::CORERobot robot;
-    robot.OperatorControl();
+    testRobot robot;
     Wait(100);
 }

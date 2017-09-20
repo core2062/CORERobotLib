@@ -172,8 +172,8 @@ void TankTracker::teleopInitTask() {
 void TankTracker::postLoopTask() {
 	//Position2d current = getLatestFieldToVehicle();
 	auto current = getLatestFieldToVehicle();
-	SmartDashboard::PutNumber("Robot X" , current.getTranslation().getX());
-	SmartDashboard::PutNumber("Robot Y" , current.getTranslation().getY());
+//	SmartDashboard::PutNumber("Robot X" , current.getTranslation().getX());
+//	SmartDashboard::PutNumber("Robot Y" , current.getTranslation().getY());
 }
 
 void TankTracker::teleopEndTask() {

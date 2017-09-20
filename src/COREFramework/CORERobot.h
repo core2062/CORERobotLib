@@ -2,17 +2,14 @@
 
 #include <iostream>
 
-#include "COREScheduler.h"
+#include "COREFramework/COREScheduler.h"
 #include "COREUtilities/CORETimer.h"
 #include "COREDashboard/COREDriverstation.h"
 #include "CORELogging/CORELog.h"
-#include "COREHardwareManager.h"
+#include "COREFramework/COREHardwareManager.h"
 
-#ifdef NOT_REAL
-#include "WPILib312312.h"
-#else
 #include <WPILib.h>
-#endif                                                          \
+
 
 namespace CORE {
     class CORERobot : public CORESubsystem, public SampleRobot {

@@ -24,6 +24,10 @@ namespace CORE {
         void setIntegralConstant(double kI);
         void setDerivativeConstant(double kD);
         void setFeedForwardConstant(double kF);
+        double getProportionalConstant();
+        double getIntegralConstant();
+        double getDerivativeConstant();
+        double getFeedForwardConstant();
         void setPIDProfile(PIDProfile &profile);
         virtual double calculate(double mistake);
         virtual double calculate(double mistake, double dt);
@@ -50,5 +54,6 @@ namespace CORE {
         explicit COREAnglePID(double kP, double kI, double kD, double kF = 1);
         explicit COREAnglePID(PIDProfile &profile);
         double calculate(Rotation2d actualAngle, Rotation2d setPointAngle);
+        double calculate(Rotation2d actualAngle, Rotation2d setPointAngle, double dt);
     };
 }

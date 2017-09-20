@@ -2,62 +2,62 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
     <generated>
-      <config projectName="CORERobotLib_Test" targetName="ContinuousStart" />
-      <config projectName="CORERobotLib_Test" targetName="CORESimulation" />
-      <config projectName="CORERobotLib_Test" targetName="ExperimentalCoverage" />
-      <config projectName="CORERobotLib_Test" targetName="gmock_main" />
-      <config projectName="CORERobotLib_Test" targetName="NightlyBuild" />
-      <config projectName="CORERobotLib_Test" targetName="NightlyCoverage" />
-      <config projectName="CORERobotLib_Test" targetName="Continuous" />
-      <config projectName="CORERobotLib_Test" targetName="ExperimentalStart" />
-      <config projectName="CORERobotLib_Test" targetName="ws_chatroom" />
-      <config projectName="CORERobotLib_Test" targetName="seasocks_obj" />
-      <config projectName="CORERobotLib_Test" targetName="ContinuousCoverage" />
-      <config projectName="CORERobotLib_Test" targetName="Experimental" />
-      <config projectName="CORERobotLib_Test" targetName="ph_test" />
-      <config projectName="CORERobotLib_Test" targetName="ws_echo" />
       <config projectName="CORERobotLib_Test" targetName="ExperimentalTest" />
-      <config projectName="CORERobotLib_Test" targetName="ContinuousTest" />
-      <config projectName="CORERobotLib_Test" targetName="serve" />
-      <config projectName="CORERobotLib_Test" targetName="ExperimentalUpdate" />
-      <config projectName="CORERobotLib_Test" targetName="async_test" />
-      <config projectName="CORERobotLib_Test" targetName="seasocks" />
-      <config projectName="CORERobotLib_Test" targetName="Nightly" />
-      <config projectName="CORERobotLib_Test" targetName="ws_test" />
-      <config projectName="CORERobotLib_Test" targetName="ExperimentalSubmit" />
-      <config projectName="CORERobotLib_Test" targetName="ContinuousConfigure" />
-      <config projectName="CORERobotLib_Test" targetName="COREDashboard" />
-      <config projectName="CORERobotLib_Test" targetName="NightlyUpdate" />
-      <config projectName="CORERobotLib_Test" targetName="COREControl" />
-      <config projectName="CORERobotLib_Test" targetName="ExperimentalConfigure" />
-      <config projectName="CORERobotLib_Test" targetName="Main" />
-      <config projectName="CORERobotLib_Test" targetName="ContinuousBuild" />
-      <config projectName="CORERobotLib_Test" targetName="NightlyMemoryCheck" />
-      <config projectName="CORERobotLib_Test" targetName="embedded" />
-      <config projectName="CORERobotLib_Test" targetName="gtest" />
-      <config projectName="CORERobotLib_Test" targetName="COREUtilities" />
-      <config projectName="CORERobotLib_Test" targetName="COREData" />
-      <config projectName="CORERobotLib_Test" targetName="gtest_main" />
-      <config projectName="CORERobotLib_Test" targetName="ExperimentalBuild" />
-      <config projectName="CORERobotLib_Test" targetName="streaming_test" />
-      <config projectName="CORERobotLib_Test" targetName="CORELogging" />
-      <config projectName="CORERobotLib_Test" targetName="ExperimentalMemCheck" />
-      <config projectName="CORERobotLib_Test" targetName="NightlyTest" />
-      <config projectName="CORERobotLib_Test" targetName="NightlyMemCheck" />
-      <config projectName="CORERobotLib_Test" targetName="CORERobotLib_Test" />
-      <config projectName="CORERobotLib_Test" targetName="seasocks_so" />
-      <config projectName="CORERobotLib_Test" targetName="COREHardware" />
-      <config projectName="CORERobotLib_Test" targetName="NightlyStart" />
-      <config projectName="CORERobotLib_Test" targetName="ContinuousMemCheck" />
-      <config projectName="CORERobotLib_Test" targetName="COREFramework" />
-      <config projectName="CORERobotLib_Test" targetName="gmock" />
-      <config projectName="CORERobotLib_Test" targetName="ContinuousSubmit" />
-      <config projectName="CORERobotLib_Test" targetName="WaypointFollower" />
-      <config projectName="CORERobotLib_Test" targetName="ContinuousUpdate" />
-      <config projectName="CORERobotLib_Test" targetName="COREDrive" />
-      <config projectName="CORERobotLib_Test" targetName="NightlyConfigure" />
-      <config projectName="CORERobotLib_Test" targetName="NightlySubmit" />
       <config projectName="CORERobotLib_Test" targetName="ws_test_poll" />
+      <config projectName="CORERobotLib_Test" targetName="gmock_main" />
+      <config projectName="CORERobotLib_Test" targetName="COREFramework" />
+      <config projectName="CORERobotLib_Test" targetName="streaming_test" />
+      <config projectName="CORERobotLib_Test" targetName="serve" />
+      <config projectName="CORERobotLib_Test" targetName="COREDashboard" />
+      <config projectName="CORERobotLib_Test" targetName="ws_echo" />
+      <config projectName="CORERobotLib_Test" targetName="ExperimentalMemCheck" />
+      <config projectName="CORERobotLib_Test" targetName="NightlyCoverage" />
+      <config projectName="CORERobotLib_Test" targetName="ContinuousStart" />
+      <config projectName="CORERobotLib_Test" targetName="COREData" />
+      <config projectName="CORERobotLib_Test" targetName="ph_test" />
+      <config projectName="CORERobotLib_Test" targetName="Nightly" />
+      <config projectName="CORERobotLib_Test" targetName="ContinuousConfigure" />
+      <config projectName="CORERobotLib_Test" targetName="gmock" />
+      <config projectName="CORERobotLib_Test" targetName="COREUtilities" />
+      <config projectName="CORERobotLib_Test" targetName="ws_test" />
+      <config projectName="CORERobotLib_Test" targetName="CORERobotLib_Test" />
+      <config projectName="CORERobotLib_Test" targetName="NightlySubmit" />
+      <config projectName="CORERobotLib_Test" targetName="NightlyBuild" />
+      <config projectName="CORERobotLib_Test" targetName="async_test" />
+      <config projectName="CORERobotLib_Test" targetName="ExperimentalStart" />
+      <config projectName="CORERobotLib_Test" targetName="Experimental" />
+      <config projectName="CORERobotLib_Test" targetName="ExperimentalSubmit" />
+      <config projectName="CORERobotLib_Test" targetName="Main" />
+      <config projectName="CORERobotLib_Test" targetName="seasocks" />
+      <config projectName="CORERobotLib_Test" targetName="ContinuousMemCheck" />
+      <config projectName="CORERobotLib_Test" targetName="ExperimentalConfigure" />
+      <config projectName="CORERobotLib_Test" targetName="embedded" />
+      <config projectName="CORERobotLib_Test" targetName="COREControl" />
+      <config projectName="CORERobotLib_Test" targetName="ExperimentalBuild" />
+      <config projectName="CORERobotLib_Test" targetName="Continuous" />
+      <config projectName="CORERobotLib_Test" targetName="NightlyMemoryCheck" />
+      <config projectName="CORERobotLib_Test" targetName="ws_chatroom" />
+      <config projectName="CORERobotLib_Test" targetName="NightlyStart" />
+      <config projectName="CORERobotLib_Test" targetName="CORESimulation" />
+      <config projectName="CORERobotLib_Test" targetName="seasocks_obj" />
+      <config projectName="CORERobotLib_Test" targetName="ContinuousTest" />
+      <config projectName="CORERobotLib_Test" targetName="gtest" />
+      <config projectName="CORERobotLib_Test" targetName="ContinuousSubmit" />
+      <config projectName="CORERobotLib_Test" targetName="ExperimentalUpdate" />
+      <config projectName="CORERobotLib_Test" targetName="COREDrive" />
+      <config projectName="CORERobotLib_Test" targetName="seasocks_so" />
+      <config projectName="CORERobotLib_Test" targetName="gtest_main" />
+      <config projectName="CORERobotLib_Test" targetName="ExperimentalCoverage" />
+      <config projectName="CORERobotLib_Test" targetName="COREHardware" />
+      <config projectName="CORERobotLib_Test" targetName="NightlyUpdate" />
+      <config projectName="CORERobotLib_Test" targetName="ContinuousUpdate" />
+      <config projectName="CORERobotLib_Test" targetName="CORELogging" />
+      <config projectName="CORERobotLib_Test" targetName="NightlyMemCheck" />
+      <config projectName="CORERobotLib_Test" targetName="ContinuousCoverage" />
+      <config projectName="CORERobotLib_Test" targetName="ContinuousBuild" />
+      <config projectName="CORERobotLib_Test" targetName="NightlyTest" />
+      <config projectName="CORERobotLib_Test" targetName="WaypointFollower" />
+      <config projectName="CORERobotLib_Test" targetName="NightlyConfigure" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -91,18 +91,8 @@
       <file leaf-file-name="COREDrive_Test.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/COREDrive_Test.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="5" column="8" lean-forward="false" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="COREControl_Test.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/COREControl_Test.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="15" column="32" lean-forward="false" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+            <state relative-caret-position="17">
+              <caret line="95" column="28" lean-forward="true" selection-start-line="95" selection-start-column="28" selection-end-line="95" selection-end-column="28" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -110,82 +100,90 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.cpp">
+      <file leaf-file-name="CORESwerveDrive.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../src/COREDrive/CORESwerveDrive.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+            <state relative-caret-position="202">
+              <caret line="16" column="91" lean-forward="false" selection-start-line="16" selection-start-column="91" selection-end-line="16" selection-end-column="91" />
+              <folding>
+                <element signature="e#14#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CORESwerveDrive.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../src/COREDrive/CORESwerveDrive.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="202">
+              <caret line="93" column="28" lean-forward="false" selection-start-line="93" selection-start-column="28" selection-end-line="93" selection-end-column="28" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="COREUtilities_Test.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/COREUtilities_Test.cpp">
+      <file leaf-file-name="COREDrive.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../src/COREDrive/COREDrive.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-297">
-              <caret line="16" column="31" lean-forward="true" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
+            <state relative-caret-position="335">
+              <caret line="21" column="89" lean-forward="false" selection-start-line="21" selection-start-column="89" selection-end-line="21" selection-end-column="89" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="COREConnectionHandler.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/COREDashboard/COREConnectionHandler.h">
+      <file leaf-file-name="DriveSubsystem.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SwerveRobot/DriveSubsystem.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="712">
+              <caret line="83" column="11" lean-forward="false" selection-start-line="83" selection-start-column="11" selection-end-line="83" selection-end-column="11" />
+              <folding>
+                <element signature="e#14#39#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="COREPID.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../src/COREControl/COREPID.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="40" column="32" lean-forward="false" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="32" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="COREConnectionHandler.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/COREDashboard/COREConnectionHandler.cpp">
+      <file leaf-file-name="COREPID.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../src/COREControl/COREPID.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="407">
+              <caret line="61" column="32" lean-forward="false" selection-start-line="61" selection-start-column="32" selection-end-line="61" selection-end-column="32" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="COREDashboard.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/COREDashboard/COREDashboard.cpp">
+      <file leaf-file-name="Robot.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/SwerveRobot/Robot.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="134">
+              <caret line="69" column="27" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="69" selection-end-column="27" />
+              <folding>
+                <element signature="e#36#55#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="COREData.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/COREData/COREData.cpp">
+      <file leaf-file-name="COREFramework_Test.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/COREFramework_Test.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="COREDataConnectionHandler.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/COREData/COREDataConnectionHandler.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="20" column="39" lean-forward="false" selection-start-line="20" selection-start-column="39" selection-end-line="20" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="COREDataConnectionHandler.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../src/COREData/COREDataConnectionHandler.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="171">
+              <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -199,20 +197,12 @@
       <find>config</find>
       <find>neut</find>
       <find>ConfigNeutralMode</find>
+      <find>sampl</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/../src/COREHardware/COREHardware.h" />
-        <option value="$PROJECT_DIR$/../src/COREHardware/COREHardware.cpp" />
-        <option value="$PROJECT_DIR$/main.cpp" />
-        <option value="$PROJECT_DIR$/../src/COREFramework/COREScheduler.cpp" />
-        <option value="$PROJECT_DIR$/../src/COREFramework/COREHardwareManager.cpp" />
-        <option value="$PROJECT_DIR$/../src/COREFramework/COREScheduler.h" />
-        <option value="$PROJECT_DIR$/../src/COREFramework/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/../src/COREFramework/COREHardwareManager.h" />
-        <option value="$PROJECT_DIR$/../src/CORERobotLib.h" />
         <option value="$PROJECT_DIR$/Test.cpp" />
         <option value="$PROJECT_DIR$/../src/CORESimulation/WPILib.h" />
         <option value="$PROJECT_DIR$/../src/COREDashboard/COREDriverstation.h" />
@@ -221,30 +211,49 @@
         <option value="$PROJECT_DIR$/../src/CORELogging/COREDataLog.cpp" />
         <option value="$PROJECT_DIR$/../src/COREUtilities/CORETimer.cpp" />
         <option value="$PROJECT_DIR$/COREDrive_Test.cpp.cpp" />
-        <option value="$PROJECT_DIR$/../src/COREHardware/COREJoystick.cpp" />
-        <option value="$PROJECT_DIR$/../src/COREHardware/COREMotor.cpp" />
-        <option value="$PROJECT_DIR$/../src/COREHardware/COREMotor.h" />
         <option value="$PROJECT_DIR$/../src/COREHardware/CORECANTalon.h" />
         <option value="$PROJECT_DIR$/../src/COREHardware/CORECANTalon.cpp" />
         <option value="$PROJECT_DIR$/../src/COREUtilities/CORECANTalon.h" />
         <option value="$PROJECT_DIR$/../src/COREUtilities/CORECANTalon.cpp" />
-        <option value="$PROJECT_DIR$/../src/COREHardware/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/../src/COREUtilities/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/../src/CORESimulation/CANTalon.h" />
         <option value="$PROJECT_DIR$/../src/CORESimulation/mock_CANTalon.h" />
-        <option value="$PROJECT_DIR$/../src/CORESimulation/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/../src/CORESimulation/mock_CANTalon.cpp" />
         <option value="$PROJECT_DIR$/CORELogging_Test.cpp" />
-        <option value="$PROJECT_DIR$/COREFramework_Test.cpp" />
-        <option value="$PROJECT_DIR$/../src/CORESimulation/WPILib312312.h" />
         <option value="$PROJECT_DIR$/../src/COREUtilities/COREConstant.h" />
         <option value="$PROJECT_DIR$/../src/CORESimulation/CORESimRobot.h" />
+        <option value="$PROJECT_DIR$/COREUtilities_Test.cpp" />
+        <option value="$PROJECT_DIR$/COREControl_Test.cpp" />
+        <option value="$PROJECT_DIR$/SwerveRobot/Robot.cpp" />
+        <option value="$PROJECT_DIR$/../src/CORESimulation/WPILib312312.h" />
+        <option value="$PROJECT_DIR$/../src/CORESimulation/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/../src/COREHardware/COREEncoder.cpp" />
+        <option value="$PROJECT_DIR$/../src/COREHardware/COREEncoder.h" />
+        <option value="$PROJECT_DIR$/../src/COREHardware/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/../src/COREHardware/COREMotor.h" />
+        <option value="$PROJECT_DIR$/../src/COREHardware/COREMotor.cpp" />
+        <option value="$PROJECT_DIR$/COREHardware_Test.cpp" />
         <option value="$PROJECT_DIR$/../src/COREFramework/CORERobot.cpp" />
         <option value="$PROJECT_DIR$/../src/COREFramework/CORERobot.h" />
-        <option value="$PROJECT_DIR$/COREUtilities_Test.cpp" />
+        <option value="$PROJECT_DIR$/../src/COREFramework/COREScheduler.cpp" />
+        <option value="$PROJECT_DIR$/../src/CORESimulation/CANTalon.h" />
+        <option value="$PROJECT_DIR$/../src/WaypointFollower/TankTracker.cpp" />
+        <option value="$PROJECT_DIR$/../src/COREHardware/COREJoystick.cpp" />
+        <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/../src/COREFramework/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/../src/COREDrive/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/SwerveRobot/Robot.h" />
+        <option value="$PROJECT_DIR$/../src/CORESimulation/Joystick.h" />
+        <option value="$PROJECT_DIR$/../src/COREHardware/COREJoystick.h" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/COREControl_Test.cpp" />
+        <option value="$PROJECT_DIR$/../src/CORESimulation/AHRS.h" />
+        <option value="$PROJECT_DIR$/COREFramework_Test.cpp" />
+        <option value="$PROJECT_DIR$/SwerveRobot/DriveSubsystem.h" />
+        <option value="$PROJECT_DIR$/SwerveRobot/DriveSubsystem.cpp" />
+        <option value="$PROJECT_DIR$/../src/COREControl/COREPID.h" />
+        <option value="$PROJECT_DIR$/../src/COREControl/COREPID.cpp" />
         <option value="$PROJECT_DIR$/COREDrive_Test.cpp" />
+        <option value="$PROJECT_DIR$/../src/COREDrive/CORESwerveDrive.cpp" />
+        <option value="$PROJECT_DIR$/../src/COREDrive/CORESwerveDrive.h" />
       </list>
     </option>
   </component>
@@ -256,6 +265,7 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="1920" />
     <option name="y" value="29" />
     <option name="width" value="1920" />
     <option name="height" value="1051" />
@@ -291,19 +301,31 @@
               <item name="CORERobotLib_Test" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
               <item name="test" type="47feb1d3:ProjectViewModuleNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="COREDashboard" type="462c0819:PsiDirectoryNode" />
+              <item name="COREControl" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="CORERobotLib_Test" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
               <item name="test" type="47feb1d3:ProjectViewModuleNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="COREData" type="462c0819:PsiDirectoryNode" />
+              <item name="COREDrive" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="CORERobotLib_Test" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
               <item name="test" type="47feb1d3:ProjectViewModuleNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="COREHardware" type="462c0819:PsiDirectoryNode" />
+              <item name="COREFramework" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CORERobotLib_Test" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="test" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="CORESimulation" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CORERobotLib_Test" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="test" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="COREUtilities" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="CORERobotLib_Test" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
@@ -316,6 +338,12 @@
               <item name="test" type="462c0819:PsiDirectoryNode" />
               <item name="CORE-Web-Interface" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="CORERobotLib_Test" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="test" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="SwerveRobot" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -325,15 +353,16 @@
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C/C++" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../src/COREFramework" />
+      <recent name="$PROJECT_DIR$/../src" />
+      <recent name="$PROJECT_DIR$/../src/COREUtilities" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/../src/COREUtilities" />
-      <recent name="$PROJECT_DIR$/../src/COREFramework" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -597,58 +626,60 @@
       <workItem from="1505139176143" duration="2855000" />
       <workItem from="1505257301347" duration="1887000" />
       <workItem from="1505260354539" duration="7000" />
-      <workItem from="1505263318251" duration="142000" />
+      <workItem from="1505263318251" duration="1411000" />
+      <workItem from="1505444407744" duration="30955000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="CORERobotLib_Test - 2017.09.11 at 10h 05m 40s.xml">
+    <history-entry file="CORERobotLib_Test - 2017.09.16 at 10h 24m 25s.xml">
       <configuration name="CORERobotLib_Test" configurationId="CMakeGoogleTestRunConfigurationType" />
     </history-entry>
-    <history-entry file="CORERobotLib_Test - 2017.09.11 at 10h 06m 17s.xml">
+    <history-entry file="CORERobotLib_Test - 2017.09.16 at 10h 24m 51s.xml">
       <configuration name="CORERobotLib_Test" configurationId="CMakeGoogleTestRunConfigurationType" />
     </history-entry>
-    <history-entry file="CORERobotLib_Test - 2017.09.11 at 10h 06m 57s.xml">
+    <history-entry file="CORERobotLib_Test - 2017.09.16 at 10h 30m 58s.xml">
       <configuration name="CORERobotLib_Test" configurationId="CMakeGoogleTestRunConfigurationType" />
     </history-entry>
-    <history-entry file="CORERobotLib_Test - 2017.09.11 at 10h 07m 30s.xml">
+    <history-entry file="CORERobotLib_Test - 2017.09.16 at 10h 31m 51s.xml">
       <configuration name="CORERobotLib_Test" configurationId="CMakeGoogleTestRunConfigurationType" />
     </history-entry>
-    <history-entry file="CORERobotLib_Test - 2017.09.11 at 10h 10m 18s.xml">
+    <history-entry file="CORERobotLib_Test - 2017.09.16 at 10h 32m 18s.xml">
       <configuration name="CORERobotLib_Test" configurationId="CMakeGoogleTestRunConfigurationType" />
     </history-entry>
-    <history-entry file="CORERobotLib_Test - 2017.09.11 at 10h 10m 42s.xml">
+    <history-entry file="CORERobotLib_Test - 2017.09.16 at 10h 33m 28s.xml">
       <configuration name="CORERobotLib_Test" configurationId="CMakeGoogleTestRunConfigurationType" />
     </history-entry>
-    <history-entry file="CORERobotLib_Test - 2017.09.11 at 10h 11m 06s.xml">
+    <history-entry file="CORERobotLib_Test - 2017.09.16 at 10h 34m 02s.xml">
       <configuration name="CORERobotLib_Test" configurationId="CMakeGoogleTestRunConfigurationType" />
     </history-entry>
-    <history-entry file="CORERobotLib_Test - 2017.09.11 at 10h 12m 24s.xml">
+    <history-entry file="CORERobotLib_Test - 2017.09.16 at 10h 35m 00s.xml">
       <configuration name="CORERobotLib_Test" configurationId="CMakeGoogleTestRunConfigurationType" />
     </history-entry>
-    <history-entry file="CORERobotLib_Test - 2017.09.11 at 10h 16m 13s.xml">
+    <history-entry file="CORERobotLib_Test - 2017.09.16 at 10h 36m 18s.xml">
       <configuration name="CORERobotLib_Test" configurationId="CMakeGoogleTestRunConfigurationType" />
     </history-entry>
-    <history-entry file="CORERobotLib_Test - 2017.09.12 at 19h 43m 01s.xml">
+    <history-entry file="CORERobotLib_Test - 2017.09.16 at 10h 38m 48s.xml">
       <configuration name="CORERobotLib_Test" configurationId="CMakeGoogleTestRunConfigurationType" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37989000" />
+    <option name="totallyTimeSpent" value="70213000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="29" width="1920" height="1051" extended-state="6" />
+    <frame x="1920" y="29" width="1920" height="1051" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23056443" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31896552" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.31896552" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34051725" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3297414" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297414" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23269436" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297414" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39978448" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -657,7 +688,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -669,241 +699,42 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="4" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../src/COREUtilities/CORETimer.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="10" lean-forward="false" selection-start-line="11" selection-start-column="10" selection-end-line="11" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREUtilities/CORETimer.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="617">
-          <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/CORELogging/COREDataLog.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="798">
-          <caret line="42" column="46" lean-forward="false" selection-start-line="42" selection-start-column="46" selection-end-line="42" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREHardware/COREMotor.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="42" lean-forward="false" selection-start-line="8" selection-start-column="42" selection-end-line="8" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREHardware/COREMotor.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="17" column="12" lean-forward="false" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREUtilities/CORECANTalon.cpp" />
-    <entry file="file://$PROJECT_DIR$/../src/COREUtilities/CORECANTalon.h" />
-    <entry file="file://$PROJECT_DIR$/../src/COREHardware/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="22" lean-forward="false" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREDrive/CMakeLists.txt">
+    <entry file="file://$PROJECT_DIR$/../src/COREFramework/COREAuton.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREUtilities/CMakeLists.txt">
+    <entry file="file://$PROJECT_DIR$/../src/COREDashboard/COREDriverstation.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="22" lean-forward="false" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+        <state relative-caret-position="197">
+          <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="30" selection-end-column="36" />
+          <folding>
+            <element signature="e#65#84#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../3rdparty/googletest/googletest/include/gtest/gtest.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9006">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/CORESimulation/mock_CANTalon.cpp">
+    <entry file="file://$PROJECT_DIR$/../src/COREFramework/COREScheduler.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/CORESimulation/CANTalon.h">
+    <entry file="file://$PROJECT_DIR$/../src/COREFramework/COREScheduler.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="19" column="4" lean-forward="false" selection-start-line="19" selection-start-column="4" selection-end-line="228" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/CORELogging/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="14" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Test.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="3" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/CORESimulation/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="24" lean-forward="false" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/CORESimulation/mock_CANTalon.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1273">
-          <caret line="67" column="25" lean-forward="false" selection-start-line="66" selection-start-column="8" selection-end-line="67" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../3rdparty/googletest/googlemock/include/gmock/gmock-generated-actions.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="1311" column="4" lean-forward="false" selection-start-line="1311" selection-start-column="4" selection-end-line="1311" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../3rdparty/googletest/googlemock/include/gmock/gmock-spec-builders.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="1846" column="9" lean-forward="false" selection-start-line="1846" selection-start-column="9" selection-end-line="1846" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../3rdparty/wpilib/include/DriverStation.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="278">
-          <caret line="104" column="30" lean-forward="false" selection-start-line="104" selection-start-column="30" selection-end-line="104" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../3rdparty/wpilib/include/HAL/DriverStation.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-710">
-          <caret line="56" column="7" lean-forward="false" selection-start-line="56" selection-start-column="7" selection-end-line="56" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../3rdparty/wpilib/include/HAL/HAL.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1028">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../3rdparty/wpilib/include/RobotBase.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="798">
-          <caret line="42" column="6" lean-forward="false" selection-start-line="42" selection-start-column="6" selection-end-line="42" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../3rdparty/wpilib/include/Base.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="454">
-          <caret line="76" column="16" lean-forward="false" selection-start-line="76" selection-start-column="16" selection-end-line="76" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/CORESimulation/WPILib312312.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="9" column="5" lean-forward="false" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/CORESimulation/CORESimRobot.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="13" lean-forward="false" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/CORESimulation/CORESimRobot.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="3" column="39" lean-forward="false" selection-start-line="3" selection-start-column="39" selection-end-line="3" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREFramework/CORERobot.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREUtilities/COREConstant.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="7" column="23" lean-forward="false" selection-start-line="7" selection-start-column="23" selection-end-line="7" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../3rdparty/wpilib/include/IterativeRobot.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../3rdparty/wpilib/include/SampleRobot.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../3rdparty/wpilib/include/WPILib.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="67" column="0" lean-forward="false" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREFramework/CORERobot.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="674">
-          <caret line="70" column="1" lean-forward="false" selection-start-line="70" selection-start-column="1" selection-end-line="70" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CORELogging_Test.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="1850">
+          <caret line="105" column="28" lean-forward="false" selection-start-line="105" selection-start-column="28" selection-end-line="105" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -911,56 +742,11 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREHardware/COREEncoder.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1938">
-          <caret line="102" column="0" lean-forward="false" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREHardware/COREJoystick.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="836">
-          <caret line="44" column="2" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="55" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/COREFramework_Test.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1140">
-          <caret line="60" column="0" lean-forward="false" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREControl/COREPID.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="49" column="16" lean-forward="false" selection-start-line="49" selection-start-column="16" selection-end-line="49" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/COREControl_Test.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="15" column="32" lean-forward="false" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREDashboard/COREConnectionHandler.h">
+    <entry file="file://$PROJECT_DIR$/CORELogging_Test.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -968,7 +754,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREDashboard/COREConnectionHandler.cpp">
+    <entry file="file://$PROJECT_DIR$/../src/WaypointFollower/TankKinematics.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="5" column="7" lean-forward="false" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/WaypointFollower/Path.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2795">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/CORESimulation/CANTalon.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="33" column="5" lean-forward="false" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/WaypointFollower/TankTracker.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="33" column="6" lean-forward="false" selection-start-line="33" selection-start-column="6" selection-end-line="33" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -976,7 +794,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREDashboard/COREDashboard.cpp">
+    <entry file="file://$PROJECT_DIR$/../src/WaypointFollower/TankTracker.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="487">
+          <caret line="95" column="0" lean-forward="false" selection-start-line="95" selection-start-column="0" selection-end-line="95" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/COREUtilities/COREConstant.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -984,51 +810,331 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREData/COREData.cpp">
+    <entry file="file://$PROJECT_DIR$/../src/COREUtilities/COREConstant.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="-456">
+          <caret line="62" column="27" lean-forward="false" selection-start-line="62" selection-start-column="27" selection-end-line="62" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREData/COREDataConnectionHandler.h">
+    <entry file="file://$PROJECT_DIR$/../src/COREFramework/CORERobot.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../src/COREData/COREDataConnectionHandler.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="20" column="39" lean-forward="false" selection-start-line="20" selection-start-column="39" selection-end-line="20" selection-end-column="39" />
+          <caret line="0" column="13" lean-forward="false" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+        <state relative-caret-position="19">
+          <caret line="1" column="24" lean-forward="false" selection-start-line="1" selection-start-column="24" selection-end-line="1" selection-end-column="24" />
+          <folding>
+            <marker date="1505529500399" expanded="true" signature="9:149" ph="..." />
+            <marker date="1505529500399" expanded="true" signature="194:587" ph="{...}" />
+            <marker date="1505529500399" expanded="true" signature="303:311" ph="{...}" />
+            <marker date="1505529500399" expanded="true" signature="334:342" ph="{...}" />
+            <marker date="1505529500399" expanded="true" signature="366:374" ph="{...}" />
+            <marker date="1505529500399" expanded="true" signature="394:494" ph="{...}" />
+            <marker date="1505529500399" expanded="true" signature="625:796" ph="{...}" />
+            <marker date="1505529500399" expanded="true" signature="665:673" ph="{...}" />
+            <marker date="1505529500399" expanded="true" signature="705:713" ph="{...}" />
+            <marker date="1505529500399" expanded="true" signature="741:785" ph="{...}" />
+            <marker date="1505529500399" expanded="true" signature="810:927" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/COREFramework/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" column="9" lean-forward="false" selection-start-line="9" selection-start-column="9" selection-end-line="9" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/COREUtilities_Test.cpp">
+    <entry file="file://$PROJECT_DIR$/../src/COREUtilities/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-297">
-          <caret line="16" column="31" lean-forward="true" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/COREDrive/COREEtherDrive.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="829">
+          <caret line="56" column="0" lean-forward="false" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/COREDrive/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" column="10" lean-forward="false" selection-start-line="9" selection-start-column="10" selection-end-line="9" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../3rdparty/wpilib/include/WPILib.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/COREFramework/CORERobot.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../3rdparty/googletest/googletest/include/gtest/internal/gtest-port.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="1022" column="0" lean-forward="false" selection-start-line="1022" selection-start-column="0" selection-end-line="1022" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/CORESimulation/Joystick.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="4" column="14" lean-forward="false" selection-start-line="4" selection-start-column="14" selection-end-line="4" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../3rdparty/wpilib/include/Joystick.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="28" column="6" lean-forward="false" selection-start-line="28" selection-start-column="6" selection-end-line="28" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../3rdparty/wpilib/include/SerialPort.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="29" column="6" lean-forward="false" selection-start-line="29" selection-start-column="6" selection-end-line="29" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/7.1.1/ext/new_allocator.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="135" column="0" lean-forward="false" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/CORESimulation/AHRS.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="46" column="94" lean-forward="false" selection-start-line="46" selection-start-column="94" selection-end-line="46" selection-end-column="94" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/COREHardware/COREJoystick.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="130" column="14" lean-forward="false" selection-start-line="130" selection-start-column="14" selection-end-line="130" selection-end-column="14" />
+          <folding>
+            <element signature="e#14#31#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/CORERobotLib.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/COREHardware/COREJoystick.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-513">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SwerveRobot/Robot.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="13" lean-forward="false" selection-start-line="0" selection-start-column="13" selection-end-line="0" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="416">
+          <caret line="67" column="30" lean-forward="false" selection-start-line="67" selection-start-column="30" selection-end-line="67" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/7.1.1/bits/stl_vector.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="433" column="0" lean-forward="false" selection-start-line="433" selection-start-column="0" selection-end-line="433" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../3rdparty/googletest/googletest/src/gtest.cc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="2471" column="0" lean-forward="false" selection-start-line="2471" selection-start-column="0" selection-end-line="2471" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/COREDrive/COREDrive.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="24" column="16" lean-forward="false" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SwerveRobot/DriveSubsystem.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="15" column="45" lean-forward="false" selection-start-line="15" selection-start-column="45" selection-end-line="15" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../3rdparty/googletest/googletest/include/gtest/gtest.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="2030" column="8" lean-forward="false" selection-start-line="2030" selection-start-column="8" selection-end-line="2030" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/7.1.1/bits/shared_ptr_base.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="153" column="0" lean-forward="false" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/COREHardware_Test.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="16" column="28" lean-forward="false" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../3rdparty/googletest/googlemock/include/gmock/gmock-spec-builders.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="1010" column="20" lean-forward="false" selection-start-line="1010" selection-start-column="20" selection-end-line="1010" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SwerveRobot/DriveSubsystem.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="712">
+          <caret line="83" column="11" lean-forward="false" selection-start-line="83" selection-start-column="11" selection-end-line="83" selection-end-column="11" />
+          <folding>
+            <element signature="e#14#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/COREFramework_Test.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SwerveRobot/Robot.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="69" column="27" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="69" selection-end-column="27" />
+          <folding>
+            <element signature="e#36#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/COREControl/COREPID.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="40" column="32" lean-forward="false" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/COREControl/COREPID.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="407">
+          <caret line="61" column="32" lean-forward="false" selection-start-line="61" selection-start-column="32" selection-end-line="61" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../3rdparty/googletest/googlemock/include/gmock/gmock-actions.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="586" column="11" lean-forward="false" selection-start-line="586" selection-start-column="11" selection-end-line="586" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/COREDrive/COREDrive.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="21" column="89" lean-forward="false" selection-start-line="21" selection-start-column="89" selection-end-line="21" selection-end-column="89" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/COREDrive/CORESwerveDrive.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="93" column="28" lean-forward="false" selection-start-line="93" selection-start-column="28" selection-end-line="93" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../src/COREDrive/CORESwerveDrive.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="16" column="91" lean-forward="false" selection-start-line="16" selection-start-column="91" selection-end-line="16" selection-end-column="91" />
+          <folding>
+            <element signature="e#14#31#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/COREDrive_Test.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="5" column="8" lean-forward="false" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
-          <folding />
+        <state relative-caret-position="17">
+          <caret line="95" column="28" lean-forward="true" selection-start-line="95" selection-start-column="28" selection-end-line="95" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -6,6 +6,7 @@ COREPID::COREPID(double kP, double kI, double kD, double kF) : m_profile(kP, kI,
     if(kF == 0) {
         CORELog::logWarning("PID kF set to 0, this disables calculation!");
     }
+    m_mistake = 0;
     m_lastMistake = 0;
     m_riemannSum = 0;
 }
@@ -58,8 +59,7 @@ double COREPID::calculate(double mistake, double dt) {
     m_derivative = ((mistake - m_lastMistake) / dt) * m_profile.kD;
     m_lastMistake = mistake;
     m_mistake = mistake;
-    double output = m_profile.kF * (m_proportional + m_integral + m_derivative);
-    return output;
+    return m_profile.kF * (m_proportional + m_integral + m_derivative);
 }
 
 double COREPID::getProportional() const {
@@ -76,6 +76,22 @@ double COREPID::getDerivative() const {
 
 double COREPID::getMistake() const {
     return m_mistake;
+}
+
+double COREPID::getProportionalConstant() {
+    return m_profile.kP;
+}
+
+double COREPID::getIntegralConstant() {
+    return m_profile.kI;
+}
+
+double COREPID::getDerivativeConstant() {
+    return m_profile.kD;
+}
+
+double COREPID::getFeedForwardConstant() {
+    return m_profile.kF;
 }
 
 COREPositionPID::COREPositionPID(double kP, double kI, double kD, double kF) : COREPID(kP, kI, kD, kF) {
@@ -104,4 +120,12 @@ double COREAnglePID::calculate(Rotation2d actualAngle, Rotation2d setPointAngle)
     clockwiseMove = clockwiseMove < 0 ? 360 + clockwiseMove : clockwiseMove;
     counterClockwiseMove = counterClockwiseMove < 0 ? 360 + counterClockwiseMove : counterClockwiseMove;
     return COREPID::calculate(clockwiseMove < counterClockwiseMove ? clockwiseMove : -counterClockwiseMove);
+}
+
+double COREAnglePID::calculate(Rotation2d actualAngle, Rotation2d setPointAngle, double dt) {
+    double counterClockwiseMove = actualAngle.getCompassDegrees() - setPointAngle.getCompassDegrees();
+    double clockwiseMove = setPointAngle.getCompassDegrees() - actualAngle.getCompassDegrees();
+    clockwiseMove = clockwiseMove < 0 ? 360 + clockwiseMove : clockwiseMove;
+    counterClockwiseMove = counterClockwiseMove < 0 ? 360 + counterClockwiseMove : counterClockwiseMove;
+    return COREPID::calculate(clockwiseMove < counterClockwiseMove ? clockwiseMove : -counterClockwiseMove, dt);
 }
