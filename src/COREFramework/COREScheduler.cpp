@@ -69,7 +69,6 @@ void COREScheduler::addTask(CORETask* task) {
 
 void COREScheduler::robotInit() {
     CORELog::robotInit();
-    COREDashboard::robotInit();
     COREConstantsManager::updateConstants();
     for(auto subsystem : m_subsystems) {
         subsystem->robotInit();

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.0)
 
 project(CORERobotLib_Test)
 
@@ -12,12 +12,13 @@ add_definitions(-DNOT_REAL)
 include_directories(${PROJECT_SOURCE_DIR}/src)
 include_directories(${PROJECT_SOURCE_DIR}/src/CORESimulation)
 include_directories(${PROJECT_SOURCE_DIR}/3rdparty/wpilib/include)
-include_directories(${PROJECT_SOURCE_DIR}/3rdparty/Catch/include)
 include_directories(${PROJECT_SOURCE_DIR}/3rdparty/seasocks/src/main/c)
 include_directories(${PROJECT_SOURCE_DIR}/3rdparty/json/src)
 
 #### Google Test
 include_directories(${PROJECT_SOURCE_DIR}/3rdparty/googletest)
+include_directories(${PROJECT_SOURCE_DIR}/3rdparty/googletest/googlemock/include)
+include_directories(${PROJECT_SOURCE_DIR}/3rdparty/googletest/googletest/include)
 add_subdirectory(${PROJECT_SOURCE_DIR}/3rdparty/googletest ${CMAKE_CURRENT_BINARY_DIR}/3rdparty/googletest)
 
 #### Seasocks

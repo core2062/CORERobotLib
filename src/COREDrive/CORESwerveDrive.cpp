@@ -64,7 +64,7 @@ void CORESwerve::calculate(double forward, double strafeRight, double rotateCloc
     If it does, set the angle to be the angle plus another 180 degrees, then take the remainder to make sure that the wheels don't make
     multiple rotations
     Sets speed to negative (I guess this would make it velocity)*/
-    /*
+
     if (fabs(rightFrontModuleAngle - m_rightFrontModule->getAngle()) > 90 &&
             fabs(rightFrontModuleAngle - m_rightFrontModule->getAngle()) < 270) {
         rightFrontModuleAngle = fmod((rightFrontModuleAngle + 180), 360);
@@ -88,7 +88,7 @@ void CORESwerve::calculate(double forward, double strafeRight, double rotateCloc
         rightBackModuleAngle = fmod((rightBackModuleAngle + 180), 360);
         rightBackModuleSpeed = -rightBackModuleSpeed;
     }
-    */
+
 }
 
 CORESwerve::SwerveModule::SwerveModule(CANTalon *driveMotor, CANTalon *steerMotor, double angleOffset) :
@@ -106,7 +106,7 @@ double CORESwerve::SwerveModule::getAngle(bool raw) {
     if(raw) {
         return angle;
     } else {
-        return angle + m_angleOffset;
+        return angle - m_angleOffset;
     }
 }
 

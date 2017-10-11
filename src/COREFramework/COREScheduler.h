@@ -9,7 +9,6 @@
 #include "COREAuton.h"
 #include "COREHardwareManager.h"
 #include "COREUtilities/COREConstant.h"
-#include "COREDashboard/COREDashboard.h"
 #include "CORETask.h"
 #include "CORELogging/CORELog.h"
 #include "COREUtilities/CORENamedObject.h"

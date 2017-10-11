@@ -34,10 +34,10 @@ void CORETimer::Start() {
 }
 
 double CORETimer::getTime() {
-#ifdef NOT_REAL
+
     return duration_cast<microseconds>(high_resolution_clock::now().time_since_epoch()).count() / 1000000.0;
-#else
-    return frc::GetFPGATime();
-#endif
+
+    //return frc::GetFPGATime();
+
 
 }
