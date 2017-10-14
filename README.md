@@ -16,9 +16,9 @@ sudo apt-add-repository ppa:wpilib/toolchain
 ```bash
 sudo apt-get update
 ```
-- Install basic build tools (cmake, make, python, wpilib toolchain, etc)
+- Install basic build tools (cmake, make, python, wpilib toolchain, ninja-build, etc)
 ```bash
-sudo apt-get install build-essential cmake python frc-toolchain
+sudo apt-get install build-essential cmake python frc-toolchain ninja-build
 ```
 ## Building
 ### CLion
