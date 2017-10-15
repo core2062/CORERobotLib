@@ -18,7 +18,7 @@
 					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.1501509670." name="/" resourcePath="">
 						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.exe.debug.215183143" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.exe.debug">
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.828471012" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
-							<builder buildPath="/CORERobotLib/build" id="de.marw.cdt.cmake.core.genscriptbuilder.207042540" incrementalBuildTarget="CORERobotLib" keepEnvironmentInBuildfile="false" name="CMake Builder (portable)" superClass="de.marw.cdt.cmake.core.genscriptbuilder"/>
+							<builder buildPath="/CORERobotLib/build" command="ninja" id="de.marw.cdt.cmake.core.genscriptbuilder.207042540" incrementalBuildTarget="CORERobotLib" keepEnvironmentInBuildfile="false" name="CMake Builder (portable)" superClass="de.marw.cdt.cmake.core.genscriptbuilder"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.2098952169" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.option.optimization.level.352719915" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.debugging.level.1297565500" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
@@ -51,8 +51,12 @@
 					<def name="CMAKE_TOOLCHAIN_FILE" type="STRING" val="tools/roborio-toolchain.cmake"/>
 				</defs>
 				<linux command="cmake" generator="Ninja" use-default="true">
+					<defs/>
+					<undefs/>
 				</linux>
 				<win32 command="cmake" generator="Ninja" use-default="true">
+					<defs/>
+					<undefs/>
 				</win32>
 			</storageModule>
 		</cconfiguration>
@@ -130,4 +134,5 @@
 		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>

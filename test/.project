@@ -3,6 +3,7 @@
 	<name>CORERobotLib_Test</name>
 	<comment></comment>
 	<projects>
+		<project>CORERobotLib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

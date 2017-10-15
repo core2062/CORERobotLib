@@ -10,7 +10,8 @@ set(SOURCE_FILES
         CORENamedObject.cpp
         Rotation2d.cpp
         Translation2d.cpp
-        Position2d.cpp)
+        Position2d.cpp
+		COREDriverstation.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 

@@ -6,8 +6,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 set(SOURCE_FILES
         COREDashboard.cpp
-        COREConnectionHandler.cpp
-        COREDriverstation.cpp)
+        COREConnectionHandler.cpp)
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 

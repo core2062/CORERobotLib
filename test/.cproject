@@ -29,9 +29,12 @@
 								<option id="gnu.cpp.compiler.option.debugging.level.1538357034" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.2145919807" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${WPILIB}/user/cpp/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CORERobotLib/3rdparty/googletest/googletest/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CORERobotLib/3rdparty/googletest/googlemock/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CORERobotLib/3rdparty/googletest/googletest/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CORERobotLib/src}&quot;"/>
+								</option>
+								<option id="gnu.cpp.compiler.option.preprocessor.def.1774122423" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="NOT_REAL"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.812607854" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -139,7 +142,11 @@
 		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
-	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings">
+		<doc-comment-owner id="org.eclipse.cdt.ui.doxygen">
+			<path value=""/>
+		</doc-comment-owner>
+	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.pathentry">
 		<pathentry kind="src" path="[Subprojects]"/>
 		<pathentry excluding="**/CMakeFiles/" kind="out" path=""/>
