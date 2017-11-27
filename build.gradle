@@ -1,0 +1,141 @@
+plugins {
+    id 'com.gradle.build-scan' version '1.10.3'
+    id "cpp"
+    id "jaci.openrio.gradle.GradleRIO" version "2017.11.27"
+}
+
+buildScan {
+  licenseAgreementUrl = 'https://gradle.com/terms-of-service'
+  licenseAgree = 'yes'
+}
+
+apply plugin: "cpp"
+apply plugin: 'google-test-test-suite'
+apply plugin: 'eclipse'
+
+model {
+    platforms {
+        amd64 {
+            architecture 'amd64'
+        }
+    }
+    repositories {
+        libs(PrebuiltLibraries) {
+            seasocks {
+                headers.srcDir "3rdparty/seasocks/src/main/c"
+                binaries.withType(StaticLibraryBinary) {
+                    staticLibraryFile = file("3rdparty/seasocks/" + getPlatformPath(targetPlatform) + "/libseasocks.a")
+                }
+            }
+            googleTest {
+                headers.srcDir "3rdparty/googletest/googletest/include"
+                binaries.withType(StaticLibraryBinary) {
+                    staticLibraryFile = file("3rdparty/googletest/googletest/" + getPlatformPath(targetPlatform) + "/libgtest.a")
+                }
+            }
+            googleTestMain {
+                headers.srcDir "3rdparty/googletest/googletest/include"
+                binaries.withType(StaticLibraryBinary) {
+                    staticLibraryFile = file("3rdparty/googletest/googletest/" + getPlatformPath(targetPlatform) + "/libgtest_main.a")
+                }
+            }
+            googleMock {
+                headers.srcDir "3rdparty/googletest/googlemock/include"
+                binaries.withType(StaticLibraryBinary) {
+                    staticLibraryFile = file("3rdparty/googletest/googlemock/" + getPlatformPath(targetPlatform) + "/libgmock.a")
+                }
+            }
+            googleMockMain {
+                headers.srcDir "3rdparty/googletest/googlemock/include"
+                binaries.withType(StaticLibraryBinary) {
+                    staticLibraryFile = file("3rdparty/googletest/googlemock/" + getPlatformPath(targetPlatform) + "/libgmock_main.a")
+                }
+            }
+            wpilibrary {
+                headers.srcDir "3rdparty/wpilib/include"
+            }
+            json {
+                headers.srcDir "3rdparty/json/src"
+            }
+        }
+    }
+    components {
+        CORERobotLib(NativeLibrarySpec) {
+            targetPlatform 'roborio'
+            sources.cpp {
+                source {
+                    srcDir "src"
+                    include "**/*.cpp"
+                    exclude "WaypointFollower", "CORESimulation"
+                }
+                exportedHeaders {
+                    srcDir "src"
+                }
+                lib library: "json", linkage: "api"
+                lib library: "seasocks", linkage: "static"
+                lib library: "ctre"
+                lib library: "navx"
+                lib library: 'wpilib'
+            }
+        }
+        CORERobotLibTest(NativeLibrarySpec) {
+            targetPlatform "amd64"
+            sources.cpp {
+                source {
+                    srcDirs "src", "test"
+                        include "**/*.cpp"
+                        exclude "WaypointFollower", "COREData", "COREDashboard", "COREDrive/COREEtherDrive.*", "COREFramework/CORERobot.*"
+                }
+                exportedHeaders {
+                    srcDirs "src", "src/CORESimulation"
+                }
+                binaries.all {
+                    lib library: "wpilibrary", linkage: "api"
+                    lib library: "json", linkage: "api"
+                    lib library: "googleTest", linkage: "static"
+                    lib library: "googleTestMain", linkage: "static"
+                    lib library: "googleMock", linkage: "static"
+                    lib library: "googleMockMain", linkage: "static"
+                    cppCompiler.define "NOT_REAL"
+                    if (targetPlatform.operatingSystem.linux) {
+                        cppCompiler.args '-pthread'
+                            linker.args '-pthread'
+                    }            
+                }
+            }
+        }
+        all {
+            binaries.withType(SharedLibraryBinarySpec) {
+                buildable = false
+            }
+        }
+    }
+    testSuites {
+        CORERobotLib_Test(GoogleTestTestSuiteSpec) {
+            testing $.components.CORERobotLibTest            
+        }
+    }
+     binaries {
+        withType(GoogleTestTestSuiteBinarySpec) {
+            lib library: "wpilibrary", linkage: "api"
+            lib library: "json", linkage: "api"
+            lib library: "googleTest", linkage: "static"
+            lib library: "googleTestMain", linkage: "static"
+            lib library: "googleMock", linkage: "static"
+            lib library: "googleMockMain", linkage: "static"
+            cppCompiler.define "NOT_REAL"
+            if (targetPlatform.operatingSystem.linux) {
+                cppCompiler.args '-pthread'
+                linker.args '-pthread'
+            }
+        }
+    }
+}
+
+def getPlatformPath(Platform platform) {
+    if (platform.operatingSystem.windows) {
+        return "Windows/amd64/"
+    } else {
+        return "Linux/amd64/"
+    }
+}

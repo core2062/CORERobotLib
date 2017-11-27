@@ -10,14 +10,15 @@
 using namespace std;
 
 struct DataPoint {
-	double x = 0;
-	double y = 0;
-	double speed = 100;
-	double angle = -7;
-	std::string event = "";
+    double x = 0;
+    double y = 0;
+    double speed = 100;
+    double angle = -7;
+    std::string event = "";
 };
 
-class PathLoader{
+class PathLoader {
 public:
-	static Path * loadPath(std::string fileName, double speedScale = 1.0, bool flipY = false, bool flipX = false, bool reversePath = false);
+    static Path *loadPath(std::string fileName, double speedScale = 1.0, bool flipY = false, bool flipX = false,
+                          bool reversePath = false);
 };

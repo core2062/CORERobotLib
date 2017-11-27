@@ -4,7 +4,7 @@
 
 #include "COREFramework/COREHardwareManager.h"
 #include "COREDrive.h"
-#include "CANTalon.h"
+#include "ctrlib/CANTalon.h"
 #include "COREHardware/CORESensor.h"
 #include "COREControl/COREPID.h"
 

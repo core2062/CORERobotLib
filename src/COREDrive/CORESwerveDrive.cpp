@@ -64,31 +64,39 @@ void CORESwerve::calculate(double forward, double strafeRight, double rotateCloc
     If it does, set the angle to be the angle plus another 180 degrees, then take the remainder to make sure that the wheels don't make
     multiple rotations
     Sets speed to negative (I guess this would make it velocity)*/
+    double MAX_WHEEL_INVERT_SPEED = 1;
 
-    if (fabs(rightFrontModuleAngle - m_rightFrontModule->getAngle()) > 90 &&
-            fabs(rightFrontModuleAngle - m_rightFrontModule->getAngle()) < 270) {
-        rightFrontModuleAngle = fmod((rightFrontModuleAngle + 180), 360);
-        rightFrontModuleSpeed = -rightFrontModuleSpeed;
+    if (abs(rightFrontModuleSpeed) <= MAX_WHEEL_INVERT_SPEED) { 
+        if (fabs(rightFrontModuleAngle - m_rightFrontModule->getAngle()) > 90 &&
+                fabs(rightFrontModuleAngle - m_rightFrontModule->getAngle()) < 270) {
+            rightFrontModuleAngle = fmod((rightFrontModuleAngle + 180), 360);
+            rightFrontModuleSpeed = -rightFrontModuleSpeed;
+        }
     }
 
-    if (fabs(leftFrontModuleAngle - m_leftFrontModule->getAngle()) > 90 &&
-            fabs(leftFrontModuleAngle - m_leftFrontModule->getAngle()) < 270) {
-        leftFrontModuleAngle = fmod((leftFrontModuleAngle + 180), 360);
-        leftFrontModuleSpeed = -leftFrontModuleSpeed;
+    if (abs(leftFrontModuleSpeed) <= MAX_WHEEL_INVERT_SPEED) { 
+        if (fabs(leftFrontModuleAngle - m_leftFrontModule->getAngle()) > 90 &&
+                fabs(leftFrontModuleAngle - m_leftFrontModule->getAngle()) < 270) {
+            leftFrontModuleAngle = fmod((leftFrontModuleAngle + 180), 360);
+            leftFrontModuleSpeed = -leftFrontModuleSpeed;
+        }
     }
 
-    if (fabs(leftBackModuleAngle - m_leftBackModule->getAngle()) > 90 &&
-            fabs(leftBackModuleAngle - m_leftBackModule->getAngle()) < 270) {
-        leftBackModuleAngle = fmod((leftBackModuleAngle + 180), 360);
-        leftBackModuleSpeed = -leftBackModuleSpeed;
+    if (abs(leftBackModuleSpeed) <= MAX_WHEEL_INVERT_SPEED){
+        if (fabs(leftBackModuleAngle - m_leftBackModule->getAngle()) > 90 &&
+                fabs(leftBackModuleAngle - m_leftBackModule->getAngle()) < 270) {
+            leftBackModuleAngle = fmod((leftBackModuleAngle + 180), 360);
+            leftBackModuleSpeed = -leftBackModuleSpeed;
+        }
     }
 
-    if (fabs(rightBackModuleAngle - m_rightBackModule->getAngle()) > 90 &&
-            fabs(rightBackModuleAngle - m_rightBackModule->getAngle()) < 270) {
-        rightBackModuleAngle = fmod((rightBackModuleAngle + 180), 360);
-        rightBackModuleSpeed = -rightBackModuleSpeed;
+    if (abs(rightBackModuleSpeed) <= MAX_WHEEL_INVERT_SPEED) {
+        if (fabs(rightBackModuleAngle - m_rightBackModule->getAngle()) > 90 &&
+                fabs(rightBackModuleAngle - m_rightBackModule->getAngle()) < 270) {
+            rightBackModuleAngle = fmod((rightBackModuleAngle + 180), 360);
+            rightBackModuleSpeed = -rightBackModuleSpeed;
+        }
     }
-
 }
 
 CORESwerve::SwerveModule::SwerveModule(CANTalon *driveMotor, CANTalon *steerMotor, double angleOffset) :
@@ -187,8 +195,8 @@ void CORESwerve::setSteerPID(double kp, double ki, double kd) {
 }
 
 void CORESwerve::zeroOffsets() {
-	m_leftFrontModule->zeroAngle();
-	m_rightFrontModule->zeroAngle();
-	m_rightBackModule->zeroAngle();
-	m_leftBackModule->zeroAngle();
+    m_leftFrontModule->zeroAngle();
+    m_rightFrontModule->zeroAngle();
+    m_rightBackModule->zeroAngle();
+    m_leftBackModule->zeroAngle();
 }

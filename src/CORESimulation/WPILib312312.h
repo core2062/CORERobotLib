@@ -1,11 +1,9 @@
 #pragma once
-#ifndef __arm__
-
 #include <string>
 #include <memory>
 #include <iostream>
 
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) || defined(__MINGW32__) || defined(__MINGW64__)
 #include <windows.h>
 #else
 #include <unistd.h>
@@ -86,8 +84,8 @@ public:
 };
 
 inline void Wait(double _) {
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
-    Wait(_*1000);
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) || defined(__MINGW32__) || defined(__MINGW64__)
+	Sleep(_*1000);
 #else
     usleep(_ * 1000000);
 #endif
@@ -192,4 +190,3 @@ public:
 //private:
 //    static LiveWindow* m_instance;
 //};
-#endif

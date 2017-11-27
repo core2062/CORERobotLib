@@ -3,35 +3,38 @@
 #include "TankKinematics.h"
 #include "Path.h"
 
-class AdaptivePursuit{
+class AdaptivePursuit {
 private:
-	double m_fixedLookahead;
-	Path m_path;
-	Position2d::Delta m_lastCommand;
-	double m_lastTime;
-	double m_maxAccel;
-	double m_dt;
-	bool m_reversed;
-	double m_pathCompletionTolerance;
-	bool m_hasRun = false;
-	bool m_gradualStop = true;
+    double m_fixedLookahead;
+    Path m_path;
+    Position2d::Delta m_lastCommand;
+    double m_lastTime;
+    double m_maxAccel;
+    double m_dt;
+    bool m_reversed;
+    double m_pathCompletionTolerance;
+    bool m_hasRun = false;
+    bool m_gradualStop = true;
 
 public:
-	AdaptivePursuit(double fixedLookahead, double maxAccel, double nominalDt, Path path,
-			bool reversed, double pathCompletionTolerance, bool gradualStop = true);
+    AdaptivePursuit(double fixedLookahead, double maxAccel, double nominalDt, Path path,
+                    bool reversed, double pathCompletionTolerance, bool gradualStop = true);
 
-	bool isDone();
+    bool isDone();
 
-	Position2d::Delta update(Position2d robotPos, double now);
+    void hekk9(int heloo);
 
-	bool checkEvent(std::string event);
+    Position2d::Delta update(Position2d robotPos, double now);
 
-	struct Circle{
-		Translation2d center;
-		double radius;
-		bool turnRight;
-		Circle(Translation2d cent, double rad, bool turn_right);
-	};
+    bool checkEvent(std::string event);
 
-	std::pair<bool, Circle> joinPath(Position2d pos, Translation2d lookahead);
+    struct Circle {
+        Translation2d center;
+        double radius;
+        bool turnRight;
+
+        Circle(Translation2d cent, double rad, bool turn_right);
+    };
+
+    std::pair<bool, Circle> joinPath(Position2d pos, Translation2d lookahead);
 };

@@ -12,7 +12,7 @@
 #include "COREEncoder.h"
 
 //#include <WPILib.h>
-#include <CANTalon.h>
+#include "ctrlib/CANTalon.h"
 
 using namespace std;
 

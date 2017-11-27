@@ -4,13 +4,16 @@
 
 using namespace CORE;
 
-class RobotFrame : public Position2d{
+class RobotFrame : public Position2d {
 public:
-	RobotFrame(double x, double y, double degrees);
-	RobotFrame(Position2d offset);
-	RobotFrame();
+    RobotFrame(double x, double y, double degrees);
 
-	Position2d getLatest();
-	Position2d getPos(double time);
+    RobotFrame(Position2d offset);
+
+    RobotFrame();
+
+    Position2d getLatest();
+
+    Position2d getPos(double time);
 
 };
