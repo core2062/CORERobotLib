@@ -4,6 +4,7 @@
 #define private public
 
 #include "COREHardware/COREJoystick.h"
+#include "COREUtilities/COREDriverstation.h"
 
 using namespace CORE;
 using ::testing::Return;

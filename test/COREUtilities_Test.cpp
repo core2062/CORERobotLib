@@ -27,10 +27,10 @@ TEST(CORETimer, startStop) {
     CORETimer timer;
     timer.Start();
     Wait(0.01);
-    EXPECT_NEAR(timer.Get(), 0.01, 0.005);
+    EXPECT_NEAR(timer.Get(), 0.01, 0.01);
     timer.Stop();
     Wait(0.01);
-    EXPECT_NEAR(timer.Get(), 0.01, 0.005);
+    EXPECT_NEAR(timer.Get(), 0.01, 0.01);
 }
 
 TEST(Rotation2d, toCompassDegrees) {
@@ -55,4 +55,8 @@ TEST(Rotation2d, rotateBy) {
 TEST(Rotation2d, opposite) {
     Rotation2d rotation(0, 1, true); //0 degrees
     EXPECT_EQ(rotation.opposite().getCompassDegrees(), 180);
+}
+
+TEST(Rotation2d, interpolate) {
+
 }

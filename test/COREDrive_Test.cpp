@@ -2,7 +2,7 @@
 #include "gmock/gmock.h"
 
 #include "COREDrive/CORESwerveDrive.h"
-#include "CORESimulation/CANTalon.h"
+#include "CORESimulation/ctrlib/CANTalon.h"
 
 using namespace testing;
 using namespace CORE;
