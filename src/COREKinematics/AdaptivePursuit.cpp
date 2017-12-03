@@ -1,9 +1,8 @@
 #include "AdaptivePursuit.h"
 
-AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel,
-                                 double nominalDt, Path path, bool reversed,
+AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel, double nominalDt, Path path, bool reversed,
                                  double pathCompletionTolerance, bool gradualStop) :
-        m_lastCommand(0, 0, 0) {
+    m_lastCommand(0, 0, 0) {
     m_fixedLookahead = fixedLookahead;
     m_maxAccel = maxAccel;
     m_path = path;
@@ -12,7 +11,6 @@ AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel,
     m_pathCompletionTolerance = pathCompletionTolerance;
     m_lastTime = 0.0;
     m_gradualStop = gradualStop;
-
 }
 
 bool AdaptivePursuit::isDone() {
@@ -32,17 +30,12 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
         return {0, 0, 0};
     }
 
-//	std::cout << "Dist From Path" << distanceFromPath << std::endl;
-
     PathSegment::Sample lookaheadPoint = m_path.getLookaheadPoint(robotPos.getTranslation(),
                                                                   distanceFromPath + m_fixedLookahead);
     std::pair<bool, Circle> circle = joinPath(pos, lookaheadPoint.translation);
-//	std::cout << "Look X: " << lookaheadPoint.translation.getX() << "  Look Y: " << lookaheadPoint.translation.getY() << std::endl;
-
 
     double speed = lookaheadPoint.speed;
     if (m_reversed) {
-//		std::cout << "Reversed: " << speed << std::endl;
         speed *= -1;
     }
 
@@ -60,7 +53,6 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
     }
 
     double remainingDistance = m_path.getRemainingLength();
-//	std::cout << "Remain: " << remainingDistance << std::endl;
     if (m_gradualStop) {
         double maxAllowedSpeed = sqrt(2 * m_maxAccel * remainingDistance);
         if (fabs(speed) > maxAllowedSpeed) {
@@ -82,22 +74,19 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
     m_lastTime = now;
     m_lastCommand = rv;
     return rv;
-
 }
 
 bool AdaptivePursuit::checkEvent(std::string event) {
     return m_path.eventPassed(event);
 }
 
-AdaptivePursuit::Circle::Circle(Translation2d cent, double rad,
-                                bool turn_right) {
+AdaptivePursuit::Circle::Circle(Translation2d cent, double rad, bool turn_right) {
     center = cent;
     radius = rad;
     turnRight = turn_right;
 }
 
-std::pair<bool, AdaptivePursuit::Circle> AdaptivePursuit::joinPath(Position2d pos,
-                                                                   Translation2d lookahead) {
+std::pair<bool, AdaptivePursuit::Circle> AdaptivePursuit::joinPath(Position2d pos, Translation2d lookahead) {
     double x1 = pos.getTranslation().getX();
     double y1 = pos.getTranslation().getY();
     double x2 = lookahead.getX();

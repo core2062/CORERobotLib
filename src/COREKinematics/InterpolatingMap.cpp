@@ -4,15 +4,13 @@ InterpolatingDouble::InterpolatingDouble(double val) {
     value = val;
 }
 
-InterpolatingDouble InterpolatingDouble::interpolate(InterpolatingDouble other,
-                                                     double x) {
+InterpolatingDouble InterpolatingDouble::interpolate(InterpolatingDouble other, double x) {
     double dydx = other.value - value;
     double searchY = dydx * x + value;
     return InterpolatingDouble(searchY);
 }
 
-double InterpolatingDouble::inverseInterpolate(InterpolatingDouble upper,
-                                               InterpolatingDouble query) {
+double InterpolatingDouble::inverseInterpolate(InterpolatingDouble upper, InterpolatingDouble query) {
     double upperToLower = upper.value - value;
     if (upperToLower <= 0) {
         return 0;
@@ -33,8 +31,7 @@ InterpolatingTreeMap::InterpolatingTreeMap(int maxSize) {
     put(InterpolatingDouble(0.0), Position2d());
 }
 
-Position2d InterpolatingTreeMap::put(InterpolatingDouble key,
-                                     Position2d value) {
+Position2d InterpolatingTreeMap::put(InterpolatingDouble key, Position2d value) {
     if (m_max > 0 && m_max <= m_values.size()) {
         m_values.erase(m_values.begin());
     }

@@ -12,7 +12,6 @@ RobotFrame::RobotFrame() :
 
 Position2d RobotFrame::getLatest() {
     Position2d absPos = Position2d(TankTracker::GetInstance()->getLatestFieldToVehicle());
-    std::cout << "Y: " << absPos.getTranslation().getY() << std::endl;
     absPos.setTranslation(Translation2d(absPos.getTranslation().getX() - getTranslation().getX(),
                                         absPos.getTranslation().getY() - getTranslation().getY()).rotateBy(
             getRotation()));

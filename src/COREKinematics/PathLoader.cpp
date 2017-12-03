@@ -2,8 +2,10 @@
 #include <algorithm>
 #include "CORELogging/CORELog.h"
 
+using namespace CORE;
+
 Path *PathLoader::loadPath(std::string fileName, double speedScale, bool flipY, bool flipX, bool reversePath) {
-    CORE::CORELog::logInfo("Loading File: " + fileName);
+    CORELog::logInfo("Loading File: " + fileName);
     std::vector<Waypoint> points;
     std::string line;
     std::string fileStarter = "/media/sda1/COREAutoPaths/";
@@ -53,18 +55,18 @@ Path *PathLoader::loadPath(std::string fileName, double speedScale, bool flipY, 
 //            		reverse(points.begin(), points.end());
 //            		cout << "Reversing Path" << endl;
 //            	}
-            CORE::CORELog::logInfo(fileName + " was loaded");
+            CORELog::logInfo(fileName + " was loaded");
             std::cout << fileName << " has " << points.size() << " points" << std::endl;
             for (auto i : points) {
                 cout << i.position.getX() << " " << i.position.getY() << endl;
             }
             return new Path(points, flipY, flipX);
         } else {
-            CORE::CORELog::logError(fileName + " was empty!");
+            CORELog::logError(fileName + " was empty!");
             return new Path({Waypoint({-1, -1}, -1)}, flipY, flipX);
         }
     } else {
-        CORE::CORELog::logError("Could not find " + fileName + " in either directory");
+        CORELog::logError("Could not find " + fileName + " in either directory");
     }
 
     cout << "Failed to open: " << fileName << endl;

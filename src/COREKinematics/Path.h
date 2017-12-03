@@ -3,6 +3,7 @@
 #include "PathSegment.h"
 #include <vector>
 #include <algorithm>
+#include "CORELogging/CORELog.h"
 
 struct Waypoint {
     Translation2d position;

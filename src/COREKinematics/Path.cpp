@@ -1,16 +1,12 @@
 #include "Path.h"
 
+using namespace CORE;
+
 Waypoint::Waypoint(Translation2d pos, double spd, std::string completeEvent) {
     position = pos;
     speed = spd;
     event = completeEvent;
 }
-
-/*
-Path::Path(){
-
-}
-*/
 
 Path::Path(std::vector<Waypoint> waypoints, bool flipY, bool flipX) {
     m_waypoints = waypoints;
@@ -20,15 +16,15 @@ Path::Path(std::vector<Waypoint> waypoints, bool flipY, bool flipX) {
                     PathSegment(m_waypoints[i].position.inverse(), m_waypoints[i + 1].position.inverse(),
                                 m_waypoints[i].speed));
         } else if (flipX) {
-            std::cout << "Flipped X" << std::endl;
+            CORELog::logInfo("Flipped X"); 
             m_segments.push_back(
                     PathSegment(m_waypoints[i].position.flipX(), m_waypoints[i + 1].position.flipX(),
                                 m_waypoints[i].speed));
         } else if (flipY) {
-            std::cout << "Flipped Y" << std::endl;
+            CORELog::logInfo("Flipped Y"); 
             m_segments.push_back(
-                    PathSegment(m_waypoints[i].position.flipY(), m_waypoints[i + 1].position.flipY(),
-                                m_waypoints[i].speed));
+                    PathSegment(m_waypoints[i].position.flipY(), m_waypoints[i + 1].position.flipY(), 
+                        m_waypoints[i].speed));
         } else {
             m_segments.push_back(
                     PathSegment(m_waypoints[i].position, m_waypoints[i + 1].position, m_waypoints[i].speed));
@@ -46,9 +42,7 @@ Path::Path(std::vector<Waypoint> waypoints, bool flipY, bool flipX) {
 double Path::update(Translation2d pos) {
     double rv = 0.0;
     for (unsigned int i = 0; i < m_segments.size(); i++) {
-//		PathSegment segment = m_segments[i];
         PathSegment::ClosestPointReport closestPointReport = m_segments[i].getClosestPoint(pos);
-//		std::cout << "Index " << closestPointReport.index << std::endl;
         if (closestPointReport.index >= .99) {
             m_segments.erase(m_segments.begin() + i);
             if (m_waypoints.size() > 0) {
@@ -99,8 +93,7 @@ double Path::getRemainingLength() {
     return length;
 }
 
-PathSegment::Sample Path::getLookaheadPoint(Translation2d pos,
-                                            double lookahead) {
+PathSegment::Sample Path::getLookaheadPoint(Translation2d pos, double lookahead) {
     if (m_segments.size() == 0) {
         return PathSegment::Sample(Translation2d(), 0);
     }
@@ -113,31 +106,31 @@ PathSegment::Sample Path::getLookaheadPoint(Translation2d pos,
         PathSegment segment = m_segments[i];
         double distance = posInverse.translateBy(segment.getEnd()).norm();
         if (distance >= lookahead) {
-            std::pair<bool, Translation2d> intersectionPoint = getFirstCircleSegmentIntersection(segment,
-                                                                                                 pos, lookahead);
+            std::pair<bool, Translation2d> intersectionPoint = getFirstCircleSegmentIntersection(segment, pos,
+                                                                                                 lookahead);
             if (intersectionPoint.first) {
                 return PathSegment::Sample(intersectionPoint.second, segment.getSpeed());
             } else {
-                std::cout << "Error? Bad things happened" << std::endl;
+                CORELog::logError("Error? Bad things happend");
             }
         }
     }
 
     PathSegment lastSegment = m_segments[m_segments.size() - 1];
-    PathSegment newLastSegment = PathSegment(lastSegment.getStart(), lastSegment.interpolate(10000),
+    PathSegment newLastSegment = PathSegment(lastSegment.getStart(), lastSegment.interpolate(10000), 
                                              lastSegment.getSpeed());
     std::pair<bool, Translation2d> intersectionPoint = getFirstCircleSegmentIntersection(newLastSegment, pos,
                                                                                          lookahead);
     if (intersectionPoint.first) {
         return PathSegment::Sample(intersectionPoint.second, lastSegment.getSpeed());
     } else {
-        std::cout << "Error? REALLY Bad things happened" << std::endl;
+        CORELog::logError("Error? Bad things happend");
         return PathSegment::Sample(lastSegment.getEnd(), lastSegment.getSpeed());
     }
 }
 
-std::pair<bool, Translation2d> Path::getFirstCircleSegmentIntersection(
-        PathSegment segment, Translation2d center, double radius) {
+std::pair<bool, Translation2d> Path::getFirstCircleSegmentIntersection(PathSegment segment, Translation2d center,
+                                                                       double radius) {
     double x1 = segment.getStart().getX() - center.getX();
     double y1 = segment.getStart().getY() - center.getY();
     double x2 = segment.getEnd().getX() - center.getX();

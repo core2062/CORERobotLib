@@ -1,5 +1,7 @@
 #include "TankTracker.h"
 
+using namespace CORE;
+
 TankTracker *TankTracker::m_instance = nullptr;
 
 TankTracker::TankTracker() :
@@ -23,7 +25,6 @@ TankTracker *TankTracker::GetInstance() {
 }
 
 void TankTracker::init(CANTalon *left, CANTalon *right, AHRS *gyro) {
-    std::cout << "Tracker Construct" << std::endl;
     m_left = left;
     m_right = right;
     m_gyro = gyro;
@@ -33,7 +34,6 @@ void TankTracker::init(CANTalon *left, CANTalon *right, AHRS *gyro) {
     m_right->SetStatusFrameRateMs(CANTalon::StatusFrameRateGeneral, floor(1000 * m_targetLoopTime));
     m_right->SetStatusFrameRateMs(CANTalon::StatusFrameRateQuadEncoder, floor(1000 * m_targetLoopTime));
     m_loopEnabled = false;
-    std::cout << "Tracker Contruct End" << std::endl;
 }
 
 void TankTracker::reset(double time, Position2d initial) {
@@ -46,7 +46,7 @@ void TankTracker::reset(double time, Position2d initial) {
 }
 
 void TankTracker::start() {
-    cout << "Starting tank tracker!" << endl;
+    CORELog::logInfo("Starting tank tracker!");
     m_loopLock.lock();
     std::pair<double, double> inches = getEncoderInches();
     m_leftPrev = inches.first;
@@ -61,7 +61,7 @@ void TankTracker::start() {
     m_loopEnabled = true;
     m_mainLoop = new thread(&TankTracker::loop, TankTracker::GetInstance());
     SetThreadPriority(*m_mainLoop, false, 3);
-    cout << "Started tank tracker!" << endl;
+    CORELog::logInfo("Started tank tracker!");
 }
 
 void TankTracker::stop() {
