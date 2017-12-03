@@ -24,7 +24,7 @@ model {
             seasocks {
                 headers.srcDir "3rdparty/seasocks/src/main/c"
                 binaries.withType(StaticLibraryBinary) {
-                    staticLibraryFile = file("3rdparty/seasocks/" + getPlatformPath(targetPlatform) + "/libseasocks.a")
+                    staticLibraryFile = file("3rdparty/seasocks/Linux/arm/libseasocks.a")
                 }
             }
             googleTest {
@@ -77,6 +77,7 @@ model {
                 lib library: "navx"
                 lib library: 'wpilib'
             }
+
         }
         CORERobotLibTest(NativeLibrarySpec) {
             targetPlatform "amd64"
@@ -115,7 +116,7 @@ model {
             testing $.components.CORERobotLibTest            
         }
     }
-     binaries {
+    binaries {
         withType(GoogleTestTestSuiteBinarySpec) {
             lib library: "wpilibrary", linkage: "api"
             lib library: "json", linkage: "api"
@@ -131,6 +132,13 @@ model {
         }
     }
 }
+
+task copyToLibDir(type: Copy) {
+    from "build/libs/cORERobotLib/static"
+    into "lib"
+}
+
+build.finalizedBy copyToLibDir
 
 def getPlatformPath(Platform platform) {
     if (platform.operatingSystem.windows) {
