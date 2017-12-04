@@ -21,6 +21,6 @@ public:
 
     static VelocityPair inverseKinematics(Position2d::Delta vel);
 
-    static CORE::COREConstant<double> wheelDiameter;
-    static CORE::COREConstant<double> scrubFactor;
+    static double wheelDiameter; //TODO: Change this so that thease can be changed
+    static double scrubFactor;
 };

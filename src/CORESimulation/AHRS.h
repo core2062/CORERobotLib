@@ -22,11 +22,11 @@ public:
         /**
          * (default):  6 and 9-axis processed data
          */
-                kProcessedData = 0,
+        kProcessedData = 0,
         /**
          * unprocessed data from each individual sensor
          */
-                kRawData = 1
+        kRawData = 1
     };
 
     struct SPI {
@@ -45,58 +45,110 @@ public:
     AHRS(SPI::Port spi_port_id, uint32_t spi_bitrate, int update_rate_hz) {}
 
     AHRS(SerialPort::Port serial_port_id, AHRS::SerialDataType data_type, int update_rate_hz) {}
-
-    float GetPitch();
-    float GetRoll();
-    float GetYaw();
-    float GetCompassHeading();
-    void ZeroYaw();
-    bool IsCalibrating();
-    bool IsConnected();
-    double GetByteCount();
-    double GetUpdateCount();
-    long GetLastSensorTimestamp();
-    float GetWorldLinearAccelX();
-    float GetWorldLinearAccelY();
-    float GetWorldLinearAccelZ();
-    bool IsMoving();
-    bool IsRotating();
-    float GetBarometricPressure();
-    float GetAltitude();
-    bool IsAltitudeValid();
-    float GetFusedHeading();
-    bool IsMagneticDisturbance();
-    bool IsMagnetometerCalibrated();
-    float GetQuaternionW();
-    float GetQuaternionX();
-    float GetQuaternionY();
-    float GetQuaternionZ();
-    void ResetDisplacement();
-    void UpdateDisplacement(float accel_x_g, float accel_y_g, int update_rate_hz, bool is_moving);
-    float GetVelocityX();
-    float GetVelocityY();
-    float GetVelocityZ();
-    float GetDisplacementX();
-    float GetDisplacementY();
-    float GetDisplacementZ();
-    double GetAngle();
-    double GetRate();
-    void SetAngleAdjustment(double angle);
-    double GetAngleAdjustment();
-    void Reset();
-    float GetRawGyroX();
-    float GetRawGyroY();
-    float GetRawGyroZ();
-    float GetRawAccelX();
-    float GetRawAccelY();
-    float GetRawAccelZ();
-    float GetRawMagX();
-    float GetRawMagY();
-    float GetRawMagZ();
-    float GetPressure();
-    float GetTempC();
-    AHRS::BoardYawAxis GetBoardYawAxis();
-    std::string GetFirmwareVersion();
-    int GetActualUpdateRate();
-    int GetRequestedUpdateRate();
+    MOCK_METHOD0(GetPitch,
+        float());
+    MOCK_METHOD0(GetRoll,
+        float());
+    MOCK_METHOD0(GetYaw,
+        float());
+    MOCK_METHOD0(GetCompassHeading,
+        float());
+    MOCK_METHOD0(ZeroYaw,
+        void());
+    MOCK_METHOD0(IsCalibrating,
+        bool());
+    MOCK_METHOD0(IsConnected,
+        bool());
+    MOCK_METHOD0(GetByteCount,
+        double());
+    MOCK_METHOD0(GetUpdateCount,
+        double());
+    MOCK_METHOD0(GetLastSensorTimestamp,
+        long());
+    MOCK_METHOD0(GetWorldLinearAccelX,
+        float());
+    MOCK_METHOD0(GetWorldLinearAccelY,
+        float());
+    MOCK_METHOD0(GetWorldLinearAccelZ,
+        float());
+    MOCK_METHOD0(IsMoving,
+        bool());
+    MOCK_METHOD0(IsRotating,
+        bool());
+    MOCK_METHOD0(GetBarometricPressure,
+        float());
+    MOCK_METHOD0(GetAltitude,
+        float());
+    MOCK_METHOD0(IsAltitudeValid,
+        bool());
+    MOCK_METHOD0(GetFusedHeading,
+        float());
+    MOCK_METHOD0(IsMagneticDisturbance,
+        bool());
+    MOCK_METHOD0(IsMagnetometerCalibrated,
+        bool());
+    MOCK_METHOD0(GetQuaternionW,
+        float());
+    MOCK_METHOD0(GetQuaternionX,
+        float());
+    MOCK_METHOD0(GetQuaternionY,
+        float());
+    MOCK_METHOD0(GetQuaternionZ,
+        float());
+    MOCK_METHOD0(ResetDisplacement,
+        void());
+    MOCK_METHOD4(UpdateDisplacement,
+        void(float accel_x_g, float accel_y_g, int update_rate_hz, bool is_moving));
+    MOCK_METHOD0(GetVelocityX,
+        float());
+    MOCK_METHOD0(GetVelocityY,
+        float());
+    MOCK_METHOD0(GetVelocityZ,
+        float());
+    MOCK_METHOD0(GetDisplacementX,
+        float());
+    MOCK_METHOD0(GetDisplacementY,
+        float());
+    MOCK_METHOD0(GetDisplacementZ,
+        float());
+    MOCK_METHOD0(GetAngle,
+        double());
+    MOCK_METHOD0(GetRate,
+        double());
+    MOCK_METHOD1(SetAngleAdjustment,
+        void(double angle));
+    MOCK_METHOD0(GetAngleAdjustment,
+        double());
+    MOCK_METHOD0(Reset,
+        void());
+    MOCK_METHOD0(GetRawGyroX,
+        float());
+    MOCK_METHOD0(GetRawGyroY,
+        float());
+    MOCK_METHOD0(GetRawGyroZ,
+        float());
+    MOCK_METHOD0(GetRawAccelX,
+        float());
+    MOCK_METHOD0(GetRawAccelY,
+        float());
+    MOCK_METHOD0(GetRawAccelZ,
+        float());
+    MOCK_METHOD0(GetRawMagX,
+        float());
+    MOCK_METHOD0(GetRawMagY,
+        float());
+    MOCK_METHOD0(GetRawMagZ,
+        float());
+    MOCK_METHOD0(GetPressure,
+        float());
+    MOCK_METHOD0(GetTempC,
+        float());
+    MOCK_METHOD0(GetBoardYawAxis,
+        AHRS::BoardYawAxis());
+    MOCK_METHOD0(GetFirmwareVersion,
+        std::string());
+    MOCK_METHOD0(GetActualUpdateRate,
+        int());
+    MOCK_METHOD0(GetRequestedUpdateRate,
+        int());
 };

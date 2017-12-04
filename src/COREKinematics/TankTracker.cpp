@@ -60,7 +60,7 @@ void TankTracker::start() {
 
     m_loopEnabled = true;
     m_mainLoop = new thread(&TankTracker::loop, TankTracker::GetInstance());
-    SetThreadPriority(*m_mainLoop, false, 3);
+    //SetThreadPriority(*m_mainLoop, false, 3);
     CORELog::logInfo("Started tank tracker!");
 }
 
@@ -73,7 +73,7 @@ void TankTracker::stop() {
 
 void TankTracker::loop() {
     while (m_loopEnabled) {
-        double time = Timer::GetFPGATimestamp();
+        double time = CORETimer::getTime();//Timer::GetFPGATimestamp();
         std::pair<double, double> inches = getEncoderInches();
         double left = inches.first;
         double right = inches.second;

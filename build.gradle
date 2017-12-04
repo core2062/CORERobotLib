@@ -24,7 +24,7 @@ model {
             seasocks {
                 headers.srcDir "3rdparty/seasocks/src/main/c"
                 binaries.withType(StaticLibraryBinary) {
-                    staticLibraryFile = file("3rdparty/seasocks/Linux/arm/libseasocks.a")
+                    staticLibraryFile = file("3rdparty/seasocks/" + getPlatformPath(targetPlatform) + "/libseasocks.a")
                 }
             }
             googleTest {
@@ -85,7 +85,7 @@ model {
                 source {
                     srcDirs "src", "test"
                         include "**/*.cpp"
-                        exclude "WaypointFollower", "COREData", "COREDashboard", "COREDrive/COREEtherDrive.*", "COREFramework/CORERobot.*"
+                        exclude "COREFramework/CORERobot.*"
                 }
                 exportedHeaders {
                     srcDirs "src", "src/CORESimulation"
@@ -93,6 +93,7 @@ model {
                 binaries.all {
                     lib library: "wpilibrary", linkage: "api"
                     lib library: "json", linkage: "api"
+                    lib library: "seasocks", linkage: "static"
                     lib library: "googleTest", linkage: "static"
                     lib library: "googleTestMain", linkage: "static"
                     lib library: "googleMock", linkage: "static"
@@ -120,6 +121,7 @@ model {
         withType(GoogleTestTestSuiteBinarySpec) {
             lib library: "wpilibrary", linkage: "api"
             lib library: "json", linkage: "api"
+            lib library: "seasocks", linkage: "static"
             lib library: "googleTest", linkage: "static"
             lib library: "googleTestMain", linkage: "static"
             lib library: "googleMock", linkage: "static"
@@ -143,6 +145,8 @@ build.finalizedBy copyToLibDir
 def getPlatformPath(Platform platform) {
     if (platform.operatingSystem.windows) {
         return "Windows/amd64/"
+    } else if (platform.architecture.arm) {
+        return "Linux/arm/"
     } else {
         return "Linux/amd64/"
     }

@@ -3,7 +3,7 @@
 #include "COREUtilities/Position2d.h"
 #include "TankKinematics.h"
 #include "InterpolatingMap.h"
-#include "CANTalon.h"
+#include "ctrlib/CANTalon.h"
 #include "AHRS.h"
 #include "../COREUtilities/CORETimer.h"
 #include "CORELogging/CORELog.h"

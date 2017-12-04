@@ -1,5 +1,7 @@
 #include "AdaptivePursuit.h"
 
+using namespace std;
+
 AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel, double nominalDt, Path path, bool reversed,
                                  double pathCompletionTolerance, bool gradualStop) :
     m_lastCommand(0, 0, 0) {
@@ -32,7 +34,7 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
 
     PathSegment::Sample lookaheadPoint = m_path.getLookaheadPoint(robotPos.getTranslation(),
                                                                   distanceFromPath + m_fixedLookahead);
-    std::pair<bool, Circle> circle = joinPath(pos, lookaheadPoint.translation);
+    pair<bool, Circle> circle = joinPath(pos, lookaheadPoint.translation);
 
     double speed = lookaheadPoint.speed;
     if (m_reversed) {
@@ -66,8 +68,7 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
 
     Position2d::Delta rv(0, 0, 0);
     if (circle.first) {
-        rv = Position2d::Delta(speed, 0,
-                               ((circle.second.turnRight) ? -1 : 1) * fabs(speed) / circle.second.radius);
+        rv = Position2d::Delta(speed, 0, ((circle.second.turnRight) ? -1 : 1) * fabs(speed) / circle.second.radius);
     } else {
         rv = Position2d::Delta(speed, 0, 0);
     }
@@ -76,7 +77,7 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
     return rv;
 }
 
-bool AdaptivePursuit::checkEvent(std::string event) {
+bool AdaptivePursuit::checkEvent(string event) {
     return m_path.eventPassed(event);
 }
 
@@ -86,7 +87,7 @@ AdaptivePursuit::Circle::Circle(Translation2d cent, double rad, bool turn_right)
     turnRight = turn_right;
 }
 
-std::pair<bool, AdaptivePursuit::Circle> AdaptivePursuit::joinPath(Position2d pos, Translation2d lookahead) {
+pair<bool, AdaptivePursuit::Circle> AdaptivePursuit::joinPath(Position2d pos, Translation2d lookahead) {
     double x1 = pos.getTranslation().getX();
     double y1 = pos.getTranslation().getY();
     double x2 = lookahead.getX();
@@ -110,8 +111,7 @@ std::pair<bool, AdaptivePursuit::Circle> AdaptivePursuit::joinPath(Position2d po
         return {false, Circle(Translation2d(), 0, 0)};
     }
 
-    return {true, Circle(
-            Translation2d((mx * (x1 * x1 - x2 * x2 - dy * dy) + 2 * my * x1 * dy) / (2 * crossTerm),
-                          (-my * (-y1 * y1 + y2 * y2 + dy * dy) + 2 * mx * y1 * dx) / (2 * crossTerm)),
-            .5 * abs((dx * dx + dy * dy) / crossTerm), (crossProduct > 0))};
+    return {true, Circle(Translation2d((mx * (x1 * x1 - x2 * x2 - dy * dy) + 2 * my * x1 * dy) / (2 * crossTerm),
+                                       (-my * (-y1 * y1 + y2 * y2 + dy * dy) + 2 * mx * y1 * dx) / (2 * crossTerm)),
+                         .5 * abs((dx * dx + dy * dy) / crossTerm), (crossProduct > 0))};
 }
