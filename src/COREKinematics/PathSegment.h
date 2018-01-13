@@ -1,47 +1,48 @@
 #pragma once
 
 #include "COREUtilities/Position2d.h"
+#include "COREUtilities/COREVector.h"
 
 class PathSegment {
 public:
     struct Sample {
-        Translation2d translation;
+        COREVector translation;
         double speed;
 
-        Sample(Translation2d newTranslation, double newSpeed);
+        Sample(COREVector newTranslation, double newSpeed);
     };
 
 protected:
     double m_speed;
-    Translation2d m_start;
-    Translation2d m_end;
-    Translation2d m_startToEnd;
+    COREVector m_start;
+    COREVector m_end;
+    COREVector m_startToEnd;
     double m_length;
 
 public:
     struct ClosestPointReport {
         double index;
         double clampedIndex;
-        Translation2d closestPoint;
+        COREVector closestPoint;
         double distance;
     };
 
-    PathSegment(Translation2d start, Translation2d end, double speed);
+    PathSegment(COREVector start, COREVector end, double speed);
 
-    void updateStart(Translation2d newStart);
+    void updateStart(COREVector newStart);
 
     double getSpeed();
 
-    Translation2d getStart();
+    COREVector getStart();
 
-    Translation2d getEnd();
+    COREVector getEnd();
 
     double getLength();
 
-    Translation2d interpolate(double index);
+    COREVector interpolate(double index);
 
-    double dotProduct(Translation2d other);
+    double dotProduct(COREVector other);
 
-    ClosestPointReport getClosestPoint(Translation2d queryPoint);
+    ClosestPointReport getClosestPoint(COREVector queryPoint);
 
 };

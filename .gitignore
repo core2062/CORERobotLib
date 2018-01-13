@@ -179,3 +179,4 @@ CTestTestfile.cmake
 test/COREUtilities_Test
 test/Testing
 /.gradle/
+/build/

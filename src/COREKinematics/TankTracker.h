@@ -62,13 +62,13 @@ public:
 
     Position2d getLatestFieldToVehicle();
 
-    Position2d generateOdometry(double leftDelta, double rightDelta, Rotation2d heading);
+    Position2d generateOdometry(double leftDelta, double rightDelta, COREVector heading);
 
     std::pair<double, double> getEncoderInches();
 
     std::pair<double, double> getEncoderSpeed();
 
-    Rotation2d getGyroAngle();
+    COREVector getGyroAngle();
 
     void autonInitTask() override;
 

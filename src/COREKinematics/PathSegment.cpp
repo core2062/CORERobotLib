@@ -1,20 +1,20 @@
 #include "PathSegment.h"
 
-PathSegment::Sample::Sample(Translation2d newTranslation, double newSpeed) {
+PathSegment::Sample::Sample(COREVector newTranslation, double newSpeed) {
     translation = newTranslation;
     speed = newSpeed;
 }
 
-PathSegment::PathSegment(Translation2d start, Translation2d end, double speed) {
+PathSegment::PathSegment(COREVector start, COREVector end, double speed) {
     m_end = end;
     m_speed = speed;
     updateStart(start);
 }
 
-void PathSegment::updateStart(Translation2d newStart) {
+void PathSegment::updateStart(COREVector newStart) {
     m_start = newStart;
-    m_startToEnd = m_start.inverse().translateBy(m_end);
-    m_length = m_startToEnd.norm();
+    m_startToEnd = m_start.MagnitudeInverse().TranslateBy(m_end);
+    m_length = m_startToEnd.NormalizeMagnitude();
 //	std::cout << "New Length: " << m_length << std::endl;
 }
 
@@ -22,11 +22,11 @@ double PathSegment::getSpeed() {
     return m_speed;
 }
 
-Translation2d PathSegment::getStart() {
+COREVector PathSegment::getStart() {
     return m_start;
 }
 
-Translation2d PathSegment::getEnd() {
+COREVector PathSegment::getEnd() {
     return m_end;
 }
 
@@ -34,16 +34,16 @@ double PathSegment::getLength() {
     return m_length;
 }
 
-Translation2d PathSegment::interpolate(double index) {
-    return m_start.interpolate(m_end, index);
+COREVector PathSegment::interpolate(double index) {
+    return m_start.InterpolateMagnitude(m_end, index);
 }
 
-double PathSegment::dotProduct(Translation2d other) {
-    Translation2d startToOther = m_start.inverse().translateBy(other);
-    return m_startToEnd.getX() * startToOther.getX() + m_startToEnd.getY() * startToOther.getY();
+double PathSegment::dotProduct(COREVector other) {
+	COREVector startToOther = m_start.MagnitudeInverse().TranslateBy(other);
+    return other.GetDotProduct(other);
 }
 
-PathSegment::ClosestPointReport PathSegment::getClosestPoint(Translation2d queryPoint) {
+PathSegment::ClosestPointReport PathSegment::getClosestPoint(COREVector queryPoint) {
     ClosestPointReport rv;
     if (m_length > kE) {
         double dot = dotProduct(queryPoint);
@@ -53,8 +53,8 @@ PathSegment::ClosestPointReport PathSegment::getClosestPoint(Translation2d query
     } else {
         rv.index = 0.0;
         rv.clampedIndex = 0.0;
-        rv.closestPoint = Translation2d(m_start);
+        rv.closestPoint = COREVector(m_start);
     }
-    rv.distance = rv.closestPoint.inverse().translateBy(queryPoint).norm();
+    rv.distance = rv.closestPoint.MagnitudeInverse().TranslateBy(queryPoint).NormalizeMagnitude();
     return rv;
 }

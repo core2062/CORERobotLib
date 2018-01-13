@@ -2,7 +2,7 @@
 
 #include "COREUtilities/CORETimer.h"
 #include "COREUtilities/CORENamedObject.h"
-#include "COREUtilities/Rotation2d.h"
+#include "COREUtilities/COREVector.h"
 #include "COREController.h"
 
 namespace CORE {
@@ -53,7 +53,7 @@ namespace CORE {
     public:
         explicit COREAnglePID(double kP, double kI, double kD, double kF = 1);
         explicit COREAnglePID(PIDProfile &profile);
-        double calculate(Rotation2d actualAngle, Rotation2d setPointAngle);
-        double calculate(Rotation2d actualAngle, Rotation2d setPointAngle, double dt);
+        double calculate(COREVector actualAngle, COREVector setPointAngle);
+        double calculate(COREVector actualAngle, COREVector setPointAngle, double dt);
     };
 }

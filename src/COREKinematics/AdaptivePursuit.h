@@ -26,11 +26,11 @@ public:
     bool checkEvent(string event);
 
     struct Circle {
-        Translation2d center;
+        COREVector center;
         double radius;
         bool turnRight;
-        Circle(Translation2d cent, double rad, bool turn_right);
+        Circle(COREVector cent, double rad, bool turn_right);
     };
 
-    pair<bool, Circle> joinPath(Position2d pos, Translation2d lookahead);
+    pair<bool, Circle> joinPath(Position2d pos, COREVector lookahead);
 };

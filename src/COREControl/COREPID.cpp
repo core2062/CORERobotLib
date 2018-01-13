@@ -114,17 +114,17 @@ COREAnglePID::COREAnglePID(COREPID::PIDProfile &profile) : COREPID(profile) {
 
 }
 
-double COREAnglePID::calculate(Rotation2d actualAngle, Rotation2d setPointAngle) {
-    double counterClockwiseMove = actualAngle.getCompassDegrees() - setPointAngle.getCompassDegrees();
-    double clockwiseMove = setPointAngle.getCompassDegrees() - actualAngle.getCompassDegrees();
+double COREAnglePID::calculate(COREVector actualAngle, COREVector setPointAngle) {
+    double counterClockwiseMove = actualAngle.GetCompassDegrees() - setPointAngle.GetCompassDegrees();
+    double clockwiseMove = setPointAngle.GetCompassDegrees() - actualAngle.GetCompassDegrees();
     clockwiseMove = clockwiseMove < 0 ? 360 + clockwiseMove : clockwiseMove;
     counterClockwiseMove = counterClockwiseMove < 0 ? 360 + counterClockwiseMove : counterClockwiseMove;
     return COREPID::calculate(clockwiseMove < counterClockwiseMove ? clockwiseMove : -counterClockwiseMove);
 }
 
-double COREAnglePID::calculate(Rotation2d actualAngle, Rotation2d setPointAngle, double dt) {
-    double counterClockwiseMove = actualAngle.getCompassDegrees() - setPointAngle.getCompassDegrees();
-    double clockwiseMove = setPointAngle.getCompassDegrees() - actualAngle.getCompassDegrees();
+double COREAnglePID::calculate(COREVector actualAngle, COREVector setPointAngle, double dt) {
+    double counterClockwiseMove = actualAngle.GetCompassDegrees() - setPointAngle.GetCompassDegrees();
+    double clockwiseMove = setPointAngle.GetCompassDegrees() - actualAngle.GetCompassDegrees();
     clockwiseMove = clockwiseMove < 0 ? 360 + clockwiseMove : clockwiseMove;
     counterClockwiseMove = counterClockwiseMove < 0 ? 360 + counterClockwiseMove : counterClockwiseMove;
     return COREPID::calculate(clockwiseMove < counterClockwiseMove ? clockwiseMove : -counterClockwiseMove, dt);

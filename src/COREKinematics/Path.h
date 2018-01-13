@@ -6,11 +6,11 @@
 #include "CORELogging/CORELog.h"
 
 struct Waypoint {
-    Translation2d position;
+    COREVector position;
     double speed;
     std::string event;
 
-    Waypoint(Translation2d pos = Translation2d(0, 0), double spd = 0.0, std::string completeEvent = "");
+    Waypoint(COREVector pos = COREVector(0, 0), double spd = 0.0, std::string completeEvent = "");
 };
 
 class Path {
@@ -21,16 +21,16 @@ protected:
 
 public:
     //Path();
-    Path(std::vector<Waypoint> waypoints = {Waypoint(Translation2d(), 0)}, bool flipY = false, bool flipX = false);
+    Path(std::vector<Waypoint> waypoints = {Waypoint(COREVector(), 0)}, bool flipY = false, bool flipX = false);
 
-    double update(Translation2d pos);
+    double update(COREVector pos);
 
     bool eventPassed(std::string event);
 
     double getRemainingLength();
 
-    PathSegment::Sample getLookaheadPoint(Translation2d pos, double lookahead);
+    PathSegment::Sample getLookaheadPoint(COREVector pos, double lookahead);
 
-    std::pair<bool, Translation2d> getFirstCircleSegmentIntersection(PathSegment segment, Translation2d center,
+    std::pair<bool, COREVector> getFirstCircleSegmentIntersection(PathSegment segment, COREVector center,
                                                                      double radius);
 };

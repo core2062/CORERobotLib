@@ -77,7 +77,7 @@ void TankTracker::loop() {
         std::pair<double, double> inches = getEncoderInches();
         double left = inches.first;
         double right = inches.second;
-        Rotation2d gyroAngle = getGyroAngle();
+        COREVector gyroAngle = getGyroAngle();
 
         m_loopLock.lock();
         Position2d odometry = generateOdometry(left - m_leftPrev, right - m_rightPrev, gyroAngle);
@@ -119,15 +119,15 @@ void TankTracker::addData(double time, Position2d data, Position2d::Delta vel) {
     m_data.put(InterpolatingDouble(time), data);
     m_velocity = vel;
     if (doLog) {
-        log.putData({new COREDataPoint<double>(data.getTranslation().getX()),
-                     new COREDataPoint<double>(data.getTranslation().getY()),
-                     new COREDataPoint<double>(data.getRotation().getDegrees())});
+        log.putData({new COREDataPoint<double>(data.getTranslation().GetX()),
+                     new COREDataPoint<double>(data.getTranslation().GetY()),
+                     new COREDataPoint<double>(data.getRotation().GetDegrees())});
     }
     m_dataLock.unlock();
 }
 
 Position2d TankTracker::generateOdometry(double leftDelta, double rightDelta,
-                                         Rotation2d heading) {
+                                         COREVector heading) {
     Position2d last = getLatestFieldToVehicle();
     return TankKinematics::integrateForwardKinematics(last, leftDelta, rightDelta, heading);
 }
@@ -142,9 +142,9 @@ std::pair<double, double> TankTracker::getEncoderSpeed() {
     return {m_left->GetSpeed() * factor, m_right->GetSpeed() * factor};
 }
 
-Rotation2d TankTracker::getGyroAngle() {
+COREVector TankTracker::getGyroAngle() {
     double degrees = m_gyro->GetAngle();
-    return Rotation2d::fromDegrees(degrees);
+    return COREVector::FromDegrees(degrees);
 }
 
 void TankTracker::autonInitTask() {

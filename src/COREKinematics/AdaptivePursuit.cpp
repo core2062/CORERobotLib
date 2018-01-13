@@ -24,7 +24,7 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
     Position2d pos = robotPos;
     if (m_reversed) {
         pos = Position2d(robotPos.getTranslation(),
-                         robotPos.getRotation().rotateBy(Rotation2d::fromRadians(PI)));
+                         robotPos.getRotation().RotateBy(COREVector::FromRadians(PI)));
     }
 
     double distanceFromPath = m_path.update(robotPos.getTranslation());
@@ -81,37 +81,38 @@ bool AdaptivePursuit::checkEvent(string event) {
     return m_path.eventPassed(event);
 }
 
-AdaptivePursuit::Circle::Circle(Translation2d cent, double rad, bool turn_right) {
+AdaptivePursuit::Circle::Circle(COREVector cent, double rad, bool turn_right) {
     center = cent;
     radius = rad;
     turnRight = turn_right;
 }
 
-pair<bool, AdaptivePursuit::Circle> AdaptivePursuit::joinPath(Position2d pos, Translation2d lookahead) {
-    double x1 = pos.getTranslation().getX();
-    double y1 = pos.getTranslation().getY();
-    double x2 = lookahead.getX();
-    double y2 = lookahead.getY();
+pair<bool, AdaptivePursuit::Circle> AdaptivePursuit::joinPath(Position2d pos, COREVector lookahead) {
+    double x1 = pos.getTranslation().GetX();
+    double y1 = pos.getTranslation().GetY();
+    double x2 = lookahead.GetX();
+    double y2 = lookahead.GetY();
 
-    Translation2d posToLookahead = pos.getTranslation().inverse().translateBy(lookahead);
-    double crossProduct = posToLookahead.getX() * pos.getRotation().getSin()
-                          - posToLookahead.getY() * pos.getRotation().getCos();
+    COREVector posToLookahead = pos.getTranslation().MagnitudeInverse().TranslateBy(lookahead);
+
+    double crossProduct = lookahead.GetX() * pos.getRotation().GetSin()
+                          - posToLookahead.GetY() * pos.getRotation().GetCos();
     if (abs(crossProduct) < kE) {
-        return {false, Circle(Translation2d(), 0, 0)};
+        return {false, Circle(COREVector(), 0, 0)};
     }
 
     double dx = x1 - x2;
     double dy = y1 - y2;
-    double my = ((crossProduct > 0) ? -1 : 1) * pos.getRotation().getCos();
-    double mx = ((crossProduct > 0) ? 1 : -1) * pos.getRotation().getSin();
+    double my = ((crossProduct > 0) ? -1 : 1) * pos.getRotation().GetCos();
+    double mx = ((crossProduct > 0) ? 1 : -1) * pos.getRotation().GetSin();
 
     double crossTerm = mx * dx + my * dy;
 
     if (abs(crossTerm) < kE) {
-        return {false, Circle(Translation2d(), 0, 0)};
+        return {false, Circle(COREVector(), 0, 0)};
     }
 
-    return {true, Circle(Translation2d((mx * (x1 * x1 - x2 * x2 - dy * dy) + 2 * my * x1 * dy) / (2 * crossTerm),
+    return {true, Circle(COREVector((mx * (x1 * x1 - x2 * x2 - dy * dy) + 2 * my * x1 * dy) / (2 * crossTerm),
                                        (-my * (-y1 * y1 + y2 * y2 + dy * dy) + 2 * mx * y1 * dx) / (2 * crossTerm)),
                          .5 * abs((dx * dx + dy * dy) / crossTerm), (crossProduct > 0))};
 }

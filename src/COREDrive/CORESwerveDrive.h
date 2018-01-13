@@ -7,6 +7,7 @@
 #include "ctrlib/CANTalon.h"
 #include "COREHardware/CORESensor.h"
 #include "COREControl/COREPID.h"
+#include "COREUtilities/COREVector.h"
 
 namespace CORE {
     class CORESwerve/* : public COREDrive*/ {

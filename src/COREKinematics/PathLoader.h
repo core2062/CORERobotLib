@@ -1,5 +1,6 @@
 #pragma once
 
+#include "COREUtilities/COREVector.h"
 #include "Path.h"
 #include <iostream>
 #include <fstream>

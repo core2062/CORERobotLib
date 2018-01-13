@@ -44,7 +44,7 @@ Path *PathLoader::loadPath(std::string fileName, double speedScale, bool flipY, 
             }
 
             Waypoint wp;
-            wp.position = Translation2d(p.x, p.y);
+            wp.position = COREVector(p.x, p.y);
             wp.speed = 100;
             wp.event = p.event;
             points.push_back(wp);
@@ -58,7 +58,7 @@ Path *PathLoader::loadPath(std::string fileName, double speedScale, bool flipY, 
             CORELog::logInfo(fileName + " was loaded");
             std::cout << fileName << " has " << points.size() << " points" << std::endl;
             for (auto i : points) {
-                cout << i.position.getX() << " " << i.position.getY() << endl;
+                cout << i.position.GetX() << " " << i.position.GetY() << endl;
             }
             return new Path(points, flipY, flipX);
         } else {

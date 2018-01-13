@@ -2,7 +2,7 @@
 
 using namespace CORE;
 
-Waypoint::Waypoint(Translation2d pos, double spd, std::string completeEvent) {
+Waypoint::Waypoint(COREVector pos, double spd, std::string completeEvent) {
     position = pos;
     speed = spd;
     event = completeEvent;
@@ -13,17 +13,17 @@ Path::Path(std::vector<Waypoint> waypoints, bool flipY, bool flipX) {
     for (unsigned int i = 0; i < m_waypoints.size() - 1; ++i) {
         if (flipX && flipY) {
             m_segments.push_back(
-                    PathSegment(m_waypoints[i].position.inverse(), m_waypoints[i + 1].position.inverse(),
+                    PathSegment(m_waypoints[i].position.MagnitudeInverse(), m_waypoints[i + 1].position.MagnitudeInverse(),
                                 m_waypoints[i].speed));
         } else if (flipX) {
             CORELog::logInfo("Flipped X"); 
             m_segments.push_back(
-                    PathSegment(m_waypoints[i].position.flipX(), m_waypoints[i + 1].position.flipX(),
+                    PathSegment(m_waypoints[i].position.FlipX(), m_waypoints[i + 1].position.FlipX(),
                                 m_waypoints[i].speed));
         } else if (flipY) {
             CORELog::logInfo("Flipped Y"); 
             m_segments.push_back(
-                    PathSegment(m_waypoints[i].position.flipY(), m_waypoints[i + 1].position.flipY(), 
+                    PathSegment(m_waypoints[i].position.FlipY(), m_waypoints[i + 1].position.FlipY(),
                         m_waypoints[i].speed));
         } else {
             m_segments.push_back(
@@ -39,7 +39,7 @@ Path::Path(std::vector<Waypoint> waypoints, bool flipY, bool flipX) {
     }
 }
 
-double Path::update(Translation2d pos) {
+double Path::update(COREVector pos) {
     double rv = 0.0;
     for (unsigned int i = 0; i < m_segments.size(); i++) {
         PathSegment::ClosestPointReport closestPointReport = m_segments[i].getClosestPoint(pos);
@@ -93,25 +93,25 @@ double Path::getRemainingLength() {
     return length;
 }
 
-PathSegment::Sample Path::getLookaheadPoint(Translation2d pos, double lookahead) {
+PathSegment::Sample Path::getLookaheadPoint(COREVector pos, double lookahead) {
     if (m_segments.size() == 0) {
-        return PathSegment::Sample(Translation2d(), 0);
+        return PathSegment::Sample(COREVector(), 0);
     }
 
-    Translation2d posInverse = pos.inverse();
-    if (posInverse.translateBy(m_segments[0].getStart()).norm() >= lookahead) {
+    Position2d posInverse = pos.MagnitudeInverse();
+    if (posInverse.transformBy(m_segments[0].getStart()).NormalizeMagnitude() >= lookahead) {
         return PathSegment::Sample(m_segments[0].getStart(), m_segments[0].getSpeed());
     }
     for (unsigned int i = 0; i < m_segments.size(); ++i) {
         PathSegment segment = m_segments[i];
-        double distance = posInverse.translateBy(segment.getEnd()).norm();
+        double distance = posInverse.transformBy(segment.getEnd()).NormalizeMagnitude();
         if (distance >= lookahead) {
-            std::pair<bool, Translation2d> intersectionPoint = getFirstCircleSegmentIntersection(segment, pos,
+            std::pair<bool, COREVector> intersectionPoint = getFirstCircleSegmentIntersection(segment, pos,
                                                                                                  lookahead);
             if (intersectionPoint.first) {
                 return PathSegment::Sample(intersectionPoint.second, segment.getSpeed());
             } else {
-                CORELog::logError("Error? Bad things happend");
+                CORELog::logError("Error? Bad things happened");
             }
         }
     }
@@ -119,7 +119,7 @@ PathSegment::Sample Path::getLookaheadPoint(Translation2d pos, double lookahead)
     PathSegment lastSegment = m_segments[m_segments.size() - 1];
     PathSegment newLastSegment = PathSegment(lastSegment.getStart(), lastSegment.interpolate(10000), 
                                              lastSegment.getSpeed());
-    std::pair<bool, Translation2d> intersectionPoint = getFirstCircleSegmentIntersection(newLastSegment, pos,
+    std::pair<bool, COREVector> intersectionPoint = getFirstCircleSegmentIntersection(newLastSegment, pos,
                                                                                          lookahead);
     if (intersectionPoint.first) {
         return PathSegment::Sample(intersectionPoint.second, lastSegment.getSpeed());
@@ -129,12 +129,12 @@ PathSegment::Sample Path::getLookaheadPoint(Translation2d pos, double lookahead)
     }
 }
 
-std::pair<bool, Translation2d> Path::getFirstCircleSegmentIntersection(PathSegment segment, Translation2d center,
+std::pair<bool, COREVector> Path::getFirstCircleSegmentIntersection(PathSegment segment, COREVector center,
                                                                        double radius) {
-    double x1 = segment.getStart().getX() - center.getX();
-    double y1 = segment.getStart().getY() - center.getY();
-    double x2 = segment.getEnd().getX() - center.getX();
-    double y2 = segment.getEnd().getY() - center.getY();
+    double x1 = segment.getStart().GetX() - center.GetX();
+    double y1 = segment.getStart().GetY() - center.GetY();
+    double x2 = segment.getEnd().GetX() - center.GetX();
+    double y2 = segment.getEnd().GetY() - center.GetY();
     double dx = x2 - x1;
     double dy = y2 - y1;
     double drSquared = dx * dx + dy * dy;
@@ -142,16 +142,16 @@ std::pair<bool, Translation2d> Path::getFirstCircleSegmentIntersection(PathSegme
 
     double discriminant = drSquared * radius * radius - det * det;
     if (discriminant < 0) {
-        return {false, Translation2d()};
+        return {false, COREVector()};
     }
 
     double sqrtDiscriminant = sqrt(discriminant);
-    Translation2d posSolution = Translation2d(
-            (det * dy + ((dy < 0) ? -1 : 1) * dx * sqrtDiscriminant) / drSquared + center.getX(),
-            (-det * dx + abs(dy) * sqrtDiscriminant) / drSquared + center.getY());
-    Translation2d negSolution = Translation2d(
-            (det * dy - ((dy < 0) ? -1 : 1) * dx * sqrtDiscriminant) / drSquared + center.getX(),
-            (-det * dx - abs(dy) * sqrtDiscriminant) / drSquared + center.getY());
+    COREVector posSolution = COREVector(
+            (det * dy + ((dy < 0) ? -1 : 1) * dx * sqrtDiscriminant) / drSquared + center.GetX(),
+            (-det * dx + abs(dy) * sqrtDiscriminant) / drSquared + center.GetY());
+    COREVector negSolution = COREVector(
+            (det * dy - ((dy < 0) ? -1 : 1) * dx * sqrtDiscriminant) / drSquared + center.GetX(),
+            (-det * dx - abs(dy) * sqrtDiscriminant) / drSquared + center.GetY());
 
     double posDot = segment.dotProduct(posSolution);
     double negDot = segment.dotProduct(negSolution);

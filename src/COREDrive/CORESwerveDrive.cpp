@@ -61,9 +61,9 @@ void CORESwerve::calculate(double forward, double strafeRight, double rotateCloc
 
     /*Code to determine if the motors should be set to be in reverse and rotate the wheels accordingly
     First checks to see if the angle from the driver would require turning more than 90 degrees
-    If it does, set the angle to be the angle plus another 180 degrees, then take the remainder to make sure that the wheels don't make
-    multiple rotations
-    Sets speed to negative (I guess this would make it velocity)*/
+    If it does, set the angle to be the angle plus another 180 degrees, then take the remainder to
+    make sure that the wheels don't make multiple rotations. Sets speed to negative*/
+
     double MAX_WHEEL_INVERT_SPEED = 1;
 
     if (abs(rightFrontModuleSpeed) <= MAX_WHEEL_INVERT_SPEED) { 
@@ -132,11 +132,11 @@ void CORESwerve::tank(double speed, double rot){
 void CORESwerve::SwerveModule::drive(double magnitude, double direction, double dt) {
     double steerMotorOutput;
     if(dt == -1) {
-        steerMotorOutput = m_anglePIDController.calculate(Rotation2d::fromCompassDegrees(getAngle()),
-                                         Rotation2d::fromCompassDegrees(direction));
+        steerMotorOutput = m_anglePIDController.calculate(COREVector::FromCompassDegrees(getAngle()),
+                                         COREVector::FromCompassDegrees(direction));
     } else {
-        steerMotorOutput = m_anglePIDController.calculate(Rotation2d::fromCompassDegrees(getAngle()),
-                                                         Rotation2d::fromCompassDegrees(direction), dt);
+        steerMotorOutput = m_anglePIDController.calculate(COREVector::FromCompassDegrees(getAngle()),
+                                                         COREVector::FromCompassDegrees(direction), dt);
     }
     m_steerMotor->Set(steerMotorOutput);
     m_driveMotor->Set(magnitude);

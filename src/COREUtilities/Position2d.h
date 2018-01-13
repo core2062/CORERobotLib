@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Translation2d.h"
+#include "COREVector.h"
 
 class Position2d{
 public:
@@ -11,24 +11,24 @@ public:
 	};
 
 protected:
-	Translation2d m_translation;
-	Rotation2d m_rotation;
+	COREVector m_translation;
+	COREVector m_rotation;
 
 public:
 	Position2d();
-	Position2d(Translation2d tran, Rotation2d rot);
+	Position2d(COREVector tran, COREVector rot);
 	Position2d(const Position2d& other);
 
-	static Position2d fromTranslation(Translation2d tran);
-	static Position2d fromRotation(Rotation2d rot);
+	static Position2d fromTranslation(COREVector tran);
+	static Position2d fromRotation(COREVector rot);
 	static Position2d fromVelocity(Delta delta);
 
-	Translation2d getTranslation();
-	void setTranslation(Translation2d tran);
-	Rotation2d getRotation();
-	void setRotation(Rotation2d rot);
+	COREVector getTranslation();
+	void setTranslation(COREVector tran);
+	COREVector getRotation();
+	void setRotation(COREVector rot);
 
-	Position2d transformBy(Position2d other);
+	Position2d transformBy(COREVector other);
 
 	Position2d inverse();
 

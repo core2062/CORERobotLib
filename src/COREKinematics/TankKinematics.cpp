@@ -24,9 +24,9 @@ Position2d::Delta TankKinematics::forwardKinematics(double leftDelta,
 }
 
 Position2d TankKinematics::integrateForwardKinematics(Position2d pos,
-                                                      double leftDelta, double rightDelta, Rotation2d heading) {
+                                                      double leftDelta, double rightDelta, COREVector heading) {
     Position2d::Delta withGyro = forwardKinematics(leftDelta, rightDelta,
-                                                   pos.getRotation().inverse().rotateBy(heading).getRadians());
+                                                   pos.getRotation().RotationInverse().RotateBy(heading).GetRadians());
     return pos.transformBy(Position2d::fromVelocity(withGyro));
 }
 

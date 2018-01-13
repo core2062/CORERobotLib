@@ -17,7 +17,7 @@ public:
     static Position2d::Delta forwardKinematics(double leftDelta, double rightDelta, double deltaRads);
 
     static Position2d
-    integrateForwardKinematics(Position2d pos, double leftDelta, double rightDelta, Rotation2d heading);
+    integrateForwardKinematics(Position2d pos, double leftDelta, double rightDelta, COREVector heading);
 
     static VelocityPair inverseKinematics(Position2d::Delta vel);
 

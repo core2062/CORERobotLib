@@ -12,8 +12,8 @@ public:
 
     RobotFrame();
 
-    Position2d getLatest();
+    Position2d getLatest(COREVector translation);
 
-    Position2d getPos(double time);
+    Position2d getPos(double time, COREVector translation);
 
 };

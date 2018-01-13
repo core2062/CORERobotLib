@@ -49,7 +49,7 @@ Position2d InterpolatingTreeMap::getInterpolated(InterpolatingDouble key) {
         bool top = (topBound == m_values.end());
         bool bot = (botBound == m_values.end());
         if (top && bot) {
-            return Position2d(Translation2d(), Rotation2d());
+            return Position2d(COREVector(), COREVector());
         } else if (top) {
             return botBound->second;
         } else if (bot) {
