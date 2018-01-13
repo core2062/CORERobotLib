@@ -60,9 +60,9 @@ void Position2d::setRotation(COREVector rot) {
 	m_rotation = rot;
 }
 
-Position2d Position2d::transformBy(COREVector other) {
-	return Position2d(m_translation.TranslateBy(other.m_translation.RotateBy(m_rotation)),
-			m_rotation.RotateBy(other.m_rotation));
+Position2d Position2d::transformBy(Position2d other) {
+	return Position2d(m_translation.TranslateBy(m_translation.RotateBy(m_rotation)),
+			m_rotation.RotateBy(m_rotation));
 }
 
 Position2d Position2d::inverse() {

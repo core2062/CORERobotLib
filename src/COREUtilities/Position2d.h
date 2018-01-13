@@ -28,7 +28,7 @@ public:
 	COREVector getRotation();
 	void setRotation(COREVector rot);
 
-	Position2d transformBy(COREVector other);
+	Position2d transformBy(Position2d other);
 
 	Position2d inverse();
 

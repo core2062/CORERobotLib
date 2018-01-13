@@ -98,13 +98,13 @@ PathSegment::Sample Path::getLookaheadPoint(COREVector pos, double lookahead) {
         return PathSegment::Sample(COREVector(), 0);
     }
 
-    Position2d posInverse = pos.MagnitudeInverse();
-    if (posInverse.transformBy(m_segments[0].getStart()).NormalizeMagnitude() >= lookahead) {
+    COREVector posInverse = pos.MagnitudeInverse();
+    if (posInverse.TranslateBy(m_segments[0].getStart()).NormalizeMagnitude() >= lookahead) {
         return PathSegment::Sample(m_segments[0].getStart(), m_segments[0].getSpeed());
     }
     for (unsigned int i = 0; i < m_segments.size(); ++i) {
         PathSegment segment = m_segments[i];
-        double distance = posInverse.transformBy(segment.getEnd()).NormalizeMagnitude();
+        double distance = posInverse.TranslateBy(segment.getEnd()).NormalizeMagnitude();
         if (distance >= lookahead) {
             std::pair<bool, COREVector> intersectionPoint = getFirstCircleSegmentIntersection(segment, pos,
                                                                                                  lookahead);
