@@ -6,10 +6,10 @@ using namespace CORE;
 
 COREMotor::COREMotor(int port, controllerType controller, controlMode controlMethod) :
         m_motorControlMode(controlMethod), m_motorControllerType(controller), m_motorPort(port) {
-    if(m_motorControllerType == CORE::CANTALON) {
-    	m_CANTalonController = make_shared<CANTalon>(port);
+    if(m_motorControllerType == CORE::TALONSRX) {
+    	m_TalonSRXController = make_shared<TalonSRX>(port);
 //        m_encoder = make_shared<COREEncoder>(m_CANTalonController, SRX_RELATIVE);
-        m_CANTalonController->DisableSoftPositionLimits();
+        m_TalonSRXController->DisableSoftPositionLimits();
         setControlMode(controlMethod);
     } else if(m_motorControllerType == CORE::JAGUAR) {
 //        m_JaguarController = make_shared<Jaguar>(port);
@@ -43,16 +43,16 @@ bool COREMotor::getReversed() {
 }
 
 void COREMotor::setControlMode(controlMode controlMethod) {
-    if(m_motorControllerType == CANTALON) {
+    if(m_motorControllerType == TALONSRX) {
         switch(controlMethod) {
             case VOLTAGE:
-                m_CANTalonController->SetControlMode(CANTalon::ControlMode::kVoltage);
+                m_TalonSRXController->SetControlMode(TALONSRX::ControlMode::kVoltage);
                 break;
             case PERCENTAGE:
-                m_CANTalonController->SetControlMode(CANTalon::ControlMode::kPercentVbus);
+                m_TalonSRXController->SetControlMode(TALONSRX::ControlMode::kPercentVbus);
                 break;
             case CURRENT:
-                m_CANTalonController->SetControlMode(CANTalon::ControlMode::kCurrent);
+                m_TalonSRXController->SetControlMode(TALONSRX::ControlMode::kCurrent);
                 break;
         }
     }
@@ -82,9 +82,9 @@ void COREMotor::setDeadband(double min, double max) {
 
 void COREMotor::setFollower(int port) {
     m_isFollower = true;
-    if(m_motorControllerType == CORE::CANTALON) {
-        m_CANTalonController->SetControlMode(CANTalon::ControlMode::kFollower);
-        m_CANTalonController->Set(port);
+    if(m_motorControllerType == CORE::TALONSRX) {
+        m_TalonSRXController->SetControlMode(TalonSRX::ControlMode::kFollower);
+        m_TalonSRXController->Set(port);
     }
 }
 
@@ -93,8 +93,8 @@ void COREMotor::motorSafety(bool disableMotorSafety) {
 }
 
 double COREMotor::getCurrent() {
-    if(m_motorControllerType == CORE::CANTALON) {
-        return m_CANTalonController->GetOutputCurrent();
+    if(m_motorControllerType == CORE::TALONSRX) {
+        return TalonSRXController->GetOutputCurrent();
     } else {
         //TODO: Throw error
         return 0;
@@ -102,9 +102,9 @@ double COREMotor::getCurrent() {
 }
 
 void COREMotor::Update() {
-    if(m_isFollower || (m_motorControllerType == CANTALON
-                                          && (m_CANTalonController->GetTalonControlMode() == CANTalon::TalonControlMode::kFollowerMode
-                                        		  || m_CANTalonController->GetControlMode() == CANTalon::ControlMode::kFollower))) {
+    if(m_isFollower || (m_motorControllerType == TALONSRX
+                                          && (m_TalonSRXController->GetTalonControlMode() == TALONSRX::TalonControlMode::kFollowerMode
+                                        		  || m_TalonSRXController->GetControlMode() == TALONSRX::ControlMode::kFollower))) {
         m_isFollower = true;
         return;
     }
@@ -121,8 +121,8 @@ void COREMotor::Update() {
     m_motorValue = abs(m_motorValue) > 1 ? (m_motorValue > 1 ? 1 : -1) : m_motorValue;
     m_motorValue = (m_motorValue < m_deadBandMax && m_motorValue > m_deadBandMin) ? 0 : m_motorValue;
 
-    if(m_motorControllerType == CORE::CANTALON) {
-        m_CANTalonController->Set(m_motorValue);
+    if(m_motorControllerType == CORE::TALONSRX) {
+        m_TalonSRXController->Set(m_motorValue);
     } else if(m_motorControllerType == CORE::JAGUAR) {
 //        m_JaguarController->Set(m_motorValue);
     } else if(m_motorControllerType == CORE::VICTOR) {
@@ -144,11 +144,11 @@ void COREMotor::ControllerSet(double value) {
     Set(value);
 }
 
-shared_ptr<CANTalon> COREMotor::getCANTalon() {
-    if(!m_CANTalonController) {
-        CORELog::logError("Motor in port: " + to_string(m_motorPort) + " returning CANTalon nullptr!");
+shared_ptr<TalonSRX> COREMotor::getCANTalon() {
+    if(!m_TalonSRXController) {
+        CORELog::logError("Motor in port: " + to_string(m_motorPort) + " returning TalonSRX nullptr!");
     }
-    return m_CANTalonController;
+    return m_TalonSRXController;
 }
 
 //shared_ptr<Jaguar> COREMotor::getJaguar() {

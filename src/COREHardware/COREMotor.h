@@ -12,7 +12,7 @@
 #include "COREEncoder.h"
 
 //#include <WPILib.h>
-#include "ctrlib/CANTalon.h"
+#include <ctre/TalonSRX.h>
 
 using namespace std;
 
@@ -24,7 +24,7 @@ namespace CORE {
     };
 
     enum controllerType {
-        CANTALON,
+        TALONSRX,
         JAGUAR,
         VICTOR
     };
@@ -35,7 +35,7 @@ namespace CORE {
     };
     class COREMotor : public ICOREMotor, public ControllerOutput, public CORENamedObject {
     public:
-        COREMotor(int port, controllerType controller = CANTALON, controlMode controlMethod = PERCENTAGE);
+        COREMotor(int port, controllerType controller = TALONSRX, controlMode controlMethod = PERCENTAGE);
         void Set(double motorSetValue);
         double Get();
         double GetLast();
@@ -50,14 +50,14 @@ namespace CORE {
         void setFollower(int port);
         void motorSafety(bool disableMotorSafety = true);
         double getCurrent();
-        shared_ptr<CANTalon> getCANTalon();
+        shared_ptr<TalonSRX> getTalonSRX();
 //        shared_ptr<Jaguar> getJaguar();
 //        shared_ptr<Victor> getVictor();
 //        shared_ptr<COREEncoder> getEncoder();
         void ControllerSet(double value) override;
         void Update() override;
     private:
-        shared_ptr<CANTalon> m_CANTalonController = nullptr;
+        shared_ptr<TalonSRX> m_TalonSRXController = nullptr;
 //        shared_ptr<Jaguar> m_JaguarController = nullptr;
 //        shared_ptr<Victor> m_VictorController = nullptr;
 //        shared_ptr<COREEncoder> m_encoder = nullptr;
