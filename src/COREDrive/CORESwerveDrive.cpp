@@ -99,7 +99,7 @@ void CORESwerve::calculate(double forward, double strafeRight, double rotateCloc
     }
 }
 
-CORESwerve::SwerveModule::SwerveModule(CANTalon *driveMotor, CANTalon *steerMotor, double angleOffset) :
+CORESwerve::SwerveModule::SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMotor, double angleOffset) :
         m_speedPIDController(0, 0, 0),
         m_anglePIDController(0, 0, 0),
         m_driveMotor(driveMotor),
@@ -110,7 +110,8 @@ CORESwerve::SwerveModule::SwerveModule(CANTalon *driveMotor, CANTalon *steerMoto
 
 double CORESwerve::SwerveModule::getAngle(bool raw) {
     //Multiplying by 360 degrees and dividing by five volts
-    double angle = m_steerMotor->GetAnalogInRaw() * (360.0 / 1025.0);
+	//getSensorCollection replaced getAnalogInRaw
+    double angle = m_steerMotor->getSensorCollection(getAnalogInRaw) * (360.0 / 1025.0);
     if(raw) {
         return angle;
     } else {

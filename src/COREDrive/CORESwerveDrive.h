@@ -4,7 +4,7 @@
 
 #include "COREFramework/COREHardwareManager.h"
 #include "COREDrive.h"
-#include "ctrlib/CANTalon.h"
+#include "ctrlib/TalonSRX.h"
 #include "COREHardware/CORESensor.h"
 #include "COREControl/COREPID.h"
 #include "COREUtilities/COREVector.h"
@@ -14,7 +14,7 @@ namespace CORE {
     public:
         class SwerveModule {
         public:
-            SwerveModule(CANTalon *driveMotor, CANTalon *steerMotor, double angleOffset = 0);
+            SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMotor, double angleOffset = 0);
             void drive(double magnitude, double direction, double dt = -1);
             double getAngle(bool raw = false);
             void setAnglePID(double p, double i, double d);
@@ -24,8 +24,8 @@ namespace CORE {
             COREPID m_speedPIDController;
             COREAnglePID m_anglePIDController;
         private:
-            CANTalon *m_driveMotor;
-            CANTalon *m_steerMotor;
+            TalonSRX *m_driveMotor;
+            TalonSRX *m_steerMotor;
             double m_angleOffset;
         };
 
