@@ -3,7 +3,7 @@
 #include "COREUtilities/Position2d.h"
 #include "TankKinematics.h"
 #include "InterpolatingMap.h"
-#include "ctrlib/CANTalon.h"
+#include "ctrlib/TalonSRX.h"
 #include "AHRS.h"
 #include "../COREUtilities/CORETimer.h"
 #include "CORELogging/CORELog.h"
@@ -29,8 +29,8 @@ private:
     double m_leftPrev = 0;
     double m_rightPrev = 0;
     CORETimer m_loopTimer;
-    CANTalon *m_left = nullptr;
-    CANTalon *m_right = nullptr;
+    TalonSRX *m_left = nullptr;
+    TalonSRX *m_right = nullptr;
     AHRS *m_gyro = nullptr;
     thread *m_mainLoop = nullptr;
     static TankTracker *m_instance;
@@ -50,7 +50,7 @@ public:
 
     static TankTracker *GetInstance();
 
-    void init(CANTalon *left, CANTalon *right, AHRS *gyro);
+    void init(TalonSRX *left, TalonSRX *right, AHRS *gyro);
 
     ~TankTracker();
 

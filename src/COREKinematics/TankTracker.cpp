@@ -24,15 +24,15 @@ TankTracker *TankTracker::GetInstance() {
     return m_instance;
 }
 
-void TankTracker::init(CANTalon *left, CANTalon *right, AHRS *gyro) {
+void TankTracker::init(TalonSRX *left, TalonSRX *right, AHRS *gyro) {
     m_left = left;
     m_right = right;
     m_gyro = gyro;
     m_targetLoopTime = 1.0 / m_targetLoopHz;
-    m_left->SetStatusFrameRateMs(CANTalon::StatusFrameRateGeneral, floor(1000 * m_targetLoopTime));
-    m_left->SetStatusFrameRateMs(CANTalon::StatusFrameRateQuadEncoder, floor(1000 * m_targetLoopTime));
-    m_right->SetStatusFrameRateMs(CANTalon::StatusFrameRateGeneral, floor(1000 * m_targetLoopTime));
-    m_right->SetStatusFrameRateMs(CANTalon::StatusFrameRateQuadEncoder, floor(1000 * m_targetLoopTime));
+    m_left->SetStatusFrameRateMs(TalonSRX::StatusFrameRateGeneral, floor(1000 * m_targetLoopTime));
+    m_left->SetStatusFrameRateMs(TalonSRX::StatusFrameRateQuadEncoder, floor(1000 * m_targetLoopTime));
+    m_right->SetStatusFrameRateMs(TalonSRX::StatusFrameRateGeneral, floor(1000 * m_targetLoopTime));
+    m_right->SetStatusFrameRateMs(TalonSRX::StatusFrameRateQuadEncoder, floor(1000 * m_targetLoopTime));
     m_loopEnabled = false;
 }
 
