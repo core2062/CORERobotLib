@@ -9,18 +9,18 @@
 //    encoder = pointer;
 //    m_portA = portA;
 //    m_portB = portB;
-//    m_boundToCANTalon = false;
+//    m_boundToTalonSRX = false;
 //    Reset();
 //    COREHardwareManager::addEncoder(this);
 //}
 //
-//COREEncoder::COREEncoder(shared_ptr<CANTalon> boundCANTalonController, encoderType encoder, bool reversed) :
+//COREEncoder::COREEncoder(shared_ptr<TalonSRX> boundTalonSRXController, encoderType encoder, bool reversed) :
 //        m_encoderType(encoder),
 //        m_reversed(reversed) {
-//    CANTalonController = boundCANTalonController;
+//    TalonSRXController = boundTalonSRXController;
 //    m_portA = -1;
 //    m_portB = -1;
-//    m_boundToCANTalon = true;
+//    m_boundToTalonSRX = true;
 //    Reset();
 //    COREHardwareManager::addEncoder(this);
 //}
@@ -54,8 +54,8 @@
 //}
 //
 //void COREEncoder::SetEncPos(int value) {
-//    if(m_boundToCANTalon) {
-//        CANTalonController->SetEncPosition(value);
+//    if(m_boundToTalonSRX) {
+//        TalonSRXController->SetEncPosition(value);
 //        m_offset = 0;
 //    } else {
 //        encoder->Reset();
@@ -77,16 +77,16 @@
 //    return m_portB;
 //}
 //
-//bool COREEncoder::isBoundToCANTalon() {
-//    return m_boundToCANTalon;
+//bool COREEncoder::isBoundToTalonSRX() {
+//    return m_boundToTalonSRX;
 //}
 //
 //void COREEncoder::Update() {
 //    double time = m_timer.Get();
 //    if(time != 0) {
-//        if(m_boundToCANTalon) {
-//            m_pos = CANTalonController->GetEncPosition();
-//            m_vel = CANTalonController->GetEncVel();
+//        if(m_boundToTalonSRX) {
+//            m_pos = TalonSRXController->GetEncPosition();
+//            m_vel = TalonSRXController->GetEncVel();
 //        } else {
 //            m_pos = (encoder->Get() * (m_reversed ? -1 : 1)) + m_offset;
 //            m_vel = (m_pos - m_lastPos) / time;
@@ -99,6 +99,6 @@
 //    m_timer.Start();
 //}
 //
-//int COREEncoder::getCANTalonID() {
-//    return CANTalonController->GetDeviceID();
+//int COREEncoder::getTalonSRXID() {
+//    return TalonSRXController->GetDeviceID();
 //}

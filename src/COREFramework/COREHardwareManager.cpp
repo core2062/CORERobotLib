@@ -45,11 +45,11 @@ void COREHardwareManager::zeroEncoders() {
 
 void COREHardwareManager::addEncoder(ICOREEncoder* encoder) {
     m_encoders.push_back(encoder);
-    if(!encoder->isBoundToCANTalon()) {
+    if(!encoder->isBoundToTalonSRX()) {
         CORELog::logInfo("Encoder in ports " + to_string(encoder->getPortA()) + ", "
                          + to_string(encoder->getPortB()) + " added");
     } else {
-        CORELog::logInfo("Encoder bound to CAN Talon ID: " + to_string(encoder->getCANTalonID())
+        CORELog::logInfo("Encoder bound to CAN Talon ID: " + to_string(encoder->getTalonSRXID())
                          + " added");
     }
 }

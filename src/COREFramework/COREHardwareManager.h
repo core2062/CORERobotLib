@@ -25,8 +25,8 @@ namespace CORE {
         virtual int getPortA() = 0;
         virtual int getPortB() = 0;
         virtual void Reset() = 0;
-        virtual bool isBoundToCANTalon() = 0;
-        virtual int getCANTalonID() = 0;
+        virtual bool isBoundToTalonSRX() = 0;
+        virtual int getTalonSRXID() = 0;
         virtual ~ICOREEncoder() = default;
     };
 
