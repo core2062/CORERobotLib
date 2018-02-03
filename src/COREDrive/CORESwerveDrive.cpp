@@ -111,7 +111,7 @@ CORESwerve::SwerveModule::SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMoto
 double CORESwerve::SwerveModule::getAngle(bool raw) {
     //Multiplying by 360 degrees and dividing by five volts
 	//getSensorCollection replaced getAnalogInRaw
-    double angle = m_steerMotor->getSensorCollection(getAnalogInRaw) * (360.0 / 1025.0);
+    double angle = m_steerMotor->GetSensorCollection() * (360.0 / 1025.0);
     if(raw) {
         return angle;
     } else {
@@ -139,8 +139,9 @@ void CORESwerve::SwerveModule::drive(double magnitude, double direction, double 
         steerMotorOutput = m_anglePIDController.calculate(COREVector::FromCompassDegrees(getAngle()),
                                                          COREVector::FromCompassDegrees(direction), dt);
     }
-    m_steerMotor->Set(steerMotorOutput);
-    m_driveMotor->Set(magnitude);
+    //TODO check percent output
+    m_steerMotor->Set(ControlMode::PercentOutput, steerMotorOutput);
+    m_driveMotor->Set(ControlMode::PercentOutput, magnitude);
 
 }
 

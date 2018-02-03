@@ -4,7 +4,7 @@
 
 #include "COREFramework/COREHardwareManager.h"
 #include "COREDrive.h"
-#include "ctrlib/TalonSRX.h"
+#include "ctre/Phoenix.h"
 #include "COREHardware/CORESensor.h"
 #include "COREControl/COREPID.h"
 #include "COREUtilities/COREVector.h"

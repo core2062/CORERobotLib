@@ -29,10 +29,15 @@ void TankTracker::init(TalonSRX *left, TalonSRX *right, AHRS *gyro) {
     m_right = right;
     m_gyro = gyro;
     m_targetLoopTime = 1.0 / m_targetLoopHz;
-    m_left->SetStatusFrameRateMs(TalonSRX::StatusFrameRateGeneral, floor(1000 * m_targetLoopTime));
-    m_left->SetStatusFrameRateMs(TalonSRX::StatusFrameRateQuadEncoder, floor(1000 * m_targetLoopTime));
-    m_right->SetStatusFrameRateMs(TalonSRX::StatusFrameRateGeneral, floor(1000 * m_targetLoopTime));
-    m_right->SetStatusFrameRateMs(TalonSRX::StatusFrameRateQuadEncoder, floor(1000 * m_targetLoopTime));
+    //StatusFrameRateQuadEncoder may need to be changed
+    m_left->SetStatusFramePeriod(CANifierStatusFrame_Status_1_General,
+    		m_targetLoopTime, floor(1000 * m_targetLoopTime));
+    m_left->SetStatusFramePeriod(CANifierStatusFrame_Status_3_PwmInputs0,
+    		m_targetLoopTime, floor(1000 * m_targetLoopTime));
+    m_right->SetStatusFramePeriod(CANifierStatusFrame_Status_1_General,
+    		m_targetLoopTime, floor(1000 * m_targetLoopTime));
+    m_right->SetStatusFramePeriod(CANifierStatusFrame_Status_3_PwmInputs0,
+    		m_targetLoopTime, floor(1000 * m_targetLoopTime));
     m_loopEnabled = false;
 }
 
@@ -134,12 +139,14 @@ Position2d TankTracker::generateOdometry(double leftDelta, double rightDelta,
 
 std::pair<double, double> TankTracker::getEncoderInches() {
     double factor = 4.0 * PI;
-    return {m_left->GetPosition() * factor, m_right->GetPosition() * factor};
+    return {m_left->GetSelectedSensorPosition(0) * factor, m_right->GetSelectedSensorPosition(0) * factor};
 }
+
+//TODO change the inputs of the getSelectedSensorPosition and getSelectedSensorVelocity
 
 std::pair<double, double> TankTracker::getEncoderSpeed() {
     double factor = 4.0 * PI * .0166666666;
-    return {m_left->GetSpeed() * factor, m_right->GetSpeed() * factor};
+    return {m_left->GetSelectedSensorVelocity(0) * factor, m_right->GetSelectedSensorVelocity(0) * factor};
 }
 
 COREVector TankTracker::getGyroAngle() {
