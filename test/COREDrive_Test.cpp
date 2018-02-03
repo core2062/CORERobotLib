@@ -2,14 +2,15 @@
 #include "gmock/gmock.h"
 
 #include "COREDrive/CORESwerveDrive.h"
-#include "CORESimulation/ctrlib/CANTalon.h"
+#include "wpilib.h"
+#include "ctre/Phoenix.h"
 
 using namespace testing;
 using namespace CORE;
 
 TEST(CORESwerve, XYMove) {
-    CANTalon steerMotor(1);
-    CANTalon driveMotor(1);
+    TalonSRX steerMotor(1);
+    TalonSRX driveMotor(1);
     auto frontRight = new CORESwerve::SwerveModule(&driveMotor, &steerMotor);
     auto frontLeft = new CORESwerve::SwerveModule(&driveMotor, &steerMotor);
     auto backRight = new CORESwerve::SwerveModule(&driveMotor, &steerMotor);
@@ -44,8 +45,8 @@ TEST(CORESwerve, XYMove) {
 }
 
 TEST(CORESwerve, Optimization) {
-    CANTalon steerMotor(1);
-    CANTalon driveMotor(1);
+    TalonSRX steerMotor(1);
+    TalonSRX driveMotor(1);
     auto frontRight = new CORESwerve::SwerveModule(&driveMotor, &steerMotor);
     auto frontLeft = new CORESwerve::SwerveModule(&driveMotor, &steerMotor);
     auto backRight = new CORESwerve::SwerveModule(&driveMotor, &steerMotor);
@@ -81,8 +82,8 @@ TEST(CORESwerve, Optimization) {
 
 
 TEST(CORESwerve, Rotation) {
-    CANTalon steerMotor(1);
-    CANTalon driveMotor(1);
+    TalonSRX steerMotor(1);
+    TalonSRX driveMotor(1);
     auto frontRight = new CORESwerve::SwerveModule(&driveMotor, &steerMotor);
     auto frontLeft = new CORESwerve::SwerveModule(&driveMotor, &steerMotor);
     auto backRight = new CORESwerve::SwerveModule(&driveMotor, &steerMotor);
@@ -117,8 +118,8 @@ TEST(CORESwerve, Rotation) {
 }
 
 TEST(CORESwerve, AnglePID) {
-    CANTalon steerMotor(1);
-    CANTalon driveMotor(1);
+    TalonSRX steerMotor(1);
+    TalonSRX driveMotor(1);
     auto frontRight = new CORESwerve::SwerveModule(&driveMotor, &steerMotor);
     auto frontLeft = new CORESwerve::SwerveModule(&driveMotor, &steerMotor);
     auto backRight = new CORESwerve::SwerveModule(&driveMotor, &steerMotor);

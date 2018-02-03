@@ -6,7 +6,7 @@
 ////#include <WPILib.h>
 //#include "COREUtilities/CORETimer.h"
 //#include "COREFramework/COREHardwareManager.h"
-//#include "CANTalon.h"
+//#include "TalonSRX.h"
 //#include "COREControl/COREController.h"
 //
 //using namespace std;
@@ -28,8 +28,8 @@
 //    class COREEncoder : public ICOREEncoder, public ControllerInput {
 //    public:
 ////        shared_ptr<Encoder> encoder;
-//        shared_ptr<CANTalon> CANTalonController;
-//        COREEncoder(shared_ptr<CANTalon> boundCANTalonController, encoderType encoderType, bool reversed = false);
+//        shared_ptr<TalonSRX> TalonSRXController;
+//        COREEncoder(shared_ptr<TalonSRX> boundTalonSRXController, encoderType encoderType, bool reversed = false);
 //        COREEncoder(int portA, int portB, encoderType encoder, bool reversed = false);
 //        void setEncReversed(bool reversed = true);
 //        bool getEncReversed();
@@ -42,12 +42,12 @@
 //        void Reset();
 //        int getPortA();
 //        int getPortB();
-//        bool isBoundToCANTalon();
+//        bool isBoundToTalonSRX();
 //        void Update();
-//        int getCANTalonID() override;
+//        int getTalonSRXID() override;
 //    protected:
 //        CORETimer m_timer;
-//        bool m_boundToCANTalon = false;
+//        bool m_boundToTalonSRX = false;
 //        double m_ticksToDistanceConversion[4];
 //        int m_pos;
 //        double m_vel, m_accel, m_lastVel;
