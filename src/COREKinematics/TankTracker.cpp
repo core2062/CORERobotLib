@@ -30,13 +30,13 @@ void TankTracker::init(TalonSRX *left, TalonSRX *right, AHRS *gyro) {
     m_gyro = gyro;
     m_targetLoopTime = 1.0 / m_targetLoopHz;
     //StatusFrameRateQuadEncoder may need to be changed
-    m_left->SetStatusFramePeriod(CANifierStatusFrame_Status_1_General,
+    m_left->SetStatusFramePeriod(StatusFrame::Status_1_General_,
     		m_targetLoopTime, floor(1000 * m_targetLoopTime));
-    m_left->SetStatusFramePeriod(CANifierStatusFrame_Status_3_PwmInputs0,
+    m_left->SetStatusFramePeriod(StatusFrame::Status_1_General_,
     		m_targetLoopTime, floor(1000 * m_targetLoopTime));
-    m_right->SetStatusFramePeriod(CANifierStatusFrame_Status_1_General,
+    m_right->SetStatusFramePeriod(StatusFrame::Status_1_General_,
     		m_targetLoopTime, floor(1000 * m_targetLoopTime));
-    m_right->SetStatusFramePeriod(CANifierStatusFrame_Status_3_PwmInputs0,
+    m_right->SetStatusFramePeriod(StatusFrame::Status_1_General_,
     		m_targetLoopTime, floor(1000 * m_targetLoopTime));
     m_loopEnabled = false;
 }

@@ -110,8 +110,8 @@ CORESwerve::SwerveModule::SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMoto
 
 double CORESwerve::SwerveModule::getAngle(bool raw) {
     //Multiplying by 360 degrees and dividing by five volts
-	//getSensorCollection replaced getAnalogInRaw
-    double angle = m_steerMotor->GetSensorCollection() * (360.0 / 1025.0);
+	//GetSensorCollection replaced getAnalogInRaw
+    double angle = m_steerMotor->GetSensorCollection().GetAnalogInRaw() * (360.0 / 1025.0);
     if(raw) {
         return angle;
     } else {
@@ -146,7 +146,7 @@ void CORESwerve::SwerveModule::drive(double magnitude, double direction, double 
 }
 
 string CORESwerve::SwerveModule::print() {
-    string text = "\n\tSteer Motor Speed: " + to_string(m_steerMotor->Get());
+    string text = "\n\tSteer Motor Speed: " + to_string(m_steerMotor->GetSelectedSensorVelocity(0)); //TODO Change 0 to some other value
     text += "\n\tSteer Angle Offset: " + to_string(m_angleOffset);
     text += "\n\tSteer PID:";
     text += "\n\t\tkP: " + to_string(m_anglePIDController.getProportionalConstant());
