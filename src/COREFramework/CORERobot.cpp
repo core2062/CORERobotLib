@@ -6,33 +6,13 @@ CORERobot::CORERobot() {
 
 }
 
-void CORERobot::waitLoopTime() {
-    if(!m_loopStarted) {
-        m_loopTimer.Reset();
-        m_loopTimer.Start();
-        m_loopStarted = true;
-    }
-    double loopTime = m_loopTimer.Get() < m_targetLoopTime ? m_targetLoopTime - m_loopTimer.Get() : 0.0;
-    if(m_loopTimer.Get() >= m_targetLoopTime * 1.2) {
-        CORELog::logWarning("Loop timer high at " + to_string(m_loopTimer.Get()) + " seconds!");
-    }
-    Wait(loopTime);
-    m_loopTimer.Reset();
-    m_loopTimer.Start();
-}
+
 
 void CORERobot::StartCompetition() {
 	COREDriverstation::updateRobotState();
 
 }
 
-void CORERobot::SetPeriod(double seconds) {
-	seconds = waitLoopTime();
-}
-
-void CORERobot::setLoopTime(double loopTime) {
-    m_targetLoopTime = loopTime;
-}
 
 void CORERobot::RobotInit() {
 	COREDriverstation::updateRobotState();
@@ -53,24 +33,14 @@ void CORERobot::AutonomousInit() {
     COREDriverstation::updateRobotState();
     bool autonComplete = false;
     COREScheduler::autonInit();
-    m_loopTimer.Reset();
-    m_loopTimer.Start();
-    while(IsAutonomous() && IsEnabled() && !autonComplete) {
-        autonComplete = COREScheduler::auton();
-        waitLoopTime();
-    }
+    autonComplete = COREScheduler::auton();
 }
 
 
 void CORERobot::TestInit() {
     COREDriverstation::updateRobotState();
-	m_loopTimer.Reset();
-	m_loopTimer.Start();
-    while(IsEnabled()) {
         //LiveWindow::GetInstance()->Run();
         COREScheduler::test();
-        waitLoopTime();
-    }
 }
 
 
@@ -82,11 +52,8 @@ void CORERobot::RobotPeriodic() {
 void CORERobot::AutonomousPeriodic() {
 	COREDriverstation::updateRobotState();
     bool autonComplete = false;
-    m_loopTimer.Reset();
-    m_loopTimer.Start();
     if (IsAutonomous() && IsEnabled() && !autonComplete) {
         autonComplete = COREScheduler::auton();
-        waitLoopTime();
     } else {
     	COREScheduler::autonEnd();
     }
@@ -95,12 +62,7 @@ void CORERobot::AutonomousPeriodic() {
 void CORERobot::TeleopPeriodic() {
     COREDriverstation::updateRobotState();
     COREScheduler::teleopInit();
-    m_loopTimer.Reset();
-    m_loopTimer.Start();
-    while(IsOperatorControl() && IsEnabled()) {
-        COREScheduler::teleop();
-        waitLoopTime();
-    }
+    COREScheduler::teleop();
     COREScheduler::teleopEnd();
 }
 

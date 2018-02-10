@@ -15,11 +15,8 @@ namespace CORE {
     class CORERobot : public CORESubsystem, public TimedRobot {
     public:
         CORERobot();
-        void waitLoopTime();
         void StartCompetition();
-        void SetPeriod(double seconds);
         void RobotInit();
-        void setLoopTime(double loopTime);
         void DisabledInit();
         void AutonomousInit();
         void TeleopInit();
@@ -33,7 +30,5 @@ namespace CORE {
         ~CORERobot();
     private:
         bool m_loopStarted = false;
-        CORETimer m_loopTimer;
-        double m_targetLoopTime = 0.01;
     };
 }
