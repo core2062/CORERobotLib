@@ -21,6 +21,15 @@ void CORERobot::waitLoopTime() {
     m_loopTimer.Start();
 }
 
+void CORERobot::StartCompetition() {
+	COREDriverstation::updateRobotState();
+
+}
+
+void CORERobot::SetPeriod(double seconds) {
+	seconds = waitLoopTime();
+}
+
 void CORERobot::setLoopTime(double loopTime) {
     m_targetLoopTime = loopTime;
 }
@@ -30,12 +39,17 @@ void CORERobot::RobotInit() {
     COREScheduler::robotInit();
 }
 
-void CORERobot::Disabled() {
+void CORERobot::TeleopInit() {
+	COREDriverstation::updateRobotState();
+	COREScheduler::teleopInit();
+}
+
+void CORERobot::DisabledInit() {
     COREDriverstation::updateRobotState();
     COREScheduler::disabled();
 }
 
-void CORERobot::Autonomous() {
+void CORERobot::AutonomousInit() {
     COREDriverstation::updateRobotState();
     bool autonComplete = false;
     COREScheduler::autonInit();
@@ -47,7 +61,38 @@ void CORERobot::Autonomous() {
     }
 }
 
-void CORERobot::OperatorControl() {
+
+void CORERobot::TestInit() {
+    COREDriverstation::updateRobotState();
+	m_loopTimer.Reset();
+	m_loopTimer.Start();
+    while(IsEnabled()) {
+        //LiveWindow::GetInstance()->Run();
+        COREScheduler::test();
+        waitLoopTime();
+    }
+}
+
+
+void CORERobot::RobotPeriodic() {
+	COREDriverstation::updateRobotState();
+
+}
+
+void CORERobot::AutonomousPeriodic() {
+	COREDriverstation::updateRobotState();
+    bool autonComplete = false;
+    m_loopTimer.Reset();
+    m_loopTimer.Start();
+    if (IsAutonomous() && IsEnabled() && !autonComplete) {
+        autonComplete = COREScheduler::auton();
+        waitLoopTime();
+    } else {
+    	COREScheduler::autonEnd();
+    }
+}
+
+void CORERobot::TeleopPeriodic() {
     COREDriverstation::updateRobotState();
     COREScheduler::teleopInit();
     m_loopTimer.Reset();
@@ -59,15 +104,10 @@ void CORERobot::OperatorControl() {
     COREScheduler::teleopEnd();
 }
 
-void CORERobot::Test() {
-    COREDriverstation::updateRobotState();
-	m_loopTimer.Reset();
-	m_loopTimer.Start();
-    while(IsEnabled()) {
-        //LiveWindow::GetInstance()->Run();
-        COREScheduler::test();
-        waitLoopTime();
-    }
+void CORERobot::TestPeriodic() {
+	COREDriverstation::updateRobotState();
+	COREScheduler::test();
+
 }
 
 CORERobot::~CORERobot() {

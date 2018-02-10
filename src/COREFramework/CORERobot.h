@@ -12,16 +12,24 @@
 
 
 namespace CORE {
-    class CORERobot : public CORESubsystem, public SampleRobot {
+    class CORERobot : public CORESubsystem, public TimedRobot {
     public:
         CORERobot();
         void waitLoopTime();
-        void setLoopTime(double loopTime);
+        void StartCompetition();
+        void SetPeriod(double seconds);
         void RobotInit();
-        void Disabled();
-        void Autonomous();
-        void OperatorControl();
-        void Test();
+        void setLoopTime(double loopTime);
+        void DisabledInit();
+        void AutonomousInit();
+        void TeleopInit();
+        void TestInit();
+
+        void RobotPeriodic();
+        void DisabledPeriodic();
+        void AutonomousPeriodic();
+        void TeleopPeriodic();
+        void TestPeriodic();
         ~CORERobot();
     private:
         bool m_loopStarted = false;
