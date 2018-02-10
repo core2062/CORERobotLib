@@ -2,9 +2,6 @@
 
 using namespace CORE;
 
-shared_ptr<thread> COREDashboard::m_serveThread;
-Server * COREDashboard::m_server;
-
 void COREDashboard::robotInit() {
     m_server = new Server(make_shared<m_logger>());
     m_server->addWebSocketHandler("/data", make_shared<COREDataConnectionHandler>());
