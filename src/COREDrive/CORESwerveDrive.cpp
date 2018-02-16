@@ -1,6 +1,8 @@
 #include "CORESwerveDrive.h"
+#include "COREControl/COREPID.h"
 #include "COREUtilities/COREMath.h"
 #include "WPILib.h"
+#include "ctre/Phoenix.h"
 
 using namespace CORE;
 
@@ -117,6 +119,7 @@ double CORESwerve::SwerveModule::getAngle(bool raw) {
     } else {
         return angle - m_angleOffset;
     }
+
 }
 
 void CORESwerve::SwerveModule::setAnglePID(double p, double i, double d) {
