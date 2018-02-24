@@ -6,7 +6,8 @@
 
 using namespace CORE;
 
-CORESwerve::CORESwerve(double trackWidth, double wheelBase,
+CORESwerve::CORESwerve(double trackWidth, double wheelBase, double wheelCircumference,
+					   double ticksToRotation,
                        SwerveModule *leftFrontModule,
                        SwerveModule *leftBackModule,
                        SwerveModule *rightBackModule,
@@ -17,6 +18,79 @@ CORESwerve::CORESwerve(double trackWidth, double wheelBase,
         m_rightFrontModule(rightFrontModule) {
     m_trackwidth = trackWidth;
     m_wheelbase = wheelBase;
+    m_wheelCircumference = wheelCircumference;
+    m_ticksToRotation = ticksToRotation;
+
+}
+
+CORESwerve::SwerveModule::SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMotor, double angleOffset) :
+        m_speedPIDController(0, 0, 0),
+        m_anglePIDController(0, 0, 0),
+        m_driveMotor(driveMotor),
+        m_steerMotor(steerMotor),
+        m_angleOffset(angleOffset) {
+}
+
+
+double CORESwerve::SwerveModule::getAngle(bool raw) {
+    //Multiplying by 360 degrees and dividing by five volts
+	//GetSensorCollection replaced getAnalogInRaw
+    double angle = m_steerMotor->GetSensorCollection().GetAnalogInRaw() * (360.0 / 1025.0);
+    if(raw) {
+        return angle;
+    } else {
+        return angle - m_angleOffset;
+    }
+
+}
+
+double CORESwerve::SwerveModule::getTotalTicks() {
+	return m_steerMotor->GetSelectedSensorPosition(0);
+}
+void CORESwerve::SwerveModule::setAnglePID(double p, double i, double d) {
+    m_anglePIDController.setProportionalConstant(p);
+    m_anglePIDController.setIntegralConstant(i);
+    m_anglePIDController.setDerivativeConstant(d);
+}
+
+void CORESwerve::tank(double speed, double rot){
+//    tank(COREEtherDrive::calculate(speed, rot, .1));
+}
+
+
+void CORESwerve::SwerveModule::drive(double magnitude, double direction, double dt) {
+    double steerMotorOutput;
+    if(dt == -1) {
+        steerMotorOutput = m_anglePIDController.calculate(COREVector::FromCompassDegrees(getAngle()),
+                                         COREVector::FromCompassDegrees(direction));
+    } else {
+        steerMotorOutput = m_anglePIDController.calculate(COREVector::FromCompassDegrees(getAngle()),
+                                                         COREVector::FromCompassDegrees(direction), dt);
+    }
+    //TODO check percent output
+    m_steerMotor->Set(ControlMode::PercentOutput, steerMotorOutput);
+    m_driveMotor->Set(ControlMode::PercentOutput, magnitude);
+
+}
+
+string CORESwerve::SwerveModule::print() {
+    string text = "\n\tSteer Motor Speed: " + to_string(m_steerMotor->GetSelectedSensorVelocity(0)); //TODO Change 0 to some other value
+    text += "\n\tSteer Angle Offset: " + to_string(m_angleOffset);
+    text += "\n\tSteer PID:";
+    text += "\n\t\tkP: " + to_string(m_anglePIDController.getProportionalConstant());
+    text += " kI: " + to_string(m_anglePIDController.getIntegralConstant());
+    text += " kD: " + to_string(m_anglePIDController.getDerivativeConstant());
+    text += " kF: " + to_string(m_anglePIDController.getFeedForwardConstant());
+    text += "\n\t\tMistake: " + to_string(m_anglePIDController.getMistake());
+    return text;
+}
+
+void CORESwerve::SwerveModule::setAngleOffset(double angleOffset) {
+    m_angleOffset = angleOffset;
+}
+
+void CORESwerve::SwerveModule::zeroAngle() {
+    m_angleOffset = -getAngle(true);
 }
 
 void CORESwerve::calculate(double forward, double strafeRight, double rotateClockwise) {
@@ -101,71 +175,37 @@ void CORESwerve::calculate(double forward, double strafeRight, double rotateCloc
     }
 }
 
-CORESwerve::SwerveModule::SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMotor, double angleOffset) :
-        m_speedPIDController(0, 0, 0),
-        m_anglePIDController(0, 0, 0),
-        m_driveMotor(driveMotor),
-        m_steerMotor(steerMotor),
-        m_angleOffset(angleOffset) {
-}
+void CORESwerve::calculateInverseKinematics(double fudgeFactor) {
+	double r = sqrt(pow(m_trackwidth, 2) + pow(m_wheelbase, 2));
 
+	//Sets the change in x for each of the modules
+	leftFrontDeltaX = ((cos(leftFrontModuleAngle) * fudgeFactor * fmod(m_wheelCircumference *
+			m_leftFrontModule->getTotalTicks(), 360) / m_ticksToRotation) +
+			leftFrontModuleAngle * m_wheelbase / r);
+	rightFrontDeltaX = ((cos(rightFrontModuleAngle) * fudgeFactor * fmod(m_wheelCircumference *
+			m_rightFrontModule->getTotalTicks(), 360) / m_ticksToRotation) +
+			rightFrontModuleAngle * m_wheelbase / r);
+	leftBackDeltaX = ((cos(leftBackModuleAngle) * fudgeFactor * fmod(m_wheelCircumference *
+			m_leftBackModule->getTotalTicks(), 360) / m_ticksToRotation) -
+			leftBackModuleAngle * m_wheelbase / r);
+	rightBackDeltaX = ((cos(rightBackModuleAngle) * fudgeFactor * fmod(m_wheelCircumference *
+			m_rightBackModule->getTotalTicks(), 360) / m_ticksToRotation) -
+			rightBackModuleAngle * m_wheelbase / r);
 
-double CORESwerve::SwerveModule::getAngle(bool raw) {
-    //Multiplying by 360 degrees and dividing by five volts
-	//GetSensorCollection replaced getAnalogInRaw
-    double angle = m_steerMotor->GetSensorCollection().GetAnalogInRaw() * (360.0 / 1025.0);
-    if(raw) {
-        return angle;
-    } else {
-        return angle - m_angleOffset;
-    }
+	//Sets the change in y for all of the modules
+	leftFrontDeltaY = ((sin(leftFrontModuleAngle) * fudgeFactor * fmod(m_wheelCircumference *
+			m_leftFrontModule->getTotalTicks(), 360) / m_ticksToRotation) +
+			leftFrontModuleAngle * m_wheelbase / r);
+	rightFrontDeltaY = ((sin(rightFrontModuleAngle) * fudgeFactor * fmod(m_wheelCircumference *
+			m_rightFrontModule->getTotalTicks(), 360) / m_ticksToRotation) -
+			rightFrontModuleAngle * m_wheelbase / r);
+	leftBackDeltaY = ((sin(leftBackModuleAngle) * fudgeFactor * fmod(m_wheelCircumference *
+			m_leftBackModule->getTotalTicks(), 360) / m_ticksToRotation) +
+			leftBackModuleAngle * m_wheelbase / r);
+	rightBackDeltaY = ((sin(rightBackModuleAngle) * fudgeFactor * fmod(m_wheelCircumference *
+			m_rightBackModule->getTotalTicks(), 360) / m_ticksToRotation) -
+			rightBackModuleAngle * m_wheelbase / r);
 
-}
-
-void CORESwerve::SwerveModule::setAnglePID(double p, double i, double d) {
-    m_anglePIDController.setProportionalConstant(p);
-    m_anglePIDController.setIntegralConstant(i);
-    m_anglePIDController.setDerivativeConstant(d);
-}
-
-void CORESwerve::tank(double speed, double rot){
-//    tank(COREEtherDrive::calculate(speed, rot, .1));
-}
-
-
-void CORESwerve::SwerveModule::drive(double magnitude, double direction, double dt) {
-    double steerMotorOutput;
-    if(dt == -1) {
-        steerMotorOutput = m_anglePIDController.calculate(COREVector::FromCompassDegrees(getAngle()),
-                                         COREVector::FromCompassDegrees(direction));
-    } else {
-        steerMotorOutput = m_anglePIDController.calculate(COREVector::FromCompassDegrees(getAngle()),
-                                                         COREVector::FromCompassDegrees(direction), dt);
-    }
-    //TODO check percent output
-    m_steerMotor->Set(ControlMode::PercentOutput, steerMotorOutput);
-    m_driveMotor->Set(ControlMode::PercentOutput, magnitude);
-
-}
-
-string CORESwerve::SwerveModule::print() {
-    string text = "\n\tSteer Motor Speed: " + to_string(m_steerMotor->GetSelectedSensorVelocity(0)); //TODO Change 0 to some other value
-    text += "\n\tSteer Angle Offset: " + to_string(m_angleOffset);
-    text += "\n\tSteer PID:";
-    text += "\n\t\tkP: " + to_string(m_anglePIDController.getProportionalConstant());
-    text += " kI: " + to_string(m_anglePIDController.getIntegralConstant());
-    text += " kD: " + to_string(m_anglePIDController.getDerivativeConstant());
-    text += " kF: " + to_string(m_anglePIDController.getFeedForwardConstant());
-    text += "\n\t\tMistake: " + to_string(m_anglePIDController.getMistake());
-    return text;
-}
-
-void CORESwerve::SwerveModule::setAngleOffset(double angleOffset) {
-    m_angleOffset = angleOffset;
-}
-
-void CORESwerve::SwerveModule::zeroAngle() {
-    m_angleOffset = -getAngle(true);
 }
 
 void CORESwerve::update(double dt){
