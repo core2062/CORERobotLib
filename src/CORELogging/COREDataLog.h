@@ -45,8 +45,6 @@ namespace CORE {
 		std::string getValue() override;
 	};
 
-	static CORETimeDataPoint matchTime;
-
 	class COREDataLogger{
 	public:
 		COREDataLogger(std::initializer_list<std::string> headers);

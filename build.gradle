@@ -4,9 +4,15 @@ plugins {
 }
 
 apply plugin: "cpp"
+apply plugin: 'google-test-test-suite'
 apply plugin: 'eclipse'
 
 model {
+    platforms {
+        amd64 {
+            architecture 'amd64'
+        }
+    }
     repositories {
         libs(PrebuiltLibraries) {
             seasocks {
@@ -39,6 +45,9 @@ model {
                     staticLibraryFile = file("3rdparty/googletest/googlemock/" + getPlatformPath(targetPlatform) + "/libgmock_main.a")
                 }
             }
+            wpilibrary {
+                headers.srcDir "3rdparty/wpilib/include"
+            }
             json {
                 headers.srcDir "3rdparty/json/src"
             }
@@ -60,28 +69,71 @@ model {
                 lib library: "seasocks", linkage: "static"
                 lib library: "ctre"
                 lib library: "navx"
-                lib library: "wpilib"
-                lib library: "ctre"
+                lib library: 'wpilib'
             }
+        }
+        CORERobotLibTest(NativeLibrarySpec) {
+            targetPlatform "amd64"
+            sources.cpp {
+                source {
+                    srcDirs "src", "test"
+                        include "**/*.cpp"
+                        exclude "CORESimulation", "COREKinematics", "COREData", "COREDrive", "COREDashboard", "COREDrive/COREEtherDrive.*"
+                }
+                exportedHeaders {
+                    srcDirs "src", "src/CORESimulation"
+                }
+                binaries.all {
+                    lib library: "wpilibrary", linkage: "api"
+                    lib library: "json", linkage: "api"
+                    lib library: "googleTest", linkage: "static"
+                    lib library: "googleTestMain", linkage: "static"
+                    lib library: "googleMock", linkage: "static"
+                    lib library: "googleMockMain", linkage: "static"
+                    cppCompiler.define "NOT_REAL"
+			cppCompiler.args "-g3"
+                    if (targetPlatform.operatingSystem.linux) {
+                        cppCompiler.args '-pthread -g'
+                            linker.args '-pthread'
+                    }            
+                }
+            }
+        }
+        all {
             binaries.withType(SharedLibraryBinarySpec) {
                 buildable = false
             }
         }
     }
+    testSuites {
+        CORERobotLib_Test(GoogleTestTestSuiteSpec) {
+            testing $.components.CORERobotLibTest            
+        }
+    }
+    binaries {
+        withType(GoogleTestTestSuiteBinarySpec) {
+            lib library: "wpilibrary", linkage: "api"
+            lib library: "json", linkage: "api"
+            lib library: "googleTest", linkage: "static"
+            lib library: "googleTestMain", linkage: "static"
+            lib library: "googleMock", linkage: "static"
+            lib library: "googleMockMain", linkage: "static"
+            cppCompiler.define "NOT_REAL"
+			cppCompiler.args "-g"
+            if (targetPlatform.operatingSystem.linux) {
+                cppCompiler.args '-pthread'
+                linker.args '-pthread'
+            }
+        }
+        all {
+            cppCompiler.args "-g3"
+        }
+    }
 }
-
-task copyToLibDir(type: Copy) {
-    from "build/libs/cORERobotLib/static"
-    into "lib"
-}
-
-build.finalizedBy copyToLibDir
 
 def getPlatformPath(Platform platform) {
     if (platform.operatingSystem.windows) {
         return "Windows/amd64/"
-    } else if (platform.architecture.arm) {
-        return "Linux/arm/"
     } else {
         return "Linux/amd64/"
     }

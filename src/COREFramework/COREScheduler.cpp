@@ -45,6 +45,8 @@ vector<function<void()>> COREScheduler::m_preLoopCallBacks;
 vector<function<void()>> COREScheduler::m_postLoopCallBacks;
 vector<function<void()>> COREScheduler::m_teleopEndCallBacks;
 vector<function<void()>> COREScheduler::m_disabledCallBacks;
+COREJoystick* COREScheduler::m_driverJoystick;
+COREJoystick* COREScheduler::m_operatorJoystick;
 //SendableChooser<COREAuton*>* COREScheduler::m_autonChooser;
 
 COREAuton* COREScheduler::m_selectedAuton;
@@ -70,7 +72,17 @@ void COREScheduler::addTask(CORETask* task) {
 void COREScheduler::robotInit() {
     CORELog::robotInit();
     COREConstantsManager::updateConstants();
+    m_driverJoystick = new COREJoystick(0);
+    m_operatorJoystick = new COREJoystick(1);
+    if(!m_driverJoystick) {
+        CORELog::logError("Driver joystick is a null pointer!");
+    }
+    if(!m_operatorJoystick) {
+        CORELog::logError("Operator joystick is a null pointer!");
+    }
     for(auto subsystem : m_subsystems) {
+        subsystem->driverJoystick = m_driverJoystick;
+        subsystem->operatorJoystick = m_operatorJoystick;
         subsystem->robotInit();
     }
     for(auto task : m_tasks) {

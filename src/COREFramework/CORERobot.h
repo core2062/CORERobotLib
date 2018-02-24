@@ -4,15 +4,21 @@
 
 #include "COREFramework/COREScheduler.h"
 #include "COREUtilities/CORETimer.h"
-//#include "COREUtilities/COREDriverstation.h"
+//#include "COREDashboard/COREDriverstation.h"
 #include "CORELogging/CORELog.h"
 #include "COREFramework/COREHardwareManager.h"
 
+#ifndef NOT_REAL
 #include <WPILib.h>
+#endif
 
 
 namespace CORE {
-    class CORERobot : public CORESubsystem, public TimedRobot {
+    class CORERobot : public CORESubsystem
+#ifndef NOT_REAL 
+		      , public TimedRobot 
+#endif	      
+		      {
     public:
         CORERobot();
         void StartCompetition();
@@ -21,7 +27,6 @@ namespace CORE {
         void AutonomousInit();
         void TeleopInit();
         void TestInit();
-
         void RobotPeriodic();
         void DisabledPeriodic();
         void AutonomousPeriodic();
@@ -30,5 +35,7 @@ namespace CORE {
         ~CORERobot();
     private:
         bool m_loopStarted = false;
+        bool m_autonComplete = false;
+        bool m_autonEnded = false;
     };
 }

@@ -12,6 +12,7 @@
 #include "CORETask.h"
 #include "CORELogging/CORELog.h"
 #include "COREUtilities/CORENamedObject.h"
+#include "COREHardware/COREJoystick.h"
 
 using namespace std;
 using namespace std::placeholders;
@@ -31,6 +32,8 @@ namespace CORE {
 		virtual void test() {}
 		virtual void disabled() {}
         virtual ~CORESubsystem() {}
+		COREJoystick* driverJoystick;
+		COREJoystick* operatorJoystick;
     };
 
 	class COREController : public CORETask {
@@ -84,6 +87,8 @@ namespace CORE {
 		static vector<CORESubsystem*> m_subsystems;
 		static COREAuton* m_selectedAuton;
 		static CORETimer m_autonTimer;
+        static COREJoystick* m_driverJoystick;
+        static COREJoystick* m_operatorJoystick;
 	public:
 		static void addSubsystem(CORESubsystem* subsystem);
 		static void addAuton(COREAuton * auton);

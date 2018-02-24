@@ -5,7 +5,9 @@
 #include <vector>
 
 #include "CORELogging/CORELog.h"
+#ifndef NOT_REAL
 #include <Preferences.h>
+#endif
 
 using namespace std;
 
@@ -34,7 +36,9 @@ namespace CORE {
     public:
         COREConstant(string name, T defaultValue) : m_value(defaultValue) {
             m_name = "INVALID TYPE";
+#ifndef NOT_REAL
             Preferences::GetInstance()->PutString(m_name, "INVALID TYPE SPECIFIED FOR: " + name);
+#endif
             CORELog::logError("Invalid COREConstant type specified with name: " + name);
         }
 
@@ -60,7 +64,9 @@ namespace CORE {
     public:
         COREConstant(string name, double defaultValue) : m_value(defaultValue) {
             m_name = name;
+#ifndef NOT_REAL
             Preferences::GetInstance()->PutDouble(m_name, defaultValue);
+#endif
             COREConstantsManager::addConstant(this);
         }
 
@@ -74,7 +80,9 @@ namespace CORE {
         }
 
         void updateConstant() {
+#ifndef NOT_REAL
             m_value = Preferences::GetInstance()->GetDouble(m_name);
+#endif
         }
 
         string m_name;
@@ -86,7 +94,9 @@ namespace CORE {
     public:
         COREConstant(string name, string defaultValue) : m_value(defaultValue) {
             m_name = name;
+#ifndef NOT_REAL
             Preferences::GetInstance()->PutString(m_name, defaultValue);
+#endif
             COREConstantsManager::addConstant(this);
         }
 
@@ -100,7 +110,9 @@ namespace CORE {
         }
 
         void updateConstant() {
+#ifndef NOT_REAL
             m_value = Preferences::GetInstance()->GetString(m_name);
+#endif
         }
 
         string m_name;
@@ -112,7 +124,9 @@ namespace CORE {
     public:
         COREConstant(string name, bool defaultValue) : m_value(defaultValue) {
             m_name = name;
+#ifndef NOT_REAL
             Preferences::GetInstance()->PutBoolean(m_name, defaultValue);
+#endif
             COREConstantsManager::addConstant(this);
         }
 
@@ -126,7 +140,9 @@ namespace CORE {
         }
 
         void updateConstant() {
+#ifndef NOT_REAL
             m_value = Preferences::GetInstance()->GetBoolean(m_name);
+#endif
         }
 
         string m_name;
@@ -138,7 +154,9 @@ namespace CORE {
     public:
         COREConstant(string name, int defaultValue) : m_value(defaultValue) {
             m_name = name;
+#ifndef NOT_REAL
             Preferences::GetInstance()->PutInt(m_name, defaultValue);
+#endif
             COREConstantsManager::addConstant(this);
         }
 
@@ -152,7 +170,9 @@ namespace CORE {
         }
 
         void updateConstant() {
+#ifndef NOT_REAL
             m_value = Preferences::GetInstance()->GetInt(m_name);
+#endif
         }
 
         string m_name;
