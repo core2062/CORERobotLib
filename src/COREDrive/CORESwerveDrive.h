@@ -30,7 +30,7 @@ namespace CORE {
             double m_angleOffset;
         };
 
-        CORESwerve(double trackWidth, double wheelBase, double wheelCircumference,
+        CORESwerve(double trackWidth, double wheelBase, double wheelDiameter,
         		   double ticksToRotation,
                    SwerveModule *leftFrontModule,
                    SwerveModule *leftBackModule,

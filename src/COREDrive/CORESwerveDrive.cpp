@@ -6,7 +6,7 @@
 
 using namespace CORE;
 
-CORESwerve::CORESwerve(double trackWidth, double wheelBase, double wheelCircumference,
+CORESwerve::CORESwerve(double trackWidth, double wheelBase, double wheelDiameter,
 					   double ticksToRotation,
                        SwerveModule *leftFrontModule,
                        SwerveModule *leftBackModule,
@@ -18,7 +18,7 @@ CORESwerve::CORESwerve(double trackWidth, double wheelBase, double wheelCircumfe
         m_rightFrontModule(rightFrontModule) {
     m_trackwidth = trackWidth;
     m_wheelbase = wheelBase;
-    m_wheelCircumference = wheelCircumference;
+    m_wheelCircumference = wheelDiameter * PI;
     m_ticksToRotation = ticksToRotation;
 
 }
