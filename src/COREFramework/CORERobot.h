@@ -21,7 +21,6 @@ namespace CORE {
 		      {
     public:
         CORERobot();
-        void StartCompetition();
         void RobotInit();
         void DisabledInit();
         void AutonomousInit();

@@ -24,3 +24,21 @@ add_executable(fake_libCORERobotLib.so ${SOURCES} ${ALL_INCLUDES})
 
 add_custom_target(libCORERobotLib.so_build gradlew.bat build WORKING_DIRECTORY ../ SOURCES ${SOURCES} ${ALL_INCLUDES})
 add_custom_target(libCORERobotLib.so_deploy gradlew.bat deploy WORKING_DIRECTORY ../ SOURCES ${SOURCES} ${ALL_INCLUDES})
+file(GLOB_RECURSE SOURCES "src/*.*" "test/*.*")
+file(GLOB_RECURSE INCLUDES "src/*.*" "src/CORESimulation/*.*")
+include_directories(src)
+include_directories(src/CORESimulation)
+
+file(GLOB_RECURSE DEP_INCLUDES "3rdparty/wpilib/include/*.*" "3rdparty/json/src/*.*" "3rdparty/googletest/googletest/include/*.*" "3rdparty/googletest/googlemock/include/*.*" "src/*.*" "src/CORESimulation/*.*")
+include_directories(3rdparty/wpilib/include)
+include_directories(3rdparty/json/src)
+include_directories(3rdparty/googletest/googletest/include)
+include_directories(3rdparty/googletest/googlemock/include)
+include_directories(src)
+include_directories(src/CORESimulation)
+set(ALL_INCLUDES ${INCLUDES} ${DEP_INCLUDES})
+
+add_executable(fake_CORERobotLibTest.dll ${SOURCES} ${ALL_INCLUDES})
+
+add_custom_target(CORERobotLibTest.dll_build gradlew.bat build WORKING_DIRECTORY ../ SOURCES ${SOURCES} ${ALL_INCLUDES})
+add_custom_target(CORERobotLibTest.dll_deploy gradlew.bat deploy WORKING_DIRECTORY ../ SOURCES ${SOURCES} ${ALL_INCLUDES})

@@ -10,10 +10,10 @@ TEST(COREFramework, GameStateCorrectlyTransitions) {
     class Robot : public CORERobot {
     public:
         Robot() {
-
+            CORELog::logInfo("Robot");
         }
         ~Robot() {
-
+            CORELog::logInfo("~Robot");
         }
         void robotInit() {
             CORELog::logInfo("RobotInit");
@@ -28,5 +28,6 @@ TEST(COREFramework, GameStateCorrectlyTransitions) {
         }
     };
     Robot testRobot;
-    testRobot.robotInit();
+    CORELog::logInfo("Robot Finished Init");
+    testRobot.RobotInit();
 }

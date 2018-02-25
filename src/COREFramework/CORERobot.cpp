@@ -4,16 +4,12 @@
 using namespace CORE;
 
 CORERobot::CORERobot() {
-	std::cout << "CORERobot" << std::endl;
-}
 
-void CORERobot::StartCompetition() {
-    COREDriverstation::updateRobotState();
 }
 
 void CORERobot::RobotInit() {
     COREDriverstation::updateRobotState();
-	COREScheduler::robotInit();
+    COREScheduler::robotInit();
 }
 
 void CORERobot::TeleopInit() {
@@ -23,7 +19,7 @@ void CORERobot::TeleopInit() {
 
 void CORERobot::DisabledInit() {
 	COREDriverstation::updateRobotState();
-	COREScheduler::disabled();
+    COREScheduler::disabled();
 }
 
 void CORERobot::AutonomousInit() {
@@ -40,7 +36,7 @@ void CORERobot::TestInit() {
 }
 
 void CORERobot::RobotPeriodic() {
-	COREDriverstation::updateRobotState();
+
 }
 
 void CORERobot::DisabledPeriodic() {
