@@ -16,6 +16,9 @@ CORESwerve::CORESwerve(double trackWidth, double wheelBase, double wheelDiameter
         m_leftBackModule(leftBackModule),
         m_rightBackModule(rightBackModule),
         m_rightFrontModule(rightFrontModule) {
+    if(!(m_leftFrontModule && m_leftBackModule && m_rightBackModule && m_rightFrontModule)) {
+        CORELog::logError("A module passed to CORESwerve is a nullptr!");
+    }
     m_trackwidth = trackWidth;
     m_wheelbase = wheelBase;
     m_wheelCircumference = wheelDiameter * PI;
