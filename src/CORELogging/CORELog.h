@@ -32,9 +32,11 @@ namespace CORE {
         static void robotInit();
         static void autonInit();
         static void teleopInit();
-        static void disabled();
+        static void testInit();
+
+static void disabled();
         static void setConsoleLoggingLevel(loggingLevel level);
-    private:
+            private:
         static void writeLastDuration();
         static string getFileName();
         static string getRobotMode();
