@@ -138,6 +138,13 @@ void CORELog::teleopInit() {
     m_matchTimer.Start();
 }
 
+void CORELog::testInit() {
+    m_file.open(m_fileName);
+    writeLastDuration();
+    m_matchTimer.Reset();
+    m_matchTimer.Start();
+}
+
 void CORELog::disabled() {
     writeLastDuration();
     m_matchTimer.Reset();

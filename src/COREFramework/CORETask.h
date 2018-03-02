@@ -12,6 +12,7 @@ namespace CORE {
         virtual void autonInitTask() {}
         virtual void autonEndTask() {}
         virtual void teleopInitTask() {}
+        virtual void testInitTask() {}
         virtual void preLoopTask() {}
         virtual void postLoopTask() {}
         virtual void teleopEndTask() {}

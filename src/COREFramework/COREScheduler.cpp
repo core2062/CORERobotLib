@@ -224,9 +224,8 @@ void COREScheduler::teleopEnd() {
 void COREScheduler::disabled() {
     CORELog::disabled();
     for(auto task : m_tasks) {
-        if(!task->isDisabled()) {
-            task->disabledTask();
-        }
+    	task->disabledTask();
+
     }
     for(auto callBack : m_disabledCallBacks) {
         callBack();
@@ -238,11 +237,17 @@ void COREScheduler::disabled() {
 }
 
 void COREScheduler::test() {
-    CORELog::logInfo("COREScheduler Test");
-    for(auto subsystem : m_subsystems) {
+	for(auto task : m_tasks) {
+		if(!task->isDisabled()) {
+			task->disabledTask();
+		}
+	}
+	for(auto callBack : m_testCallBacks) {
+		callBack();
+	}
+	for(auto subsystem : m_subsystems) {
         subsystem->test();
     }
-    //TODO: Do something
 }
 
 void COREScheduler::cleanUp() {
@@ -304,6 +309,22 @@ void COREScheduler::addDisabledCallBack(T* const object, void(T::* const callBac
     m_disabledCallBacks.emplace_back(bind(callBack, object, _1, _2));
 }
 
+template<class T>
+void COREScheduler::addTestCallBack(T* const object, void(T::* const callBack)()) {
+    m_testCallBacks.emplace_back(bind(callBack, object, _1, _2));
+}
+
+template<class T>
+void COREScheduler::addTestInitCallBack(T* const object, void(T::* const callBack)()) {
+    m_testInitCallBacks.emplace_back(bind(callBack, object, _1, _2));
+}
+
+template<class T>
+void COREScheduler::addTestEndCallBack(T* const object, void(T::* const callBack)()) {
+    m_testEndCallBacks.emplace_back(bind(callBack, object, _1, _2));
+}
+
+
 void COREScheduler::preLoop() {
     COREHardwareManager::updateEncoders();
     for(auto task : m_tasks) {
@@ -327,11 +348,18 @@ void COREScheduler::postLoop() {
     }
     COREHardwareManager::updateMotors();
 }
-
-void COREScheduler::testInit() {
-    for(auto task : m_tasks) {
-        if(!task->isDisabled()) {
-            task->testInitTask();
-        }
-    }
+void COREScheduler::testInit(){
+	CORELog::testInit();
+	COREConstantsManager::updateConstants();
+	for(auto subsystem : m_subsystems) {
+		subsystem->testInit();
+	}
+	for(auto task : m_tasks) {
+		if(!task->isDisabled()) {
+			task->testInitTask();
+		}
+	}
+	for(auto callBack : m_testInitCallBacks) {
+		callBack();
+	}
 }

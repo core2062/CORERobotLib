@@ -31,7 +31,6 @@ void CORERobot::AutonomousInit() {
 
 void CORERobot::TestInit() {
 	COREDriverstation::updateRobotState();
-	//LiveWindow::GetInstance()->Run();
 	COREScheduler::testInit();
 }
 
