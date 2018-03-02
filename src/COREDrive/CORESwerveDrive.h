@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "COREFramework/COREHardwareManager.h"
+#include "COREUtilities/COREConstant.h"
 #include "COREDrive.h"
 #include "ctre/Phoenix.h"
 #include "COREHardware/CORESensor.h"
@@ -14,7 +15,7 @@ namespace CORE {
     public:
         class SwerveModule {
         public:
-            SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMotor, double angleOffset = 0);
+            SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMotor);
             void drive(double magnitude, double direction, double dt = -1);
             double getAngle(bool raw = false);
             double getTotalTicks();
@@ -37,13 +38,14 @@ namespace CORE {
                    SwerveModule *rightBackModule,
                    SwerveModule *rightFrontModule);
     public:
-        void calculate(double speed, double strafeRight, double rotateClockwise);
+        void calculate(double y, double x, double theta);
         void calculateInverseKinematics(double fudgefactor);
         void tank(double speed, double rotateClockwise);
         string print();
         void update(double dt = -1);
         void setSteerPID(double kp, double ki, double kd);
         void zeroOffsets();
+
         double rightFrontDeltaX = 0.0;
         double rightFrontDeltaY = 0.0;
         double leftFrontDeltaX = 0.0;
@@ -68,6 +70,8 @@ namespace CORE {
         double m_ticksToRotation;
         double m_wheelCircumference;
         SwerveModule* m_leftFrontModule, *m_leftBackModule, *m_rightBackModule, *m_rightFrontModule;
+        COREConstant<double> m_leftFrontModuleOffset, m_leftBackModuleOffset, m_rightBackModuleOffset,
+                m_rightFrontModuleOffset;
     };
 }
 

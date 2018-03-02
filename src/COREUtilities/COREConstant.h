@@ -34,16 +34,28 @@ namespace CORE {
     template<class T>
     class COREConstant : public ICOREConstant {
     public:
+        COREConstant(string name) {
+            m_name = name;
+            updateConstant();
+            COREConstantsManager::addConstant(this);
+        }
+
         COREConstant(string name, T defaultValue) : m_value(defaultValue) {
-            m_name = "INVALID TYPE";
+            m_name = name;
 #ifndef NOT_REAL
             Preferences::GetInstance()->PutString(m_name, "INVALID TYPE SPECIFIED FOR: " + name);
+            m_value = defaultValue;
 #endif
             CORELog::logError("Invalid COREConstant type specified with name: " + name);
         }
 
         T Get() {
             return m_value;
+        }
+
+        void Set(T value) {
+            m_value = value;
+            Preferences::GetInstance()->PutString(m_name, m_value);
         }
 
     private:
@@ -62,16 +74,28 @@ namespace CORE {
     template<>
     class COREConstant<double> : public ICOREConstant {
     public:
-        COREConstant(string name, double defaultValue) : m_value(defaultValue) {
+        COREConstant(string name) {
+            m_name = name;
+            updateConstant();
+            COREConstantsManager::addConstant(this);
+        }
+
+        COREConstant(string name, double defaultValue) {
             m_name = name;
 #ifndef NOT_REAL
             Preferences::GetInstance()->PutDouble(m_name, defaultValue);
+            m_value = defaultValue;
 #endif
             COREConstantsManager::addConstant(this);
         }
 
         double Get() {
             return m_value;
+        }
+
+        void Set(double value) {
+            m_value = value;
+            Preferences::GetInstance()->PutDouble(m_name, m_value);
         }
 
     private:
@@ -92,16 +116,28 @@ namespace CORE {
     template<>
     class COREConstant<string> : public ICOREConstant {
     public:
-        COREConstant(string name, string defaultValue) : m_value(defaultValue) {
+        COREConstant(string name) {
+            m_name = name;
+            updateConstant();
+            COREConstantsManager::addConstant(this);
+        }
+
+        COREConstant(string name, string defaultValue) {
             m_name = name;
 #ifndef NOT_REAL
             Preferences::GetInstance()->PutString(m_name, defaultValue);
+            m_value = defaultValue;
 #endif
             COREConstantsManager::addConstant(this);
         }
 
         string Get() {
             return m_value;
+        }
+
+        void Set(string value) {
+            m_value = value;
+            Preferences::GetInstance()->PutString(m_name, m_value);
         }
 
     private:
@@ -122,16 +158,28 @@ namespace CORE {
     template<>
     class COREConstant<bool> : public ICOREConstant {
     public:
-        COREConstant(string name, bool defaultValue) : m_value(defaultValue) {
+        COREConstant(string name) {
+            m_name = name;
+            updateConstant();
+            COREConstantsManager::addConstant(this);
+        }
+
+        COREConstant(string name, bool defaultValue) {
             m_name = name;
 #ifndef NOT_REAL
             Preferences::GetInstance()->PutBoolean(m_name, defaultValue);
+            m_value = defaultValue;
 #endif
             COREConstantsManager::addConstant(this);
         }
 
         bool Get() {
             return m_value;
+        }
+
+        void Set(bool value) {
+            m_value = value;
+            Preferences::GetInstance()->PutBoolean(m_name, m_value);
         }
 
     private:
@@ -152,16 +200,28 @@ namespace CORE {
     template<>
     class COREConstant<int> : public ICOREConstant {
     public:
-        COREConstant(string name, int defaultValue) : m_value(defaultValue) {
+        COREConstant(string name) {
+            m_name = name;
+            updateConstant();
+            COREConstantsManager::addConstant(this);
+        }
+
+        COREConstant(string name, int defaultValue) {
             m_name = name;
 #ifndef NOT_REAL
             Preferences::GetInstance()->PutInt(m_name, defaultValue);
+            m_value = defaultValue;
 #endif
             COREConstantsManager::addConstant(this);
         }
 
         int Get() {
             return m_value;
+        }
+
+        void Set(int value) {
+            m_value = value;
+            Preferences::GetInstance()->PutInt(m_name, m_value);
         }
 
     private:

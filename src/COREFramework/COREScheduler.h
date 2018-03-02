@@ -129,6 +129,7 @@ namespace CORE {
         static void postLoop();
 		static void disabled();
 		static void test();
+        static void testInit();
 		static void cleanUp();
 	};
 }

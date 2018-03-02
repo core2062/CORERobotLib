@@ -174,11 +174,11 @@ void COREJoystick::preLoopTask() {
     m_lastButtonCache = m_buttonCache;
     for(auto button : m_buttonCache) {
     	bool isActive;
-		if(COREDriverstation::getMode() == COREDriverstation::AUTON
+		/*if(COREDriverstation::getMode() == COREDriverstation::AUTON //TODO: REENABLE THIS SAFETY FEATURE LATER
 		   || COREDriverstation::getMode() == COREDriverstation::DISABLE) {
 			m_buttonCache[button.first] = OFF;
 			continue;
-		}
+		}*/
     	if(button.first > -1) {
 			isActive = m_joystick.GetRawButton(button.first);
     	} else {
@@ -199,11 +199,11 @@ void COREJoystick::preLoopTask() {
 		}
     }
     for(auto axis : m_axisCache) {
-    	if(COREDriverstation::getMode() == COREDriverstation::AUTON
+    	/*if(COREDriverstation::getMode() == COREDriverstation::AUTON //TODO: REENABLE THIS SAFETY FEATURE LATER
 		   || COREDriverstation::getMode() == COREDriverstation::DISABLE) {
     		m_axisCache[axis.first] = 0;
 			continue;
-		}
+		}*/
         m_axisCache[axis.first] = m_joystick.GetRawAxis(axis.first);
     }
 }

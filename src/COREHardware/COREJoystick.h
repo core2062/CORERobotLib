@@ -68,7 +68,7 @@ namespace CORE {
         bool getFallingEdge(JoystickButton button);
         ButtonState getButtonState(JoystickButton button);
         int getPort();
-        void preLoopTask();
+        void preLoopTask() override;
     private:
         int m_F310_X_Mode_Map[26] = {
                 0, //LEFT_STICK_X

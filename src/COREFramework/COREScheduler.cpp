@@ -66,6 +66,7 @@ void COREScheduler::addAuton(COREAuton* auton) {
 }
 
 void COREScheduler::addTask(CORETask* task) {
+    CORELog::logInfo("Adding task");
     m_tasks.push_back(task);
 }
 
@@ -190,6 +191,16 @@ void COREScheduler::teleopInit() {
 }
 
 void COREScheduler::teleop() {
+    m_driverJoystick->preLoopTask();
+    m_operatorJoystick->preLoopTask();
+    for(auto task : m_tasks) {
+        if(!task->isDisabled()) {
+            task->preLoopTask();
+        }
+    }
+    for(auto callBack : m_preLoopCallBacks) {
+        callBack();
+    }
     for(auto subsystem : m_subsystems) {
         subsystem->teleop();
     }
@@ -227,6 +238,7 @@ void COREScheduler::disabled() {
 }
 
 void COREScheduler::test() {
+    CORELog::logInfo("COREScheduler Test");
     for(auto subsystem : m_subsystems) {
         subsystem->test();
     }
@@ -314,4 +326,12 @@ void COREScheduler::postLoop() {
         callBack();
     }
     COREHardwareManager::updateMotors();
+}
+
+void COREScheduler::testInit() {
+    for(auto task : m_tasks) {
+        if(!task->isDisabled()) {
+            task->testInitTask();
+        }
+    }
 }

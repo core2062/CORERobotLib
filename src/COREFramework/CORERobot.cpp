@@ -32,7 +32,7 @@ void CORERobot::AutonomousInit() {
 void CORERobot::TestInit() {
 	COREDriverstation::updateRobotState();
 	//LiveWindow::GetInstance()->Run();
-	COREScheduler::test();
+	COREScheduler::testInit();
 }
 
 void CORERobot::RobotPeriodic() {
@@ -57,7 +57,7 @@ void CORERobot::TeleopPeriodic() {
 }
 
 void CORERobot::TestPeriodic() {
-	COREScheduler::test();
+    COREScheduler::test();
 }
 
 CORERobot::~CORERobot() {

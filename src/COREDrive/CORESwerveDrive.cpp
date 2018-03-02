@@ -15,7 +15,11 @@ CORESwerve::CORESwerve(double trackWidth, double wheelBase, double wheelDiameter
         m_leftFrontModule(leftFrontModule),
         m_leftBackModule(leftBackModule),
         m_rightBackModule(rightBackModule),
-        m_rightFrontModule(rightFrontModule) {
+        m_rightFrontModule(rightFrontModule),
+        m_leftFrontModuleOffset("Front Left Module Offset"),
+        m_leftBackModuleOffset("Back Left Module Offset"),
+        m_rightBackModuleOffset("Back Right Module Offset"),
+        m_rightFrontModuleOffset("Front Right Module Offset") {
     if(!(m_leftFrontModule && m_leftBackModule && m_rightBackModule && m_rightFrontModule)) {
         CORELog::logError("A module passed to CORESwerve is a nullptr!");
     }
@@ -24,14 +28,17 @@ CORESwerve::CORESwerve(double trackWidth, double wheelBase, double wheelDiameter
     m_wheelCircumference = wheelDiameter * PI;
     m_ticksToRotation = ticksToRotation;
 
+    m_leftFrontModule->setAngleOffset(m_leftFrontModuleOffset.Get());
+    m_rightFrontModule->setAngleOffset(m_rightFrontModuleOffset.Get());
+    m_leftBackModule->setAngleOffset(m_leftBackModuleOffset.Get());
+    m_rightBackModule->setAngleOffset(m_rightBackModuleOffset.Get());
 }
 
-CORESwerve::SwerveModule::SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMotor, double angleOffset) :
+CORESwerve::SwerveModule::SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMotor) :
         m_speedPIDController(0, 0, 0),
         m_anglePIDController(0, 0, 0),
         m_driveMotor(driveMotor),
-        m_steerMotor(steerMotor),
-        m_angleOffset(angleOffset) {
+        m_steerMotor(steerMotor) {
 }
 
 
@@ -96,8 +103,8 @@ void CORESwerve::SwerveModule::zeroAngle() {
     m_angleOffset = -getAngle(true);
 }
 
-void CORESwerve::calculate(double forward, double strafeRight, double rotateClockwise) {
-    if(forward == 0 && strafeRight == 0 && rotateClockwise == 0) {
+void CORESwerve::calculate(double x, double y, double theta) {
+    if(y == 0 && x == 0 && theta == 0) {
         rightFrontModuleSpeed = 0;
         leftFrontModuleSpeed = 0;
         leftBackModuleSpeed = 0;
@@ -105,10 +112,10 @@ void CORESwerve::calculate(double forward, double strafeRight, double rotateCloc
         return;
     }
     double r = sqrt(pow(m_wheelbase, 2) + pow(m_trackwidth, 2));
-    double a = strafeRight - rotateClockwise * (m_wheelbase / r);
-    double b = strafeRight + rotateClockwise * (m_wheelbase / r);
-    double c = forward - rotateClockwise * (m_trackwidth / r);
-    double d = forward + rotateClockwise * (m_trackwidth / r);
+    double a = x - theta * (m_wheelbase / r);
+    double b = x + theta * (m_wheelbase / r);
+    double c = y - theta * (m_trackwidth / r);
+    double d = y + theta * (m_trackwidth / r);
 
     rightFrontModuleSpeed = sqrt(pow(b, 2) + pow(c, 2));
     leftFrontModuleSpeed = sqrt(pow(b, 2) + pow(d, 2));
@@ -243,8 +250,15 @@ void CORESwerve::setSteerPID(double kp, double ki, double kd) {
 }
 
 void CORESwerve::zeroOffsets() {
-    m_leftFrontModule->zeroAngle();
-    m_rightFrontModule->zeroAngle();
-    m_rightBackModule->zeroAngle();
-    m_leftBackModule->zeroAngle();
+    m_leftFrontModuleOffset.Set(m_leftFrontModule->getAngle(true));
+    m_leftFrontModule->setAngleOffset(m_leftFrontModuleOffset.Get());
+    
+    m_rightFrontModuleOffset.Set(m_rightFrontModule->getAngle(true));
+    m_rightFrontModule->setAngleOffset(m_rightFrontModuleOffset.Get());
+
+    m_leftBackModuleOffset.Set(m_leftBackModule->getAngle(true));
+    m_leftBackModule->setAngleOffset(m_leftBackModuleOffset.Get());
+
+    m_rightBackModuleOffset.Set(m_rightBackModule->getAngle(true));
+    m_rightBackModule->setAngleOffset(m_rightBackModuleOffset.Get());
 }
