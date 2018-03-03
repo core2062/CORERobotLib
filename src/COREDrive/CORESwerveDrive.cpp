@@ -152,9 +152,9 @@ void CORESwerve::calculate(double x, double y, double theta) {
 
     double MAX_WHEEL_INVERT_SPEED = 1;
 
-    if (abs(rightFrontModuleSpeed) <= MAX_WHEEL_INVERT_SPEED) { 
+    if (abs(rightFrontModuleSpeed) <= MAX_WHEEL_INVERT_SPEED) {
         if (fabs(rightFrontModuleAngle - m_rightFrontModule->getAngle()) > 90 &&
-                fabs(rightFrontModuleAngle - m_rightFrontModule->getAngle()) < 270) {
+            fabs(rightFrontModuleAngle - m_rightFrontModule->getAngle()) < 270) {
             rightFrontModuleAngle = fmod((rightFrontModuleAngle + 180), 360);
             rightFrontModuleSpeed = -rightFrontModuleSpeed;
         }

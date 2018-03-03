@@ -27,7 +27,7 @@ namespace CORE {
         CORESubsystem();
         virtual void robotInit() = 0;
         virtual void teleopInit() = 0;
-        virtual void testInit() = 0;
+        virtual void testInit() {};
         virtual void teleop() = 0;
         virtual void teleopEnd() {}
 		virtual void test() {}
@@ -78,14 +78,12 @@ namespace CORE {
 		static vector<CORETask*> m_tasks;
 		static vector<function<void()>> m_robotInitCallBacks;
 		static vector<function<void()>> m_autonInitCallBacks;
-		static vector<function<void()>> m_testInitCallBacks;
 		static vector<function<void()>> m_autonEndCallBacks;
 		static vector<function<void()>> m_teleopInitCallBacks;
 		static vector<function<void()>> m_preLoopCallBacks;
 		static vector<function<void()>> m_postLoopCallBacks;
 		static vector<function<void()>> m_teleopEndCallBacks;
 		static vector<function<void()>> m_testEndCallBacks;
-		static vector<function<void()>> m_testCallBacks;
 		static vector<function<void()>> m_disabledCallBacks;
 //		static SendableChooser<COREAuton*>* m_autonChooser;
 		static vector<CORESubsystem*> m_subsystems;
@@ -134,7 +132,7 @@ namespace CORE {
 		static void robotInit();
 		static void autonInit();
 		static void testInit();
-static bool auton();
+        static bool auton();
 		static void autonEnd();
 		static void teleopInit();
 		static void teleop();
@@ -143,7 +141,6 @@ static bool auton();
         static void postLoop();
 		static void disabled();
 		static void test();
-        static void testInit();
 		static void cleanUp();
 			};
 }

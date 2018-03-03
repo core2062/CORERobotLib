@@ -16,7 +16,6 @@ namespace CORE {
         virtual void preLoopTask() {}
         virtual void postLoopTask() {}
         virtual void teleopEndTask() {}
-        virtual void testInitTask() {}
         virtual void disabledTask() {}
         virtual void disableTasks(bool disable = true);
         virtual bool isDisabled();

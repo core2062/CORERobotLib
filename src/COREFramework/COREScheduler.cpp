@@ -242,9 +242,6 @@ void COREScheduler::test() {
 			task->disabledTask();
 		}
 	}
-	for(auto callBack : m_testCallBacks) {
-		callBack();
-	}
 	for(auto subsystem : m_subsystems) {
         subsystem->test();
     }
@@ -311,12 +308,10 @@ void COREScheduler::addDisabledCallBack(T* const object, void(T::* const callBac
 
 template<class T>
 void COREScheduler::addTestCallBack(T* const object, void(T::* const callBack)()) {
-    m_testCallBacks.emplace_back(bind(callBack, object, _1, _2));
 }
 
 template<class T>
 void COREScheduler::addTestInitCallBack(T* const object, void(T::* const callBack)()) {
-    m_testInitCallBacks.emplace_back(bind(callBack, object, _1, _2));
 }
 
 template<class T>
@@ -348,6 +343,7 @@ void COREScheduler::postLoop() {
     }
     COREHardwareManager::updateMotors();
 }
+
 void COREScheduler::testInit(){
 	CORELog::testInit();
 	COREConstantsManager::updateConstants();
@@ -358,8 +354,5 @@ void COREScheduler::testInit(){
 		if(!task->isDisabled()) {
 			task->testInitTask();
 		}
-	}
-	for(auto callBack : m_testInitCallBacks) {
-		callBack();
 	}
 }
