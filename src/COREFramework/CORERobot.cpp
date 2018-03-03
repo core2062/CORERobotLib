@@ -4,12 +4,43 @@
 using namespace CORE;
 
 CORERobot::CORERobot() {
+}
 
+CORERobot::~CORERobot() {
+	CORELog::logInfo("Cleaning up CORERobot!");
+	COREScheduler::cleanUp();
 }
 
 void CORERobot::RobotInit() {
-    COREDriverstation::updateRobotState();
-    COREScheduler::robotInit();
+	COREDriverstation::updateRobotState();
+	COREScheduler::robotInit();
+}
+
+void CORERobot::RobotPeriodic() {
+}
+
+void CORERobot::DisabledInit() {
+	COREDriverstation::updateRobotState();
+	COREScheduler::disabled();
+}
+
+void CORERobot::DisabledPeriodic() {
+}
+
+void CORERobot::AutonomousInit() {
+	COREDriverstation::updateRobotState();
+	m_autonComplete = false;
+	m_autonEnded = false;
+	COREScheduler::autonInit();
+}
+
+void CORERobot::AutonomousPeriodic() {
+	if (!m_autonComplete) {
+		m_autonComplete = COREScheduler::auton();
+	} else if (!m_autonEnded) {
+		m_autonEnded = false;
+		COREScheduler::autonEnd();
+	}
 }
 
 void CORERobot::TeleopInit() {
@@ -17,16 +48,8 @@ void CORERobot::TeleopInit() {
 	COREScheduler::teleopInit();
 }
 
-void CORERobot::DisabledInit() {
-	COREDriverstation::updateRobotState();
-    COREScheduler::disabled();
-}
-
-void CORERobot::AutonomousInit() {
-	COREDriverstation::updateRobotState();
-	m_autonComplete = false;
-    m_autonEnded = false;
-	COREScheduler::autonInit();
+void CORERobot::TeleopPeriodic() {
+	COREScheduler::teleop();
 }
 
 void CORERobot::TestInit() {
@@ -34,32 +57,6 @@ void CORERobot::TestInit() {
 	COREScheduler::testInit();
 }
 
-void CORERobot::RobotPeriodic() {
-
-}
-
-void CORERobot::DisabledPeriodic() {
-
-}
-
-void CORERobot::AutonomousPeriodic() {
-	if (!m_autonComplete) {
-		m_autonComplete = COREScheduler::auton();
-	} else if (!m_autonEnded) {
-        m_autonEnded = false;
-		COREScheduler::autonEnd();
-	}
-}
-
-void CORERobot::TeleopPeriodic() {
-	COREScheduler::teleop();
-}
-
 void CORERobot::TestPeriodic() {
-    COREScheduler::test();
-}
-
-CORERobot::~CORERobot() {
-	CORELog::logInfo("Cleaning up CORERobot!");
-	COREScheduler::cleanUp();
+	COREScheduler::test();
 }

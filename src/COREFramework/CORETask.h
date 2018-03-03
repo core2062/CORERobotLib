@@ -8,6 +8,7 @@ namespace CORE {
         bool m_disabled;
     public:
         CORETask();
+        virtual ~CORETask() {}
         virtual void robotInitTask() {}
         virtual void autonInitTask() {}
         virtual void autonEndTask() {}
@@ -19,6 +20,5 @@ namespace CORE {
         virtual void disabledTask() {}
         virtual void disableTasks(bool disable = true);
         virtual bool isDisabled();
-        virtual ~CORETask() {}
-    };
+	};
 }
