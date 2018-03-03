@@ -80,15 +80,6 @@ namespace CORE {
 	private:
 		static vector<COREAuton*> m_autons;
 		static vector<CORETask*> m_tasks;
-		static vector<function<void()>> m_robotInitCallBacks;
-		static vector<function<void()>> m_autonInitCallBacks;
-		static vector<function<void()>> m_autonEndCallBacks;
-		static vector<function<void()>> m_teleopInitCallBacks;
-		static vector<function<void()>> m_preLoopCallBacks;
-		static vector<function<void()>> m_postLoopCallBacks;
-		static vector<function<void()>> m_teleopEndCallBacks;
-		static vector<function<void()>> m_testEndCallBacks;
-		static vector<function<void()>> m_disabledCallBacks;
 		// static SendableChooser<COREAuton*>* m_autonChooser;
 		static vector<CORESubsystem*> m_subsystems;
 		static COREAuton* m_selectedAuton;
@@ -101,49 +92,12 @@ namespace CORE {
 		static void addAuton(COREAuton * auton);
 		static void addTask(CORETask* task);
 
-		template<class T>
-		static void addRobotInitCallBack(T* const object, void (T::* const callBack)());
-
-		template<class T>
-		static void addDisabledCallBack(T* const object, void (T::* const callBack)());
-
-		template<class T>
-		static void addAutonInitCallBack(T* const object, void (T::* const callBack)());
-
-		template<class T>
-		static void addAutonEndCallBack(T* const object, void (T::* const callBack)());
-
-		template<class T>
-		static void addTeleopInitCallBack(T* const object, void (T::* const callBack)());
-
-		template<class T>
-		static void addPreLoopCallBack(T* const object, void (T::* const callBack)());
-
-		template<class T>
-		static void addPostLoopCallBack(T* const object, void (T::* const callBack)());
-
-		template<class T>
-		static void addTeleopEndCallBack(T* const object, void (T::* const callBack)());
-
-		template<class T>
-		static void addTestInitCallBack(T* const object, void (T::* const callBack)());
-
-		template<class T>
-		static void addTestCallBack(T* const object, void (T::* const callBack)());
-
-		template<class T>
-		static void addTestEndCallBack(T* const object, void (T::* const callBack)());
-
 		static void robotInit();
 		static void disabled();
 		static void autonInit();
 		static bool auton();
-		static void autonEnd();
 		static void teleopInit();
 		static void teleop();
-		static void preLoop();
-		static void postLoop();
-		static void teleopEnd();
 		static void testInit();
 		static void test();
 		static void cleanUp();

@@ -30,16 +30,12 @@ void CORERobot::DisabledPeriodic() {
 void CORERobot::AutonomousInit() {
 	COREDriverstation::updateRobotState();
 	m_autonComplete = false;
-	m_autonEnded = false;
 	COREScheduler::autonInit();
 }
 
 void CORERobot::AutonomousPeriodic() {
 	if (!m_autonComplete) {
 		m_autonComplete = COREScheduler::auton();
-	} else if (!m_autonEnded) {
-		m_autonEnded = false;
-		COREScheduler::autonEnd();
 	}
 }
 

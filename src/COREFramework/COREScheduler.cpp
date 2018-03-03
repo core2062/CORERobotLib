@@ -34,14 +34,6 @@ bool COREVariableControlledSubsystem::setController(COREController* controller) 
 vector<CORESubsystem*> COREScheduler::m_subsystems;
 vector<COREAuton*> COREScheduler::m_autons;
 vector<CORETask*> COREScheduler::m_tasks;
-vector<function<void()>> COREScheduler::m_robotInitCallBacks;
-vector<function<void()>> COREScheduler::m_autonInitCallBacks;
-vector<function<void()>> COREScheduler::m_autonEndCallBacks;
-vector<function<void()>> COREScheduler::m_teleopInitCallBacks;
-vector<function<void()>> COREScheduler::m_preLoopCallBacks;
-vector<function<void()>> COREScheduler::m_postLoopCallBacks;
-vector<function<void()>> COREScheduler::m_teleopEndCallBacks;
-vector<function<void()>> COREScheduler::m_disabledCallBacks;
 COREJoystick* COREScheduler::m_driverJoystick;
 COREJoystick* COREScheduler::m_operatorJoystick;
 //SendableChooser<COREAuton*>* COREScheduler::m_autonChooser;
@@ -67,59 +59,6 @@ void COREScheduler::addTask(CORETask* task) {
 	m_tasks.push_back(task);
 }
 
-template<class T>
-void COREScheduler::addRobotInitCallBack(T* const object, void (T::* const callBack)()) {
-	m_robotInitCallBacks.emplace_back(bind(callBack, object, _1, _2));
-}
-
-template<class T>
-void COREScheduler::addDisabledCallBack(T* const object, void (T::* const callBack)()) {
-	m_disabledCallBacks.emplace_back(bind(callBack, object, _1, _2));
-}
-
-template<class T>
-void COREScheduler::addAutonInitCallBack(T* const object, void (T::* const callBack)()) {
-	m_autonInitCallBacks.emplace_back(bind(callBack, object, _1, _2));
-}
-
-template<class T>
-void COREScheduler::addAutonEndCallBack(T* const object, void (T::* const callBack)()) {
-	m_autonEndCallBacks.emplace_back(bind(callBack, object, _1, _2));
-}
-
-template<class T>
-void COREScheduler::addTeleopInitCallBack(T* const object, void (T::* const callBack)()) {
-	m_teleopInitCallBacks.emplace_back(bind(callBack, object, _1, _2));
-}
-
-template<class T>
-void COREScheduler::addPreLoopCallBack(T* const object, void (T::* const callBack)()) {
-	m_preLoopCallBacks.emplace_back(bind(callBack, object, _1, _2));
-}
-
-template<class T>
-void COREScheduler::addPostLoopCallBack(T* const object, void (T::* const callBack)()) {
-	m_postLoopCallBacks.emplace_back(bind(callBack, object, _1, _2));
-}
-
-template<class T>
-void COREScheduler::addTeleopEndCallBack(T* const object, void (T::* const callBack)()) {
-	m_teleopEndCallBacks.emplace_back(bind(callBack, object, _1, _2));
-}
-
-template<class T>
-void COREScheduler::addTestInitCallBack(T* const object, void (T::* const callBack)()) {
-}
-
-template<class T>
-void COREScheduler::addTestCallBack(T* const object, void (T::* const callBack)()) {
-}
-
-template<class T>
-void COREScheduler::addTestEndCallBack(T* const object, void (T::* const callBack)()) {
-	m_testEndCallBacks.emplace_back(bind(callBack, object, _1, _2));
-}
-
 void COREScheduler::robotInit() {
 	CORELog::robotInit();
 	COREConstantsManager::updateConstants();
@@ -141,26 +80,18 @@ void COREScheduler::robotInit() {
 			task->robotInitTask();
 		}
 	}
-	for (auto callBack : m_robotInitCallBacks) {
-		callBack();
-	}
 //    m_autonChooser = new SendableChooser<COREAuton*>();
 //    m_autonChooser->AddDefault("Do Nothing", nullptr);
 //    for(auto auton : m_autons) {
 //        auton->putToDashboard(m_autonChooser);
 //    }
 //    SmartDashboard::PutData("Autonomous", m_autonChooser);
-	//TODO: Log -> RobotInit Complete
 }
 
 void COREScheduler::disabled() {
 	CORELog::disabled();
 	for (auto task : m_tasks) {
 		task->disabledTask();
-
-	}
-	for (auto callBack : m_disabledCallBacks) {
-		callBack();
 	}
 	for (auto subsystem : m_subsystems) {
 		subsystem->disabled();
@@ -175,9 +106,6 @@ void COREScheduler::autonInit() {
 		if (!task->isDisabled()) {
 			task->autonInitTask();
 		}
-	}
-	for (auto callBack : m_autonInitCallBacks) {
-		callBack();
 	}
 	if (!m_autons.empty()) {
 //        m_selectedAuton = m_autonChooser->GetSelected();
@@ -195,14 +123,10 @@ void COREScheduler::autonInit() {
 }
 
 bool COREScheduler::auton() {
-//	COREHardwareManager::updateEncoders();
 	for (auto task : m_tasks) {
 		if (!task->isDisabled()) {
 			task->preLoopTask();
 		}
-	}
-	for (auto callBack : m_preLoopCallBacks) {
-		callBack();
 	}
 	if (m_selectedAuton != nullptr) {
 		m_selectedAuton->auton();
@@ -211,10 +135,6 @@ bool COREScheduler::auton() {
 				task->postLoopTask();
 			}
 		}
-		for (auto callBack : m_postLoopCallBacks) {
-			callBack();
-		}
-		COREHardwareManager::updateMotors();
 		bool complete = m_selectedAuton->complete();
 		if (complete) {
 			CORELog::logInfo(m_selectedAuton->getName() + " autonomous complete! Took: " + to_string(m_autonTimer.Get()) + " seconds");
@@ -223,17 +143,6 @@ bool COREScheduler::auton() {
 	} else {
 		CORELog::logWarning("No autonomous selected!");
 		return true;
-	}
-}
-
-void COREScheduler::autonEnd() {
-	for (auto task : m_tasks) {
-		if (!task->isDisabled()) {
-			task->autonEndTask();
-		}
-	}
-	for (auto callBack : m_autonEndCallBacks) {
-		callBack();
 	}
 }
 
@@ -248,10 +157,6 @@ void COREScheduler::teleopInit() {
 			task->teleopInitTask();
 		}
 	}
-	for (auto callBack : m_teleopInitCallBacks) {
-		callBack();
-	}
-	//TODO: Log -> TeleopInit Complete
 }
 
 void COREScheduler::teleop() {
@@ -262,51 +167,9 @@ void COREScheduler::teleop() {
 			task->preLoopTask();
 		}
 	}
-	for (auto callBack : m_preLoopCallBacks) {
-		callBack();
-	}
 	for (auto subsystem : m_subsystems) {
 		subsystem->teleop();
 	}
-}
-
-void COREScheduler::preLoop() {
-	COREHardwareManager::updateEncoders();
-	for (auto task : m_tasks) {
-		if (!task->isDisabled()) {
-			task->preLoopTask();
-		}
-	}
-	for (auto callBack : m_preLoopCallBacks) {
-		callBack();
-	}
-}
-
-void COREScheduler::postLoop() {
-	for (auto task : m_tasks) {
-		if (!task->isDisabled()) {
-			task->postLoopTask();
-		}
-	}
-	for (auto callBack : m_postLoopCallBacks) {
-		callBack();
-	}
-	COREHardwareManager::updateMotors();
-}
-
-void COREScheduler::teleopEnd() {
-	for (auto task : m_tasks) {
-		if (!task->isDisabled()) {
-			task->teleopEndTask();
-		}
-	}
-	for (auto callBack : m_teleopEndCallBacks) {
-		callBack();
-	}
-	for (auto subsystem : m_subsystems) {
-		subsystem->teleopEnd();
-	}
-	//TODO: Log -> TeleopEnd Complete
 }
 
 void COREScheduler::testInit() {
@@ -325,7 +188,7 @@ void COREScheduler::testInit() {
 void COREScheduler::test() {
 	for (auto task : m_tasks) {
 		if (!task->isDisabled()) {
-			task->disabledTask();
+			task->testTask();
 		}
 	}
 	for (auto subsystem : m_subsystems) {
@@ -348,6 +211,5 @@ void COREScheduler::cleanUp() {
 		delete *i;
 	}
 	m_subsystems.clear();
-//	COREHardwareManager::cleanUp();
 	COREConstantsManager::cleanUp();
 }

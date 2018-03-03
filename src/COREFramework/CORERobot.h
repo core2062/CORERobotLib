@@ -37,6 +37,5 @@ namespace CORE {
     private:
         bool m_loopStarted = false;
         bool m_autonComplete = false;
-        bool m_autonEnded = false;
     };
 }
