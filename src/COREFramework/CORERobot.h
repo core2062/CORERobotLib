@@ -15,23 +15,25 @@
 
 namespace CORE {
     class CORERobot : public CORESubsystem
-#ifndef NOT_REAL 
-		      , public TimedRobot 
-#endif	      
+#ifndef NOT_REAL
+		      , public TimedRobot
+#endif
 		      {
     public:
         CORERobot();
-        void RobotInit();
-        void DisabledInit();
-        void AutonomousInit();
-        void TeleopInit();
-        void TestInit();
-        void RobotPeriodic();
-        void DisabledPeriodic();
-        void AutonomousPeriodic();
-        void TeleopPeriodic();
-        void TestPeriodic();
         ~CORERobot();
+
+        void RobotInit();
+		void RobotPeriodic();
+		void DisabledInit();
+		void DisabledPeriodic();
+		void AutonomousInit();
+		void AutonomousPeriodic();
+		void TeleopInit();
+		void TeleopPeriodic();
+		void TestInit();
+		void TestPeriodic();
+
     private:
         bool m_loopStarted = false;
         bool m_autonComplete = false;
