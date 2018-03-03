@@ -27,18 +27,18 @@ COREVector::COREVector(double x, double y) {
   m_y = y;
 }
 
-COREVector COREVector::FromRadians(double radians) {
-  return COREVector(cos(radians), sin(radians), false);
+COREVector COREVector::FromRadians(double radians, double mag) {
+  return COREVector(cos(radians) * mag, sin(radians) * mag, false);
 }
 
-COREVector COREVector::FromDegrees(double degrees) {
-  return FromRadians(toRadians(degrees));
+COREVector COREVector::FromDegrees(double degrees, double mag) {
+  return FromRadians(toRadians(degrees), mag);
 }
 
-COREVector COREVector::FromCompassDegrees(double compassDegrees) {
+COREVector COREVector::FromCompassDegrees(double compassDegrees, double mag) {
   double degrees = 90 - compassDegrees;
   degrees = degrees < 0 ? 360 + degrees : degrees;
-  return FromRadians(toRadians(degrees));
+  return FromRadians(toRadians(degrees), mag);
 }
 
 void COREVector::NormalizeRotation() {
@@ -165,3 +165,15 @@ double COREVector::GetCrossProduct(COREVector firstVector) {
   return GetX() * firstVector.GetY() - GetY() * firstVector.GetX();
 }
 
+COREVector COREVector::ShortestRotationTo(COREVector target) {
+  double counterClockwiseMove = GetCompassDegrees() - target.GetCompassDegrees();
+  double clockwiseMove = target.GetCompassDegrees() - GetCompassDegrees();
+  clockwiseMove = clockwiseMove < 0 ? 360 + clockwiseMove : clockwiseMove;
+  counterClockwiseMove = counterClockwiseMove < 0 ? 360 + counterClockwiseMove : counterClockwiseMove;
+  return COREVector::FromCompassDegrees(clockwiseMove < counterClockwiseMove ? clockwiseMove : -counterClockwiseMove);
+}
+
+void COREVector::SetMagnitude(double magnitude) {
+  m_x = cos(GetRadians()) * magnitude;
+  m_y = sin(GetRadians()) * magnitude;
+}
