@@ -1,31 +1,33 @@
-#include "TankTracker.h"
+#include "SwerveTracker.h"
 #include "ctre/Phoenix.h"
 
 using namespace CORE;
 
-TankTracker *TankTracker::m_instance = nullptr;
+SwerveTracker *SwerveTracker::m_instance = nullptr;
 
-TankTracker::TankTracker() :
-        log({"X", "Y", "T"}) {
-
+SwerveTracker::SwerveTracker(CORESwerve *swerveDrive) :
+        log({"X", "Y", "T"}),
+		m_fudgeFactor("Fudge Factor", 1) {
 }
 
-TankTracker::~TankTracker() {
-    m_left = nullptr;
-    m_right = nullptr;
+SwerveTracker::~SwerveTracker() {
     m_gyro = nullptr;
     stop();
     delete m_mainLoop;
 }
 
-TankTracker *TankTracker::GetInstance() {
+SwerveTracker *SwerveTracker::GetInstance() {
+	//TODO try to figure the problem with the pointers out
     if (!m_instance) {
-        m_instance = new TankTracker;
+        //m_instance = new SwerveTracker(new CORESwerve(m_swerveDrive));
     }
     return m_instance;
 }
 
-void TankTracker::init(TalonSRX *left, TalonSRX *right, AHRS *gyro) {
+void SwerveTracker::injectCORESwerve(CORESwerve * swerveDrive) {
+
+}
+void SwerveTracker::init(TalonSRX *left, TalonSRX *right, AHRS *gyro) {
     m_left = left;
     m_right = right;
     m_gyro = gyro;
@@ -42,7 +44,7 @@ void TankTracker::init(TalonSRX *left, TalonSRX *right, AHRS *gyro) {
     m_loopEnabled = false;
 }
 
-void TankTracker::reset(double time, Position2d initial) {
+void SwerveTracker::reset(double time, Position2d initial) {
     m_dataLock.lock();
     m_data = InterpolatingTreeMap(100);
     m_data.put(InterpolatingDouble(Timer::GetFPGATimestamp()), initial);
@@ -51,8 +53,8 @@ void TankTracker::reset(double time, Position2d initial) {
     m_dataLock.unlock();
 }
 
-void TankTracker::start() {
-    CORELog::logInfo("Starting tank tracker!");
+void SwerveTracker::start() {
+    CORELog::logInfo("Starting Swerve Tracker!");
     m_loopLock.lock();
     std::pair<double, double> inches = getEncoderInches();
     m_leftPrev = inches.first;
@@ -65,33 +67,28 @@ void TankTracker::start() {
     m_timerLock.unlock();
 
     m_loopEnabled = true;
-    m_mainLoop = new thread(&TankTracker::loop, TankTracker::GetInstance());
-    //SetThreadPriority(*m_mainLoop, false, 3);
-    CORELog::logInfo("Started tank tracker!");
+    m_mainLoop = new thread(&SwerveTracker::loop, SwerveTracker::GetInstance());
+    CORELog::logInfo("Started Swerve tracker!");
 }
 
-void TankTracker::stop() {
+void SwerveTracker::stop() {
     if (m_loopEnabled && m_mainLoop) {
         m_loopEnabled = false;
         m_mainLoop->join();
     }
 }
 
-void TankTracker::loop() {
+void SwerveTracker::loop() {
     while (m_loopEnabled) {
-        double time = CORETimer::getTime();//Timer::GetFPGATimestamp();
+        double time = CORETimer::getTime();
         std::pair<double, double> inches = getEncoderInches();
-        double left = inches.first;
-        double right = inches.second;
         COREVector gyroAngle = getGyroAngle();
 
         m_loopLock.lock();
-        Position2d odometry = generateOdometry(left - m_leftPrev, right - m_rightPrev, gyroAngle);
-        m_leftPrev = left;
-        m_rightPrev = right;
+        Position2d odometry = generateOdometry(gyroAngle);
         m_loopLock.unlock();
         std::pair<double, double> inPerSec = getEncoderSpeed();
-        Position2d::Delta velocity = TankKinematics::forwardKinematics(inPerSec.first, inPerSec.second);
+        Position2d::Delta velocity = m_swerveDrive->forwardKinematics();
         addData(time, odometry, velocity);
 
         m_timerLock.lock();
@@ -106,21 +103,21 @@ void TankTracker::loop() {
     }
 }
 
-Position2d TankTracker::getFieldToVehicle(double time) {
+Position2d SwerveTracker::getFieldToVehicle(double time) {
     m_dataLock.lock();
     auto cache = m_data.getInterpolated(InterpolatingDouble(time));
     m_dataLock.unlock();
     return cache;
 }
 
-Position2d TankTracker::getLatestFieldToVehicle() {
+Position2d SwerveTracker::getLatestFieldToVehicle() {
     m_dataLock.lock();
     auto cache = m_data.getLatest();
     m_dataLock.unlock();
     return cache;
 }
 
-void TankTracker::addData(double time, Position2d data, Position2d::Delta vel) {
+void SwerveTracker::addData(double time, Position2d data, Position2d::Delta vel) {
     m_dataLock.lock();
     m_data.put(InterpolatingDouble(time), data);
     m_velocity = vel;
@@ -132,39 +129,38 @@ void TankTracker::addData(double time, Position2d data, Position2d::Delta vel) {
     m_dataLock.unlock();
 }
 
-Position2d TankTracker::generateOdometry(double leftDelta, double rightDelta,
-                                         COREVector heading) {
+Position2d SwerveTracker::generateOdometry(COREVector heading) {
     Position2d last = getLatestFieldToVehicle();
-    return TankKinematics::integrateForwardKinematics(last, leftDelta, rightDelta, heading);
+    return m_swerveDrive->integrateForwardKinematics(last, heading, m_fudgeFactor.Get());
 }
 
-std::pair<double, double> TankTracker::getEncoderInches() {
+std::pair<double, double> SwerveTracker::getEncoderInches() {
     double factor = 4.0 * PI;
     return {m_left->GetSelectedSensorPosition(0) * factor, m_right->GetSelectedSensorPosition(0) * factor};
 }
 
 //TODO change the inputs of the getSelectedSensorPosition and getSelectedSensorVelocity
 
-std::pair<double, double> TankTracker::getEncoderSpeed() {
+std::pair<double, double> SwerveTracker::getEncoderSpeed() {
     double factor = 4.0 * PI * .0166666666;
     return {m_left->GetSelectedSensorVelocity(0) * factor, m_right->GetSelectedSensorVelocity(0) * factor};
 }
 
-COREVector TankTracker::getGyroAngle() {
+COREVector SwerveTracker::getGyroAngle() {
     double degrees = m_gyro->GetAngle();
     return COREVector::FromDegrees(degrees);
 }
 
-void TankTracker::autonInitTask() {
+void SwerveTracker::autonInitTask() {
     doLog = true;
     start();
 }
 
-void TankTracker::autonEndTask() {
+void SwerveTracker::autonEndTask() {
     stop();
 }
 
-void TankTracker::teleopInitTask() {
+void SwerveTracker::teleopInitTask() {
     stop();
     doLog = false;
     time_t currentTime = time(0);
@@ -175,10 +171,10 @@ void TankTracker::teleopInitTask() {
     log.save(name);
 }
 
-void TankTracker::postLoopTask() {
+void SwerveTracker::postLoopTask() {
 
 }
 
-void TankTracker::teleopEndTask() {
+void SwerveTracker::teleopEndTask() {
     stop();
 }
