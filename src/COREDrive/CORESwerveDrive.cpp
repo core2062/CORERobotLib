@@ -3,6 +3,7 @@
 #include "COREUtilities/COREMath.h"
 #include "WPILib.h"
 #include "ctre/Phoenix.h"
+#include <cmath>
 
 using namespace CORE;
 
@@ -22,11 +23,6 @@ CORESwerve::CORESwerve(double trackWidth, double wheelBase,
 	m_ticksToRotation = ticksToRotation;
 	m_wheelDiameter = wheelDiameter;
 
-}
-
-SwerveVectorPair::SwerveVectorPair(double ang, double pos) {
-	angle = ang;
-	position = pos;
 }
 
 CORESwerve::SwerveModule::SwerveModule(TalonSRX *driveMotor,
@@ -50,32 +46,16 @@ double CORESwerve::SwerveModule::getAngle(bool raw) {
 
 }
 
-double CORESwerve::SwerveModule::getPosition(double position) {
-	return position;
-}
-
-Position2d::Delta CORESwerve::SwerveModule::forwardKinematics() {
-	double deltaPosition =
-			m_driveMotor->GetSensorCollection().GetPulseWidthPosition()
-					- getPosition(
-							m_driveMotor->GetSensorCollection().GetPulseWidthPosition());
-	double deltaRotation = m_steerMotor->GetSensorCollection().GetAnalogInRaw()
-			- getAngle();
-
-	return Position2d::Delta(deltaPosition, 0, deltaRotation);
-}
-
-Position2d CORESwerve::SwerveModule::integrateForwardKinematics(Position2d pos,
-		double deltaPosition, COREVector heading) {
-	Position2d::Delta withGyro = forwardKinematics(deltaPosition,
-			pos.getRotation().RotationInverse().RotateBy(heading).GetRadians());
-	return pos.transformBy(Position2d::fromVelocity(withGyro));
-}
-
-SwerveVectorPair CORESwerve::SwerveModule::inverseKinematics(double deltaAngle,
-		double deltaPosition) {
-	return SwerveVectorPair(deltaAngle, deltaPosition);
-
+COREVector CORESwerve::SwerveModule::inverseKinematics(
+		double wheelCircumference, double ticksToRotation) {
+	//Calculates the individual vector of each of the modules
+	//Theta may be change in angle or the total angle
+	double magnitude = (getTotalTicks() * wheelCircumference) / ticksToRotation
+			- m_lastMagnitude;
+	double angle = getAngle() - m_lastAngle;
+	m_lastAngle += angle;
+	m_lastMagnitude += magnitude;
+	return COREVector(magnitude, angle);
 }
 
 void CORESwerve::SwerveModule::zeroAngle() {
@@ -85,6 +65,7 @@ void CORESwerve::SwerveModule::zeroAngle() {
 double CORESwerve::SwerveModule::getTotalTicks() {
 	return m_steerMotor->GetSelectedSensorPosition(0);
 }
+
 void CORESwerve::SwerveModule::setAnglePID(double p, double i, double d) {
 	m_anglePIDController.setProportionalConstant(p);
 	m_anglePIDController.setIntegralConstant(i);
@@ -213,137 +194,24 @@ void CORESwerve::calculate(double forward, double strafeRight,
 	}
 }
 
-void CORESwerve::calculateInverseKinematics(double fudgeFactor) {
-	//TODO put these in the modules instead of in the swerve drive class
-	double r = sqrt(pow(m_trackwidth, 2) + pow(m_wheelbase, 2));
+COREVector CORESwerve::inverseKinematics() {
+	//Adds the up all of the vector of each of the modules to get a total vector
+	double r = sqrt(pow(m_wheelbase, 2) + pow(m_trackwidth, 2));
+	COREVector leftFront = m_leftFrontModule->inverseKinematics(m_wheelCircumference, m_ticksToRotation);
+	leftFront.SetX(leftFront.GetX() - m_leftFrontModule->getAngle() * (m_wheelbase / r));
+	leftFront.SetY(leftFront.GetY() - m_leftFrontModule->getAngle() * (m_trackwidth / r));
+	COREVector rightFront = m_rightFrontModule->inverseKinematics(m_wheelCircumference, m_ticksToRotation);
+	rightFront.SetX(rightFront.GetX() - m_rightFrontModule->getAngle() * (m_wheelbase / r));
+	rightFront.SetY(rightFront.GetY() - m_rightFrontModule->getAngle() * (m_trackwidth / r));
+	COREVector leftBack = m_leftBackModule->inverseKinematics(m_wheelCircumference, m_ticksToRotation);
+	leftBack.SetX(leftBack.GetX() - m_leftBackModule->getAngle() * (m_wheelbase / r));
+	leftBack.SetY(leftBack.GetY() - m_leftBackModule->getAngle() * (m_trackwidth / r));
+	COREVector rightBack = m_rightBackModule->inverseKinematics(m_wheelCircumference, m_ticksToRotation);
+	rightBack.SetX(rightBack.GetX() - m_rightBackModule->getAngle() * (m_wheelbase / r));
+	rightBack.SetY(rightBack.GetY() - m_rightBackModule->getAngle() * (m_trackwidth / r));
 
-	//Sets the change in x for each of the modules
-	leftFrontDeltaX = ((cos(leftFrontModuleAngle) * fudgeFactor
-			* fmod(m_wheelCircumference * m_leftFrontModule->getTotalTicks(),
-					360) / m_ticksToRotation)
-			+ leftFrontModuleAngle * m_wheelbase / r);
-	rightFrontDeltaX = ((cos(rightFrontModuleAngle) * fudgeFactor
-			* fmod(m_wheelCircumference * m_rightFrontModule->getTotalTicks(),
-					360) / m_ticksToRotation)
-			+ rightFrontModuleAngle * m_wheelbase / r);
-	leftBackDeltaX = ((cos(leftBackModuleAngle) * fudgeFactor
-			* fmod(m_wheelCircumference * m_leftBackModule->getTotalTicks(),
-					360) / m_ticksToRotation)
-			- leftBackModuleAngle * m_wheelbase / r);
-	rightBackDeltaX = ((cos(rightBackModuleAngle) * fudgeFactor
-			* fmod(m_wheelCircumference * m_rightBackModule->getTotalTicks(),
-					360) / m_ticksToRotation)
-			- rightBackModuleAngle * m_wheelbase / r);
+	return leftFront.AddVector(rightFront.AddVector(leftBack.AddVector(rightBack)));
 
-	SmartDashboard::PutNumber("Left Front Delta X", leftFrontDeltaX);
-	SmartDashboard::PutNumber("Right Front Delta X", rightFrontDeltaX);
-	SmartDashboard::PutNumber("Left Back Delta X", leftBackDeltaX);
-	SmartDashboard::PutNumber("Right Back Delta X", rightBackDeltaX);
-
-	//Sets the change in y for all of the modules
-	leftFrontDeltaY = ((sin(leftFrontModuleAngle) * fudgeFactor
-			* fmod(m_wheelCircumference * m_leftFrontModule->getTotalTicks(),
-					360) / m_ticksToRotation)
-			+ leftFrontModuleAngle * m_wheelbase / r);
-	rightFrontDeltaY = ((sin(rightFrontModuleAngle) * fudgeFactor
-			* fmod(m_wheelCircumference * m_rightFrontModule->getTotalTicks(),
-					360) / m_ticksToRotation)
-			- rightFrontModuleAngle * m_wheelbase / r);
-	leftBackDeltaY = ((sin(leftBackModuleAngle) * fudgeFactor
-			* fmod(m_wheelCircumference * m_leftBackModule->getTotalTicks(),
-					360) / m_ticksToRotation)
-			+ leftBackModuleAngle * m_wheelbase / r);
-	rightBackDeltaY = ((sin(rightBackModuleAngle) * fudgeFactor
-			* fmod(m_wheelCircumference * m_rightBackModule->getTotalTicks(),
-					360) / m_ticksToRotation)
-			- rightBackModuleAngle * m_wheelbase / r);
-
-	SmartDashboard::PutNumber("Left Front Delta Y", leftFrontDeltaY);
-	SmartDashboard::PutNumber("Right Front Delta Y", rightFrontDeltaY);
-	SmartDashboard::PutNumber("Left Back Delta Y", leftBackDeltaY);
-	SmartDashboard::PutNumber("Right Back Delta Y", rightBackDeltaY);
-
-	rightFrontDeltaPosition = sqrt(
-			pow(rightFrontDeltaY, 2) + pow(rightFrontDeltaX, 2));
-	leftFrontDeltaPosition = sqrt(
-			pow(leftFrontDeltaY, 2) + pow(leftFrontDeltaX, 2));
-	rightBackDeltaPosition = sqrt(
-			pow(rightBackDeltaY, 2) + pow(rightBackDeltaX, 2));
-	leftFrontDeltaPosition = sqrt(
-			pow(leftBackDeltaY, 2) + pow(leftBackDeltaX, 2));
-
-	SmartDashboard::PutNumber("Left Front Delta Position",
-			leftFrontDeltaPosition);
-	SmartDashboard::PutNumber("Right Front Delta Y", rightFrontDeltaY);
-	SmartDashboard::PutNumber("Left Back Delta Y", leftBackDeltaY);
-	SmartDashboard::PutNumber("Right Back Delta Y", rightBackDeltaY);
-
-	//Sets the change in rotation for all of the modules
-	leftFrontDeltaRot = ((leftFrontDeltaX - leftFrontDeltaY) * fudgeFactor)
-			/ m_wheelDiameter;
-	rightFrontDeltaRot = ((rightFrontDeltaX - rightFrontDeltaY) * fudgeFactor)
-			/ m_wheelDiameter;
-	leftBackDeltaRot = ((leftBackDeltaX - leftBackDeltaY) * fudgeFactor)
-			/ m_wheelDiameter;
-	rightBackDeltaRot = ((rightBackDeltaX - rightBackDeltaY) * fudgeFactor)
-			/ m_wheelDiameter;
-
-	SmartDashboard::PutNumber("Left Front Delta Rot", leftFrontDeltaRot);
-	SmartDashboard::PutNumber("Right Front Delta Rot", rightFrontDeltaRot);
-	SmartDashboard::PutNumber("Left Back Delta Rot", leftBackDeltaRot);
-	SmartDashboard::PutNumber("Right Back Delta Rot", rightBackDeltaRot);
-}
-
-Position2d::Delta CORESwerve::forwardKinematics() {
-	m_leftFrontModule->forwardKinematics();
-	m_rightFrontModule->forwardKinematics();
-	m_leftBackModule->forwardKinematics();
-	m_rightBackModule->forwardKinematics();
-	return m_rightFrontModule->forwardKinematics();
-}
-Position2d::Delta CORESwerve::forwardKinematics(double fudgeFactor,
-		double leftFrontDeltaPosition, double rightFrontDeltaPosition,
-		double leftBackDeltaPosition, double rightBackDeltaPosition) {
-	calculateInverseKinematics(fudgeFactor);
-	m_leftFrontModule->forwardKinematics(leftFrontDeltaPosition,
-			leftFrontDeltaRot);
-	m_rightFrontModule->forwardKinematics(rightFrontDeltaPosition,
-			rightFrontDeltaRot);
-	m_leftBackModule->forwardKinematics(leftBackDeltaPosition,
-			leftBackDeltaRot);
-	m_rightBackModule->forwardKinematics(rightBackDeltaPosition,
-			rightBackDeltaRot);
-	return m_rightFrontModule->forwardKinematics(rightBackDeltaPosition,
-			rightFrontDeltaRot);
-}
-
-Position2d CORESwerve::integrateForwardKinematics(Position2d pos, COREVector heading,
-		double fudgeFactor) {
-	calculateInverseKinematics(fudgeFactor);
-	m_leftFrontModule->integrateForwardKinematics(pos, leftFrontDeltaPosition,
-			heading);
-	m_rightFrontModule->integrateForwardKinematics(pos, rightFrontDeltaPosition,
-			heading);
-	m_leftBackModule->integrateForwardKinematics(pos, leftBackDeltaPosition,
-			heading);
-	m_rightBackModule->integrateForwardKinematics(pos, rightBackDeltaPosition,
-			heading);
-	return 	m_rightFrontModule->integrateForwardKinematics(pos, rightFrontDeltaPosition,
-			heading);
-}
-
-SwerveVectorPair CORESwerve::inverseKinematics(Position2d::Delta vel, double fudgeFactor) {
-	calculateInverseKinematics(fudgeFactor);
-	m_leftFrontModule->inverseKinematics(leftFrontDeltaRot,
-			leftFrontDeltaPosition);
-	m_rightFrontModule->inverseKinematics(rightFrontDeltaRot,
-			rightFrontDeltaPosition);
-	m_leftBackModule->inverseKinematics(leftBackDeltaRot,
-			leftBackDeltaPosition);
-	m_rightBackModule->inverseKinematics(rightBackDeltaRot,
-			rightBackDeltaPosition);
-	return 	m_rightFrontModule->inverseKinematics(rightFrontDeltaRot,
-			rightFrontDeltaPosition);
 }
 
 void CORESwerve::update(double dt) {

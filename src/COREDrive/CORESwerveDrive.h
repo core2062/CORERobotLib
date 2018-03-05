@@ -10,12 +10,6 @@
 #include "COREUtilities/COREVector.h"
 #include "COREUtilities/Position2d.h"
 
-struct SwerveVectorPair {
-	double angle;
-	double position;
-	SwerveVectorPair(double ang, double p);
-};
-
 namespace CORE {
 
 class CORESwerve/* : public COREDrive*/{
@@ -27,16 +21,7 @@ public:
 				double angleOffset = 0);
 		void drive(double magnitude, double direction, double dt = -1);
 		double getAngle(bool raw = false);
-		Position2d::Delta forwardKinematics();
-		Position2d::Delta forwardKinematics(double positionDelta,
-				double deltaRads);
-		SwerveVectorPair inverseKinematics(double deltaAngle,
-				double deltaSpeed);
-		Position2d integrateForwardKinematics(Position2d pos,
-				double deltaPosition, COREVector heading);
-		double integrateForwardKinematics(Position2d::Delta vel,
-				double wheelDiameter, double fudgeFactor);
-		double getPosition(double position);
+		COREVector inverseKinematics(double wheelCircumference, double ticksToRotation);
 		double getTotalTicks();
 		void setAnglePID(double p, double i, double d);
 		void setAngleOffset(double angleOffset);
@@ -49,6 +34,8 @@ public:
 		TalonSRX *m_driveMotor;
 		TalonSRX *m_steerMotor;
 		double m_angleOffset;
+		double m_lastMagnitude = 0.0;
+		double m_lastAngle = 0.0;
 	};
 
 	CORESwerve(double trackWidth, double wheelBase, double wheelDiameter,
@@ -57,37 +44,11 @@ public:
 			SwerveModule *rightFrontModule);
 public:
 	void calculate(double speed, double strafeRight, double rotateClockwise);
-	Position2d::Delta forwardKinematics();
-	Position2d::Delta forwardKinematics(double fudgeFactor, double leftFrontDeltaPosition,
-			double rightFrontDeltaPosition, double leftBackDeltaPosition,
-			double rightBackDeltaPosition);
-	Position2d integrateForwardKinematics(Position2d pos, COREVector heading,
-			double fudgeFactor);
-	void calculateInverseKinematics(double fudgefactor);
-	SwerveVectorPair inverseKinematics(Position2d::Delta vel, double fudgeFactor);
+	COREVector inverseKinematics();
 	string print();
 	void update(double dt = -1);
 	void setSteerPID(double kp, double ki, double kd);
 	void zeroOffsets();
-	double rightFrontDeltaX = 0.0;
-	double leftFrontDeltaX = 0.0;
-	double rightBackDeltaX = 0.0;
-	double leftBackDeltaX = 0.0;
-
-	double rightFrontDeltaY = 0.0;
-	double leftFrontDeltaY = 0.0;
-	double rightBackDeltaY = 0.0;
-	double leftBackDeltaY = 0.0;
-
-	double rightFrontDeltaPosition = 0.0;
-	double leftFrontDeltaPosition = 0.0;
-	double rightBackDeltaPosition = 0.0;
-	double leftBackDeltaPosition = 0.0;
-
-	double rightFrontDeltaRot = 0.0;
-	double leftFrontDeltaRot = 0.0;
-	double leftBackDeltaRot = 0.0;
-	double rightBackDeltaRot = 0.0;
 
 	double leftFrontModuleSpeed = 0.0;
 	double rightFrontModuleSpeed = 0.0;

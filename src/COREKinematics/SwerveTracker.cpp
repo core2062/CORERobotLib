@@ -88,8 +88,8 @@ void SwerveTracker::loop() {
         Position2d odometry = generateOdometry(gyroAngle);
         m_loopLock.unlock();
         std::pair<double, double> inPerSec = getEncoderSpeed();
-        Position2d::Delta velocity = m_swerveDrive->forwardKinematics();
-        addData(time, odometry, velocity);
+//        Position2d::Delta velocity = m_swerveDrive->calculate();
+//        addData(time, odometry, velocity);
 
         m_timerLock.lock();
         double loopTime = m_loopTimer.Get() < m_targetLoopTime ? m_targetLoopTime - m_loopTimer.Get() : 0.0;
@@ -131,7 +131,6 @@ void SwerveTracker::addData(double time, Position2d data, Position2d::Delta vel)
 
 Position2d SwerveTracker::generateOdometry(COREVector heading) {
     Position2d last = getLatestFieldToVehicle();
-    return m_swerveDrive->integrateForwardKinematics(last, heading, m_fudgeFactor.Get());
 }
 
 std::pair<double, double> SwerveTracker::getEncoderInches() {
