@@ -5,7 +5,7 @@ using namespace CORE;
 
 SwerveTracker *SwerveTracker::m_instance = nullptr;
 
-SwerveTracker::SwerveTracker(CORESwerve *swerveDrive) :
+SwerveTracker::SwerveTracker() :
         log({"X", "Y", "T"}),
 		m_fudgeFactor("Fudge Factor", 1) {
 }
@@ -17,15 +17,15 @@ SwerveTracker::~SwerveTracker() {
 }
 
 SwerveTracker *SwerveTracker::GetInstance() {
-	//TODO try to figure the problem with the pointers out
+
     if (!m_instance) {
-        //m_instance = new SwerveTracker(new CORESwerve(m_swerveDrive));
+        m_instance = new SwerveTracker();
     }
     return m_instance;
 }
 
 void SwerveTracker::injectCORESwerve(CORESwerve * swerveDrive) {
-
+	m_swerveDrive = swerveDrive;
 }
 void SwerveTracker::init(TalonSRX *left, TalonSRX *right, AHRS *gyro) {
     m_left = left;

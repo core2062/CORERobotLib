@@ -37,9 +37,9 @@ private:
     thread *m_mainLoop = nullptr;
     static SwerveTracker *m_instance;
     void injectCORESwerve(CORESwerve * swerveDrive);
-    //CORESwerve* m_swerveDrive;
+    CORESwerve *m_swerveDrive = nullptr;
 
-    SwerveTracker(CORESwerve *swerveDrive);
+    SwerveTracker();
 
     void start();
 

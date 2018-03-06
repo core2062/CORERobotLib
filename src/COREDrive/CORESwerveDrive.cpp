@@ -201,26 +201,26 @@ COREVector CORESwerve::inverseKinematics() {
 	COREVector leftFront = m_leftFrontModule->inverseKinematics(m_wheelCircumference, m_ticksToRotation);
 	leftFront.SetX(leftFront.GetX() - m_leftFrontModule->getAngle() * (m_wheelbase / r));
 	leftFront.SetY(leftFront.GetY() - m_leftFrontModule->getAngle() * (m_trackwidth / r));
-	CORELog::logInfo(to_string(leftFront.GetX()));
-	CORELog::logInfo(to_string(leftFront.GetY()));
+	CORELog::logInfo("Left Front X: " + to_string(leftFront.GetX()));
+	CORELog::logInfo("Left Front Y: " + to_string(leftFront.GetY()));
 
 	COREVector rightFront = m_rightFrontModule->inverseKinematics(m_wheelCircumference, m_ticksToRotation);
 	rightFront.SetX(rightFront.GetX() - m_rightFrontModule->getAngle() * (m_wheelbase / r));
 	rightFront.SetY(rightFront.GetY() - m_rightFrontModule->getAngle() * (m_trackwidth / r));
-	CORELog::logInfo(to_string(rightFront.GetX()));
-	CORELog::logInfo(to_string(rightFront.GetY()));
+	CORELog::logInfo("Right Front X: " + to_string(rightFront.GetX()));
+	CORELog::logInfo("Right Front Y: " + to_string(rightFront.GetY()));
 
 	COREVector leftBack = m_leftBackModule->inverseKinematics(m_wheelCircumference, m_ticksToRotation);
 	leftBack.SetX(leftBack.GetX() - m_leftBackModule->getAngle() * (m_wheelbase / r));
 	leftBack.SetY(leftBack.GetY() - m_leftBackModule->getAngle() * (m_trackwidth / r));
-	CORELog::logInfo(to_string(leftBack.GetX()));
-	CORELog::logInfo(to_string(leftBack.GetY()));
+	CORELog::logInfo("Left Back X: " + to_string(leftBack.GetX()));
+	CORELog::logInfo("Left Back Y: " + to_string(leftBack.GetY()));
 
 	COREVector rightBack = m_rightBackModule->inverseKinematics(m_wheelCircumference, m_ticksToRotation);
 	rightBack.SetX(rightBack.GetX() - m_rightBackModule->getAngle() * (m_wheelbase / r));
 	rightBack.SetY(rightBack.GetY() - m_rightBackModule->getAngle() * (m_trackwidth / r));
-	CORELog::logInfo(to_string(rightBack.GetX()));
-	CORELog::logInfo(to_string(rightBack.GetY()));
+	CORELog::logInfo("Right Back X: " + to_string(rightBack.GetX()));
+	CORELog::logInfo("Right Back Y: " + to_string(rightBack.GetY()));
 
 	return leftFront.AddVector(rightFront.AddVector(leftBack.AddVector(rightBack)));
 
