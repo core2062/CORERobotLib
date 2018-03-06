@@ -180,3 +180,5 @@ test/COREUtilities_Test
 test/Testing
 /.gradle/
 /build/
+gradle
+src/CORESimulation/ctre

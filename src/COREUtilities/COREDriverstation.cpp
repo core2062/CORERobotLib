@@ -32,7 +32,6 @@ void COREDriverstation::updateRobotState() {
     } else if(DriverStation::GetInstance().GetAlliance() == DriverStation::kInvalid) {
         m_alliance = INVALID;
     }
-
     m_station = DriverStation::GetInstance().GetLocation();
     m_isCompetition = DriverStation::GetInstance().IsFMSAttached();
 #endif

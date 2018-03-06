@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "COREFramework/COREHardwareManager.h"
+#include "COREUtilities/COREConstant.h"
 #include "COREDrive.h"
 #include "ctre/Phoenix.h"
 #include "COREHardware/CORESensor.h"
@@ -11,63 +12,59 @@
 #include "COREUtilities/Position2d.h"
 
 namespace CORE {
+    class CORESwerve/* : public COREDrive*/ {
+    public:
+        class SwerveModule {
+        public:
+            SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMotor);
+            void drive(COREVector vector, double dt = -1);
+            double getAngle(bool raw = false);
+            double getTotalTicks();
+            void setAnglePID(double p, double i, double d);
+            void setAngleOffset(double angleOffset);
+            void zeroAngle();
+            string print();
+            COREPID m_speedPIDController;
+            COREAnglePID m_anglePIDController;
+        private:
+            TalonSRX *m_driveMotor;
+            TalonSRX *m_steerMotor;
+            double m_angleOffset;
+        };
 
-class CORESwerve/* : public COREDrive*/{
+        CORESwerve(double trackWidth, double wheelBase, double wheelDiameter,
+        		   double ticksToRotation,
+                   SwerveModule *leftFrontModule,
+                   SwerveModule *leftBackModule,
+                   SwerveModule *rightBackModule,
+                   SwerveModule *rightFrontModule);
+    public:
+        void calculate(double y, double x, double theta);
+        void calculateInverseKinematics(double fudgefactor);
+        void tank(double speed, double rotateClockwise);
+        string print();
+        void update(double dt = -1);
+        void setSteerPID(double kp, double ki, double kd);
+        void zeroOffsets();
 
-public:
-	class SwerveModule {
-	public:
-		SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMotor,
-				double angleOffset = 0);
-		void drive(double magnitude, double direction, double dt = -1);
-		double getAngle(bool raw = false);
-		COREVector inverseKinematics(double wheelCircumference, double ticksToRotation);
-		double getTotalTicks();
-		void setAnglePID(double p, double i, double d);
-		void setAngleOffset(double angleOffset);
-		void zeroAngle();
-		string print();
-		COREPID m_speedPIDController;
-		COREAnglePID m_anglePIDController;
-		double m_position = 0.0;
-	private:
-		TalonSRX *m_driveMotor;
-		TalonSRX *m_steerMotor;
-		double m_angleOffset;
-		double m_lastMagnitude = 0.0;
-		double m_lastAngle = 0.0;
-	};
-
-	CORESwerve(double trackWidth, double wheelBase, double wheelDiameter,
-			double ticksToRotation, SwerveModule *leftFrontModule,
-			SwerveModule *leftBackModule, SwerveModule *rightBackModule,
-			SwerveModule *rightFrontModule);
-public:
-	void calculate(double speed, double strafeRight, double rotateClockwise);
-	COREVector inverseKinematics();
-	string print();
-	void update(double dt = -1);
-	void setSteerPID(double kp, double ki, double kd);
-	void zeroOffsets();
-
-	double leftFrontModuleSpeed = 0.0;
-	double rightFrontModuleSpeed = 0.0;
-	double leftBackModuleSpeed = 0.0;
-	double rightBackModuleSpeed = 0.0;
-	double leftFrontModuleAngle = 0.0;
-	double rightFrontModuleAngle = 0.0;
-	double rightBackModuleAngle = 0.0;
-	double leftBackModuleAngle = 0.0;
-
-private:
-	double m_wheelbase;
-	double m_trackwidth;
-	double m_ticksToRotation;
-	double m_wheelCircumference;
-	double m_wheelDiameter;
-	SwerveModule* m_leftFrontModule, *m_leftBackModule, *m_rightBackModule,
-			*m_rightFrontModule;
-};
+        double rightFrontDeltaX = 0.0;
+        double rightFrontDeltaY = 0.0;
+        double leftFrontDeltaX = 0.0;
+        double leftFrontDeltaY = 0.0;
+        double rightBackDeltaX = 0.0;
+        double rightBackDeltaY = 0.0;
+        double leftBackDeltaX = 0.0;
+        double leftBackDeltaY = 0.0;
+    private:
+        double m_wheelbase;
+        double m_trackwidth;
+        double m_ticksToRotation;
+        double m_wheelCircumference;
+        SwerveModule* m_frontLeftModule, *m_backLeftModule, *m_backRightModule, *m_frontRightModule;
+        COREConstant<double> m_leftFrontModuleOffset, m_leftBackModuleOffset, m_rightBackModuleOffset,
+                m_rightFrontModuleOffset;
+        COREVector m_frontLeft, m_frontRight, m_backLeft, m_backRight;
+    };
 }
 
 

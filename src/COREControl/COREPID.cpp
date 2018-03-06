@@ -123,9 +123,5 @@ double COREAnglePID::calculate(COREVector actualAngle, COREVector setPointAngle)
 }
 
 double COREAnglePID::calculate(COREVector actualAngle, COREVector setPointAngle, double dt) {
-    double counterClockwiseMove = actualAngle.GetCompassDegrees() - setPointAngle.GetCompassDegrees();
-    double clockwiseMove = setPointAngle.GetCompassDegrees() - actualAngle.GetCompassDegrees();
-    clockwiseMove = clockwiseMove < 0 ? 360 + clockwiseMove : clockwiseMove;
-    counterClockwiseMove = counterClockwiseMove < 0 ? 360 + counterClockwiseMove : counterClockwiseMove;
-    return COREPID::calculate(clockwiseMove < counterClockwiseMove ? clockwiseMove : -counterClockwiseMove, dt);
+    return COREPID::calculate(actualAngle.ShortestRotationTo(setPointAngle).GetCompassDegrees(), dt);
 }

@@ -11,9 +11,9 @@ public:
     double GetCompassDegrees();
   	double GetX();
   	double GetY();
-	static COREVector FromCompassDegrees(double compassDegrees);
-	static COREVector FromRadians(double radians);
-	static COREVector FromDegrees(double degrees);
+	static COREVector FromCompassDegrees(double compassDegrees, double mag = 1);
+	static COREVector FromRadians(double radians, double mag = 1);
+	static COREVector FromDegrees(double degrees, double mag = 1);
 	COREVector RotationInverse();
 	COREVector MagnitudeInverse();
 	COREVector Opposite();
@@ -24,12 +24,12 @@ public:
 	COREVector InterpolateMagnitude(COREVector other, double x);
 	COREVector TranslateBy(COREVector other);
 	COREVector Extrapolate(COREVector other, double x);
+	COREVector ShortestRotationTo(COREVector target);
 	void NormalizeRotation();
 	double NormalizeMagnitude();
 	void SetX(double x);
 	void SetY(double y);
-    double ConvertToRadians(double degrees);
-    double ConvertToDegrees(double radians);
+	void SetMagnitude(double magnitude);
   	COREVector AddVector(COREVector firstVector);
   	COREVector SubtractVector(COREVector firstVector);
   	double GetCrossProduct(COREVector firstVector);

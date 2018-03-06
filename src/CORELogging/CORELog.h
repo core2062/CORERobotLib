@@ -13,13 +13,15 @@
 
 using namespace std;
 
+#undef ERROR
+
 namespace CORE {
     class CORELog {
     public:
         enum loggingLevel {
-            INFO = 0,
-            WARNING = 1,
-            ERROR = 2
+            INFO,
+            WARNING,
+            ERROR
         };
         static void logInfo(ostringstream& message);
         static void logInfo(string message);
@@ -32,9 +34,11 @@ namespace CORE {
         static void robotInit();
         static void autonInit();
         static void teleopInit();
-        static void disabled();
+        static void testInit();
+
+static void disabled();
         static void setConsoleLoggingLevel(loggingLevel level);
-    private:
+            private:
         static void writeLastDuration();
         static string getFileName();
         static string getRobotMode();
