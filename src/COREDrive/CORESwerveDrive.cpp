@@ -204,26 +204,26 @@ COREVector CORESwerve::inverseKinematics() {
 	COREVector leftFront = m_frontLeftModule->inverseKinematics(m_wheelCircumference, m_ticksToRotation);
 	leftFront.SetX(leftFront.GetX() - m_frontLeftModule->getAngle() * (m_wheelbase / r));
 	leftFront.SetY(leftFront.GetY() - m_frontLeftModule->getAngle() * (m_trackwidth / r));
-	CORELog::logInfo("Left Front X: " + to_string(leftFront.GetX()));
-	CORELog::logInfo("Left Front Y: " + to_string(leftFront.GetY()));
+	SmartDashboard::PutNumber("Left Front X: ", leftFront.GetX());
+	SmartDashboard::PutNumber("Left Front Y: ", leftFront.GetY());
 
 	COREVector rightFront = m_frontRightModule->inverseKinematics(m_wheelCircumference, m_ticksToRotation);
 	rightFront.SetX(rightFront.GetX() - m_frontRightModule->getAngle() * (m_wheelbase / r));
 	rightFront.SetY(rightFront.GetY() - m_frontRightModule->getAngle() * (m_trackwidth / r));
-	CORELog::logInfo("Right Front X: " + to_string(rightFront.GetX()));
-	CORELog::logInfo("Right Front Y: " + to_string(rightFront.GetY()));
+	SmartDashboard::PutNumber("Right Front X: ", rightFront.GetX());
+	SmartDashboard::PutNumber("Right Front Y: ", rightFront.GetY());
 
 	COREVector leftBack = m_backLeftModule->inverseKinematics(m_wheelCircumference, m_ticksToRotation);
 	leftBack.SetX(leftBack.GetX() - m_backLeftModule->getAngle() * (m_wheelbase / r));
 	leftBack.SetY(leftBack.GetY() - m_backLeftModule->getAngle() * (m_trackwidth / r));
-	CORELog::logInfo("Left Back X: " + to_string(leftBack.GetX()));
-	CORELog::logInfo("Left Back Y: " + to_string(leftBack.GetY()));
+	SmartDashboard::PutNumber("Left Back X: ", leftBack.GetX());
+	SmartDashboard::PutNumber("Left Back Y: ", leftBack.GetY());
 
 	COREVector rightBack = m_backRightModule->inverseKinematics(m_wheelCircumference, m_ticksToRotation);
 	rightBack.SetX(rightBack.GetX() - m_backRightModule->getAngle() * (m_wheelbase / r));
 	rightBack.SetY(rightBack.GetY() - m_backRightModule->getAngle() * (m_trackwidth / r));
-	CORELog::logInfo("Right Back X: " + to_string(rightBack.GetX()));
-	CORELog::logInfo("Right Back Y: " + to_string(rightBack.GetY()));
+	SmartDashboard::PutNumber("Right Back X: ", rightBack.GetX());
+	SmartDashboard::PutNumber("Right Back Y: ", rightBack.GetY());
 
 	return leftFront.AddVector(rightFront.AddVector(leftBack.AddVector(rightBack)));
 
