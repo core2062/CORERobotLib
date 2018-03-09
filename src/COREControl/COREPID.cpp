@@ -53,9 +53,8 @@ double COREPID::calculate(double mistake, double dt) {
         return 0;
     }
     m_proportional = mistake * m_profile.kP;
-    m_riemannSum += m_proportional;
-    double riemann = m_mistake * dt;
-    m_integral = (riemann + m_riemannSum) * m_profile.kI;
+    m_riemannSum += mistake * dt;
+    m_integral = m_riemannSum * m_profile.kI;
     m_derivative = ((mistake - m_lastMistake) / dt) * m_profile.kD;
     m_lastMistake = mistake;
     m_mistake = mistake;
@@ -104,6 +103,10 @@ COREPositionPID::COREPositionPID(COREPID::PIDProfile &profile) : COREPID(profile
 
 double COREPositionPID::calculate(double actualPosition, double setPointPosition) {
     return COREPID::calculate(setPointPosition - actualPosition);
+}
+
+double COREPositionPID::calculate(double actualPosition, double setPointPosition, double dt) {
+    return COREPID::calculate(setPointPosition - actualPosition, dt);
 }
 
 COREAnglePID::COREAnglePID(double kP, double kI, double kD, double kF) : COREPID(kP, kI, kD, kF) {

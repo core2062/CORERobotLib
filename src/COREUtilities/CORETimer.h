@@ -11,7 +11,8 @@ namespace CORE {
 
     class CORETimer {
     private:
-        double m_startTime, m_stopTime;
+        double m_startTime = 0;
+        double m_stopTime = 0;
         bool m_started = false;
         bool m_stopped = false;
     public:

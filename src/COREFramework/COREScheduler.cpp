@@ -160,8 +160,6 @@ void COREScheduler::teleopInit() {
 }
 
 void COREScheduler::teleop() {
-	m_driverJoystick->preLoopTask();
-	m_operatorJoystick->preLoopTask();
 	for (auto task : m_tasks) {
 		if (!task->isDisabled()) {
 			task->preLoopTask();

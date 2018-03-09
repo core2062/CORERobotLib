@@ -36,6 +36,9 @@ namespace CORE {
     public:
         COREConstant(string name) {
             m_name = name;
+            if(!Preferences::GetInstance()->ContainsKey(m_name)) {
+                Preferences::GetInstance()->PutString(m_name, "INVALID TYPE SPECIFIED FOR: " + name);
+            }
             updateConstant();
             COREConstantsManager::addConstant(this);
         }
@@ -76,6 +79,9 @@ namespace CORE {
     public:
         COREConstant(string name) {
             m_name = name;
+            if(!Preferences::GetInstance()->ContainsKey(m_name)) {
+                Preferences::GetInstance()->PutDouble(m_name, 0);
+            }
             updateConstant();
             COREConstantsManager::addConstant(this);
         }
@@ -118,6 +124,9 @@ namespace CORE {
     public:
         COREConstant(string name) {
             m_name = name;
+            if(!Preferences::GetInstance()->ContainsKey(m_name)) {
+                Preferences::GetInstance()->PutString(m_name, "null");
+            }
             updateConstant();
             COREConstantsManager::addConstant(this);
         }
@@ -160,6 +169,9 @@ namespace CORE {
     public:
         COREConstant(string name) {
             m_name = name;
+            if(!Preferences::GetInstance()->ContainsKey(m_name)) {
+                Preferences::GetInstance()->PutBoolean(m_name, false);
+            }
             updateConstant();
             COREConstantsManager::addConstant(this);
         }
@@ -202,6 +214,9 @@ namespace CORE {
     public:
         COREConstant(string name) {
             m_name = name;
+            if(!Preferences::GetInstance()->ContainsKey(m_name)) {
+                Preferences::GetInstance()->PutInt(m_name, 0);
+            }
             updateConstant();
             COREConstantsManager::addConstant(this);
         }

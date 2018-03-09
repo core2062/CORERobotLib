@@ -69,7 +69,9 @@ namespace CORE {
         ButtonState getButtonState(JoystickButton button);
         int getPort();
         void preLoopTask() override;
-    private:
+		Joystick m_joystick;
+
+	private:
         int m_F310_X_Mode_Map[26] = {
                 0, //LEFT_STICK_X
 				1, //LEFT_STICK_Y
@@ -130,7 +132,6 @@ namespace CORE {
 #ifdef NOT_REAL
 		test::
 #endif
-        Joystick m_joystick;
         int m_joystickPort;
         map<JoystickButton, ButtonState> m_lastButtonCache, m_buttonCache;
         map<JoystickAxis, double> m_axisCache;

@@ -46,7 +46,8 @@ namespace CORE {
     public:
         explicit COREPositionPID(double kP, double kI, double kD, double kF = 1);
         explicit COREPositionPID(PIDProfile &profile);
-        double calculate(double actualPosition, double setPointPosition);
+        double calculate(double actualPosition, double setPointPosition) override;
+        double calculate(double actualPosition, double setPointPosition, double dt);
     };
 
     class COREAnglePID : public COREPID {

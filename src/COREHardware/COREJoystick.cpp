@@ -75,7 +75,11 @@ void COREJoystick::registerVector(JoystickAxis axisA, JoystickAxis axisB) {
  * Register a joystick button to be used. Must be called before a joystick button can be used.
  */
 void COREJoystick::registerButton(JoystickButton button) {
-	if(button > -1){
+    if (button == JoystickButton::RIGHT_TRIGGER) {
+        m_buttonCache[button] = abs(m_joystick.GetRawAxis(JoystickAxis::RIGHT_TRIGGER_AXIS)) > 0 ? ON : OFF;
+    } else if (button == JoystickButton::LEFT_TRIGGER) {
+        m_buttonCache[button] = abs(m_joystick.GetRawAxis(JoystickAxis::LEFT_TRIGGER_AXIS)) > 0 ? ON : OFF;
+    } else if(button > -1){
 		m_buttonCache[button] = (m_joystick.GetRawButton(button)) ? ON : OFF;
 	} else {
 		m_buttonCache[button] = (getPOVButton(button)) ? ON : OFF;
@@ -173,15 +177,19 @@ int COREJoystick::getPort() {
 void COREJoystick::preLoopTask() {
     m_lastButtonCache = m_buttonCache;
     for(auto button : m_buttonCache) {
-    	bool isActive;
-		/*if(COREDriverstation::getMode() == COREDriverstation::AUTON //TODO: REENABLE THIS SAFETY FEATURE LATER
-		   || COREDriverstation::getMode() == COREDriverstation::DISABLE) {
-			m_buttonCache[button.first] = OFF;
-			continue;
-		}*/
-    	if(button.first > -1) {
-			isActive = m_joystick.GetRawButton(button.first);
-    	} else {
+        bool isActive;
+        /*if(COREDriverstation::getMode() == COREDriverstation::AUTON //TODO: REENABLE THIS SAFETY FEATURE LATER
+           || COREDriverstation::getMode() == COREDriverstation::DISABLE) {
+            m_buttonCache[button.first] = OFF;
+            continue;
+        }*/
+        if (button.first == JoystickButton::RIGHT_TRIGGER) {
+            isActive = abs(m_joystick.GetRawAxis(JoystickAxis::RIGHT_TRIGGER_AXIS)) > 0;
+        } else if (button.first == JoystickButton::LEFT_TRIGGER) {
+            isActive = abs(m_joystick.GetRawAxis(JoystickAxis::LEFT_TRIGGER_AXIS)) > 0;
+        } else if (button.first > -1) {
+            isActive = m_joystick.GetRawButton(button.first);
+        } else {
     		isActive = getPOVButton(button.first);
     	}
     	if(m_lastButtonCache[button.first] == FALLING_EDGE || m_lastButtonCache[button.first] == OFF) {
