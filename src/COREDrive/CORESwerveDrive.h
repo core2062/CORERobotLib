@@ -20,10 +20,11 @@ namespace CORE {
             void drive(COREVector vector, double dt = -1);
             COREVector inverseKinematics(double wheelCircumference, double ticksToRotation);
             double getAngle(bool raw = false);
-            double getTotalTicks();
+            double getEncoder();
             void setAnglePID(double p, double i, double d);
             void setAngleOffset(double angleOffset);
             void zeroAngle();
+            void zeroEncoder();
             string print();
             COREPID m_speedPIDController;
             COREAnglePID m_anglePIDController;
