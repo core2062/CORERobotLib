@@ -31,8 +31,8 @@ private:
     double m_leftPrev = 0;
     double m_rightPrev = 0;
     CORETimer m_loopTimer;
-    IMotorController *m_left = nullptr;
-    IMotorController *m_right = nullptr;
+    IMotorController *m_steer = nullptr;
+    IMotorController *m_drive = nullptr;
     AHRS *m_gyro = nullptr;
     thread *m_mainLoop = nullptr;
     static SwerveTracker *m_instance;
@@ -55,7 +55,7 @@ public:
     COREConstant <double> m_fudgeFactor;
     static SwerveTracker *GetInstance();
 
-    void init(TalonSRX *left, TalonSRX *right, AHRS *gyro);
+    void init(TalonSRX *steer, TalonSRX *drive, AHRS *gyro);
 
     ~SwerveTracker();
 

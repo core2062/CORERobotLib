@@ -27,19 +27,19 @@ SwerveTracker *SwerveTracker::GetInstance() {
 void SwerveTracker::injectCORESwerve(CORESwerve * swerveDrive) {
 	m_swerveDrive = swerveDrive;
 }
-void SwerveTracker::init(TalonSRX *left, TalonSRX *right, AHRS *gyro) {
-    m_left = left;
-    m_right = right;
+void SwerveTracker::init(TalonSRX *steer, TalonSRX *drive, AHRS *gyro) {
+    m_steer = steer;
+    m_drive = drive;
     m_gyro = gyro;
     m_targetLoopTime = 1.0 / m_targetLoopHz;
     //StatusFrameRateQuadEncoder may need to be changed
-    m_left->SetStatusFramePeriod(StatusFrame::Status_1_General_,
+    m_steer->SetStatusFramePeriod(StatusFrame::Status_1_General_,
     		m_targetLoopTime, floor(1000 * m_targetLoopTime));
-    m_left->SetStatusFramePeriod(StatusFrame::Status_1_General_,
+    m_steer->SetStatusFramePeriod(StatusFrame::Status_1_General_,
     		m_targetLoopTime, floor(1000 * m_targetLoopTime));
-    m_right->SetStatusFramePeriod(StatusFrame::Status_1_General_,
+    m_drive->SetStatusFramePeriod(StatusFrame::Status_1_General_,
     		m_targetLoopTime, floor(1000 * m_targetLoopTime));
-    m_right->SetStatusFramePeriod(StatusFrame::Status_1_General_,
+    m_drive->SetStatusFramePeriod(StatusFrame::Status_1_General_,
     		m_targetLoopTime, floor(1000 * m_targetLoopTime));
     m_loopEnabled = false;
 }
@@ -135,14 +135,14 @@ Position2d SwerveTracker::generateOdometry(COREVector heading) {
 
 std::pair<double, double> SwerveTracker::getEncoderInches() {
     double factor = 4.0 * PI;
-    return {m_left->GetSelectedSensorPosition(0) * factor, m_right->GetSelectedSensorPosition(0) * factor};
+    return {m_steer->GetSelectedSensorPosition(0) * factor, m_drive->GetSelectedSensorPosition(0) * factor};
 }
 
 //TODO change the inputs of the getSelectedSensorPosition and getSelectedSensorVelocity
 
 std::pair<double, double> SwerveTracker::getEncoderSpeed() {
     double factor = 4.0 * PI * .0166666666;
-    return {m_left->GetSelectedSensorVelocity(0) * factor, m_right->GetSelectedSensorVelocity(0) * factor};
+    return {m_steer->GetSelectedSensorVelocity(0) * factor, m_drive->GetSelectedSensorVelocity(0) * factor};
 }
 
 COREVector SwerveTracker::getGyroAngle() {
