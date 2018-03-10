@@ -33,7 +33,7 @@ namespace CORE {
             TalonSRX *m_steerMotor;
             double m_lastMagnitude = 0.0;
             double m_lastAngle = 0.0;
-            double m_angleOffset;
+            double m_angleOffset = 0.0;
         };
 
         CORESwerve(double trackWidth, double wheelBase, double wheelDiameter,
@@ -62,7 +62,7 @@ namespace CORE {
         double m_trackwidth;
         double m_ticksToRotation;
         double m_wheelCircumference;
-        double m_lastGyroAngle;
+        double m_lastGyroAngle = 0.0;
         SwerveModule* m_frontLeftModule, *m_backLeftModule, *m_backRightModule, *m_frontRightModule;
         COREConstant<double> m_leftFrontModuleOffset, m_leftBackModuleOffset, m_rightBackModuleOffset,
                 m_rightFrontModuleOffset;

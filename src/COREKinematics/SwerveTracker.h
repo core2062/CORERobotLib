@@ -41,10 +41,6 @@ private:
 
     SwerveTracker();
 
-    void start();
-
-    void stop();
-
     void addData(double time, Position2d data, Position2d::Delta vel);
 
     COREDataLogger log;
@@ -62,6 +58,10 @@ public:
     void reset(double time, Position2d initial);
 
     void loop();
+
+    void start();
+
+    void stop();
 
     Position2d getFieldToVehicle(double time);
 

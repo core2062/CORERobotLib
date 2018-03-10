@@ -202,7 +202,6 @@ COREVector CORESwerve::forwardKinematics(double gyroAngle) {
     }
     
 	//Adds the up all of the vector of each of the modules to get a total vector
-//	double r = sqrt(pow(m_wheelbase, 2) + pow(m_trackwidth, 2));
 
 	COREVector leftFront = m_frontLeftModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
 	double leftFrontX = leftFront.GetX() + (gyroAngle - m_lastGyroAngle) * (m_wheelbase / 2);
