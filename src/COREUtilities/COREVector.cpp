@@ -4,176 +4,175 @@
 using namespace CORE;
 
 COREVector::COREVector() {
-  m_x = 0;
-  m_y = 0;
+    m_theta = 0;
+    m_r = 0;
 }
 
-COREVector::COREVector(double x, double y, bool doNormalize) {
-  m_cos = x;
-  m_sin = y;
-  if (doNormalize) {
-    NormalizeRotation();
-    NormalizeMagnitude();
-  }
+COREVector::COREVector(double x, double y, bool normalizeVector) {
+    m_r = hypot(x, y);
+    m_theta = atan2(y, x);
+    if(normalizeVector) {
+        Normalize();
+    }
 }
 
-COREVector::COREVector(const COREVector& other) {
-  m_cos = other.m_cos;
-  m_sin = other.m_sin;
+COREVector::COREVector(const COREVector &other) {
+    m_r = other.m_r;
+    m_theta = other.m_theta;
 }
 
-COREVector::COREVector(double x, double y) {
-  m_x = x;
-  m_y = y;
+COREVector::COREVector(double r, double theta) {
+    m_r = r;
+    m_theta = theta;
 }
 
 COREVector COREVector::FromRadians(double radians, double mag) {
-  return COREVector(cos(radians) * mag, sin(radians) * mag, false);
+    return COREVector(mag, radians);
 }
 
 COREVector COREVector::FromDegrees(double degrees, double mag) {
-  return FromRadians(toRadians(degrees), mag);
+    return FromRadians(toRadians(degrees), mag);
 }
 
 COREVector COREVector::FromCompassDegrees(double compassDegrees, double mag) {
-  double degrees = 90 - compassDegrees;
-  degrees = degrees < 0 ? 360 + degrees : degrees;
-  return FromRadians(toRadians(degrees), mag);
+    double degrees = 90 - compassDegrees;
+    degrees = degrees < 0 ? 360 + degrees : degrees;
+    return FromRadians(toRadians(degrees), mag);
 }
 
-void COREVector::NormalizeRotation() {
-  double mag = pathogram(m_cos, m_sin);
-  if (mag > kE){
-    m_sin /= mag;
-    m_cos /= mag;
-  } else {
-    m_sin = 0;
-    m_cos = 1;
-  }
+void COREVector::Normalize() {
+    if(m_r < 0) {
+        Opposite();
+    }
+    m_r = 1;
+}
+
+double COREVector::NormalizeMagnitude() {
+    m_r = 1;
+    return 0;
+    //TODO: figure out what this is supposed to do and fix this
 }
 
 double COREVector::GetCos() {
-  return m_cos;
+    return cos(m_theta);
 }
 
 double COREVector::GetSin() {
-  return m_sin;
+    return sin(m_theta);
 }
 
 double COREVector::GetRadians() {
-  return atan2(m_sin, m_cos);
+    return m_theta;
 }
 
 double COREVector::GetDegrees() {
-  return CORE::toDegrees(GetRadians());
+    return CORE::toDegrees(GetRadians());
 }
 
 double COREVector::GetCompassDegrees() {
     double degrees = 450 - GetDegrees();
-    return degrees >= 360 ? degrees - 360 : degrees;
+    return (degrees >= 360 ? degrees - 360 : degrees);
 }
 
 COREVector COREVector::RotateBy(COREVector other) {
-  return COREVector(m_cos * other.GetCos() - m_sin * other.GetSin(),
-      m_cos * other.GetSin() + m_sin * other.GetCos(), true);
+    return COREVector(m_r, m_theta + other.m_theta);
 }
 
 COREVector COREVector::RotationInverse() {
-  return COREVector(m_cos, -m_sin, false);
+    return COREVector(m_r, fmod(m_theta + PI, 2 * PI));
 }
 
 COREVector COREVector::Opposite() {
-  return COREVector(-m_cos, -m_sin, false);
+    return COREVector(-m_r, fmod(m_theta + PI, 2 * PI));
 }
 
 COREVector COREVector::InterpolateRotation(COREVector other, double x) {
-  if (x <= 0){
-    return *this;
-  } else if (x >= 1){
-    return other;
-  }
-  double diff = RotationInverse().RotateBy(other).GetRadians();
-  return RotateBy(FromRadians(diff * x));
-}
-
-double COREVector::NormalizeMagnitude() {
-  return CORE::pathogram(m_x, m_y);
+    if (x <= 0) {
+        return *this;
+    } else if (x >= 1) {
+        return other;
+    }
+    double diff = RotationInverse().RotateBy(other).GetRadians();
+    return RotateBy(FromRadians(diff * x));
 }
 
 double COREVector::GetX() {
-  return m_x;
+    return cos(m_theta) * m_r;
 }
 
 double COREVector::GetY() {
-  return m_y;
+    return sin(m_theta) * m_r;
+}
+
+void COREVector::Invert() {
+    m_r *= -1;
+    m_theta = fmod(m_theta + PI, 2 * PI);
 }
 
 double COREVector::GetMagnitude() {
-  return NormalizeMagnitude();
+    return m_r;
 }
 
-void COREVector::SetX(double x) {
-  m_x = x;
-}
-
-void COREVector::SetY(double y) {
-  m_y = y;
+void COREVector::SetXY(double x, double y) {
+    m_r = hypot(x, y);
+    m_theta = atan2(y, x);
 }
 
 COREVector COREVector::TranslateBy(COREVector other) {
-  return COREVector(m_x + other.GetX(), m_y + other.GetY());
+    return COREVector(m_r + other.m_r, m_theta + other.m_theta);
 }
 
 COREVector COREVector::MagnitudeInverse() {
-  return COREVector(-m_x, -m_y);
+    return COREVector(-m_r, m_theta);
 }
 
 COREVector COREVector::InterpolateMagnitude(COREVector other, double x) {
-  if(x <=0){
-    return *this;
-  } else if (x >= 1){
-    return other;
-  }
-  return Extrapolate(other, x);
+    if (x <= 0) {
+        return *this;
+    } else if (x >= 1) {
+        return other;
+    }
+    return Extrapolate(other, x);
 }
 
 COREVector COREVector::Extrapolate(COREVector other, double x) {
-  return COREVector(x * (other.GetX() - m_x) + m_x, x * (other.GetY() - m_y) + m_y);
+    return COREVector(x * (other.GetX() - GetX()) + GetX(), x * (other.GetY() - GetY()) + GetY());
 }
 
 COREVector COREVector::FlipX() {
-  return COREVector(-m_x, m_y);
+    //return COREVector(-m_x, m_y);
+    return COREVector(0, 0);
 }
 
 COREVector COREVector::FlipY() {
-  return COREVector(m_x, -m_y);
+    //return COREVector(m_x, -m_y);
+    return COREVector(0, 0);
 }
 
 COREVector COREVector::AddVector(COREVector firstVector) {
-  return COREVector(GetX() + firstVector.GetX(), GetY() + firstVector.GetY());
+    return COREVector(GetX() + firstVector.GetX(), GetY() + firstVector.GetY());
 }
 
 COREVector COREVector::SubtractVector(COREVector firstVector) {
-  return COREVector(GetX() - firstVector.GetX(), GetY() - firstVector.GetY());
+    return COREVector(GetX() - firstVector.GetX(), GetY() - firstVector.GetY());
 }
 
 double COREVector::GetDotProduct(COREVector firstVector) {
-  return GetX() * firstVector.GetX() + GetY() + firstVector.GetY();
+    return GetX() * firstVector.GetX() + GetY() + firstVector.GetY();
 }
 
 double COREVector::GetCrossProduct(COREVector firstVector) {
-  return GetX() * firstVector.GetY() - GetY() * firstVector.GetX();
+    return GetX() * firstVector.GetY() - GetY() * firstVector.GetX();
 }
 
-COREVector COREVector::ShortestRotationTo(COREVector target) {
-  double counterClockwiseMove = GetCompassDegrees() - target.GetCompassDegrees();
-  double clockwiseMove = target.GetCompassDegrees() - GetCompassDegrees();
-  clockwiseMove = clockwiseMove < 0 ? 360 + clockwiseMove : clockwiseMove;
-  counterClockwiseMove = counterClockwiseMove < 0 ? 360 + counterClockwiseMove : counterClockwiseMove;
-  return COREVector::FromCompassDegrees(clockwiseMove < counterClockwiseMove ? clockwiseMove : -counterClockwiseMove);
+double COREVector::ShortestRotationTo(COREVector target) {
+    double counterClockwiseMove = GetCompassDegrees() - target.GetCompassDegrees();
+    double clockwiseMove = target.GetCompassDegrees() - GetCompassDegrees();
+    clockwiseMove += (clockwiseMove < 0 ? 360 : 0);
+    counterClockwiseMove += (counterClockwiseMove < 0 ? 360 : 0);
+    return (abs(clockwiseMove) < abs(counterClockwiseMove) ? clockwiseMove : -counterClockwiseMove);
 }
 
 void COREVector::SetMagnitude(double magnitude) {
-  m_x = cos(GetRadians()) * magnitude;
-  m_y = sin(GetRadians()) * magnitude;
+    m_r = magnitude;
 }

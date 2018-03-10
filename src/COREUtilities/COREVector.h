@@ -1,13 +1,14 @@
 #pragma once
 
 #include "COREUtilities/COREMath.h"
+#include <cmath>
 
 class COREVector {
 public:
 	COREVector();
 	COREVector(double x, double y, bool doNormalize);
 	COREVector(const COREVector& other);
-	COREVector(double x, double y);
+	COREVector(double r, double theta);
     double GetCompassDegrees();
   	double GetX();
   	double GetY();
@@ -24,12 +25,12 @@ public:
 	COREVector InterpolateMagnitude(COREVector other, double x);
 	COREVector TranslateBy(COREVector other);
 	COREVector Extrapolate(COREVector other, double x);
-	COREVector ShortestRotationTo(COREVector target);
-	void NormalizeRotation();
-	double NormalizeMagnitude();
-	void SetX(double x);
-	void SetY(double y);
+	double ShortestRotationTo(COREVector target);
+	void Normalize();
+    double NormalizeMagnitude();
+	void SetXY(double x, double y);
 	void SetMagnitude(double magnitude);
+    void Invert();
   	COREVector AddVector(COREVector firstVector);
   	COREVector SubtractVector(COREVector firstVector);
   	double GetCrossProduct(COREVector firstVector);
@@ -40,12 +41,7 @@ public:
   	double GetCos();
   	double GetSin();
 
-  	double m_direction = 0;
-  	double m_magnitude = 0;
 protected:
-  	double m_sin = 0;
-  	double m_cos = 1;
-  	double m_x = 0;
-  	double m_y = 0;
-  	double m_COREVector;
+  	double m_theta = 0;
+    double m_r = 0;
 };

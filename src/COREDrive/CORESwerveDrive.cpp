@@ -3,7 +3,6 @@
 #include "COREUtilities/COREMath.h"
 #include "WPILib.h"
 #include "ctre/Phoenix.h"
-#include <cmath>
 
 using namespace CORE;
 
@@ -42,17 +41,16 @@ CORESwerve::SwerveModule::SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMoto
         m_steerMotor(steerMotor) {
 }
 
-double CORESwerve::SwerveModule::getAngle(bool raw) {
-	//Multiplying by 360 degrees and dividing by five volts
-	//GetSensorCollection replaced getAnalogInRaw
-	double angle = m_steerMotor->GetSensorCollection().GetAnalogInRaw()
-			* (360.0 / 1025.0);
-	if (raw) {
-		return angle;
 
-	} else {
-		return angle - m_angleOffset;
-	}
+double CORESwerve::SwerveModule::getAngle(bool raw) {
+    //Multiplying by 360 degrees and dividing by five volts
+	//GetSensorCollection replaced getAnalogInRaw
+    double angle = m_steerMotor->GetSensorCollection().GetAnalogInRaw() * (360.0 / 1025.0);
+    if(raw) {
+        return angle;
+    } else {
+        return angle - m_angleOffset;
+    }
 
 }
 
@@ -75,12 +73,16 @@ void CORESwerve::SwerveModule::zeroAngle() {
 double CORESwerve::SwerveModule::getTotalTicks() {
 	return m_steerMotor->GetSelectedSensorPosition(0);
 }
-
 void CORESwerve::SwerveModule::setAnglePID(double p, double i, double d) {
-	m_anglePIDController.setProportionalConstant(p);
-	m_anglePIDController.setIntegralConstant(i);
-	m_anglePIDController.setDerivativeConstant(d);
+    m_anglePIDController.setProportionalConstant(p);
+    m_anglePIDController.setIntegralConstant(i);
+    m_anglePIDController.setDerivativeConstant(d);
 }
+
+void CORESwerve::tank(double speed, double rot){
+//    tank(COREEtherDrive::calculate(speed, rot, .1));
+}
+
 
 void CORESwerve::SwerveModule::drive(COREVector vector, double dt) {
     double steerMotorOutput;
@@ -95,26 +97,22 @@ void CORESwerve::SwerveModule::drive(COREVector vector, double dt) {
 }
 
 string CORESwerve::SwerveModule::print() {
-	string text = "\n\tSteer Motor Speed: "
-			+ to_string(m_steerMotor->GetSelectedSensorVelocity(0)); //TODO Change 0 to some other value
-	text += "\n\tSteer Angle Offset: " + to_string(m_angleOffset);
-	text += "\n\tSteer PID:";
-	text += "\n\t\tkP: "
-			+ to_string(m_anglePIDController.getProportionalConstant());
-	text += " kI: " + to_string(m_anglePIDController.getIntegralConstant());
-	text += " kD: " + to_string(m_anglePIDController.getDerivativeConstant());
-	text += " kF: " + to_string(m_anglePIDController.getFeedForwardConstant());
-	text += "\n\t\tMistake: " + to_string(m_anglePIDController.getMistake());
-	return text;
+    string text = "\n\tSteer Motor Speed: " + to_string(m_steerMotor->GetSelectedSensorVelocity(0)); //TODO Change 0 to some other value
+    text += "\n\tSteer Angle Offset: " + to_string(m_angleOffset);
+    text += "\n\tSteer PID:";
+    text += "\n\t\tkP: " + to_string(m_anglePIDController.getProportionalConstant());
+    text += " kI: " + to_string(m_anglePIDController.getIntegralConstant());
+    text += " kD: " + to_string(m_anglePIDController.getDerivativeConstant());
+    text += " kF: " + to_string(m_anglePIDController.getFeedForwardConstant());
+    text += "\n\t\tMistake: " + to_string(m_anglePIDController.getMistake());
+    return text;
 }
 
 void CORESwerve::SwerveModule::setAngleOffset(double angleOffset) {
-	m_angleOffset = angleOffset;
+    m_angleOffset = angleOffset;
 }
 
-
 void CORESwerve::calculate(double x, double y, double theta) {
-    COREVector m_frontRight, m_frontLeft, m_backRight, m_backLeft;
     if(y == 0 && x == 0 && theta == 0) {
         m_frontRight.SetMagnitude(0);
         m_frontLeft.SetMagnitude(0);
@@ -155,46 +153,39 @@ void CORESwerve::calculate(double x, double y, double theta) {
         backLeftModuleSpeed /= maxSpeed;
         backRightModuleSpeed /= maxSpeed;
     }
-    
+
     m_frontRight = COREVector::FromCompassDegrees(frontRightModuleAngle, frontRightModuleSpeed);
     m_frontLeft = COREVector::FromCompassDegrees(frontLeftModuleAngle, frontLeftModuleSpeed);
     m_backRight = COREVector::FromCompassDegrees(backRightModuleAngle, backRightModuleSpeed);
     m_backLeft = COREVector::FromCompassDegrees(backLeftModuleAngle, backLeftModuleSpeed);
 
-	double MAX_WHEEL_INVERT_SPEED = 1;
 
-    if(m_frontRight.GetMagnitude() <= MAX_WHEEL_INVERT_SPEED) {
-        if(abs(COREVector::FromCompassDegrees(m_frontRightModule->getAngle())
-                       .ShortestRotationTo(m_frontRight).GetDegrees()) > 45) {
-            m_frontRight.MagnitudeInverse();
-            m_frontRight.RotationInverse();
-        }
+    /*Code to determine if the motors should be set to be in reverse and rotate the wheels accordingly
+    First checks to see if the angle from the driver would require turning more than 90 degrees
+    If it does, set the angle to be the angle plus another 180 degrees, then take the remainder to
+    make sure that the wheels don't make multiple rotations. Sets speed to negative*/
+
+    double MAX_WHEEL_INVERT_SPEED = 1;
+
+    if(abs(m_frontRight.GetMagnitude()) <= MAX_WHEEL_INVERT_SPEED
+        && abs(COREVector::FromCompassDegrees(m_frontRightModule->getAngle()).ShortestRotationTo(m_frontRight)) > 90) {
+        m_frontRight.Invert();
     }
 
-    if(m_frontLeft.GetMagnitude() <= MAX_WHEEL_INVERT_SPEED) {
-        if(abs(COREVector::FromCompassDegrees(m_frontLeftModule->getAngle())
-                       .ShortestRotationTo(m_frontLeft).GetDegrees()) > 45) {
-            m_frontLeft.MagnitudeInverse();
-            m_frontLeft.RotationInverse();
-        }
+    if(abs(m_frontLeft.GetMagnitude()) <= MAX_WHEEL_INVERT_SPEED
+        && abs(COREVector::FromCompassDegrees(m_frontLeftModule->getAngle()).ShortestRotationTo(m_frontLeft)) > 90) {
+        m_frontLeft.Invert();
     }
 
-    if(m_backRight.GetMagnitude() <= MAX_WHEEL_INVERT_SPEED) {
-        if(abs(COREVector::FromCompassDegrees(m_backRightModule->getAngle())
-                       .ShortestRotationTo(m_backRight).GetDegrees()) > 45) {
-            m_backRight.MagnitudeInverse();
-            m_backRight.RotationInverse();
-        }
+    if(abs(m_backRight.GetMagnitude()) <= MAX_WHEEL_INVERT_SPEED
+       && abs(COREVector::FromCompassDegrees(m_backRightModule->getAngle()).ShortestRotationTo(m_backRight)) > 90) {
+        m_backRight.Invert();
     }
 
-    if(m_backLeft.GetMagnitude() <= MAX_WHEEL_INVERT_SPEED) {
-        if(abs(COREVector::FromCompassDegrees(m_backLeftModule->getAngle())
-                       .ShortestRotationTo(m_backLeft).GetDegrees()) > 45) {
-            m_backLeft.MagnitudeInverse();
-            m_backLeft.RotationInverse();
-        }
+    if(abs(m_backLeft.GetMagnitude()) <= MAX_WHEEL_INVERT_SPEED
+       && abs(COREVector::FromCompassDegrees(m_backLeftModule->getAngle()).ShortestRotationTo(m_backLeft)) > 90) {
+        m_backLeft.Invert();
     }
-    
 }
 
 COREVector CORESwerve::inverseKinematics() {
@@ -202,26 +193,26 @@ COREVector CORESwerve::inverseKinematics() {
 	double r = sqrt(pow(m_wheelbase, 2) + pow(m_trackwidth, 2));
 
 	COREVector leftFront = m_frontLeftModule->inverseKinematics(m_wheelCircumference, m_ticksToRotation);
-	leftFront.SetX(leftFront.GetX() - m_frontLeftModule->getAngle() * (m_wheelbase / r));
-	leftFront.SetY(leftFront.GetY() - m_frontLeftModule->getAngle() * (m_trackwidth / r));
+	leftFront.SetXY(leftFront.GetX() - m_frontLeftModule->getAngle() * (m_wheelbase / r),
+                   leftFront.GetY() - m_frontLeftModule->getAngle() * (m_trackwidth / r));
 	SmartDashboard::PutNumber("Left Front X: ", leftFront.GetX());
 	SmartDashboard::PutNumber("Left Front Y: ", leftFront.GetY());
 
 	COREVector rightFront = m_frontRightModule->inverseKinematics(m_wheelCircumference, m_ticksToRotation);
-	rightFront.SetX(rightFront.GetX() - m_frontRightModule->getAngle() * (m_wheelbase / r));
-	rightFront.SetY(rightFront.GetY() - m_frontRightModule->getAngle() * (m_trackwidth / r));
+	rightFront.SetXY(rightFront.GetX() - m_frontRightModule->getAngle() * (m_wheelbase / r),
+                    rightFront.GetY() - m_frontRightModule->getAngle() * (m_trackwidth / r));
 	SmartDashboard::PutNumber("Right Front X: ", rightFront.GetX());
 	SmartDashboard::PutNumber("Right Front Y: ", rightFront.GetY());
 
 	COREVector leftBack = m_backLeftModule->inverseKinematics(m_wheelCircumference, m_ticksToRotation);
-	leftBack.SetX(leftBack.GetX() - m_backLeftModule->getAngle() * (m_wheelbase / r));
-	leftBack.SetY(leftBack.GetY() - m_backLeftModule->getAngle() * (m_trackwidth / r));
+	leftBack.SetXY(leftBack.GetX() - m_backLeftModule->getAngle() * (m_wheelbase / r),
+                   leftBack.GetY() - m_backLeftModule->getAngle() * (m_trackwidth / r));
 	SmartDashboard::PutNumber("Left Back X: ", leftBack.GetX());
 	SmartDashboard::PutNumber("Left Back Y: ", leftBack.GetY());
 
 	COREVector rightBack = m_backRightModule->inverseKinematics(m_wheelCircumference, m_ticksToRotation);
-	rightBack.SetX(rightBack.GetX() - m_backRightModule->getAngle() * (m_wheelbase / r));
-	rightBack.SetY(rightBack.GetY() - m_backRightModule->getAngle() * (m_trackwidth / r));
+	rightBack.SetXY(rightBack.GetX() - m_backRightModule->getAngle() * (m_wheelbase / r),
+                   rightBack.GetY() - m_backRightModule->getAngle() * (m_trackwidth / r));
 	SmartDashboard::PutNumber("Right Back X: ", rightBack.GetX());
 	SmartDashboard::PutNumber("Right Back Y: ", rightBack.GetY());
 
@@ -229,18 +220,35 @@ COREVector CORESwerve::inverseKinematics() {
 
 }
 
-void CORESwerve::update(double dt) {
-	m_frontLeftModule->drive(m_frontLeft, dt);
-	m_frontRightModule->drive(m_frontRight, dt);
-	m_backRightModule->drive(m_backRight, dt);
-	m_backLeftModule->drive(m_backLeft, dt);
+void CORESwerve::update(double dt){
+    m_frontLeftModule->drive(m_frontLeft, dt);
+    m_frontRightModule->drive(m_frontRight, dt);
+    m_backRightModule->drive(m_backRight, dt);
+    m_backLeftModule->drive(m_backLeft, dt);
 }
 
+/*string CORESwerve::print() {
+    string text = "Swerve Drive Status:";
+    text += "\nFront Right Module\n\tRequested Angle: " + to_string(rightFrontModuleAngle) + "\tActual: "
+            + to_string(m_rightFrontModule->getAngle()) + "\n\tRequested Speed: " + to_string(rightFrontModuleSpeed);
+    text += m_rightFrontModule->print();
+    text += "\nFront Left Module\n\tRequested Angle: " + to_string(leftFrontModuleAngle) + "\tActual: "
+            + to_string(m_leftFrontModule->getAngle()) + "\n\tRequested Speed: " + to_string(leftFrontModuleSpeed);
+    text += m_leftFrontModule->print();
+    text += "\nBack Right Module\n\tRequested Angle: " + to_string(rightBackModuleAngle) + "\tActual: "
+            + to_string(m_rightBackModule->getAngle()) + "\n\tRequested Speed: " + to_string(rightBackModuleSpeed);
+    text += m_rightBackModule->print();
+    text += "\nBack Left Module\n\tRequested Angle: " + to_string(leftBackModuleAngle) + "\tActual: "
+            + to_string(m_leftBackModule->getAngle()) + "\n\tRequested Speed: " + to_string(leftBackModuleSpeed);
+    text += m_leftBackModule->print();
+    return text;
+}*/
+
 void CORESwerve::setSteerPID(double kp, double ki, double kd) {
-	m_frontLeftModule->setAnglePID(kp, ki, kd);
-	m_frontRightModule->setAnglePID(kp, ki, kd);
-	m_backRightModule->setAnglePID(kp, ki, kd);
-	m_backLeftModule->setAnglePID(kp, ki, kd);
+    m_frontLeftModule->setAnglePID(kp, ki, kd);
+    m_frontRightModule->setAnglePID(kp, ki, kd);
+    m_backRightModule->setAnglePID(kp, ki, kd);
+    m_backLeftModule->setAnglePID(kp, ki, kd);
 }
 
 void CORESwerve::zeroOffsets() {
