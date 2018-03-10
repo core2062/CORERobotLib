@@ -128,7 +128,7 @@ void SwerveTracker::addData(double time, Position2d data, Position2d::Delta vel)
 }
 
 COREVector SwerveTracker::generateOdometry() {
-    return m_swerveDrive->inverseKinematics();
+    return m_swerveDrive->forwardKinematics(0);
 }
 
 std::pair<double, double> SwerveTracker::getEncoderInches() {

@@ -18,7 +18,7 @@ namespace CORE {
         public:
             SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMotor);
             void drive(COREVector vector, double dt = -1);
-            COREVector inverseKinematics(double wheelCircumference, double ticksToRotation);
+            COREVector forwardKinematics(double wheelCircumference, double ticksToRotation);
             double getAngle(bool raw = false);
             double getEncoder();
             void setAnglePID(double p, double i, double d);
@@ -43,10 +43,9 @@ namespace CORE {
                    SwerveModule *rightBackModule,
                    SwerveModule *rightFrontModule);
     public:
-        void calculate(double y, double x, double theta);
-        COREVector inverseKinematics(double gyroAngle);
+        void inverseKinematics(double y, double x, double theta);
+        COREVector forwardKinematics(double gyroAngle);
         void tank(double speed, double rotateClockwise);
-        void update(double dt = -1);
         void setSteerPID(double kp, double ki, double kd);
         void zeroOffsets();
 
@@ -63,10 +62,12 @@ namespace CORE {
         double m_trackwidth;
         double m_ticksToRotation;
         double m_wheelCircumference;
+        double m_lastGyroAngle;
         SwerveModule* m_frontLeftModule, *m_backLeftModule, *m_backRightModule, *m_frontRightModule;
         COREConstant<double> m_leftFrontModuleOffset, m_leftBackModuleOffset, m_rightBackModuleOffset,
                 m_rightFrontModuleOffset;
         COREVector m_frontLeft, m_frontRight, m_backLeft, m_backRight;
+        CORETimer m_timer;
     };
 }
 
