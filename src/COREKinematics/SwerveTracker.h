@@ -67,7 +67,7 @@ public:
 
     Position2d getLatestFieldToVehicle();
 
-    Position2d generateOdometry(COREVector heading);
+    COREVector generateOdometry();
 
     std::pair<double, double> getEncoderInches();
 

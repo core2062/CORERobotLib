@@ -44,7 +44,7 @@ namespace CORE {
                    SwerveModule *rightFrontModule);
     public:
         void calculate(double y, double x, double theta);
-        COREVector inverseKinematics();
+        COREVector inverseKinematics(double gyroAngle);
         void tank(double speed, double rotateClockwise);
         void update(double dt = -1);
         void setSteerPID(double kp, double ki, double kd);
