@@ -1,5 +1,6 @@
 #include "SwerveTracker.h"
 #include "ctre/Phoenix.h"
+#include "COREDrive/CORESwerveDrive.h"
 
 using namespace CORE;
 
@@ -85,11 +86,8 @@ void SwerveTracker::loop() {
         COREVector gyroAngle = getGyroAngle();
 
         m_loopLock.lock();
-        Position2d odometry = generateOdometry(gyroAngle);
         m_loopLock.unlock();
         std::pair<double, double> inPerSec = getEncoderSpeed();
-//        Position2d::Delta velocity = m_swerveDrive->calculate();
-//        addData(time, odometry, velocity);
 
         m_timerLock.lock();
         double loopTime = m_loopTimer.Get() < m_targetLoopTime ? m_targetLoopTime - m_loopTimer.Get() : 0.0;
@@ -129,8 +127,8 @@ void SwerveTracker::addData(double time, Position2d data, Position2d::Delta vel)
     m_dataLock.unlock();
 }
 
-Position2d SwerveTracker::generateOdometry(COREVector heading) {
-    Position2d last = getLatestFieldToVehicle();
+COREVector SwerveTracker::generateOdometry() {
+    return m_swerveDrive->inverseKinematics();
 }
 
 std::pair<double, double> SwerveTracker::getEncoderInches() {
