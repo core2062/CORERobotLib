@@ -118,6 +118,10 @@ void CORESwerve::inverseKinematics(double x, double y, double theta) {
         m_frontLeft.SetMagnitude(0);
         m_backRight.SetMagnitude(0);
         m_backLeft.SetMagnitude(0);
+        m_frontLeftModule->drive(m_frontLeft, -1);
+        m_frontRightModule->drive(m_frontRight, -1);
+        m_backRightModule->drive(m_backRight, -1);
+        m_backLeftModule->drive(m_backLeft, -1);
         return;
     }
     double r = sqrt(pow(m_wheelbase, 2) + pow(m_trackwidth, 2));
