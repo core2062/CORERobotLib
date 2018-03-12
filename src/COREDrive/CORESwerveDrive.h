@@ -48,6 +48,7 @@ namespace CORE {
         void tank(double speed, double rotateClockwise);
         void setSteerPID(double kp, double ki, double kd);
         void zeroOffsets();
+        void updateOffsets();
 
         double rightFrontDeltaX = 0.0;
         double rightFrontDeltaY = 0.0;

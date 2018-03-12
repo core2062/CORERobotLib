@@ -36,7 +36,6 @@ private:
     AHRS *m_gyro = nullptr;
     thread *m_mainLoop = nullptr;
     static SwerveTracker *m_instance;
-    void injectCORESwerve(CORESwerve * swerveDrive);
     CORESwerve *m_swerveDrive = nullptr;
 
     SwerveTracker();
@@ -54,6 +53,7 @@ public:
     void init(TalonSRX *steer, TalonSRX *drive, AHRS *gyro);
 
     ~SwerveTracker();
+    void injectCORESwerve(CORESwerve * swerveDrive);
 
     void reset(double time, Position2d initial);
 

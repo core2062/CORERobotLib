@@ -41,23 +41,25 @@ CORESwerve::SwerveModule::SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMoto
         m_steerMotor(steerMotor) {
 }
 
-
 double CORESwerve::SwerveModule::getAngle(bool raw) {
     //Multiplying by 360 degrees and dividing by five volts
 	//GetSensorCollection replaced getAnalogInRaw
-    double angle = m_steerMotor->GetSensorCollection().GetAnalogInRaw() * (360.0 / 1025.0);
-    if(raw) {
-        return angle;
-    } else {
-        return angle - m_angleOffset;
+    double angle = m_steerMotor->GetSensorCollection().GetAnalogInRaw() * (360.0 / 1024.0);
+    if(!raw) {
+        angle -= m_angleOffset;
     }
-
+//    if(angle < 0) {
+//        angle += 360;
+//    } else if (angle > 360) {
+//        angle -= 360;
+//    }
+    return angle;
 }
 
 COREVector CORESwerve::SwerveModule::forwardKinematics(double wheelCircumference, double ticksToRotation) {
 	//Calculates the individual vector of each of the modules
 	//Theta may be change in angle or the total angle
-	double magnitude = ((getEncoder() * wheelCircumference) / ticksToRotation);
+	double magnitude = ((getEncoder() / ticksToRotation) * wheelCircumference);
     double newMag = magnitude - m_lastMagnitude;
 	m_lastMagnitude = magnitude;
 	return COREVector::FromCompassDegrees(getAngle(), newMag);
@@ -74,6 +76,7 @@ void CORESwerve::SwerveModule::zeroEncoder() {
 double CORESwerve::SwerveModule::getEncoder() {
 	return -m_driveMotor->GetSelectedSensorPosition(0);
 }
+
 void CORESwerve::SwerveModule::setAnglePID(double p, double i, double d) {
     m_anglePIDController.setProportionalConstant(p);
     m_anglePIDController.setIntegralConstant(i);
@@ -211,47 +214,50 @@ COREVector CORESwerve::forwardKinematics(double gyroAngle) {
 	COREVector leftFront = m_frontLeftModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
     SmartDashboard::PutNumber("Left Front X: ", leftFront.GetX());
     SmartDashboard::PutNumber("Left Front Y: ", leftFront.GetY());
-	double leftFrontX = leftFront.GetX();
-	double leftFrontY = leftFront.GetY();
-	leftFront.SetXY(leftFrontX, leftFrontY);
-	SmartDashboard::PutNumber("Left Front Adjusted X: ", leftFront.GetX());
-	SmartDashboard::PutNumber("Left Front Adjusted Y: ", leftFront.GetY());
+//	double leftFrontX = leftFront.GetX() + (gyroAngle - m_lastGyroAngle) * (m_wheelbase / 2);
+//	double leftFrontY = leftFront.GetY() + (gyroAngle - m_lastGyroAngle) * (m_trackwidth / 2);
+//	leftFront.SetXY(leftFrontX, leftFrontY);
+//	SmartDashboard::PutNumber("Left Front Adjusted X: ", leftFront.GetX());
+//	SmartDashboard::PutNumber("Left Front Adjusted Y: ", leftFront.GetY());
     SmartDashboard::PutNumber("Left Front Encoder: ", m_frontLeftModule->getEncoder());
 
 	COREVector rightFront = m_frontRightModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
     SmartDashboard::PutNumber("Right Front X: ", rightFront.GetX());
     SmartDashboard::PutNumber("Right Front Y: ", rightFront.GetY());
-	double rightFrontX = rightFront.GetX();
-	double rightFrontY = rightFront.GetY();
-	rightFront.SetXY(rightFrontX, rightFrontY);
-	SmartDashboard::PutNumber("Right Front Adjusted X: ", rightFront.GetX());
-	SmartDashboard::PutNumber("Right Front Adjusted Y: ", rightFront.GetY());
+//	double rightFrontX = rightFront.GetX() + (gyroAngle - m_lastGyroAngle) * (m_wheelbase / 2);
+//	double rightFrontY = rightFront.GetY() - (gyroAngle - m_lastGyroAngle) * (m_trackwidth / 2);
+//	rightFront.SetXY(rightFrontX, rightFrontY);
+//	SmartDashboard::PutNumber("Right Front Adjusted X: ", rightFront.GetX());
+//	SmartDashboard::PutNumber("Right Front Adjusted Y: ", rightFront.GetY());
     SmartDashboard::PutNumber("Right Front Encoder: ", m_frontRightModule->getEncoder());
 
 	COREVector leftBack = m_backLeftModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
     SmartDashboard::PutNumber("Left Back X: ", leftBack.GetX());
     SmartDashboard::PutNumber("Left Back Y: ", leftBack.GetY());
-	double leftBackX = leftBack.GetX();
-	double leftBackY = leftBack.GetY();
-	leftBack.SetXY(leftBackX, leftBackY);
-	SmartDashboard::PutNumber("Left Back Adjusted X: ", leftBack.GetX());
-	SmartDashboard::PutNumber("Left Back Adjusted Y: ", leftBack.GetY());
+//	double leftBackX = leftBack.GetX() - (gyroAngle - m_lastGyroAngle) * (m_wheelbase / 2);
+//	double leftBackY = leftBack.GetY() + (gyroAngle - m_lastGyroAngle) * (m_wheelbase / 2);
+//	leftBack.SetXY(leftBackX, leftBackY);
+//	SmartDashboard::PutNumber("Left Back Adjusted X: ", leftBack.GetX());
+//	SmartDashboard::PutNumber("Left Back Adjusted Y: ", leftBack.GetY());
     SmartDashboard::PutNumber("Left Back Encoder: ", m_backLeftModule->getEncoder());
 
 	COREVector rightBack = m_backRightModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
     SmartDashboard::PutNumber("Right Back X: ", rightBack.GetX());
     SmartDashboard::PutNumber("Right Back Y: ", rightBack.GetY());
-	double rightBackX = rightBack.GetX();
-	double rightBackY =  rightBack.GetY();
-	rightBack.SetXY(rightBackX, rightBackY);
-	SmartDashboard::PutNumber("Right Back Adjusted X: ", rightBack.GetX());
-	SmartDashboard::PutNumber("Right Back Adjusted Y: ", rightBack.GetY());
+//	double rightBackX = rightBack.GetX() - (gyroAngle - m_lastGyroAngle) * (m_wheelbase / 2);
+//	double rightBackY =  rightBack.GetY() - (gyroAngle - m_lastGyroAngle) * (m_trackwidth / 2);
+//	rightBack.SetXY(rightBackX, rightBackY);
+//	SmartDashboard::PutNumber("Right Back Adjusted X: ", rightBack.GetX());
+//	SmartDashboard::PutNumber("Right Back Adjusted Y: ", rightBack.GetY());
     SmartDashboard::PutNumber("Right Back Encoder: ", m_backRightModule->getEncoder());
+
+    COREVector averageVector((leftFront.GetX() + rightFront.GetX() + leftBack.GetX() + rightBack.GetX()) / 4.0,
+                             (leftFront.GetY() + rightFront.GetY() + leftBack.GetY() + rightBack.GetY()) / 4.0);
 
     m_lastGyroAngle = gyroAngle;
     m_timer.Reset();
     m_timer.Start();
-    return leftFront.AddVector(rightFront.AddVector(leftBack.AddVector(rightBack)));
+    return averageVector;
 
 }
 
@@ -281,14 +287,16 @@ void CORESwerve::setSteerPID(double kp, double ki, double kd) {
 
 void CORESwerve::zeroOffsets() {
     m_leftFrontModuleOffset.Set(m_frontLeftModule->getAngle(true));
-    m_frontLeftModule->setAngleOffset(m_leftFrontModuleOffset.Get());
-    
     m_rightFrontModuleOffset.Set(m_frontRightModule->getAngle(true));
-    m_frontRightModule->setAngleOffset(m_rightFrontModuleOffset.Get());
-
     m_leftBackModuleOffset.Set(m_backLeftModule->getAngle(true));
-    m_backLeftModule->setAngleOffset(m_leftBackModuleOffset.Get());
-
     m_rightBackModuleOffset.Set(m_backRightModule->getAngle(true));
+
+    updateOffsets();
+}
+
+void CORESwerve::updateOffsets() {
+    m_frontLeftModule->setAngleOffset(m_leftFrontModuleOffset.Get());
+    m_frontRightModule->setAngleOffset(m_rightFrontModuleOffset.Get());
+    m_backLeftModule->setAngleOffset(m_leftBackModuleOffset.Get());
     m_backRightModule->setAngleOffset(m_rightBackModuleOffset.Get());
 }
