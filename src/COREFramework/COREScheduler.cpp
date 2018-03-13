@@ -36,7 +36,7 @@ vector<COREAuton*> COREScheduler::m_autons;
 vector<CORETask*> COREScheduler::m_tasks;
 COREJoystick* COREScheduler::m_driverJoystick;
 COREJoystick* COREScheduler::m_operatorJoystick;
-//SendableChooser<COREAuton*>* COREScheduler::m_autonChooser;
+SendableChooser<COREAuton*>* COREScheduler::m_autonChooser;
 
 COREAuton* COREScheduler::m_selectedAuton;
 CORETimer COREScheduler::m_autonTimer;
@@ -80,12 +80,12 @@ void COREScheduler::robotInit() {
 			task->robotInitTask();
 		}
 	}
-//    m_autonChooser = new SendableChooser<COREAuton*>();
-//    m_autonChooser->AddDefault("Do Nothing", nullptr);
-//    for(auto auton : m_autons) {
-//        auton->putToDashboard(m_autonChooser);
-//    }
-//    SmartDashboard::PutData("Autonomous", m_autonChooser);
+    m_autonChooser = new SendableChooser<COREAuton*>();
+    m_autonChooser->AddDefault("Do Nothing", nullptr);
+    for(auto auton : m_autons) {
+        auton->putToDashboard(m_autonChooser);
+    }
+    SmartDashboard::PutData("Autonomous", m_autonChooser);
 }
 
 void COREScheduler::disabled() {
@@ -108,7 +108,7 @@ void COREScheduler::autonInit() {
 		}
 	}
 	if (!m_autons.empty()) {
-//        m_selectedAuton = m_autonChooser->GetSelected();
+        m_selectedAuton = m_autonChooser->GetSelected();
 		if (m_selectedAuton == nullptr) {
 			return;
 		}
@@ -167,6 +167,11 @@ void COREScheduler::teleop() {
 	}
 	for (auto subsystem : m_subsystems) {
 		subsystem->teleop();
+	}
+	for (auto task : m_tasks) {
+		if (!task->isDisabled()) {
+			task->postLoopTask();
+		}
 	}
 }
 

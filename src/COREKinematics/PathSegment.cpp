@@ -14,7 +14,7 @@ PathSegment::PathSegment(COREVector start, COREVector end, double speed) {
 void PathSegment::updateStart(COREVector newStart) {
     m_start = newStart;
     m_startToEnd = m_start.MagnitudeInverse().TranslateBy(m_end);
-    m_length = m_startToEnd.NormalizeMagnitude();
+    m_length = m_startToEnd.GetMagnitude();
 //	std::cout << "New Length: " << m_length << std::endl;
 }
 
@@ -55,6 +55,6 @@ PathSegment::ClosestPointReport PathSegment::getClosestPoint(COREVector queryPoi
         rv.clampedIndex = 0.0;
         rv.closestPoint = COREVector(m_start);
     }
-    rv.distance = rv.closestPoint.MagnitudeInverse().TranslateBy(queryPoint).NormalizeMagnitude();
+    rv.distance = rv.closestPoint.MagnitudeInverse().TranslateBy(queryPoint).GetMagnitude();
     return rv;
 }

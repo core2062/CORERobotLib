@@ -82,12 +82,12 @@ void SwerveTracker::stop() {
 void SwerveTracker::loop() {
     while (m_loopEnabled) {
         double time = CORETimer::getTime();
-        std::pair<double, double> inches = getEncoderInches();
+//        std::pair<double, double> inches = getEncoderInches();
         COREVector gyroAngle = getGyroAngle();
 
         m_loopLock.lock();
         m_loopLock.unlock();
-        std::pair<double, double> inPerSec = getEncoderSpeed();
+//        std::pair<double, double> inPerSec = getEncoderSpeed();
 
         m_timerLock.lock();
         double loopTime = m_loopTimer.Get() < m_targetLoopTime ? m_targetLoopTime - m_loopTimer.Get() : 0.0;
@@ -128,7 +128,8 @@ void SwerveTracker::addData(double time, Position2d data, Position2d::Delta vel)
 }
 
 COREVector SwerveTracker::generateOdometry() {
-    return m_swerveDrive->forwardKinematics(0);
+    auto vector = m_swerveDrive->forwardKinematics(0);
+    return COREVector::FromXY(vector.first, vector.second);
 }
 
 std::pair<double, double> SwerveTracker::getEncoderInches() {

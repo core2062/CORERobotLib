@@ -16,7 +16,7 @@
 
 using namespace CORE;
 
-class SwerveTracker : public CORETask {
+class SwerveTracker /*: public CORETask*/ {
 protected:
     InterpolatingTreeMap m_data;
     Position2d::Delta m_velocity = {0, 0, 0};
@@ -75,14 +75,14 @@ public:
 
     COREVector getGyroAngle();
 
-    void autonInitTask() override;
+    void autonInitTask() ;
 
-    void autonEndTask() override;
+    void autonEndTask() ;
 
-    void teleopInitTask() override;
+    void teleopInitTask() ;
 
-    void postLoopTask() override;
+    void postLoopTask() ;
 
-    void teleopEndTask() override;
+    void teleopEndTask() ;
 };
 

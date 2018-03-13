@@ -172,7 +172,8 @@ void CORESwerve::inverseKinematics(double x, double y, double theta) {
     First checks to see if the angle from the driver would require turning more than 90 degrees
     If it does, set the angle to be the angle plus another 180 degrees, then take the remainder to
     make sure that the wheels don't make multiple rotations. Sets speed to negative*/
-
+#define OPTIMIZE
+#ifdef OPTIMIZE
     double MAX_WHEEL_INVERT_SPEED = 1;
 
     if(abs(m_frontRight.GetMagnitude()) <= MAX_WHEEL_INVERT_SPEED
@@ -194,6 +195,7 @@ void CORESwerve::inverseKinematics(double x, double y, double theta) {
        && abs(COREVector::FromCompassDegrees(m_backLeftModule->getAngle()).ShortestRotationTo(m_backLeft)) > 90) {
         m_backLeft.Invert();
     }
+#endif
 
     m_frontLeftModule->drive(m_frontLeft, -1);
     m_frontRightModule->drive(m_frontRight, -1);
@@ -201,63 +203,34 @@ void CORESwerve::inverseKinematics(double x, double y, double theta) {
     m_backLeftModule->drive(m_backLeft, -1);
 }
 
-COREVector CORESwerve::forwardKinematics(double gyroAngle) {
-    double time = m_timer.Get();
-    if(time == 0) {
-        m_timer.Reset();
-        m_timer.Start();
-        return COREVector(0, 0);
-    }
+pair<double, double> CORESwerve::forwardKinematics(double gyroAngle) {
     
 	//Adds the up all of the vector of each of the modules to get a total vector
 
 	COREVector leftFront = m_frontLeftModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
     SmartDashboard::PutNumber("Left Front X: ", leftFront.GetX());
     SmartDashboard::PutNumber("Left Front Y: ", leftFront.GetY());
-//	double leftFrontX = leftFront.GetX() + (gyroAngle - m_lastGyroAngle) * (m_wheelbase / 2);
-//	double leftFrontY = leftFront.GetY() + (gyroAngle - m_lastGyroAngle) * (m_trackwidth / 2);
-//	leftFront.SetXY(leftFrontX, leftFrontY);
-//	SmartDashboard::PutNumber("Left Front Adjusted X: ", leftFront.GetX());
-//	SmartDashboard::PutNumber("Left Front Adjusted Y: ", leftFront.GetY());
     SmartDashboard::PutNumber("Left Front Encoder: ", m_frontLeftModule->getEncoder());
 
 	COREVector rightFront = m_frontRightModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
     SmartDashboard::PutNumber("Right Front X: ", rightFront.GetX());
     SmartDashboard::PutNumber("Right Front Y: ", rightFront.GetY());
-//	double rightFrontX = rightFront.GetX() + (gyroAngle - m_lastGyroAngle) * (m_wheelbase / 2);
-//	double rightFrontY = rightFront.GetY() - (gyroAngle - m_lastGyroAngle) * (m_trackwidth / 2);
-//	rightFront.SetXY(rightFrontX, rightFrontY);
-//	SmartDashboard::PutNumber("Right Front Adjusted X: ", rightFront.GetX());
-//	SmartDashboard::PutNumber("Right Front Adjusted Y: ", rightFront.GetY());
     SmartDashboard::PutNumber("Right Front Encoder: ", m_frontRightModule->getEncoder());
 
 	COREVector leftBack = m_backLeftModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
     SmartDashboard::PutNumber("Left Back X: ", leftBack.GetX());
     SmartDashboard::PutNumber("Left Back Y: ", leftBack.GetY());
-//	double leftBackX = leftBack.GetX() - (gyroAngle - m_lastGyroAngle) * (m_wheelbase / 2);
-//	double leftBackY = leftBack.GetY() + (gyroAngle - m_lastGyroAngle) * (m_wheelbase / 2);
-//	leftBack.SetXY(leftBackX, leftBackY);
-//	SmartDashboard::PutNumber("Left Back Adjusted X: ", leftBack.GetX());
-//	SmartDashboard::PutNumber("Left Back Adjusted Y: ", leftBack.GetY());
     SmartDashboard::PutNumber("Left Back Encoder: ", m_backLeftModule->getEncoder());
 
 	COREVector rightBack = m_backRightModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
     SmartDashboard::PutNumber("Right Back X: ", rightBack.GetX());
     SmartDashboard::PutNumber("Right Back Y: ", rightBack.GetY());
-//	double rightBackX = rightBack.GetX() - (gyroAngle - m_lastGyroAngle) * (m_wheelbase / 2);
-//	double rightBackY =  rightBack.GetY() - (gyroAngle - m_lastGyroAngle) * (m_trackwidth / 2);
-//	rightBack.SetXY(rightBackX, rightBackY);
-//	SmartDashboard::PutNumber("Right Back Adjusted X: ", rightBack.GetX());
-//	SmartDashboard::PutNumber("Right Back Adjusted Y: ", rightBack.GetY());
     SmartDashboard::PutNumber("Right Back Encoder: ", m_backRightModule->getEncoder());
 
-    COREVector averageVector((leftFront.GetX() + rightFront.GetX() + leftBack.GetX() + rightBack.GetX()) / 4.0,
-                             (leftFront.GetY() + rightFront.GetY() + leftBack.GetY() + rightBack.GetY()) / 4.0);
-
-    m_lastGyroAngle = gyroAngle;
-    m_timer.Reset();
-    m_timer.Start();
-    return averageVector;
+    pair<double, double> result;
+    result.first = ((leftFront.GetX() + rightFront.GetX() + leftBack.GetX() + rightBack.GetX()) * 0.25);
+    result.second = ((leftFront.GetY() + rightFront.GetY() + leftBack.GetY() + rightBack.GetY()) * 0.25);
+    return result;
 
 }
 
