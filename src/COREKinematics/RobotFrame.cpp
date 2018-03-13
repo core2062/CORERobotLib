@@ -1,7 +1,7 @@
 #include "RobotFrame.h"
 
 RobotFrame::RobotFrame(double x, double y, double degrees) :
-        Position2d(COREVector(x, y), COREVector::FromDegrees(degrees)) {
+        Position2d(COREVector::FromXY(x, y), COREVector::FromDegrees(degrees)) {
 }
 
 RobotFrame::RobotFrame(Position2d other) :

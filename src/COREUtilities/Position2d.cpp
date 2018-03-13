@@ -40,8 +40,8 @@ Position2d Position2d::fromVelocity(Delta delta) {
 		s = sinT / delta.dtheta;
 		c = (1.0 - cosT) / delta.dtheta;
 	}
-	return Position2d(COREVector(delta.dx * s - delta.dy * c, delta.dx * c + delta.dy * s),
-			COREVector(cosT, sinT, false));
+	return Position2d(COREVector::FromXY(delta.dx * s - delta.dy * c, delta.dx * c + delta.dy * s),
+					  COREVector::FromXY(cosT, sinT));
 }
 
 COREVector Position2d::getTranslation() {

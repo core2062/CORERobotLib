@@ -146,10 +146,10 @@ std::pair<bool, COREVector> Path::getFirstCircleSegmentIntersection(PathSegment 
     }
 
     double sqrtDiscriminant = sqrt(discriminant);
-    COREVector posSolution = COREVector(
+    COREVector posSolution = COREVector::FromXY(
             (det * dy + ((dy < 0) ? -1 : 1) * dx * sqrtDiscriminant) / drSquared + center.GetX(),
             (-det * dx + abs(dy) * sqrtDiscriminant) / drSquared + center.GetY());
-    COREVector negSolution = COREVector(
+    COREVector negSolution = COREVector::FromXY(
             (det * dy - ((dy < 0) ? -1 : 1) * dx * sqrtDiscriminant) / drSquared + center.GetX(),
             (-det * dx - abs(dy) * sqrtDiscriminant) / drSquared + center.GetY());
 

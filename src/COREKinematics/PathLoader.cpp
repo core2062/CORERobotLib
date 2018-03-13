@@ -44,7 +44,7 @@ Path *PathLoader::loadPath(std::string fileName, double speedScale, bool flipY, 
             }
 
             Waypoint wp;
-            wp.position = COREVector(p.x, p.y);
+            wp.position = COREVector::FromXY(p.x, p.y);
             wp.speed = 100;
             wp.event = p.event;
             points.push_back(wp);

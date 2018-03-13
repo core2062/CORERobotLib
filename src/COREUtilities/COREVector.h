@@ -6,15 +6,15 @@
 class COREVector {
 public:
 	COREVector();
-	COREVector(double x, double y, bool doNormalize);
-	COREVector(const COREVector& other);
 	COREVector(double r, double theta);
+	COREVector(const COREVector& other);
     double GetCompassDegrees();
   	double GetX();
   	double GetY();
 	static COREVector FromCompassDegrees(double compassDegrees, double mag = 1);
 	static COREVector FromRadians(double radians, double mag = 1);
 	static COREVector FromDegrees(double degrees, double mag = 1);
+	static COREVector FromXY(double x, double y);
 	COREVector RotationInverse();
 	COREVector MagnitudeInverse();
 	COREVector Opposite();
@@ -32,7 +32,7 @@ public:
 	void SetMagnitude(double magnitude);
     void Invert();
   	COREVector AddVector(COREVector firstVector);
-  	COREVector SubtractVector(COREVector firstVector);
+	COREVector SubtractVector(COREVector firstVector);
   	double GetCrossProduct(COREVector firstVector);
   	double GetDotProduct(COREVector firstVector);
   	double GetMagnitude();

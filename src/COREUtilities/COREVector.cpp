@@ -8,14 +8,6 @@ COREVector::COREVector() {
     m_r = 0;
 }
 
-COREVector::COREVector(double x, double y, bool normalizeVector) {
-    m_r = hypot(x, y);
-    m_theta = atan2(y, x);
-    if(normalizeVector) {
-        Normalize();
-    }
-}
-
 COREVector::COREVector(const COREVector &other) {
     m_r = other.m_r;
     m_theta = other.m_theta;
@@ -38,6 +30,10 @@ COREVector COREVector::FromCompassDegrees(double compassDegrees, double mag) {
     double degrees = 90 - compassDegrees;
     degrees = degrees < 0 ? 360 + degrees : degrees;
     return FromRadians(toRadians(degrees), mag);
+}
+
+COREVector COREVector::FromXY(double x, double y) {
+    return COREVector(hypot(x, y), atan2(y, x));
 }
 
 void COREVector::Normalize() {
@@ -136,7 +132,7 @@ COREVector COREVector::InterpolateMagnitude(COREVector other, double x) {
 }
 
 COREVector COREVector::Extrapolate(COREVector other, double x) {
-    return COREVector(x * (other.GetX() - GetX()) + GetX(), x * (other.GetY() - GetY()) + GetY());
+    return FromXY(x * (other.GetX() - GetX()) + GetX(), x * (other.GetY() - GetY()) + GetY());
 }
 
 COREVector COREVector::FlipX() {
@@ -150,11 +146,11 @@ COREVector COREVector::FlipY() {
 }
 
 COREVector COREVector::AddVector(COREVector firstVector) {
-    return COREVector(GetX() + firstVector.GetX(), GetY() + firstVector.GetY());
+    return FromXY(GetX() + firstVector.GetX(), GetY() + firstVector.GetY());
 }
 
 COREVector COREVector::SubtractVector(COREVector firstVector) {
-    return COREVector(GetX() - firstVector.GetX(), GetY() - firstVector.GetY());
+    return FromXY(GetX() - firstVector.GetX(), GetY() - firstVector.GetY());
 }
 
 double COREVector::GetDotProduct(COREVector firstVector) {

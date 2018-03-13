@@ -112,7 +112,7 @@ pair<bool, AdaptivePursuit::Circle> AdaptivePursuit::joinPath(Position2d pos, CO
         return {false, Circle(COREVector(), 0, 0)};
     }
 
-    return {true, Circle(COREVector((mx * (x1 * x1 - x2 * x2 - dy * dy) + 2 * my * x1 * dy) / (2 * crossTerm),
+    return {true, Circle(COREVector::FromXY((mx * (x1 * x1 - x2 * x2 - dy * dy) + 2 * my * x1 * dy) / (2 * crossTerm),
                                        (-my * (-y1 * y1 + y2 * y2 + dy * dy) + 2 * mx * y1 * dx) / (2 * crossTerm)),
                          .5 * abs((dx * dx + dy * dy) / crossTerm), (crossProduct > 0))};
 }
