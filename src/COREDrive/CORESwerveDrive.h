@@ -10,6 +10,7 @@
 #include "COREControl/COREPID.h"
 #include "COREUtilities/COREVector.h"
 #include "COREUtilities/Position2d.h"
+#include "COREDrive/COREEtherDrive.h"
 
 namespace CORE {
     class CORESwerve/* : public COREDrive*/ {
@@ -23,6 +24,8 @@ namespace CORE {
             double getEncoder();
             void setAnglePID(double p, double i, double d);
             void setAngleOffset(double angleOffset);
+            TalonSRX * getDriveMotor();
+            void tank();
             void zeroAngle();
             void zeroEncoder();
             string print();
@@ -45,7 +48,7 @@ namespace CORE {
     public:
         void inverseKinematics(double y, double x, double theta);
         pair<double, double> forwardKinematics(double gyroAngle);
-        void tank(double speed, double rotateClockwise);
+        void tank(double speed, double rot);
         void setSteerPID(double kp, double ki, double kd);
         void zeroOffsets();
         void updateOffsets();
@@ -67,6 +70,7 @@ namespace CORE {
         SwerveModule* m_frontLeftModule, *m_backLeftModule, *m_backRightModule, *m_frontRightModule;
         COREConstant<double> m_leftFrontModuleOffset, m_leftBackModuleOffset, m_rightBackModuleOffset,
                 m_rightFrontModuleOffset;
+        COREEtherDrive autonomousDrive;
         COREVector m_frontLeft, m_frontRight, m_backLeft, m_backRight;
         CORETimer m_timer;
     };

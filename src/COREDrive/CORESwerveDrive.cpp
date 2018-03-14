@@ -19,7 +19,9 @@ CORESwerve::CORESwerve(double trackWidth, double wheelBase, double wheelDiameter
         m_leftFrontModuleOffset("Front Left Module Offset"),
         m_leftBackModuleOffset("Back Left Module Offset"),
         m_rightBackModuleOffset("Back Right Module Offset"),
-        m_rightFrontModuleOffset("Front Right Module Offset") {
+        m_rightFrontModuleOffset("Front Right Module Offset"),
+		autonomousDrive(m_frontLeftModule->getDriveMotor(), m_backLeftModule->getDriveMotor(),
+				m_frontRightModule->getDriveMotor(), m_backRightModule->getDriveMotor(), .6, .4, 1.0) {
     if(!(m_frontLeftModule && m_backLeftModule && m_backRightModule && m_frontRightModule)) {
         CORELog::logError("A module passed to CORESwerve is a nullptr!");
     }
@@ -39,6 +41,17 @@ CORESwerve::SwerveModule::SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMoto
         m_anglePIDController(0, 0, 0),
         m_driveMotor(driveMotor),
         m_steerMotor(steerMotor) {
+}
+
+void CORESwerve::SwerveModule::tank() {
+	//Sets steer motors to 0 so that the robot doesn't rotate during auto
+	m_steerMotor->Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, 0);
+
+}
+
+TalonSRX * CORESwerve::SwerveModule::getDriveMotor() {
+	//returns the drive motor to put into ether drive
+	return m_driveMotor;
 }
 
 double CORESwerve::SwerveModule::getAngle(bool raw) {
@@ -85,6 +98,13 @@ void CORESwerve::SwerveModule::setAnglePID(double p, double i, double d) {
 
 void CORESwerve::tank(double speed, double rot){
 //    tank(COREEtherDrive::calculate(speed, rot, .1));
+	//Calculates the tank outputs for each of the motors, and calls the tank function to set motors to 0
+	m_frontRightModule->tank();
+	m_frontLeftModule->tank();
+	m_backRightModule->tank();
+	m_backLeftModule->tank();
+	COREEtherDrive::calculate(speed, rot, .1);
+
 }
 
 
