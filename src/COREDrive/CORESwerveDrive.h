@@ -32,7 +32,6 @@ namespace CORE {
             TalonSRX *m_driveMotor;
             TalonSRX *m_steerMotor;
             double m_lastMagnitude = 0.0;
-            double m_lastAngle = 0.0;
             double m_angleOffset = 0.0;
         };
 
@@ -48,6 +47,7 @@ namespace CORE {
         void tank(double speed, double rotateClockwise);
         void setSteerPID(double kp, double ki, double kd);
         void zeroOffsets();
+        void zeroEncoders();
         void updateOffsets();
 
         double rightFrontDeltaX = 0.0;

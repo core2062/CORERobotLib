@@ -49,14 +49,6 @@ double COREVector::NormalizeMagnitude() {
     //TODO: figure out what this is supposed to do and fix this
 }
 
-double COREVector::GetCos() {
-    return cos(m_theta);
-}
-
-double COREVector::GetSin() {
-    return sin(m_theta);
-}
-
 double COREVector::GetRadians() {
     return m_theta;
 }
@@ -171,4 +163,10 @@ double COREVector::ShortestRotationTo(COREVector target) {
 
 void COREVector::SetMagnitude(double magnitude) {
     m_r = magnitude;
+}
+double COREVector::GetCos() {
+    return cos(m_theta);
+}
+double COREVector::GetSin() {
+    return sin(m_theta);
 }

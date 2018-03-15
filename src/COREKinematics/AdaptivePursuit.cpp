@@ -47,14 +47,17 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
         dt = m_dt;
         m_hasRun = true;
     }
-    double accel = (speed - m_lastCommand.dx) / dt;
+    double lastSpeed = hypot(m_lastCommand.dx, m_lastCommand.dy) * 100;
+    double accel = (speed - lastSpeed) / dt;
     if (accel < -m_maxAccel) {
-        speed = m_lastCommand.dx - m_maxAccel * dt;
+        speed = lastSpeed - m_maxAccel * dt;
     } else if (accel > m_maxAccel) {
-        speed = m_lastCommand.dx + m_maxAccel * dt;
+        speed = lastSpeed + m_maxAccel * dt;
     }
 
     double remainingDistance = m_path.getRemainingLength();
+    CORELog::logInfo("Current Pos - X: " + to_string(pos.getTranslation().GetX()) + " Y: " + to_string(pos.getTranslation().GetY()));
+    CORELog::logInfo("Remaining length: " + to_string(remainingDistance));
     if (m_gradualStop) {
         double maxAllowedSpeed = sqrt(2 * m_maxAccel * remainingDistance);
         if (fabs(speed) > maxAllowedSpeed) {
@@ -68,7 +71,17 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
 
     Position2d::Delta rv(0, 0, 0);
     if (circle.first) {
-        rv = Position2d::Delta(speed, 0, ((circle.second.turnRight) ? -1 : 1) * fabs(speed) / circle.second.radius);
+//        rv = Position2d::Delta(speed, 0, ((circle.second.turnRight) ? -1 : 1) * fabs(speed) / circle.second.radius);
+        CORELog::logInfo("Circle X: " + to_string(circle.second.center.GetX()));
+        CORELog::logInfo("Circle Y: " + to_string(circle.second.center.GetY()));
+        CORELog::logInfo("Circle Radians: " + to_string(circle.second.center.GetRadians()));
+        CORELog::logInfo("Circle Radius: " + to_string(circle.second.radius));
+
+//        double y = -1 * ((circle.second.turnRight) ? -1 : 1) * (fabs(speed) * circle.second.radius) * cos(PI + circle.second.center.GetRadians());
+//        double x = (fabs(speed) * circle.second.radius) * sin(PI + circle.second.center.GetRadians());
+        double y = sin(circle.second.center.GetRadians() + PI/2) * fabs(speed);
+        double x = cos(circle.second.center.GetRadians() + PI/2) * fabs(speed);
+        rv = Position2d::Delta(x, abs(y), 0);
     } else {
         rv = Position2d::Delta(speed, 0, 0);
     }
@@ -109,10 +122,10 @@ pair<bool, AdaptivePursuit::Circle> AdaptivePursuit::joinPath(Position2d pos, CO
     double crossTerm = mx * dx + my * dy;
 
     if (abs(crossTerm) < kE) {
-        return {false, Circle(COREVector(), 0, 0)};
+        return {false, Circle(COREVector(), 0, false)};
     }
 
     return {true, Circle(COREVector::FromXY((mx * (x1 * x1 - x2 * x2 - dy * dy) + 2 * my * x1 * dy) / (2 * crossTerm),
-                                       (-my * (-y1 * y1 + y2 * y2 + dy * dy) + 2 * mx * y1 * dx) / (2 * crossTerm)),
+                                       (-my * (-y1 * y1 + y2 * y2 + dx * dx) + 2 * mx * y1 * dx) / (2 * crossTerm)),
                          .5 * abs((dx * dx + dy * dy) / crossTerm), (crossProduct > 0))};
 }

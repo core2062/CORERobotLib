@@ -70,7 +70,8 @@ void CORESwerve::SwerveModule::zeroAngle() {
 }
 
 void CORESwerve::SwerveModule::zeroEncoder() {
-    m_driveMotor->SetSelectedSensorPosition(0, 0, 0);
+    m_driveMotor->SetSelectedSensorPosition(0, 0, 10);
+    m_lastMagnitude = 0;
 }
 
 double CORESwerve::SwerveModule::getEncoder() {
@@ -272,4 +273,11 @@ void CORESwerve::updateOffsets() {
     m_frontRightModule->setAngleOffset(m_rightFrontModuleOffset.Get());
     m_backLeftModule->setAngleOffset(m_leftBackModuleOffset.Get());
     m_backRightModule->setAngleOffset(m_rightBackModuleOffset.Get());
+}
+
+void CORESwerve::zeroEncoders() {
+    m_frontLeftModule->zeroEncoder();
+    m_frontRightModule->zeroEncoder();
+    m_backLeftModule->zeroEncoder();
+    m_backRightModule->zeroEncoder();
 }

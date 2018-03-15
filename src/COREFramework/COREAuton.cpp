@@ -170,7 +170,7 @@ void COREAuton::auton() {
 }
 
 /*
- * Initialize autonomous routine by reseting and adding all nodes.
+ * Initialize autonomous routine by resetting and adding all nodes.
  */
 void COREAuton::autonInit() {
     reset();

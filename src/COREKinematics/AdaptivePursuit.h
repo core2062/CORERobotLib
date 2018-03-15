@@ -3,6 +3,10 @@
 #include "TankKinematics.h"
 #include "Path.h"
 
+#include "CORELogging/CORELog.h"
+
+using namespace CORE;
+
 using namespace std;
 
 class AdaptivePursuit {

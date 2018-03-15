@@ -40,7 +40,7 @@ COREVector PathSegment::interpolate(double index) {
 
 double PathSegment::dotProduct(COREVector other) {
 	COREVector startToOther = m_start.MagnitudeInverse().TranslateBy(other);
-    return other.GetDotProduct(other);
+    return m_startToEnd.GetX() * startToOther.GetX() + m_startToEnd.GetY() * startToOther.GetY();
 }
 
 PathSegment::ClosestPointReport PathSegment::getClosestPoint(COREVector queryPoint) {
