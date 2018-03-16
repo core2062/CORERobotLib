@@ -4,7 +4,7 @@
 #include "COREFramework/CORETask.h"
 #include "COREUtilities/COREConstant.h"
 #include "COREDrive.h"
-#include "COREKinematics/TankKinematics.h"
+#include "WaypointFollower/TankKinematics.h"
 #include "ctre/Phoenix.h"
 
 namespace CORE {

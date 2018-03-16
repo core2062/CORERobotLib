@@ -1,7 +1,6 @@
 #pragma once
 
 #include "COREUtilities/COREMath.h"
-#include <cmath>
 
 class COREVector {
 public:

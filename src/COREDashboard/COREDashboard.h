@@ -7,6 +7,7 @@
 #include "seasocks/Server.h"
 #include "seasocks/PrintfLogger.h"
 #include "seasocks/Logger.h"
+#include "WaypointFollower/COREPathConnectionHandler.h"
 #include <memory>
 #include <thread>
 #include <string>

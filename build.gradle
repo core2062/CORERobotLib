@@ -12,7 +12,7 @@ model {
             seasocks {
                 headers.srcDir "3rdparty/seasocks/src/main/c"
                 binaries.withType(StaticLibraryBinary) {
-                    staticLibraryFile = file("3rdparty/seasocks/" + getPlatformPath(targetPlatform) + "/libseasocks.a")
+                    staticLibraryFile = file("3rdparty/seasocks/Linux/arm/libseasocks.a")
                 }
             }
             googleTest {
@@ -51,7 +51,7 @@ model {
                 source {
                     srcDir "src"
                     include "**/*.cpp"
-                    exclude "WaypointFollower", "CORESimulation"
+                    exclude "CORESimulation"
                 }
                 exportedHeaders {
                     srcDir "src"

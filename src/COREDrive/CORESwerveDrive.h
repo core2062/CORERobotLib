@@ -9,7 +9,6 @@
 #include "COREHardware/CORESensor.h"
 #include "COREControl/COREPID.h"
 #include "COREUtilities/COREVector.h"
-#include "COREUtilities/Position2d.h"
 #include "COREDrive/COREEtherDrive.h"
 
 namespace CORE {
@@ -70,7 +69,6 @@ namespace CORE {
         SwerveModule* m_frontLeftModule, *m_backLeftModule, *m_backRightModule, *m_frontRightModule;
         COREConstant<double> m_leftFrontModuleOffset, m_leftBackModuleOffset, m_rightBackModuleOffset,
                 m_rightFrontModuleOffset;
-        COREEtherDrive autonomousDrive;
         COREVector m_frontLeft, m_frontRight, m_backLeft, m_backRight;
         CORETimer m_timer;
     };
