@@ -22,20 +22,20 @@ bool AdaptivePursuit::isDone() {
 }
 
 Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
-//    Position2d pos = robotPos;
-//    if (m_reversed) {
-//        pos = Position2d(robotPos.getTranslation(), robotPos.getRotation().rotateBy(Rotation2d::fromRadians(PI)));
-//    }
+    Position2d pos = robotPos;
+    if (m_reversed) {
+        pos = Position2d(robotPos.getTranslation(), robotPos.getRotation().rotateBy(Rotation2d::fromRadians(PI)));
+    }
 
-    double distanceFromPath = m_path.update(robotPos.getTranslation());
+    double distanceFromPath = m_path.update(pos.getTranslation());
     if (isDone()) {
         return {0, 0, 0};
     }
 
-    PathSegment::Sample lookaheadPoint = m_path.getLookaheadPoint(robotPos.getTranslation(),
+    PathSegment::Sample lookaheadPoint = m_path.getLookaheadPoint(pos.getTranslation(),
                                                                   distanceFromPath + m_fixedLookahead);
-//    pair<bool, Circle> circle = joinPath(pos, lookaheadPoint.translation);
 
+    CORELog::logInfo("Lookahead point X: " + to_string(lookaheadPoint.translation.getX()) + " Y: " + to_string(lookaheadPoint.translation.getY()));
     double speed = lookaheadPoint.speed;
     if (m_reversed) {
         speed *= -1;
@@ -56,7 +56,6 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
     }
 
     double remainingDistance = m_path.getRemainingLength();
-    CORELog::logInfo("Look Ahead Pos - X: " + to_string(lookaheadPoint.translation.getX()) + " Y: " + to_string(lookaheadPoint.translation.getY()));
     if (m_gradualStop) {
         double maxAllowedSpeed = sqrt(2 * m_maxAccel * remainingDistance);
         if (fabs(speed) > maxAllowedSpeed) {
@@ -82,12 +81,13 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
 //        Attempt 2:
 //        double y = sin(circle.second.center.GetRadians() + PI/2) * fabs(speed);
 //        double x = cos(circle.second. center.GetRadians() + PI/2) * fabs(speed);
-        double y = lookaheadPoint.translation.getSin() * speed;
-        double x = lookaheadPoint.translation.getCos() * speed;
-        rv = Position2d::Delta(-x, y, 0);
-//    } else {
-//        rv = Position2d::Delta(speed, 0, 0);
-//    }
+    Translation2d move = robotPos.getTranslation().inverse().translateBy(lookaheadPoint.translation);
+
+    double x = move.getCos() * speed * 0.01;
+    double y = move.getSin() * speed * 0.01;
+
+    rv = Position2d::Delta(x, y, 0);
+    
     m_lastTime = now;
     m_lastCommand = rv;
     return rv;

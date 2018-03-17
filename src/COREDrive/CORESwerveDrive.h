@@ -23,8 +23,6 @@ namespace CORE {
             double getEncoder();
             void setAnglePID(double p, double i, double d);
             void setAngleOffset(double angleOffset);
-            TalonSRX * getDriveMotor();
-            void tank();
             void zeroAngle();
             void zeroEncoder();
             string print();
