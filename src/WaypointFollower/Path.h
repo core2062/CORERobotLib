@@ -31,6 +31,8 @@ public:
 
 	PathSegment::Sample getLookaheadPoint(Translation2d pos, double lookahead);
 
+    Rotation2d getNextRotation(Translation2d pos);
+
 	std::pair<bool, Translation2d> getFirstCircleSegmentIntersection(PathSegment segment, Translation2d center,
 			double radius);
 };

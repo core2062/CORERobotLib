@@ -82,12 +82,10 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
 //        double y = sin(circle.second.center.GetRadians() + PI/2) * fabs(speed);
 //        double x = cos(circle.second. center.GetRadians() + PI/2) * fabs(speed);
     Translation2d move = robotPos.getTranslation().inverse().translateBy(lookaheadPoint.translation);
-
     double x = move.getCos() * speed * 0.01;
     double y = move.getSin() * speed * 0.01;
 
     rv = Position2d::Delta(x, y, 0);
-    
     m_lastTime = now;
     m_lastCommand = rv;
     return rv;

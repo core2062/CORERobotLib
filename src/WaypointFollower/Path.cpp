@@ -96,8 +96,7 @@ double Path::getRemainingLength() {
 	return length;
 }
 
-PathSegment::Sample Path::getLookaheadPoint(Translation2d pos,
-		double lookahead) {
+PathSegment::Sample Path::getLookaheadPoint(Translation2d pos, double lookahead) {
 	if(m_segments.size() == 0){
 		return PathSegment::Sample(Translation2d(), 0);
 	}
@@ -145,7 +144,7 @@ std::pair<bool, Translation2d> Path::getFirstCircleSegmentIntersection(
 	double det = x1 * y2 - x2 * y1;
 
 	double discriminant = drSquared *radius * radius - det * det;
-	if (discriminant < 0){
+	if (discriminant < 0) {
 		return {false, Translation2d()};
 	}
 
@@ -174,4 +173,14 @@ std::pair<bool, Translation2d> Path::getFirstCircleSegmentIntersection(
 
 Waypoint Path::getFirstWaypoint() {
     return m_waypoints[0];
+}
+Rotation2d Path::getNextRotation(Translation2d pos) {
+	for(auto segment : m_segments) {
+		double distance = pos.inverse().translateBy(segment.getEnd()).norm();
+		if(distance < 0) {
+			continue;
+		}
+
+	}
+    return Rotation2d();
 }
