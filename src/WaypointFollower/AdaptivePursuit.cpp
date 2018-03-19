@@ -3,11 +3,12 @@
 using namespace std;
 using namespace CORE;
 
-AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel, double nominalDt, Path path, bool reversed,
+AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel, double maxAngAccel, double nominalDt, Path path, bool reversed,
                                  double pathCompletionTolerance, bool gradualStop) :
     m_lastCommand(0, 0, 0) {
     m_fixedLookahead = fixedLookahead;
     m_maxAccel = maxAccel;
+    m_maxAngAccel = maxAngAccel;
     m_path = path;
     m_dt = nominalDt;
     m_reversed = reversed;
@@ -35,7 +36,6 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
     PathSegment::Sample lookaheadPoint = m_path.getLookaheadPoint(pos.getTranslation(),
                                                                   distanceFromPath + m_fixedLookahead);
 
-    CORELog::logInfo("Lookahead point X: " + to_string(lookaheadPoint.translation.getX()) + " Y: " + to_string(lookaheadPoint.translation.getY()));
     double speed = lookaheadPoint.speed;
     if (m_reversed) {
         speed *= -1;
@@ -85,7 +85,28 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
     double x = move.getCos() * speed * 0.01;
     double y = move.getSin() * speed * 0.01;
 
-    rv = Position2d::Delta(x, y, 0);
+    double angDelta = robotPos.getRotation().inverse().rotateBy(m_path.getNextRotation()).getRadians();
+    //double angSpeed = (angDelta) / dt;
+    double angSpeed = 100;
+
+    double lastAngSpeed = m_lastCommand.dtheta * 100;
+    double angAccel = (angSpeed - lastAngSpeed) / dt;
+    if (angAccel < -m_maxAngAccel) {
+        angSpeed = lastAngSpeed - m_maxAngAccel * dt;
+    } else if (angAccel > m_maxAngAccel) {
+        angSpeed = lastAngSpeed + m_maxAngAccel * dt;
+    }
+
+    double maxAllowedAngSpeed = sqrt(2 * m_maxAngAccel * angDelta);
+    if (abs(angSpeed) > maxAllowedAngSpeed) {
+        angSpeed = maxAllowedAngSpeed * (angSpeed / fabs(angSpeed));
+    }
+
+    CORELog::logInfo("Ang Speed: " + to_string(angSpeed));
+
+    angSpeed *= 0.01;
+
+    rv = Position2d::Delta(x, y, angSpeed);
     m_lastTime = now;
     m_lastCommand = rv;
     return rv;

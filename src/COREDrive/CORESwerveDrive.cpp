@@ -204,7 +204,7 @@ void CORESwerve::inverseKinematics(double x, double y, double theta) {
     m_backLeftModule->drive(m_backLeft, -1);
 }
 
-pair<double, double> CORESwerve::forwardKinematics(double gyroAngle) {
+pair<double, double> CORESwerve::forwardKinematics() {
     
 	//Adds the up all of the vector of each of the modules to get a total vector
 

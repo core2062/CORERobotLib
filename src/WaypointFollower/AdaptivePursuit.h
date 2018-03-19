@@ -11,6 +11,7 @@ private:
 	Position2d::Delta m_lastCommand;
 	double m_lastTime;
 	double m_maxAccel;
+	double m_maxAngAccel;
 	double m_dt;
 	bool m_reversed;
 	double m_pathCompletionTolerance;
@@ -18,7 +19,7 @@ private:
 	bool m_gradualStop = true;
 
 public:
-	AdaptivePursuit(double fixedLookahead, double maxAccel, double nominalDt, Path path,
+	AdaptivePursuit(double fixedLookahead, double maxAccel, double maxAngAccel, double nominalDt, Path path,
 			bool reversed, double pathCompletionTolerance, bool gradualStop = true);
 
 	bool isDone();
