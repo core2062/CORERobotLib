@@ -4,16 +4,10 @@
 using namespace CORE;
 using namespace std;
 
-Path PathLoader::loadPath(string fileName, double speedScale, bool flipY, bool flipX, bool reversePath) {
+Path PathLoader::loadPath(string fileName, bool flipY, bool flipX) {
 	CORELog::logInfo("Loading File: " + fileName);
-    string fileStarter = "/media/sda1/Paths/";
+    string fileStarter = "/home/lvuser/Paths/";
     ifstream inFile(fileStarter + fileName);
-    if(!inFile.is_open()){
-    	CORELog::logWarning("Path " + fileStarter + " not found on USB!");
-    	inFile.close();
-    	fileStarter = "/home/lvuser/Paths/";
-    	inFile.open(fileStarter + fileName);
-    }
     if (inFile.is_open()) {
         string text((std::istreambuf_iterator<char>(inFile)), std::istreambuf_iterator<char>());
         return loadTextPath(text);
@@ -32,8 +26,7 @@ Path PathLoader::loadTextPath(string text) {
         return Path({Waypoint({0, 0}, 0)});
     }
 
-    CORELog::logInfo("Json text contents:\n" + json.dump(4));
-    CORELog::logInfo("Is array: " + to_string(json.is_array()));
+    //CORELog::logInfo("Json text contents:\n" + json.dump(4));
     try {
         for(int i = 0; i < json.size(); i++) {
             Waypoint waypoint(Translation2d(json[i]["x"].get<double>(), json[i]["y"].get<double>()), 100);
@@ -52,13 +45,13 @@ Path PathLoader::loadTextPath(string text) {
     if(!points.empty()){
         CORELog::logInfo("Path text was loaded");
         cout << "Path text has " << points.size() << " points" << endl;
-        for(auto i : points){
-            cout << i.position.getX() << " " << i.position.getY();
-            if(i.angleProvided) {
-                cout << " " << i.rotation.getRadians();
-            }
-            cout << endl;
-        }
+//        for(auto i : points){
+//            cout << i.position.getX() << " " << i.position.getY();
+//            if(i.angleProvided) {
+//                cout << " " << i.rotation.getRadians();
+//            }
+//            cout << endl;
+//        }
         return Path(points);
     } else{
         CORELog::logError("Loaded path text was empty!");
