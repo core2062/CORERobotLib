@@ -18,7 +18,7 @@ void COREPathConnectionHandler::onConnect(WebSocket *connection) {
 }
 
 void COREPathConnectionHandler::onData(WebSocket *webSocket, const char *string) {
-    path = PathLoader::loadTextPath(string);
+    path = PathLoader::loadTextPath(string, false);
     //TODO: Better place to put path
 }
 

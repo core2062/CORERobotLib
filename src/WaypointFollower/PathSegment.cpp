@@ -5,9 +5,10 @@ PathSegment::Sample::Sample(Translation2d newTranslation, double newSpeed) {
 	speed = newSpeed;
 }
 
-PathSegment::PathSegment(Translation2d start, Translation2d end, double speed) {
+PathSegment::PathSegment(Translation2d start, Translation2d end, Rotation2d angle, double speed) {
 	m_end = end;
 	m_speed = speed;
+    m_angle = angle;
 	updateStart(start);
 }
 
@@ -57,4 +58,8 @@ PathSegment::ClosestPointReport PathSegment::getClosestPoint(Translation2d query
 	}
 	rv.distance = rv.closestPoint.inverse().translateBy(queryPoint).norm();
 	return rv;
+}
+
+Rotation2d PathSegment::getAngle() {
+    return m_angle;
 }

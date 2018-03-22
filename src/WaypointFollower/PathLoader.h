@@ -22,6 +22,6 @@ struct DataPoint {
 
 class PathLoader{
 public:
-	static Path loadPath(string fileName, bool flipY, bool flipX);
-    static Path loadTextPath(std::string text);
+	static Path loadPath(string fileName, bool flip);
+    static Path loadTextPath(std::string text, bool flip);
 };

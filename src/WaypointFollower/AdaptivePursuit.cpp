@@ -3,12 +3,12 @@
 using namespace std;
 using namespace CORE;
 
-AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel, double maxAngAccel, double nominalDt, Path path, bool reversed,
+AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel, double rotationkP, double nominalDt, Path path, bool reversed,
                                  double pathCompletionTolerance, bool gradualStop) :
     m_lastCommand(0, 0, 0) {
     m_fixedLookahead = fixedLookahead;
     m_maxAccel = maxAccel;
-    m_maxAngAccel = maxAngAccel;
+    m_rotationkP = rotationkP;
     m_path = path;
     m_dt = nominalDt;
     m_reversed = reversed;
@@ -68,6 +68,7 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
     }
 
     Position2d::Delta rv(0, 0, 0);
+
 //    if (circle.first) {
 //        rv = Position2d::Delta(speed, 0, ((circle.second.turnRight) ? -1 : 1) * fabs(speed) / circle.second.radius);
 //        CORELog::logInfo("Circle X: " + to_string(circle.second.center.Getx()));
@@ -81,11 +82,12 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
 //        Attempt 2:
 //        double y = sin(circle.second.center.GetRadians() + PI/2) * fabs(speed);
 //        double x = cos(circle.second. center.GetRadians() + PI/2) * fabs(speed);
+
     Translation2d move = robotPos.getTranslation().inverse().translateBy(lookaheadPoint.translation);
     double x = move.getCos() * speed * 0.01;
     double y = move.getSin() * speed * 0.01;
 
-    double angDelta = robotPos.getRotation().inverse().rotateBy(m_path.getNextRotation()).getRadians();
+    /*double angDelta = robotPos.getRotation().inverse().rotateBy(m_path.getNextRotation()).getRadians();
     //double angSpeed = (angDelta) / dt;
     double angSpeed = 100;
 
@@ -94,17 +96,39 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
     if (angAccel < -m_maxAngAccel) {
         angSpeed = lastAngSpeed - m_maxAngAccel * dt;
     } else if (angAccel > m_maxAngAccel) {
-        angSpeed = lastAngSpeed + m_maxAngAccel * dt;
+        angSpeed = lastAngSpeed + m_mm_startaxAngAccel * dt;
     }
 
     double maxAllowedAngSpeed = sqrt(2 * m_maxAngAccel * angDelta);
     if (abs(angSpeed) > maxAllowedAngSpeed) {
         angSpeed = maxAllowedAngSpeed * (angSpeed / fabs(angSpeed));
+    }*/
+
+    Rotation2d setAngle = m_path.getClosestPoint(pos.getTranslation()).getRotation();
+
+    double remainingAng = COREVector::FromRadians(robotPos.getRotation().getRadians())
+            .ShortestRotationTo(COREVector::FromRadians(setAngle.getRadians()));
+
+    /*double angSpeed = remainingAng < 0 ? -100 : 100;
+    double lastAngSpeed = m_lastCommand.dtheta * 100;
+    double angAccel = (angSpeed - lastAngSpeed) / dt;
+
+    if (angAccel < -m_maxAngAccel) {
+        angSpeed = lastAngSpeed - m_maxAngAccel * dt;
+    } else if (angAccel > m_maxAngAccel) {
+        angSpeed = lastAngSpeed + m_maxAngAccel * dt;
     }
 
-    CORELog::logInfo("Ang Speed: " + to_string(angSpeed));
+    if (m_gradualStop) {
+        double maxAllowedSpeed = sqrt(2 * m_maxAngAccel * remainingAng);
+        if (fabs(angSpeed) > maxAllowedSpeed) {
+            angSpeed = maxAllowedSpeed * (angSpeed / fabs(angSpeed));
+        }
+    }*/
 
-    angSpeed *= 0.01;
+    CORELog::logInfo("Remaining Angle: " + to_string(remainingAng));
+    double angSpeed = remainingAng * m_rotationkP;
+    CORELog::logInfo("Angle speed: " + to_string(angSpeed));
 
     rv = Position2d::Delta(x, y, angSpeed);
     m_lastTime = now;
