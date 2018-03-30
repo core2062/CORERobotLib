@@ -84,11 +84,6 @@ void CORESwerve::SwerveModule::setAnglePID(double p, double i, double d) {
     m_anglePIDController.setDerivativeConstant(d);
 }
 
-void CORESwerve::tank(double speed, double rot){
-//    tank(COREEtherDrive::calculate(speed, rot, .1));
-}
-
-
 void CORESwerve::SwerveModule::drive(COREVector vector, double dt) {
     double steerMotorOutput;
     if(dt == -1) {
@@ -129,11 +124,11 @@ void CORESwerve::inverseKinematics(double x, double y, double theta) {
         m_backLeftModule->drive(m_backLeft, -1);
         return;
     }
-    double r = sqrt(pow(m_wheelbase, 2) + pow(m_trackwidth, 2));
-    double a = x - theta * (m_wheelbase / r);
-    double b = x + theta * (m_wheelbase / r);
-    double c = y - theta * (m_trackwidth / r);
-    double d = y + theta * (m_trackwidth / r);
+
+    double a = x - theta * (m_wheelbase / 2.0);
+    double b = x + theta * (m_wheelbase / 2.0);
+    double c = y - theta * (m_trackwidth / 2.0);
+    double d = y + theta * (m_trackwidth / 2.0);
 
     double frontRightModuleSpeed = sqrt(pow(b, 2) + pow(c, 2));
     double frontLeftModuleSpeed = sqrt(pow(b, 2) + pow(d, 2));
@@ -204,35 +199,43 @@ void CORESwerve::inverseKinematics(double x, double y, double theta) {
     m_backLeftModule->drive(m_backLeft, -1);
 }
 
-pair<double, double> CORESwerve::forwardKinematics() {
+Position2d CORESwerve::forwardKinematics() {
     
 	//Adds the up all of the vector of each of the modules to get a total vector
 
-	COREVector leftFront = m_frontLeftModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
-    SmartDashboard::PutNumber("Left Front X: ", leftFront.GetX());
-    SmartDashboard::PutNumber("Left Front Y: ", leftFront.GetY());
-    SmartDashboard::PutNumber("Left Front Encoder: ", m_frontLeftModule->getEncoder());
+	COREVector frontLeft = m_frontLeftModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
+    SmartDashboard::PutNumber("Front Left X: ", frontLeft.GetX());
+    SmartDashboard::PutNumber("Front Left Y: ", frontLeft.GetY());
+    SmartDashboard::PutNumber("Front Left Encoder: ", m_frontLeftModule->getEncoder());
 
-	COREVector rightFront = m_frontRightModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
-    SmartDashboard::PutNumber("Right Front X: ", rightFront.GetX());
-    SmartDashboard::PutNumber("Right Front Y: ", rightFront.GetY());
-    SmartDashboard::PutNumber("Right Front Encoder: ", m_frontRightModule->getEncoder());
+	COREVector frontRight = m_frontRightModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
+    SmartDashboard::PutNumber("Front Right X: ", frontRight.GetX());
+    SmartDashboard::PutNumber("Front Right Y: ", frontRight.GetY());
+    SmartDashboard::PutNumber("Front Right Encoder: ", m_frontRightModule->getEncoder());
 
-	COREVector leftBack = m_backLeftModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
-    SmartDashboard::PutNumber("Left Back X: ", leftBack.GetX());
-    SmartDashboard::PutNumber("Left Back Y: ", leftBack.GetY());
-    SmartDashboard::PutNumber("Left Back Encoder: ", m_backLeftModule->getEncoder());
+	COREVector backLeft = m_backLeftModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
+    SmartDashboard::PutNumber("Back Left X: ", backLeft.GetX());
+    SmartDashboard::PutNumber("Back Left Y: ", backLeft.GetY());
+    SmartDashboard::PutNumber("Back Left Encoder: ", m_backLeftModule->getEncoder());
 
-	COREVector rightBack = m_backRightModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
-    SmartDashboard::PutNumber("Right Back X: ", rightBack.GetX());
-    SmartDashboard::PutNumber("Right Back Y: ", rightBack.GetY());
-    SmartDashboard::PutNumber("Right Back Encoder: ", m_backRightModule->getEncoder());
+	COREVector backRight = m_backRightModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
+    SmartDashboard::PutNumber("Back Right X: ", backRight.GetX());
+    SmartDashboard::PutNumber("Back Right Y: ", backRight.GetY());
+    SmartDashboard::PutNumber("Back Right Encoder: ", m_backRightModule->getEncoder());
 
-    pair<double, double> result;
-    result.first = ((leftFront.GetX() + rightFront.GetX() + leftBack.GetX() + rightBack.GetX()) * 0.25);
-    result.second = ((leftFront.GetY() + rightFront.GetY() + leftBack.GetY() + rightBack.GetY()) * 0.25);
-    return result;
+    double backX = (backLeft.GetX() + backRight.GetX()) / 2.0;
+    double frontX = (frontLeft.GetX() + frontRight.GetX()) / 2.0;
+    double rightY = (frontRight.GetY() + backRight.GetY()) / 2.0;
+    double leftY = (frontLeft.GetY() + backLeft.GetY()) / 2.0;
 
+    double xOmega = (frontX - backX) / m_wheelbase;
+    double yOmega = (leftY - rightY) / m_trackwidth;
+    double omega = (xOmega + yOmega) / 2.0;
+
+    double sumX = ((frontLeft.GetX() + frontRight.GetX() + backLeft.GetX() + backRight.GetX()) / 4.0);
+    double sumY = ((frontLeft.GetY() + frontRight.GetY() + backLeft.GetY() + backRight.GetY()) / 4.0);
+
+    return Position2d({sumX, sumY}, Rotation2d::fromRadians(omega));
 }
 
 /*string CORESwerve::print() {
@@ -241,14 +244,14 @@ pair<double, double> CORESwerve::forwardKinematics() {
             + to_string(m_rightFrontModule->getAngle()) + "\n\tRequested Speed: " + to_string(rightFrontModuleSpeed);
     text += m_rightFrontModule->print();
     text += "\nFront Left Module\n\tRequested Angle: " + to_string(leftFrontModuleAngle) + "\tActual: "
-            + to_string(m_leftFrontModule->getAngle()) + "\n\tRequested Speed: " + to_string(leftFrontModuleSpeed);
-    text += m_leftFrontModule->print();
+            + to_string(m_frontLeftModule->getAngle()) + "\n\tRequested Speed: " + to_string(leftFrontModuleSpeed);
+    text += m_frontLeftModule->print();
     text += "\nBack Right Module\n\tRequested Angle: " + to_string(rightBackModuleAngle) + "\tActual: "
-            + to_string(m_rightBackModule->getAngle()) + "\n\tRequested Speed: " + to_string(rightBackModuleSpeed);
-    text += m_rightBackModule->print();
+            + to_string(m_backRightModule->getAngle()) + "\n\tRequested Speed: " + to_string(rightBackModuleSpeed);
+    text += m_backRightModule->print();
     text += "\nBack Left Module\n\tRequested Angle: " + to_string(leftBackModuleAngle) + "\tActual: "
-            + to_string(m_leftBackModule->getAngle()) + "\n\tRequested Speed: " + to_string(leftBackModuleSpeed);
-    text += m_leftBackModule->print();
+            + to_string(m_backLeftModule->getAngle()) + "\n\tRequested Speed: " + to_string(leftBackModuleSpeed);
+    text += m_backLeftModule->print();
     return text;
 }*/
 

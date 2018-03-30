@@ -41,29 +41,17 @@ namespace CORE {
                    SwerveModule *leftBackModule,
                    SwerveModule *rightBackModule,
                    SwerveModule *rightFrontModule);
-    public:
-        void inverseKinematics(double y, double x, double theta);
-        pair<double, double> forwardKinematics();
-        void tank(double speed, double rot);
+        void inverseKinematics(double x, double y, double theta);
+        Position2d forwardKinematics();
         void setSteerPID(double kp, double ki, double kd);
         void zeroOffsets();
         void zeroEncoders();
         void updateOffsets();
-
-        double rightFrontDeltaX = 0.0;
-        double rightFrontDeltaY = 0.0;
-        double leftFrontDeltaX = 0.0;
-        double leftFrontDeltaY = 0.0;
-        double rightBackDeltaX = 0.0;
-        double rightBackDeltaY = 0.0;
-        double leftBackDeltaX = 0.0;
-        double leftBackDeltaY = 0.0;
     private:
         double m_wheelbase;
         double m_trackwidth;
         double m_ticksToRotation;
         double m_wheelCircumference;
-        double m_lastGyroAngle = 0.0;
         SwerveModule* m_frontLeftModule, *m_backLeftModule, *m_backRightModule, *m_frontRightModule;
         COREConstant<double> m_leftFrontModuleOffset, m_leftBackModuleOffset, m_rightBackModuleOffset,
                 m_rightFrontModuleOffset;

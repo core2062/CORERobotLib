@@ -11,7 +11,7 @@
 using namespace std;
 
 namespace CORE {
-    class CORENamedObject {
+    class CORENamedObject: public CORETask {
     public:
         CORENamedObject();
         string getName();

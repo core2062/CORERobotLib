@@ -33,5 +33,4 @@ void CORE::CORENamedObject::robotInitTask() {
             m_name = result;
         }
 #endif
-    CORELog::logError(m_name);
 }
