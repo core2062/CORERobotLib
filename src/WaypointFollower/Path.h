@@ -4,38 +4,36 @@
 #include "CORELogging/CORELog.h"
 #include <vector>
 #include <algorithm>
+#include "json.hpp"
 
 using namespace CORE;
+using namespace nlohmann;
+using namespace std;
 
-struct Waypoint{
+struct Waypoint {
 	Translation2d position;
 	double speed;
     Rotation2d rotation;
-	std::string event;
-    Waypoint(Translation2d pos, Rotation2d rotation, double spd = 0.0, std::string completeEvent = "");
+	string event;
+    Waypoint(Translation2d pos, Rotation2d rotation, double spd = 0.0, string completeEvent = "");
 };
 
-class Path{
+class Path {
 protected:
-	std::vector<Waypoint> m_waypoints;
-	std::vector<PathSegment> m_segments;
-	std::vector<std::string> m_events;
+	vector<Waypoint> m_waypoints;
+	vector<PathSegment> m_segments;
+	vector<string> m_events;
 public:
-	//Path();
-	Path(std::vector<Waypoint> waypoints = {Waypoint(Translation2d(), Rotation2d(), 0)}, bool flip = false);
-
+	Path();
+	Path(vector<Waypoint> waypoints, bool flip = false);
+	static Path fromFile(string fileName, bool flip);
+	static Path fromText(string textPath, bool flip);
 	Waypoint getFirstWaypoint();
-
 	double update(Translation2d pos);
-
-	bool eventPassed(std::string event);
-
+	bool eventPassed(string event);
 	double getRemainingLength();
-
 	PathSegment::Sample getLookaheadPoint(Translation2d pos, double lookahead);
-
-	std::pair<bool, Translation2d> getFirstCircleSegmentIntersection(PathSegment segment, Translation2d center,
+	pair<bool, Translation2d> getFirstCircleSegmentIntersection(PathSegment segment, Translation2d center,
 																	 double radius);
-
 	Position2d getClosestPoint(Translation2d pos);
 };

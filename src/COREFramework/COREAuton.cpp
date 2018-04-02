@@ -39,10 +39,17 @@ void Node::addAction(COREAutonAction* leaf) {
 
 /*
  * Add a condition to this node.
+ * This condition is passed in as a std::function that will be called to check the condition.
+ *
+ * Typically, the best way to do this is to create a lambda that contains the code to see if the node should be run.
+ *
+ * Example:
+ * addCondition([]{return shouldNodeRun()});
+ *
  * This condition will be checked by the previous node while it is not complete.
  * While it is true this action will run its actions.
  */
-void Node::addCondition(bool(* startCondition)()) {
+void Node::addCondition(function<bool()> startCondition) {
     m_startConditonGiven = true;
     m_startCondition = startCondition;
 }
@@ -240,7 +247,7 @@ COREAuton::~COREAuton() {
 }
 
 /*
- * Takes a duration in seconds to wait for
+ * Takes a duration in seconds to wait for.
  */
 WaitAction::WaitAction(double duration) {
 	m_duration = duration;

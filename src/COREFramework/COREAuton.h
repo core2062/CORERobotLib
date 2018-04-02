@@ -32,10 +32,10 @@ namespace CORE {
 
     class Node {
     public:
-        Node(double timeout, COREAutonAction* action1, COREAutonAction* action2 = nullptr, COREAutonAction* action3 = nullptr);
+        Node(double timeout, COREAutonAction* action1 = nullptr, COREAutonAction* action2 = nullptr, COREAutonAction* action3 = nullptr);
         void addNext(Node* childNode);
         void addAction(COREAutonAction* leaf);
-        void addCondition(bool(* startCondition)());
+        void addCondition(function<bool()> startCondition);
         bool complete();
         void reset();
         void setTimeout(double timeout);
@@ -46,7 +46,7 @@ namespace CORE {
         vector<COREAutonAction*> m_actions;
         bool m_startConditonGiven = false;
         bool m_actionsInitialized = false;
-        bool (* m_startCondition)();
+        function<bool()> m_startCondition;
         double m_timeout;
         CORETimer m_timer;
     };
