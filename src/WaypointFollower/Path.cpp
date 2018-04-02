@@ -36,7 +36,7 @@ Path Path::fromFile(string fileName, bool flip) {
         return fromText(text, flip);
     }
     cout << "Failed to open: " << fileName << endl;
-    Path({Waypoint({0, 0}, Rotation2d(), 0)});
+    return Path();
 }
 
 Path Path::fromText(string text, bool flip) {
@@ -46,7 +46,7 @@ Path Path::fromText(string text, bool flip) {
         json = json::parse(text);
     } catch (const exception& e) {
         CORELog::logError("Error parsing json path! " + string(e.what()));
-        return Path({Waypoint({0, 0}, Rotation2d(), 0)});
+        return Path();
     }
 
     //CORELog::logInfo("Json text contents:\n" + json.dump(4));
@@ -65,7 +65,7 @@ Path Path::fromText(string text, bool flip) {
         }
     } catch (const exception& e) {
         CORELog::logError("Error reading json path! " + string(e.what()));
-        return Path({Waypoint({0, 0}, Rotation2d(), 0)});
+        return Path();
     }
 
     if(!points.empty()){
@@ -73,7 +73,7 @@ Path Path::fromText(string text, bool flip) {
         return Path(points);
     } else{
         CORELog::logError("Loaded path text was empty!");
-        return Path({Waypoint({0, 0}, Rotation2d(), 0)});
+        return Path();
     }
 }
 
