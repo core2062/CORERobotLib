@@ -23,12 +23,15 @@ namespace CORE {
             double getEncoder();
             void setAnglePID(double p, double i, double d);
             void setAngleOffset(double angleOffset);
+            void configMotionMagic();
+            void setMotionMagic(double angle);
             void zeroAngle();
             void zeroEncoder();
             string print();
             COREPID m_speedPIDController;
             COREAnglePID m_anglePIDController;
         private:
+            COREConstant<double> m_cruiseVel, m_maxAccel;
             TalonSRX *m_driveMotor;
             TalonSRX *m_steerMotor;
             double m_lastMagnitude = 0.0;
@@ -47,6 +50,8 @@ namespace CORE {
         void zeroOffsets();
         void zeroEncoders();
         void updateOffsets();
+        void configMotionMagic();
+        void setMotionMagic();
     private:
         double m_wheelbase;
         double m_trackwidth;

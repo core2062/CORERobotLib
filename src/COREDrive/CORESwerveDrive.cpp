@@ -38,7 +38,9 @@ CORESwerve::SwerveModule::SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMoto
         m_speedPIDController(0, 0, 0),
         m_anglePIDController(0, 0, 0),
         m_driveMotor(driveMotor),
-        m_steerMotor(steerMotor) {
+        m_steerMotor(steerMotor),
+		m_maxAccel("Swerve Drive Maximum Acceleration"),
+		m_cruiseVel("Swerve Drive Cruise Velocity"){
 }
 
 double CORESwerve::SwerveModule::getAngle(bool raw) {
@@ -76,6 +78,17 @@ void CORESwerve::SwerveModule::zeroEncoder() {
 
 double CORESwerve::SwerveModule::getEncoder() {
 	return -m_driveMotor->GetSelectedSensorPosition(0);
+}
+
+void CORESwerve::SwerveModule::configMotionMagic() {
+    m_steerMotor->ConfigMotionCruiseVelocity(m_cruiseVel.Get(), 0);
+    m_steerMotor->ConfigMotionAcceleration(m_maxAccel.Get(), 0);
+}
+
+void CORESwerve::SwerveModule::setMotionMagic(double angle) {
+	if (angle < 0.05) {
+		m_steerMotor->Set(ControlMode::MotionMagic, angle);
+	}
 }
 
 void CORESwerve::SwerveModule::setAnglePID(double p, double i, double d) {
@@ -283,4 +296,18 @@ void CORESwerve::zeroEncoders() {
     m_frontRightModule->zeroEncoder();
     m_backLeftModule->zeroEncoder();
     m_backRightModule->zeroEncoder();
+}
+
+void CORESwerve::configMotionMagic() {
+	m_frontLeftModule->configMotionMagic();
+	m_frontRightModule->configMotionMagic();
+	m_backLeftModule->configMotionMagic();
+	m_backRightModule->configMotionMagic();
+}
+
+void CORESwerve::setMotionMagic() {
+	m_frontLeftModule->setMotionMagic(m_frontLeftModule->getAngle());
+	m_frontRightModule->setMotionMagic(m_frontRightModule->getAngle());
+	m_backLeftModule->setMotionMagic(m_backLeftModule->getAngle());
+	m_backRightModule->setMotionMagic(m_backRightModule->getAngle());
 }
