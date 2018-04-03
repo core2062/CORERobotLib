@@ -2,6 +2,7 @@
 #include "COREControl/COREPID.h"
 #include "COREUtilities/COREMath.h"
 #include "WPILib.h"
+#include "COREUtilities/COREConstant.h"
 #include "ctre/Phoenix.h"
 
 using namespace CORE;
@@ -40,7 +41,7 @@ CORESwerve::SwerveModule::SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMoto
         m_driveMotor(driveMotor),
         m_steerMotor(steerMotor),
 		m_maxAccel("Swerve Drive Maximum Acceleration"),
-		m_cruiseVel("Swerve Drive Cruise Velocity"){
+		m_cruiseVel("Swerve Drive Cruise Velocity") {
 }
 
 double CORESwerve::SwerveModule::getAngle(bool raw) {
@@ -99,11 +100,14 @@ void CORESwerve::SwerveModule::setAnglePID(double p, double i, double d) {
 
 void CORESwerve::SwerveModule::drive(COREVector vector, double dt) {
     double steerMotorOutput;
-    if(dt == -1) {
-        steerMotorOutput = m_anglePIDController.calculate(COREVector::FromCompassDegrees(getAngle()), vector);
-    } else {
-        steerMotorOutput = m_anglePIDController.calculate(COREVector::FromCompassDegrees(getAngle()), vector, dt);
+    if (abs(steerMotorOutput) < 0.05) {
+    	setMotionMagic(vector.GetDegrees());
     }
+//    if(dt == -1) {
+//        steerMotorOutput = m_anglePIDController.calculate(COREVector::FromCompassDegrees(getAngle()), vector);
+//    } else {
+//        steerMotorOutput = m_anglePIDController.calculate(COREVector::FromCompassDegrees(getAngle()), vector, dt);
+//    }
     //TODO check percent output
     m_steerMotor->Set(ControlMode::PercentOutput, steerMotorOutput);
     m_driveMotor->Set(ControlMode::PercentOutput, vector.GetMagnitude());
@@ -305,9 +309,9 @@ void CORESwerve::configMotionMagic() {
 	m_backRightModule->configMotionMagic();
 }
 
-void CORESwerve::setMotionMagic() {
-	m_frontLeftModule->setMotionMagic(m_frontLeftModule->getAngle());
-	m_frontRightModule->setMotionMagic(m_frontRightModule->getAngle());
-	m_backLeftModule->setMotionMagic(m_backLeftModule->getAngle());
-	m_backRightModule->setMotionMagic(m_backRightModule->getAngle());
-}
+//void CORESwerve::setMotionMagic() {
+//	m_frontLeftModule->setMotionMagic(m_frontLeftModule->getAngle());
+//	m_frontRightModule->setMotionMagic(m_frontRightModule->getAngle());
+//	m_backLeftModule->setMotionMagic(m_backLeftModule->getAngle());
+//	m_backRightModule->setMotionMagic(m_backRightModule->getAngle());
+//}

@@ -51,7 +51,7 @@ namespace CORE {
         void zeroEncoders();
         void updateOffsets();
         void configMotionMagic();
-        void setMotionMagic();
+//        void setMotionMagic();
     private:
         double m_wheelbase;
         double m_trackwidth;
