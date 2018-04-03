@@ -55,17 +55,18 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
         speed = lastSpeed + m_maxAccel * dt;
     }
 
-    double remainingDistance = m_path.getRemainingLength();
-    if (m_gradualStop) {
-        double maxAllowedSpeed = sqrt(2 * m_maxAccel * remainingDistance);
-        if (fabs(speed) > maxAllowedSpeed) {
-            speed = maxAllowedSpeed * (speed / fabs(speed));
-        }
+    double remainingDistance = m_path.getRemainingLength() - 6;
+    remainingDistance = remainingDistance < 0 ? 0 : remainingDistance;
+    double maxAllowedSpeed = sqrt(2 * m_maxAccel * remainingDistance);
+    if (fabs(speed) > maxAllowedSpeed) {
+        speed = maxAllowedSpeed * (speed / fabs(speed));
     }
-    double minSpeed = 4.0;
-    if (fabs(speed) < minSpeed) {
-        speed = minSpeed * (speed / fabs(speed));
-    }
+
+    //CORELog::logInfo("Speed: " + to_string(speed) + " Max Speed: " + to_string(maxAllowedSpeed) + " Dist: " + to_string(remainingDistance));
+//    double minSpeed = 4.0;
+//    if (fabs(speed) < minSpeed) {
+//        speed = minSpeed * (speed / fabs(speed));
+//    }
 
     Position2d::Delta rv(0, 0, 0);
 
