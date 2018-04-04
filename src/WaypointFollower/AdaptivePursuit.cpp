@@ -127,9 +127,7 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
         }
     }*/
 
-    CORELog::logInfo("Remaining Angle: " + to_string(remainingAng));
     double angSpeed = remainingAng * m_rotationkP;
-    CORELog::logInfo("Angle speed: " + to_string(angSpeed));
 
     rv = Position2d::Delta(x, y, angSpeed);
     m_lastTime = now;
