@@ -43,6 +43,7 @@ namespace CORE {
                    SwerveModule *rightFrontModule);
         void inverseKinematics(double x, double y, double theta);
         Position2d forwardKinematics();
+        void brake();
         void setSteerPID(double kp, double ki, double kd);
         void zeroOffsets();
         void zeroEncoders();
