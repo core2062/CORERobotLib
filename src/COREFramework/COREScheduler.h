@@ -28,13 +28,13 @@ namespace CORE {
 		CORESubsystem();
 		virtual ~CORESubsystem() {}
 
-		virtual void robotInit() = 0;
-		virtual void teleopInit() = 0;
-		virtual void testInit() {}
-		virtual void teleop() = 0;
-		virtual void teleopEnd() {}
-		virtual void test() {}
-		virtual void disabled() {}
+		virtual void RobotInit() = 0;
+		virtual void TeleopInit() = 0;
+		virtual void TestInit() {}
+		virtual void Teleop() = 0;
+		virtual void TeleopEnd() {}
+		virtual void Test() {}
+		virtual void Disabled() {}
 
 		COREJoystick* driverJoystick;
 		COREJoystick* operatorJoystick;
@@ -45,11 +45,11 @@ namespace CORE {
 		COREController();
 		virtual ~COREController() {}
 
-		virtual void enabledLoop() = 0;
-		virtual void enable() {
+		virtual void EnabledLoop() = 0;
+		virtual void Enable() {
 			m_enabled = true;
 		}
-		virtual void disable() {
+		virtual void Disable() {
 			m_enabled = false;
 		}
 		bool isEnabled() {
@@ -65,13 +65,13 @@ namespace CORE {
 		COREVariableControlledSubsystem();
 		virtual ~COREVariableControlledSubsystem() {}
 
-		virtual void robotInit() = 0;
-		virtual void teleopInit() = 0;
-		virtual void teleop() override;
-		virtual void teleopEnd() {}
-		virtual void test() {}
-		virtual void disabled() {}
-		bool setController(COREController * controller);
+		virtual void RobotInit() = 0;
+		virtual void TeleopInit() = 0;
+		virtual void Teleop() override;
+		virtual void TeleopEnd() {}
+		virtual void Test() {}
+		virtual void Disabled() {}
+		bool SetController(COREController * controller);
 
 	protected:
 		COREController* m_currentController = 0;
@@ -89,18 +89,18 @@ namespace CORE {
 		static COREJoystick* m_operatorJoystick;
 
 	public:
-		static void addSubsystem(CORESubsystem* subsystem);
-		static void addAuton(COREAuton * auton);
-		static void addTask(CORETask* task);
+		static void AddSubsystem(CORESubsystem* subsystem);
+		static void AddAuton(COREAuton * auton);
+		static void AddTask(CORETask* task);
 
-		static void robotInit();
-		static void disabled();
-		static void autonInit();
-		static bool auton();
-		static void teleopInit();
-		static void teleop();
-		static void testInit();
-		static void test();
-		static void cleanUp();
+		static void RobotInit();
+		static void Disabled();
+		static void AutonInit();
+		static bool Auton();
+		static void TeleopInit();
+		static void Teleop();
+		static void TestInit();
+		static void Test();
+		static void CleanUp();
 	};
 }

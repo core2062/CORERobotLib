@@ -29,19 +29,19 @@ CORE::COREMotionProfile::COREMotionProfile(double maxVel, double maxAccel) : m_a
     m_timer.Start();
 }
 
-void CORE::COREMotionProfile::setMaxVel(double maxVelocity) {
+void CORE::COREMotionProfile::SetMaxVel(double maxVelocity) {
     m_maxVel = maxVelocity;
 }
 
-void CORE::COREMotionProfile::setMaxAccel(double maxAcceleration) {
+void CORE::COREMotionProfile::SetMaxAccel(double maxAcceleration) {
     m_maxAccel = maxAcceleration;
 }
 
-double CORE::COREMotionProfile::getMaxVel() {
+double CORE::COREMotionProfile::GetMaxVel() {
     return m_maxVel;
 }
 
-double CORE::COREMotionProfile::getMaxAccel() {
+double CORE::COREMotionProfile::GetMaxAccel() {
     return m_maxAccel;
 }
 
@@ -62,12 +62,12 @@ double CORE::COREMotionProfile::Get() {
     return m_output;
 }
 
-void CORE::COREMotionProfile::setActual(double actualPosition) {
-    COREMotionController::setActual(actualPosition);
+void CORE::COREMotionProfile::SetActual(double actualPosition) {
+    COREMotionController::SetActual(actualPosition);
 }
 
-double CORE::COREMotionProfile::getActual() {
-    return COREMotionController::getActual();
+double CORE::COREMotionProfile::GetActual() {
+    return COREMotionController::GetActual();
 }
 
 void CORE::COREMotionProfile::update() {

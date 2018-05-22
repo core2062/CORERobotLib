@@ -21,14 +21,14 @@ COREDashboard::~COREDashboard() {
 
 void COREDashboard::m_logger::log(Logger::Level level, const char *message) {
     if(level == Level::SEVERE || level == Level::ERROR) {
-        CORELog::logError("COREDashboard: " + string(message));
+        CORELog::LogError("COREDashboard: " + string(message));
     } else if(level == Level::WARNING) {
-        CORELog::logWarning("COREDashboard: " + string(message));
+        CORELog::LogWarning("COREDashboard: " + string(message));
     } else if(level == Level::INFO /*|| level == Level::ACCESS || level == Level::DEBUG*/) {
-        CORELog::logInfo("COREDashboard: " + string(message));
+        CORELog::LogInfo("COREDashboard: " + string(message));
     }
 }
 
-void COREDashboard::postLoopTask() {
+void COREDashboard::PostLoopTask() {
 //    m_server->execute(COREDataConnectionHandler::send);
 }

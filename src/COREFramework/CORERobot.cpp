@@ -7,52 +7,52 @@ CORERobot::CORERobot() {
 }
 
 CORERobot::~CORERobot() {
-	CORELog::logInfo("Cleaning up CORERobot!");
-	COREScheduler::cleanUp();
+	CORELog::LogInfo("Cleaning up CORERobot!");
+	COREScheduler::CleanUp();
 }
 
 void CORERobot::RobotInit() {
-	COREDriverstation::updateRobotState();
-	COREScheduler::robotInit();
+	COREDriverstation::UpdateRobotState();
+	COREScheduler::RobotInit();
 }
 
 void CORERobot::RobotPeriodic() {
 }
 
 void CORERobot::DisabledInit() {
-	COREDriverstation::updateRobotState();
-	COREScheduler::disabled();
+	COREDriverstation::UpdateRobotState();
+	COREScheduler::Disabled();
 }
 
 void CORERobot::DisabledPeriodic() {
 }
 
 void CORERobot::AutonomousInit() {
-	COREDriverstation::updateRobotState();
+	COREDriverstation::UpdateRobotState();
 	m_autonComplete = false;
-	COREScheduler::autonInit();
+	COREScheduler::AutonInit();
 }
 
 void CORERobot::AutonomousPeriodic() {
 	if (!m_autonComplete) {
-		m_autonComplete = COREScheduler::auton();
+		m_autonComplete = COREScheduler::Auton();
 	}
 }
 
 void CORERobot::TeleopInit() {
-	COREDriverstation::updateRobotState();
-	COREScheduler::teleopInit();
+	COREDriverstation::UpdateRobotState();
+	COREScheduler::TeleopInit();
 }
 
 void CORERobot::TeleopPeriodic() {
-	COREScheduler::teleop();
+	COREScheduler::Teleop();
 }
 
 void CORERobot::TestInit() {
-	COREDriverstation::updateRobotState();
-	COREScheduler::testInit();
+	COREDriverstation::UpdateRobotState();
+	COREScheduler::TestInit();
 }
 
 void CORERobot::TestPeriodic() {
-	COREScheduler::test();
+	COREScheduler::Test();
 }

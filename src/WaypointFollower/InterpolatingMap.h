@@ -8,9 +8,9 @@ struct InterpolatingDouble{
 
 	InterpolatingDouble(double val);
 
-	InterpolatingDouble interpolate(InterpolatingDouble other, double x);
+	InterpolatingDouble Interpolate(InterpolatingDouble other, double x);
 
-	double inverseInterpolate(InterpolatingDouble upper, InterpolatingDouble query);
+	double InverseInterpolate(InterpolatingDouble upper, InterpolatingDouble query);
 
 	bool operator<(const InterpolatingDouble& other) const;
 };
@@ -23,9 +23,10 @@ private:
 public:
 	InterpolatingTreeMap(int maxSize = 0);
 
-	Position2d put(InterpolatingDouble key, Position2d value);
+	Position2d Put(InterpolatingDouble key, Position2d value);
 
-	Position2d getInterpolated(InterpolatingDouble key);
+	Position2d GetInterpolated(InterpolatingDouble key);
 
-	Position2d getLatest();
+	Position2d GetLatest();
+
 };

@@ -23,13 +23,13 @@ COREVector COREVector::FromRadians(double radians, double mag) {
 }
 
 COREVector COREVector::FromDegrees(double degrees, double mag) {
-    return FromRadians(toRadians(degrees), mag);
+    return FromRadians(ToRadians(degrees), mag);
 }
 
 COREVector COREVector::FromCompassDegrees(double compassDegrees, double mag) {
     double degrees = 90 - compassDegrees;
     degrees = degrees < 0 ? 360 + degrees : degrees;
-    return FromRadians(toRadians(degrees), mag);
+    return FromRadians(ToRadians(degrees), mag);
 }
 
 COREVector COREVector::FromXY(double x, double y) {
@@ -54,7 +54,7 @@ double COREVector::GetRadians() {
 }
 
 double COREVector::GetDegrees() {
-    return CORE::toDegrees(GetRadians());
+    return CORE::ToDegrees(GetRadians());
 }
 
 double COREVector::GetCompassDegrees() {

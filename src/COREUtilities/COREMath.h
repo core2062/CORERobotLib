@@ -10,16 +10,16 @@ using namespace std;
 
 namespace CORE {
 
-    inline double toRadians(double degrees) {
+    inline double ToRadians(double degrees) {
         return degrees * (PI / 180.0);
     }
 
-    inline double toDegrees(double degrees) {
+    inline double ToDegrees(double degrees) {
         return degrees * (180.0 / PI);
     }
 
-    inline double arctan(double x, double y) {
-        double result = toDegrees(atan2(y, x));
+    inline double Arctan(double x, double y) {
+        double result = ToDegrees(atan2(y, x));
         if(x >= 0 && y >= 0) {
             return 90 - result;
         } else if(x >= 0 && y < 0) {
@@ -32,7 +32,7 @@ namespace CORE {
         return -1;
     }
 
-	inline double pathogram(double x, double y){
+	inline double Pathogram(double x, double y){
 		return sqrt(x*x + y*y);
 	}
 
@@ -49,16 +49,16 @@ namespace CORE {
 			x = val[0];
 			y = val[1];
 		}
-		double length() {
+		double Length() {
 			return sqrt(pow(x,2) + pow(y,2));
 		}
-		double angle() {
+		double Angle() {
 			return (atan2(x,y)*180)/3.1415;
 		}
-		Vector unit() {
+		Vector Unit() {
 			Vector v;
-			v.x = x/length();
-			v.y = y/length();
+			v.x = x/Length();
+			v.y = y/Length();
 			return v;
 		}
 	};

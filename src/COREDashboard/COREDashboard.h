@@ -26,7 +26,7 @@ namespace CORE {
         static Server * m_server;
     public:
         static void robotInit();
-        void postLoopTask() override;
+        void PostLoopTask() override;
         ~COREDashboard();
     };
 }

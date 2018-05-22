@@ -35,8 +35,8 @@ Translation2d Translation2d::translateBy(Translation2d other) {
 }
 
 Translation2d Translation2d::rotateBy(Rotation2d rotation) {
-	return Translation2d(m_x * rotation.getCos() - m_y * rotation.getSin(),
-			m_x * rotation.getSin() + m_y * rotation.getCos());
+	return Translation2d(m_x * rotation.getCos() - m_y * rotation.GetSin(),
+			m_x * rotation.GetSin() + m_y * rotation.getCos());
 }
 
 Translation2d Translation2d::inverse() {
@@ -63,7 +63,7 @@ Translation2d Translation2d::flipX() {
 Translation2d Translation2d::flipY() {
 	return Translation2d(m_x, -m_y);
 }
-double Translation2d::getSin() {
+double Translation2d::GetSin() {
     return getY() / norm();
 }
 double Translation2d::getCos() {

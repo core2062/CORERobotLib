@@ -5,7 +5,7 @@ using namespace CORE;
 using namespace std;
 
 CORESubsystem::CORESubsystem() {
-	COREScheduler::addSubsystem(this);
+	COREScheduler::AddSubsystem(this);
 }
 
 COREController::COREController() : CORETask() {
@@ -14,15 +14,15 @@ COREController::COREController() : CORETask() {
 COREVariableControlledSubsystem::COREVariableControlledSubsystem() {
 }
 
-void COREVariableControlledSubsystem::teleop() {
+void COREVariableControlledSubsystem::Teleop() {
 	if (m_currentController != nullptr) {
 		//if(m_currentController->isEnabled()){
-			m_currentController->enabledLoop();
+			m_currentController->EnabledLoop();
 		//}
 	}
 }
 
-bool COREVariableControlledSubsystem::setController(COREController* controller) {
+bool COREVariableControlledSubsystem::SetController(COREController* controller) {
 	if (controller == nullptr) {
 		m_currentController = nullptr;
 		return false;
@@ -41,71 +41,71 @@ SendableChooser<COREAuton*>* COREScheduler::m_autonChooser;
 COREAuton* COREScheduler::m_selectedAuton;
 CORETimer COREScheduler::m_autonTimer;
 
-void COREScheduler::addSubsystem(CORESubsystem* subsystem) {
+void COREScheduler::AddSubsystem(CORESubsystem* subsystem) {
 	if (!subsystem) {
-		CORELog::logError("Subsystem is a null pointer!");
+		CORELog::LogError("Subsystem is a null pointer!");
 	} else {
 		m_subsystems.push_back(subsystem);
 	}
 }
 
-void COREScheduler::addAuton(COREAuton* auton) {
+void COREScheduler::AddAuton(COREAuton* auton) {
 	m_autons.push_back(auton);
-	CORELog::logInfo(auton->getName() + " autonomous added");
+	CORELog::LogInfo(auton->GetName() + " autonomous added");
 }
 
-void COREScheduler::addTask(CORETask* task) {
-	CORELog::logInfo("Adding task");
+void COREScheduler::AddTask(CORETask* task) {
+	CORELog::LogInfo("Adding task");
 	m_tasks.push_back(task);
 }
 
-void COREScheduler::robotInit() {
-	CORELog::robotInit();
-	COREConstantsManager::updateConstants();
+void COREScheduler::RobotInit() {
+	CORELog::RobotInit();
+	COREConstantsManager::UpdateConstants();
 	COREDashboard::robotInit();
 	m_driverJoystick = new COREJoystick(0);
 	m_operatorJoystick = new COREJoystick(1);
 	if (!m_driverJoystick) {
-		CORELog::logError("Driver joystick is a null pointer!");
+		CORELog::LogError("Driver joystick is a null pointer!");
 	}
 	if (!m_operatorJoystick) {
-		CORELog::logError("Operator joystick is a null pointer!");
+		CORELog::LogError("Operator joystick is a null pointer!");
 	}
 	for (auto subsystem : m_subsystems) {
 		subsystem->driverJoystick = m_driverJoystick;
 		subsystem->operatorJoystick = m_operatorJoystick;
-		subsystem->robotInit();
+		subsystem->RobotInit();
 	}
 	for (auto task : m_tasks) {
-		if (!task->isDisabled()) {
-			task->robotInitTask();
+		if (!task->IsDisabled()) {
+			task->RobotInitTask();
 		}
 	}
     m_autonChooser = new SendableChooser<COREAuton*>();
     m_autonChooser->AddDefault("Do Nothing", nullptr);
     for(auto auton : m_autons) {
-        auton->putToDashboard(m_autonChooser);
+        auton->PutToDashboard(m_autonChooser);
     }
     SmartDashboard::PutData("Autonomous", m_autonChooser);
 }
 
-void COREScheduler::disabled() {
-	CORELog::disabled();
+void COREScheduler::Disabled() {
+	CORELog::Disabled();
 	for (auto task : m_tasks) {
-		task->disabledTask();
+		task->DisabledTask();
 	}
 	for (auto subsystem : m_subsystems) {
-		subsystem->disabled();
+		subsystem->Disabled();
 	}
-	COREHardwareManager::zeroMotors();
+	COREHardwareManager::ZeroMotors();
 }
 
-void COREScheduler::autonInit() {
-	CORELog::autonInit();
-	COREConstantsManager::updateConstants();
+void COREScheduler::AutonInit() {
+	CORELog::AutonInit();
+	COREConstantsManager::UpdateConstants();
 	for (auto task : m_tasks) {
-		if (!task->isDisabled()) {
-			task->autonInitTask();
+		if (!task->IsDisabled()) {
+			task->AutonInitTask();
 		}
 	}
 	if (!m_autons.empty()) {
@@ -113,95 +113,95 @@ void COREScheduler::autonInit() {
 		if (m_selectedAuton == nullptr) {
 			return;
 		}
-		m_selectedAuton->autonInit();
-		CORELog::logInfo("Starting " + m_selectedAuton->getName() + " autonomous");
+		m_selectedAuton->AutonInit();
+		CORELog::LogInfo("Starting " + m_selectedAuton->GetName() + " autonomous");
 	} else {
-		CORELog::logWarning("No autonomous routines added!");
+		CORELog::LogWarning("No autonomous routines added!");
 		m_selectedAuton = nullptr;
 	}
 	m_autonTimer.Reset();
 	m_autonTimer.Start();
 }
 
-bool COREScheduler::auton() {
+bool COREScheduler::Auton() {
 	for (auto task : m_tasks) {
-		if (!task->isDisabled()) {
-			task->preLoopTask();
+		if (!task->IsDisabled()) {
+			task->PreLoopTask();
 		}
 	}
 	if (m_selectedAuton != nullptr) {
-		m_selectedAuton->auton();
+		m_selectedAuton->Auton();
 		for (auto task : m_tasks) {
-			if (!task->isDisabled()) {
-				task->postLoopTask();
+			if (!task->IsDisabled()) {
+				task->PostLoopTask();
 			}
 		}
-		bool complete = m_selectedAuton->complete();
+		bool complete = m_selectedAuton->Complete();
 		if (complete) {
-			CORELog::logInfo(m_selectedAuton->getName() + " autonomous complete! Took: " + to_string(m_autonTimer.Get()) + " seconds");
+			CORELog::LogInfo(m_selectedAuton->GetName() + " autonomous complete! Took: " + to_string(m_autonTimer.Get()) + " seconds");
 		}
 		return complete;
 	} else {
-		CORELog::logWarning("No autonomous selected!");
+		CORELog::LogWarning("No autonomous selected!");
 		return true;
 	}
 }
 
-void COREScheduler::teleopInit() {
-	CORELog::teleopInit();
-	COREConstantsManager::updateConstants();
+void COREScheduler::TeleopInit() {
+	CORELog::TeleopInit();
+	COREConstantsManager::UpdateConstants();
 	for (auto subsystem : m_subsystems) {
-		subsystem->teleopInit();
+		subsystem->TeleopInit();
 	}
 	for (auto task : m_tasks) {
-		if (!task->isDisabled()) {
-			task->teleopInitTask();
+		if (!task->IsDisabled()) {
+			task->TeleopInitTask();
 		}
 	}
 }
 
-void COREScheduler::teleop() {
+void COREScheduler::Teleop() {
 	for (auto task : m_tasks) {
-		if (!task->isDisabled()) {
-			task->preLoopTask();
+		if (!task->IsDisabled()) {
+			task->PreLoopTask();
 		}
 	}
 	for (auto subsystem : m_subsystems) {
-		subsystem->teleop();
+		subsystem->Teleop();
 	}
 	for (auto task : m_tasks) {
-		if (!task->isDisabled()) {
-			task->postLoopTask();
+		if (!task->IsDisabled()) {
+			task->PostLoopTask();
 		}
 	}
 }
 
-void COREScheduler::testInit() {
-	CORELog::testInit();
-	COREConstantsManager::updateConstants();
+void COREScheduler::TestInit() {
+	CORELog::TestInit();
+	COREConstantsManager::UpdateConstants();
 	for (auto subsystem : m_subsystems) {
-		subsystem->testInit();
+		subsystem->TestInit();
 	}
 	for (auto task : m_tasks) {
-		if (!task->isDisabled()) {
-			task->testInitTask();
+		if (!task->IsDisabled()) {
+			task->TestInitTask();
 		}
 	}
 }
 
-void COREScheduler::test() {
+void COREScheduler::Test() {
 	for (auto task : m_tasks) {
-		if (!task->isDisabled()) {
-			task->testTask();
+		if (!task->IsDisabled()) {
+			task->TestTask();
 		}
 	}
 	for (auto subsystem : m_subsystems) {
-		subsystem->test();
+		subsystem->Test();
 	}
 }
 
-void COREScheduler::cleanUp() {
-	CORELog::logInfo("Cleaning up COREScheduler!");
+void COREScheduler::CleanUp() {
+	CORELog::LogInfo("Cleaning up COREScheduler!");
 	delete m_selectedAuton;
 	for (auto i = m_autons.begin(); i != m_autons.end(); i++) {
 		delete *i;
@@ -215,5 +215,5 @@ void COREScheduler::cleanUp() {
 		delete *i;
 	}
 	m_subsystems.clear();
-	COREConstantsManager::cleanUp();
+	COREConstantsManager::CleanUp();
 }

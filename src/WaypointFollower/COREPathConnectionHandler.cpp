@@ -18,7 +18,7 @@ void COREPathConnectionHandler::onConnect(WebSocket *connection) {
 }
 
 void COREPathConnectionHandler::onData(WebSocket *webSocket, const char *string) {
-    path = Path::fromText(string, false);
+    path = Path::FromText(string, false);
     //TODO: Better place to put path
 }
 
@@ -26,7 +26,7 @@ void COREPathConnectionHandler::onDisconnect(WebSocket *connection) {
 //    m_connections.erase(connection);
 }
 
-void COREPathConnectionHandler::send() {
+void COREPathConnectionHandler::Send() {
 //    if(timer->Get() > updateRate) {
 //        timer->Reset();
 //        timer->Start();

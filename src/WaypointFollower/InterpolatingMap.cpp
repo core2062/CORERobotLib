@@ -4,14 +4,14 @@ InterpolatingDouble::InterpolatingDouble(double val) {
 	value = val;
 }
 
-InterpolatingDouble InterpolatingDouble::interpolate(InterpolatingDouble other,
+InterpolatingDouble InterpolatingDouble::Interpolate(InterpolatingDouble other,
 		double x) {
 	double dydx = other.value - value;
 	double searchY = dydx * x + value;
 	return InterpolatingDouble(searchY);
 }
 
-double InterpolatingDouble::inverseInterpolate(InterpolatingDouble upper,
+double InterpolatingDouble::InverseInterpolate(InterpolatingDouble upper,
 		InterpolatingDouble query) {
 	double upperToLower = upper.value - value;
 	if (upperToLower <= 0){
@@ -30,10 +30,10 @@ bool InterpolatingDouble::operator<(const InterpolatingDouble& other) const {
 
 InterpolatingTreeMap::InterpolatingTreeMap(int maxSize) {
 	m_max = maxSize;
-	put(InterpolatingDouble(0.0), Position2d());
+	Put(InterpolatingDouble(0.0), Position2d());
 }
 
-Position2d InterpolatingTreeMap::put(InterpolatingDouble key,
+Position2d InterpolatingTreeMap::Put(InterpolatingDouble key,
 		Position2d value) {
 	if (m_max > 0 && m_max <= m_values.size()){
 		m_values.erase(m_values.begin());
@@ -42,7 +42,7 @@ Position2d InterpolatingTreeMap::put(InterpolatingDouble key,
 	return value;
 }
 
-Position2d InterpolatingTreeMap::getInterpolated(InterpolatingDouble key) {
+Position2d InterpolatingTreeMap::GetInterpolated(InterpolatingDouble key) {
 	if (m_values.count(key)){
 		return m_values[key];
 	} else {
@@ -63,10 +63,10 @@ Position2d InterpolatingTreeMap::getInterpolated(InterpolatingDouble key) {
 		Position2d botElem = botBound->second;
 		InterpolatingDouble b = botBound->first;
 		InterpolatingDouble t = topBound->first;
-		return botElem.interpolate(topElem, b.inverseInterpolate(t, key));
+		return botElem.Interpolate(topElem, b.InverseInterpolate(t, key));
 	}
 }
 
-Position2d InterpolatingTreeMap::getLatest() {
+Position2d InterpolatingTreeMap::GetLatest() {
 	return (*m_values.rbegin()).second;
 }

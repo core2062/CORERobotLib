@@ -11,13 +11,13 @@ public:
 	Rotation2d(double x, double y, bool doNormalize);
 	Rotation2d(const Rotation2d& other);
 
-	static Rotation2d fromRadians(double radians);
-	static Rotation2d fromDegrees(double degrees);
+	static Rotation2d FromRadians(double radians);
+	static Rotation2d FromDegrees(double degrees);
 
-	void normalize();
+	void Normalize();
 
 	double getCos();
-	double getSin();
+	double GetSin();
 
 	double getRadians();
 	double getDegrees();

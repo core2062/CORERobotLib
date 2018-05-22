@@ -11,14 +11,14 @@ namespace CORE {
         COREMotionProfile(ControllerInput* inputDevice, ControllerOutput* outputDevice, double maxVel, double maxAccel);
         COREMotionProfile(shared_ptr<ControllerInput> inputDevice, shared_ptr<ControllerOutput> outputDevice, double maxVel, double maxAccel);
         COREMotionProfile(double maxVel, double maxAccel);
-        void setMaxVel(double maxVelocity);
-        void setMaxAccel(double maxAcceleration);
-        double getMaxVel();
-        double getMaxAccel();
+        void SetMaxVel(double maxVelocity);
+        void SetMaxAccel(double maxAcceleration);
+        double GetMaxVel();
+        double GetMaxAccel();
         void Set(double setPoint) override;
         double Get() override;
-        void setActual(double actualPosition) override;
-        double getActual() override;
+        void SetActual(double actualPosition) override;
+        double GetActual() override;
         void update() /*override*/;
     private:
         double m_maxVel = -1;

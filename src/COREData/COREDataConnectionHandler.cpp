@@ -20,9 +20,9 @@ void COREDataConnectionHandler::onData(WebSocket *webSocket, const char *string)
     try {
         jsonData = json::parse(string);
     } catch (...) {
-        CORELog::logError("Error in parsing return packet from driver station!");
+        CORELog::LogError("Error in parsing return packet from driver station!");
     }
-    COREDataManager::updateData(jsonData);
+    COREDataManager::UpdateData(jsonData);
 }
 
 void COREDataConnectionHandler::onDisconnect(WebSocket *connection) {
@@ -34,7 +34,7 @@ void COREDataConnectionHandler::send() {
         timer->Reset();
         timer->Start();
         for (auto connection : m_connections) {
-            connection->send(COREDataManager::getJSON());
+            connection->send(COREDataManager::GetJSON());
         }
     }
 }

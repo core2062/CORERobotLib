@@ -17,16 +17,16 @@ COREEtherDrive::COREEtherDrive(TalonSRX * leftMotor1, TalonSRX * leftMotor2,
 
 }
 
-void COREEtherDrive::setAB(double a, double b) {
+void COREEtherDrive::SetAB(double a, double b) {
 	m_a = a;
 	m_b = b;
 }
 
-void COREEtherDrive::setQuickturn(double q) {
+void COREEtherDrive::SetQuickturn(double q) {
 	m_quickTurn = q;
 }
 
-VelocityPair COREEtherDrive::calculate(double mag, double rot,
+VelocityPair COREEtherDrive::Calculate(double mag, double rot,
 		double deadband) {
 	if (abs(mag) < deadband) {
 		mag = 0;
@@ -37,20 +37,20 @@ VelocityPair COREEtherDrive::calculate(double mag, double rot,
 	double left, right;
 	if (mag > 0) {
 		if (rot >= 0) {
-			left = etherL(mag, rot, m_a, m_b);
-			right = etherR(mag, rot, m_a, m_b);
+			left = EtherL(mag, rot, m_a, m_b);
+			right = EtherR(mag, rot, m_a, m_b);
 		} else {
-			left = etherR(mag, -rot, m_a, m_b);
-			right = etherL(mag, -rot, m_a, m_b);
+			left = EtherR(mag, -rot, m_a, m_b);
+			right = EtherL(mag, -rot, m_a, m_b);
 		}
 	} else if (mag < 0) {
 		if (rot >= 0) {
 
-			left = -etherR(-mag, rot, m_a, m_b);
-			right = -etherL(-mag, rot, m_a, m_b);
+			left = -EtherR(-mag, rot, m_a, m_b);
+			right = -EtherL(-mag, rot, m_a, m_b);
 		} else {
-			left = -etherL(-mag, -rot, m_a, m_b);
-			right = -etherR(-mag, -rot, m_a, m_b);
+			left = -EtherL(-mag, -rot, m_a, m_b);
+			right = -EtherR(-mag, -rot, m_a, m_b);
 		}
 	} else {
 		left = (rot * m_quickTurn);
@@ -60,31 +60,31 @@ VelocityPair COREEtherDrive::calculate(double mag, double rot,
 	return {left, right};
 }
 
-double COREEtherDrive::etherL(double fwd, double rcw, double a, double b) {
+double COREEtherDrive::EtherL(double fwd, double rcw, double a, double b) {
 	return fwd + b * rcw * (1 - fwd);
 }
 
-double COREEtherDrive::etherR(double fwd, double rcw, double a, double b) {
+double COREEtherDrive::EtherR(double fwd, double rcw, double a, double b) {
 	return fwd - b * rcw + fwd * rcw * (b - a - 1);
 }
 
-void COREEtherDrive::update() {
+void COREEtherDrive::Update() {
 	if (m_y > 0) {
 		if (m_rot >= 0) {
-			m_left = etherL(m_y, m_rot, m_a, m_b);
-			m_right = etherR(m_y, m_rot, m_a, m_b);
+			m_left = EtherL(m_y, m_rot, m_a, m_b);
+			m_right = EtherR(m_y, m_rot, m_a, m_b);
 		} else {
-			m_left = etherR(m_y, -m_rot, m_a, m_b);
-			m_right = etherL(m_y, -m_rot, m_a, m_b);
+			m_left = EtherR(m_y, -m_rot, m_a, m_b);
+			m_right = EtherL(m_y, -m_rot, m_a, m_b);
 		}
 	} else if (m_y < 0) {
 		if (m_rot >= 0) {
 
-			m_left = -etherR(-m_y, m_rot, m_a, m_b);
-			m_right = -etherL(-m_y, m_rot, m_a, m_b);
+			m_left = -EtherR(-m_y, m_rot, m_a, m_b);
+			m_right = -EtherL(-m_y, m_rot, m_a, m_b);
 		} else {
-			m_left = -etherL(-m_y, -m_rot, m_a, m_b);
-			m_right = -etherR(-m_y, -m_rot, m_a, m_b);
+			m_left = -EtherL(-m_y, -m_rot, m_a, m_b);
+			m_right = -EtherR(-m_y, -m_rot, m_a, m_b);
 		}
 	} else {
 		m_left = (m_rot * m_quickTurn);

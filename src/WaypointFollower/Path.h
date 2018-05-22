@@ -26,14 +26,14 @@ protected:
 public:
 	Path();
 	Path(vector<Waypoint> waypoints, bool flip = false);
-	static Path fromFile(string fileName, bool flip);
-	static Path fromText(string textPath, bool flip);
-	Waypoint getFirstWaypoint();
-	double update(Translation2d pos);
-	bool eventPassed(string event);
-	double getRemainingLength();
-	PathSegment::Sample getLookaheadPoint(Translation2d pos, double lookahead);
-	pair<bool, Translation2d> getFirstCircleSegmentIntersection(PathSegment segment, Translation2d center,
+	static Path FromFile(string fileName, bool flip);
+	static Path FromText(string textPath, bool flip);
+	Waypoint GetFirstWaypoint();
+	double Update(Translation2d pos);
+	bool EventPassed(string event);
+	double GetRemainingLength();
+	PathSegment::Sample GetLookaheadPoint(Translation2d pos, double lookahead);
+	pair<bool, Translation2d> GetFirstCircleSegmentIntersection(PathSegment segment, Translation2d center,
 																	 double radius);
-	Position2d getClosestPoint(Translation2d pos);
+	Position2d GetClosestPoint(Translation2d pos);
 };

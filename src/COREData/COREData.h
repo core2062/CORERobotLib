@@ -16,19 +16,19 @@ namespace CORE {
         friend class COREDataManager;
     public:
         virtual ~ICOREData() = default;
-        virtual string getName() = 0;
-        virtual string getJSON(bool onlyIfChanged = true) = 0;
-        virtual bool isDriverValue() = 0;
+        virtual string GetName() = 0;
+        virtual string GetJSON(bool onlyIfChanged = true) = 0;
+        virtual bool IsDriverValue() = 0;
     private:
         string m_name;
     };
 
     class COREDataManager {
     public:
-        static void addData(ICOREData* instance);
-        static void updateData(nlohmann::json jsonData);
-        static void cleanUp();
-        static string getJSON(bool onlyIfChanged = true);
+        static void AddData(ICOREData* instance);
+        static void UpdateData(nlohmann::json jsonData);
+        static void CleanUp();
+        static string GetJSON(bool onlyIfChanged = true);
     private:
         static map<string, ICOREData*> m_data;
     };
@@ -48,13 +48,13 @@ namespace CORE {
         void Set(int value);
         void Set(bool value);
         void Set(string value);
-        void setSource(T * pointerToSource);
-        void setSource(function<T()> sourceFunction);
+        void SetSource(T * pointerToSource);
+        void SetSource(function<T()> sourceFunction);
         T Get();
-        string getJSON(bool onlyIfChanged = true) override;
-        string getName() override;
-        void setDriverValue(bool driverValue = true);
-        bool isDriverValue() override;
+        string GetJSON(bool onlyIfChanged = true) override;
+        string GetName() override;
+        void SetDriverValue(bool driverValue = true);
+        bool IsDriverValue() override;
     private:
         string m_name, m_valueText;
         bool m_showOnDriverDashboard;

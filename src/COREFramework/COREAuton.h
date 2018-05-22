@@ -21,11 +21,11 @@ namespace CORE {
             END
         };
 
-        virtual void actionInit() {}
+        virtual void ActionInit() {}
 
-        virtual void actionEnd() {}
+        virtual void ActionEnd() {}
 
-        virtual actionStatus action() = 0;
+        virtual actionStatus Action() = 0;
 
         virtual ~COREAutonAction() {}
     };
@@ -33,13 +33,13 @@ namespace CORE {
     class Node {
     public:
         Node(double timeout, COREAutonAction* action1 = nullptr, COREAutonAction* action2 = nullptr, COREAutonAction* action3 = nullptr);
-        void addNext(Node* childNode);
-        void addAction(COREAutonAction* leaf);
-        void addCondition(function<bool()> startCondition);
-        bool complete();
-        void reset();
-        void setTimeout(double timeout);
-        void act(bool lastNodeDone);
+        void AddNext(Node* childNode);
+        void AddAction(COREAutonAction* leaf);
+        void AddCondition(function<bool()> startCondition);
+        bool Complete();
+        void Reset();
+        void SetTimeout(double timeout);
+        void Act(bool lastNodeDone);
         ~Node();
     private:
         vector<Node*> m_children;
@@ -54,25 +54,25 @@ namespace CORE {
     class COREAuton {
     public:
         COREAuton(string name, bool defaultAuton = false);
-        void putToDashboard(SendableChooser<COREAuton*>* chooser);
+        void PutToDashboard(SendableChooser<COREAuton*>* chooser);
 
-        inline COREAuton* getInstance() {
+        inline COREAuton* GetInstance() {
             return this;
         }
 
-        inline bool getDefault() {
+        inline bool GetDefault() {
             return m_defaultAuton;
         }
 
-        string getName();
-        void auton();
-        void autonInit();
-        bool complete();
-        void reset();
+        string GetName();
+        void Auton();
+        void AutonInit();
+        bool Complete();
+        void Reset();
         virtual ~COREAuton();
     protected:
-        void addFirstNode(Node* firstNode);
-        virtual void addNodes() = 0;
+        void AddFirstNode(Node* firstNode);
+        virtual void AddNodes() = 0;
     private:
         string m_name;
         bool m_defaultAuton = false;
@@ -82,8 +82,8 @@ namespace CORE {
     class WaitAction : public COREAutonAction {
     public:
     	WaitAction(double duration);
-    	void actionInit();
-    	actionStatus action();
+    	void ActionInit();
+    	actionStatus Action();
     private:
     	CORETimer m_timer;
     	double m_duration;

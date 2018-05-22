@@ -5,7 +5,7 @@ using namespace seasocks;
 
 void COREConnectionHandler::onConnect(WebSocket *connection) {
     m_connections.insert(connection);
-    CORELog::logInfo("Adding Connection");
+    CORELog::LogInfo("Adding Connection");
 }
 
 void COREConnectionHandler::onData(WebSocket *webSocket, const char *data) {

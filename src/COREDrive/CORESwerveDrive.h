@@ -17,15 +17,15 @@ namespace CORE {
         class SwerveModule {
         public:
             SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMotor);
-            void drive(COREVector vector, double dt = -1);
-            COREVector forwardKinematics(double wheelCircumference, double ticksToRotation);
-            double getAngle(bool raw = false);
-            double getEncoder();
-            void setAnglePID(double p, double i, double d);
-            void setAngleOffset(double angleOffset);
-            void zeroAngle();
-            void zeroEncoder();
-            string print();
+            void Drive(COREVector vector, double dt = -1);
+            COREVector ForwardKinematics(double wheelCircumference, double ticksToRotation);
+            double GetAngle(bool raw = false);
+            double GetEncoder();
+            void SetAnglePID(double p, double i, double d);
+            void SetAngleOffset(double angleOffset);
+            void ZeroAngle();
+            void ZeroEncoder();
+            string Print();
             COREPID m_speedPIDController;
             COREAnglePID m_anglePIDController;
         private:
@@ -41,13 +41,13 @@ namespace CORE {
                    SwerveModule *leftBackModule,
                    SwerveModule *rightBackModule,
                    SwerveModule *rightFrontModule);
-        void inverseKinematics(double x, double y, double theta);
-        Position2d forwardKinematics();
-        void brake();
-        void setSteerPID(double kp, double ki, double kd);
-        void zeroOffsets();
-        void zeroEncoders();
-        void updateOffsets();
+        void InverseKinematics(double x, double y, double theta);
+        Position2d ForwardKinematics();
+        void Brake();
+        void SetSteerPID(double kp, double ki, double kd);
+        void ZeroOffsets();
+        void ZeroEncoders();
+        void UpdateOffsets();
     private:
         double m_wheelbase;
         double m_trackwidth;

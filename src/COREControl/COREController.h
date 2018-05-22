@@ -40,7 +40,7 @@ namespace CORE {
             return ControllerGetPos() * m_ticksPerDegree;
         }
 
-        void setTicksPerRotation(double ticks) {
+        void SetTicksPerRotation(double ticks) {
             m_ticksPerDegree = 360.0 / ticks;
         }
 
@@ -57,8 +57,8 @@ namespace CORE {
     public:
         virtual void Set(double setPoint);
         virtual double Get();
-        virtual void setActual(double actualPosition);
-        virtual double getActual();
+        virtual void SetActual(double actualPosition);
+        virtual double GetActual();
         virtual ~COREMotionController() {}
     protected:
         shared_ptr<ControllerInput> m_inputDevice;

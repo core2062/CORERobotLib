@@ -16,7 +16,7 @@ namespace CORE {
         bool m_started = false;
         bool m_stopped = false;
     public:
-        static double getTime();
+        static double GetTime();
         double Get();
         void Stop();
         void Reset();

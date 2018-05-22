@@ -23,25 +23,25 @@ namespace CORE {
             WARNING,
             ERROR
         };
-        static void logInfo(ostringstream& message);
-        static void logInfo(string message);
-        static void logWarning(ostringstream& message);
-        static void logWarning(string message);
-        static void logError(ostringstream& message);
-        static void logError(string message);
-        static void updateLog();
-        static string getName();
-        static void robotInit();
-        static void autonInit();
-        static void teleopInit();
-        static void testInit();
+        static void LogInfo(ostringstream& message);
+        static void LogInfo(string message);
+        static void LogWarning(ostringstream& message);
+        static void LogWarning(string message);
+        static void LogError(ostringstream& message);
+        static void LogError(string message);
+        static void UpdateLog();
+        static string GetName();
+        static void RobotInit();
+        static void AutonInit();
+        static void TeleopInit();
+        static void TestInit();
 
-static void disabled();
-        static void setConsoleLoggingLevel(loggingLevel level);
+        static void Disabled();
+        static void SetConsoleLoggingLevel(loggingLevel level);
             private:
-        static void writeLastDuration();
-        static string getFileName();
-        static string getRobotMode();
+        static void WriteLastDuration();
+        static string GetFileName();
+        static string GetRobotMode();
         static ofstream m_file;
         static vector<string> m_fileCache;
         static string m_fileName;

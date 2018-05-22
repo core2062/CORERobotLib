@@ -22,14 +22,14 @@ namespace CORE {
             INVALID = 0
         };
 
-        static gameMode getMode();
-        static gameAlliance getAlliance();
-        static int getStation();
-        static bool isEnabled();
-        static bool isOperatorControl();
-        static bool isAutonomous();
-        static bool isCompetition();
-        static void updateRobotState();
+        static gameMode GetMode();
+        static gameAlliance GetAlliance();
+        static int GetStation();
+        static bool IsEnabled();
+        static bool IsOperatorControl();
+        static bool IsAutonomous();
+        static bool IsCompetition();
+        static void UpdateRobotState();
 #ifdef NOT_REAL
         static void overrideRobotMode(gameMode newMode);
         static void overrideAlliance(gameAlliance newAlliance);

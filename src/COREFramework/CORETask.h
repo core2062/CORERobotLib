@@ -9,17 +9,17 @@ namespace CORE {
     public:
         CORETask();
         virtual ~CORETask() {}
-        virtual void robotInitTask() {}
-        virtual void disabledTask() {}
-        virtual void autonInitTask() {}
-        virtual void autonEndTask() {}
-        virtual void teleopInitTask() {}
-        virtual void preLoopTask() {}
-        virtual void postLoopTask() {}
-        virtual void teleopEndTask() {}
-        virtual void testInitTask() {}
-        virtual void testTask() {}
-        virtual void disableTasks(bool disable = true);
-        virtual bool isDisabled();
+        virtual void RobotInitTask() {}
+        virtual void DisabledTask() {}
+        virtual void AutonInitTask() {}
+        virtual void AutonEndTask() {}
+        virtual void TeleopInitTask() {}
+        virtual void PreLoopTask() {}
+        virtual void PostLoopTask() {}
+        virtual void TeleopEndTask() {}
+        virtual void TestInitTask() {}
+        virtual void TestTask() {}
+        virtual void DisableTasks(bool disable = true);
+        virtual bool IsDisabled();
 	};
 }
