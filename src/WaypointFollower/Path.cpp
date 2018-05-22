@@ -15,7 +15,7 @@ Path::Path(vector<Waypoint> waypoints, bool flip) {
 	m_waypoints = waypoints;
 	for (int i = 0; i < m_waypoints.size() - 1; i++) {
         m_segments.emplace_back(m_waypoints[i].position, m_waypoints[i+1].position,
-                                (flip ? m_waypoints[i].rotation.inverse() : m_waypoints[i].rotation),
+                                (flip ? m_waypoints[i].rotation.Inverse() : m_waypoints[i].rotation),
                                 m_waypoints[i].speed);
 	}
 
@@ -55,8 +55,8 @@ Path Path::FromText(string text, bool flip) {
             Waypoint waypoint({point["x"].get<double>(), point["y"].get<double>()},
                               Rotation2d::FromRadians(point["theta"].get<double>()), 100);
             if(flip) {
-                waypoint.position = waypoint.position.flipX();
-                waypoint.rotation = waypoint.rotation.inverse();
+                waypoint.position = waypoint.position.FlipX();
+                waypoint.rotation = waypoint.rotation.Inverse();
             }
             if(point["name"].get<string>() != "point") {
                 waypoint.event = point["name"].get<string>();
@@ -138,12 +138,12 @@ PathSegment::Sample Path::GetLookaheadPoint(Translation2d pos, double lookahead)
 		return {Translation2d(), 0};
 	}
 
-	Translation2d posInverse = pos.inverse();
-	if(posInverse.translateBy(m_segments[0].GetStart()).norm() >= lookahead){
+	Translation2d posInverse = pos.Inverse();
+	if(posInverse.TranslateBy(m_segments[0].GetStart()).Norm() >= lookahead){
 		return {m_segments[0].GetStart(), m_segments[0].GetSpeed()};
 	}
 	for (auto segment : m_segments) {
-        double distance = posInverse.translateBy(segment.GetEnd()).norm();
+        double distance = posInverse.TranslateBy(segment.GetEnd()).Norm();
 		if(distance >= lookahead){
 			pair<bool, Translation2d> intersectionPoint =
                     GetFirstCircleSegmentIntersection(segment, pos, lookahead);
@@ -170,10 +170,10 @@ PathSegment::Sample Path::GetLookaheadPoint(Translation2d pos, double lookahead)
 
 pair<bool, Translation2d> Path::GetFirstCircleSegmentIntersection(PathSegment segment, Translation2d center,
                                                                        double radius) {
-	double x1 = segment.GetStart().getX() - center.getX();
-	double y1 = segment.GetStart().getY() - center.getY();
-	double x2 = segment.GetEnd().getX() - center.getX();
-	double y2 = segment.GetEnd().getY() - center.getY();
+	double x1 = segment.GetStart().GetX() - center.GetX();
+	double y1 = segment.GetStart().GetY() - center.GetY();
+	double x2 = segment.GetEnd().GetX() - center.GetX();
+	double y2 = segment.GetEnd().GetY() - center.GetY();
 	double dx = x2 - x1;
 	double dy = y2 - y1;
 	double drSquared = dx * dx + dy * dy;
@@ -186,11 +186,11 @@ pair<bool, Translation2d> Path::GetFirstCircleSegmentIntersection(PathSegment se
 
 	double sqrtDiscriminant = sqrt(discriminant);
 	Translation2d posSolution = Translation2d(
-			(det * dy + ((dy < 0) ? -1 : 1) * dx * sqrtDiscriminant) / drSquared + center.getX(),
-			(-det * dx + abs(dy) * sqrtDiscriminant) / drSquared + center.getY());
+			(det * dy + ((dy < 0) ? -1 : 1) * dx * sqrtDiscriminant) / drSquared + center.GetX(),
+			(-det * dx + abs(dy) * sqrtDiscriminant) / drSquared + center.GetY());
 	Translation2d negSolution = Translation2d(
-			(det * dy - ((dy < 0) ? -1 : 1) * dx * sqrtDiscriminant) / drSquared + center.getX(),
-			(-det * dx - abs(dy) * sqrtDiscriminant) / drSquared + center.getY());
+			(det * dy - ((dy < 0) ? -1 : 1) * dx * sqrtDiscriminant) / drSquared + center.GetX(),
+			(-det * dx - abs(dy) * sqrtDiscriminant) / drSquared + center.GetY());
 
 	double posDot = segment.DotProduct(posSolution);
 	double negDot = segment.DotProduct(negSolution);
@@ -213,12 +213,12 @@ Waypoint Path::GetFirstWaypoint() {
 
 Position2d Path::GetClosestPoint(Translation2d pos) {
     Position2d closestPoint = Position2d(m_segments[0].GetStart(), m_segments[0].GetAngle());
-    double closestDistance = hypot(pos.getX() - closestPoint.GetTranslation().getX(),
-                            pos.getY() - closestPoint.GetTranslation().getY());
+    double closestDistance = hypot(pos.GetX() - closestPoint.GetTranslation().GetX(),
+                            pos.GetY() - closestPoint.GetTranslation().GetY());
     for (unsigned int i = 1; i < m_segments.size(); i++){
         PathSegment segment = m_segments[i];
-        double distance = hypot(pos.getX() - segment.GetStart().getX(),
-                                pos.getY() - segment.GetStart().getY());
+        double distance = hypot(pos.GetX() - segment.GetStart().GetX(),
+                                pos.GetY() - segment.GetStart().GetY());
         if(distance < closestDistance) {
             closestPoint = Position2d(segment.GetStart(), segment.GetAngle());
             closestDistance = distance;

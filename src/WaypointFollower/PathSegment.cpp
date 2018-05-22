@@ -14,8 +14,8 @@ PathSegment::PathSegment(Translation2d start, Translation2d end, Rotation2d angl
 
 void PathSegment::UpdateStart(Translation2d newStart) {
 	m_start = newStart;
-	m_startToEnd = m_start.inverse().translateBy(m_end);
-	m_length = m_startToEnd.norm();
+	m_startToEnd = m_start.Inverse().TranslateBy(m_end);
+	m_length = m_startToEnd.Norm();
 //	std::cout << "New Length: " << m_length << std::endl;
 }
 
@@ -36,12 +36,12 @@ double PathSegment::GetLength() {
 }
 
 Translation2d PathSegment::Interpolate(double index) {
-	return m_start.interpolate(m_end, index);
+	return m_start.Interpolate(m_end, index);
 }
 
 double PathSegment::DotProduct(Translation2d other) {
-	Translation2d startToOther = m_start.inverse().translateBy(other);
-	return m_startToEnd.getX() * startToOther.getX() + m_startToEnd.getY() * startToOther.getY();
+	Translation2d startToOther = m_start.Inverse().TranslateBy(other);
+	return m_startToEnd.GetX() * startToOther.GetX() + m_startToEnd.GetY() * startToOther.GetY();
 }
 
 PathSegment::ClosestPointReport PathSegment::GetClosestPoint(Translation2d queryPoint) {
@@ -56,7 +56,7 @@ PathSegment::ClosestPointReport PathSegment::GetClosestPoint(Translation2d query
 		rv.clampedIndex = 0.0;
 		rv.closestPoint = Translation2d(m_start);
 	}
-	rv.distance = rv.closestPoint.inverse().translateBy(queryPoint).norm();
+	rv.distance = rv.closestPoint.Inverse().TranslateBy(queryPoint).Norm();
 	return rv;
 }
 

@@ -61,13 +61,13 @@ void Position2d::SetRotation(Rotation2d rot) {
 }
 
 Position2d Position2d::TransformBy(Position2d other) {
-	return Position2d(m_translation.translateBy(other.m_translation.rotateBy(m_rotation)),
-			m_rotation.rotateBy(other.m_rotation));
+	return Position2d(m_translation.TranslateBy(other.m_translation.RotateBy(m_rotation)),
+			m_rotation.RotateBy(other.m_rotation));
 }
 
 Position2d Position2d::Inverse() {
-	Rotation2d invert = m_rotation.inverse();
-	return Position2d(m_translation.inverse().rotateBy(invert), invert);
+	Rotation2d invert = m_rotation.Inverse();
+	return Position2d(m_translation.Inverse().RotateBy(invert), invert);
 }
 
 Position2d Position2d::Interpolate(Position2d other, double x) {
@@ -76,6 +76,6 @@ Position2d Position2d::Interpolate(Position2d other, double x) {
 	} else if (x >= 1){
 		return other;
 	}
-	return Position2d(m_translation.interpolate(other.m_translation, x),
-			m_rotation.interpolate(other.m_rotation, x));
+	return Position2d(m_translation.Interpolate(other.m_translation, x),
+			m_rotation.Interpolate(other.m_rotation, x));
 }

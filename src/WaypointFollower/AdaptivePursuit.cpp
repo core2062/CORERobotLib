@@ -25,7 +25,7 @@ bool AdaptivePursuit::IsDone() {
 Position2d::Delta AdaptivePursuit::Update(Position2d robotPos, double now) {
     Position2d pos = robotPos;
     if (m_reversed) {
-        pos = Position2d(robotPos.GetTranslation(), robotPos.GetRotation().rotateBy(Rotation2d::FromRadians(PI)));
+        pos = Position2d(robotPos.GetTranslation(), robotPos.GetRotation().RotateBy(Rotation2d::FromRadians(PI)));
     }
 
     double distanceFromPath = m_path.Update(pos.GetTranslation());
@@ -84,8 +84,8 @@ Position2d::Delta AdaptivePursuit::Update(Position2d robotPos, double now) {
 //        double y = sin(circle.second.center.GetRadians() + PI/2) * fabs(speed);
 //        double x = cos(circle.second. center.GetRadians() + PI/2) * fabs(speed);
 
-    Translation2d move = robotPos.GetTranslation().inverse().translateBy(lookaheadPoint.translation);
-    double x = move.getCos() * speed * 0.01;
+    Translation2d move = robotPos.GetTranslation().Inverse().TranslateBy(lookaheadPoint.translation);
+    double x = move.GetCos() * speed * 0.01;
     double y = move.GetSin() * speed * 0.01;
 
     /*double angDelta = robotPos.getRotation().inverse().rotateBy(m_path.getNextRotation()).getRadians();
@@ -107,8 +107,8 @@ Position2d::Delta AdaptivePursuit::Update(Position2d robotPos, double now) {
 
     Rotation2d setAngle = m_path.GetClosestPoint(pos.GetTranslation()).GetRotation();
 
-    double remainingAng = COREVector::FromRadians(robotPos.GetRotation().getRadians())
-            .ShortestRotationTo(COREVector::FromRadians(setAngle.getRadians()));
+    double remainingAng = COREVector::FromRadians(robotPos.GetRotation().GetRadians())
+            .ShortestRotationTo(COREVector::FromRadians(setAngle.GetRadians()));
 
     /*double angSpeed = remainingAng < 0 ? -100 : 100;
     double lastAngSpeed = m_lastCommand.dtheta * 100;
@@ -146,22 +146,22 @@ AdaptivePursuit::Circle::Circle(Translation2d cent, double rad, bool turn_right)
 }
 
 pair<bool, AdaptivePursuit::Circle> AdaptivePursuit::JoinPath(Position2d pos, Translation2d lookahead) {
-    double x1 = pos.GetTranslation().getX();
-    double y1 = pos.GetTranslation().getY();
-    double x2 = lookahead.getX();
-    double y2 = lookahead.getY();
+    double x1 = pos.GetTranslation().GetX();
+    double y1 = pos.GetTranslation().GetY();
+    double x2 = lookahead.GetX();
+    double y2 = lookahead.GetY();
 
-    Translation2d posToLookahead = pos.GetTranslation().inverse().translateBy(lookahead);
+    Translation2d posToLookahead = pos.GetTranslation().Inverse().TranslateBy(lookahead);
 
-    double crossProduct = lookahead.getX() * pos.GetRotation().GetSin()
-                          - posToLookahead.getY() * pos.GetRotation().getCos();
+    double crossProduct = lookahead.GetX() * pos.GetRotation().GetSin()
+                          - posToLookahead.GetY() * pos.GetRotation().GetCos();
     if (abs(crossProduct) < kE) {
         return {false, Circle(Translation2d(), 0, 0)};
     }
 
     double dx = x1 - x2;
     double dy = y1 - y2;
-    double my = ((crossProduct > 0) ? -1 : 1) * pos.GetRotation().getCos();
+    double my = ((crossProduct > 0) ? -1 : 1) * pos.GetRotation().GetCos();
     double mx = ((crossProduct > 0) ? 1 : -1) * pos.GetRotation().GetSin();
 
     double crossTerm = mx * dx + my * dy;

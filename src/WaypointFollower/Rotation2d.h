@@ -16,15 +16,15 @@ public:
 
 	void Normalize();
 
-	double getCos();
+	double GetCos();
 	double GetSin();
 
-	double getRadians();
-	double getDegrees();
+	double GetRadians();
+	double GetDegrees();
 
-	Rotation2d rotateBy(Rotation2d other);
-	Rotation2d inverse();
-	Rotation2d opposite();
+	Rotation2d RotateBy(Rotation2d other);
+	Rotation2d Inverse();
+	Rotation2d Opposite();
 
-	Rotation2d interpolate(Rotation2d other, double x);
+	Rotation2d Interpolate(Rotation2d other, double x);
 };

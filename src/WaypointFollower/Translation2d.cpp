@@ -10,62 +10,62 @@ Translation2d::Translation2d(double x, double y) {
 	m_y = y;
 }
 
-double Translation2d::norm() {
+double Translation2d::Norm() {
 	return hypot(m_x, m_y);
 }
 
-double Translation2d::getX() {
+double Translation2d::GetX() {
 	return m_x;
 }
 
-double Translation2d::getY() {
+double Translation2d::GetY() {
 	return m_y;
 }
 
-void Translation2d::setX(double x) {
+void Translation2d::SetX(double x) {
 	m_x = x;
 }
 
-void Translation2d::setY(double y) {
+void Translation2d::SetY(double y) {
 	m_y = y;
 }
 
-Translation2d Translation2d::translateBy(Translation2d other) {
-	return Translation2d(m_x + other.getX(), m_y + other.getY());
+Translation2d Translation2d::TranslateBy(Translation2d other) {
+	return Translation2d(m_x + other.GetX(), m_y + other.GetY());
 }
 
-Translation2d Translation2d::rotateBy(Rotation2d rotation) {
-	return Translation2d(m_x * rotation.getCos() - m_y * rotation.GetSin(),
-			m_x * rotation.GetSin() + m_y * rotation.getCos());
+Translation2d Translation2d::RotateBy(Rotation2d rotation) {
+	return Translation2d(m_x * rotation.GetCos() - m_y * rotation.GetSin(),
+			m_x * rotation.GetSin() + m_y * rotation.GetCos());
 }
 
-Translation2d Translation2d::inverse() {
+Translation2d Translation2d::Inverse() {
 	return Translation2d(-m_x, -m_y);
 }
 
-Translation2d Translation2d::interpolate(Translation2d other, double x) {
+Translation2d Translation2d::Interpolate(Translation2d other, double x) {
 	if(x <=0){
 		return *this;
 	} else if (x >= 1){
 		return other;
 	}
-	return extrapolate(other, x);
+	return Extrapolate(other, x);
 }
 
-Translation2d Translation2d::extrapolate(Translation2d other, double x) {
-	return Translation2d(x * (other.getX() - m_x) + m_x, x * (other.getY() - m_y) + m_y);
+Translation2d Translation2d::Extrapolate(Translation2d other, double x) {
+	return Translation2d(x * (other.GetX() - m_x) + m_x, x * (other.GetY() - m_y) + m_y);
 }
 
-Translation2d Translation2d::flipX() {
+Translation2d Translation2d::FlipX() {
 	return Translation2d(-m_x, m_y);
 }
 
-Translation2d Translation2d::flipY() {
+Translation2d Translation2d::FlipY() {
 	return Translation2d(m_x, -m_y);
 }
 double Translation2d::GetSin() {
-    return getY() / norm();
+    return GetY() / Norm();
 }
-double Translation2d::getCos() {
-    return getX() / norm();
+double Translation2d::GetCos() {
+    return GetX() / Norm();
 }
