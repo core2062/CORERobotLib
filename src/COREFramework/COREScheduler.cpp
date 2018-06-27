@@ -217,3 +217,8 @@ void COREScheduler::CleanUp() {
 	m_subsystems.clear();
 	COREConstantsManager::CleanUp();
 }
+void COREScheduler::Log() {
+	for (auto subsystem : m_subsystems) {
+		subsystem->Log();
+	}
+}

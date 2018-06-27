@@ -35,6 +35,7 @@ namespace CORE {
 		virtual void TeleopEnd() {}
 		virtual void Test() {}
 		virtual void Disabled() {}
+		virtual void Log() {}
 
 		COREJoystick* driverJoystick;
 		COREJoystick* operatorJoystick;
