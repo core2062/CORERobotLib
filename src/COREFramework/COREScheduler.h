@@ -102,6 +102,7 @@ namespace CORE {
 		static void Teleop();
 		static void TestInit();
 		static void Test();
+		static void Log();
 		static void CleanUp();
 	};
 }

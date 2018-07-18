@@ -17,6 +17,7 @@ void CORERobot::RobotInit() {
 }
 
 void CORERobot::RobotPeriodic() {
+	COREScheduler::Log();
 }
 
 void CORERobot::DisabledInit() {

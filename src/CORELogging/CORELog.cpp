@@ -93,6 +93,31 @@ void CORELog::LogError(string message) {
     }
 }
 
+void CORELog::SensorError(int sensorID, string sensorName, double value) {
+	m_fileCache.push_back("[ERROR] - " + to_string(round(m_matchTimer.Get() * 1000.0) / 1000.0)
+			+ ", " + to_string(sensorID) + ", " + sensorName + ", " + to_string(value)  + "\n");
+}
+
+void CORELog::SensorError(int sensorID, string sensorName, bool value) {
+	m_fileCache.push_back("[ERROR] - " + to_string(round(m_matchTimer.Get() * 1000.0) / 1000.0)
+			+ ", " + to_string(sensorID) + ", " + sensorName + ", " + to_string(value)  + "\n");
+}
+
+void CORELog::SensorLog(int sensorID, string sensorName, double value) {
+	m_fileCache.push_back("[INFO] - " + to_string(round(m_matchTimer.Get() * 1000.0) / 1000.0)
+			+ ", " + to_string(sensorID) + ", " + sensorName + ", " + to_string(value)  + "\n");
+}
+
+void CORELog::SensorLog(int sensorID, string sensorName, bool value) {
+	m_fileCache.push_back("[INFO] - " + to_string(round(m_matchTimer.Get() * 1000.0) / 1000.0)
+		    + ", " + to_string(sensorID) + ", " + sensorName + ", " + to_string(value)  + "\n");
+}
+
+void CORELog::NavXLog(double x, double y, double radians) {
+	m_fileCache.push_back("[INFO] - " + to_string(round(m_matchTimer.Get() * 1000.0) / 1000.0)
+			  + ", X: " + to_string(x) + ", Y: " + to_string(y) + ", Theta: " + to_string(radians)  + "\n");
+}
+
 void CORELog::UpdateLog() {
     CORETimer duration;
     duration.Reset();

@@ -29,6 +29,11 @@ namespace CORE {
         static void LogWarning(string message);
         static void LogError(ostringstream& message);
         static void LogError(string message);
+        static void SensorError(int sensorID, string sensorName, double value);
+        static void SensorError(int sensorID, string sensorName, bool value);
+        static void SensorLog(int sensorID, string sensorName, double value);
+        static void SensorLog(int sensorID, string sensorName, bool value);
+        static void NavXLog(double x, double y, double radians);
         static void UpdateLog();
         static string GetName();
         static void RobotInit();
