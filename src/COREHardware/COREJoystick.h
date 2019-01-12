@@ -6,7 +6,7 @@
 #include "CORELogging/CORELog.h"
 #include "COREUtilities/COREMath.h"
 
-#include "Joystick.h"
+#include "frc/Joystick.h"
 
 using namespace std;
 using namespace CORE;
@@ -69,7 +69,7 @@ namespace CORE {
         ButtonState GetButtonState(JoystickButton button);
         int GetPort();
         void PreLoopTask() override;
-		Joystick m_joystick;
+		frc::Joystick m_joystick;
 
 	private:
         int m_F310_X_Mode_Map[26] = {

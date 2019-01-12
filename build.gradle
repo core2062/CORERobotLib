@@ -1,10 +1,8 @@
 plugins {
     id "cpp"
-    id "jaci.openrio.gradle.GradleRIO" version "2018.01.22"
+    id "google-test-test-suite"
+    id "edu.wpi.first.GradleRIO" version "2019.1.1"
 }
-
-apply plugin: "cpp"
-apply plugin: 'eclipse'
 
 model {
     repositories {
@@ -46,7 +44,7 @@ model {
     }
     components {
         CORERobotLib(NativeLibrarySpec) {
-            targetPlatform 'roborio'
+            targetPlatform wpi.platforms.roborio
             sources.cpp {
                 source {
                     srcDir "src"
@@ -55,13 +53,15 @@ model {
                 }
                 exportedHeaders {
                     srcDir "src"
+                    srcDir "3rdparty/json/src/"
+                    srcDir "3rdparty/seasocks/src/main/c"
+
                 }
-                lib library: "json", linkage: "api"
-                lib library: "seasocks", linkage: "static"
-                lib library: "ctre"
-                lib library: "navx"
-                lib library: "wpilib"
-                lib library: "ctre"
+                // lib library: "json", linkage: "api"
+                // lib library: "seasocks", linkage: "static"
+                // lib library: "navx"
+                // lib library: "wpilib"
+                // lib library: "ctre"
             }
             binaries.withType(SharedLibraryBinarySpec) {
                 buildable = false
@@ -87,6 +87,3 @@ def getPlatformPath(Platform platform) {
     }
 }
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '4.4'
-}

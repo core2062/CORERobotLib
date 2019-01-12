@@ -5,7 +5,6 @@
 #include "COREFramework/COREHardwareManager.h"
 #include "COREUtilities/COREConstant.h"
 #include "COREDrive.h"
-#include "ctre/Phoenix.h"
 #include "COREHardware/CORESensor.h"
 #include "COREControl/COREPID.h"
 #include "COREUtilities/COREVector.h"
@@ -60,5 +59,3 @@ namespace CORE {
         CORETimer m_timer;
     };
 }
-
-

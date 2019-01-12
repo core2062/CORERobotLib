@@ -1,7 +1,7 @@
 #pragma once
 
 #include "COREFramework/COREScheduler.h"
-#include "WPILib.h"
+#include "frc/WPILib.h"
 
 namespace CORE::SIM {
     class CORESimRobot {

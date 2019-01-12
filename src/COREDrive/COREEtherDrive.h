@@ -5,7 +5,6 @@
 #include "COREUtilities/COREConstant.h"
 #include "COREDrive.h"
 #include "WaypointFollower/TankKinematics.h"
-#include "ctre/Phoenix.h"
 
 namespace CORE {
 	class COREEtherDrive: public COREDrive {

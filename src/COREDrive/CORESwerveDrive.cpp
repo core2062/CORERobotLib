@@ -1,8 +1,7 @@
 #include "CORESwerveDrive.h"
 #include "COREControl/COREPID.h"
 #include "COREUtilities/COREMath.h"
-#include "WPILib.h"
-#include "ctre/Phoenix.h"
+#include "frc/WPILib.h"
 
 using namespace CORE;
 
