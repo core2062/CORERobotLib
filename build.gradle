@@ -55,17 +55,13 @@ model {
                     srcDir "src"
                     srcDir "3rdparty/json/src/"
                     srcDir "3rdparty/seasocks/src/main/c"
-
                 }
-                // lib library: "json", linkage: "api"
-                // lib library: "seasocks", linkage: "static"
-                // lib library: "navx"
-                // lib library: "wpilib"
-                // lib library: "ctre"
             }
             binaries.withType(SharedLibraryBinarySpec) {
                 buildable = false
             }
+            useLibrary(it, "wpilib")
+            wpi.deps.vendor.cpp(it)
         }
     }
 }
