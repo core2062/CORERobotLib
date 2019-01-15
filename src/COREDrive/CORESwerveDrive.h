@@ -9,6 +9,7 @@
 #include "COREControl/COREPID.h"
 #include "COREUtilities/COREVector.h"
 #include "COREDrive/COREEtherDrive.h"
+#include "ctre/Phoenix.h"
 
 namespace CORE {
     class CORESwerve/* : public COREDrive*/ {

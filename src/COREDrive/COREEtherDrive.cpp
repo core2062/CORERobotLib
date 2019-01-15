@@ -1,4 +1,5 @@
 #include "COREEtherDrive.h"
+#include "ctre/Phoenix.h"
 
 using namespace CORE;
 

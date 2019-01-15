@@ -36,7 +36,7 @@ vector<COREAuton*> COREScheduler::m_autons;
 vector<CORETask*> COREScheduler::m_tasks;
 COREJoystick* COREScheduler::m_driverJoystick;
 COREJoystick* COREScheduler::m_operatorJoystick;
-SendableChooser<COREAuton*>* COREScheduler::m_autonChooser;
+frc::SendableChooser<COREAuton*>* COREScheduler::m_autonChooser;
 
 COREAuton* COREScheduler::m_selectedAuton;
 CORETimer COREScheduler::m_autonTimer;
@@ -81,12 +81,12 @@ void COREScheduler::RobotInit() {
 			task->RobotInitTask();
 		}
 	}
-    m_autonChooser = new SendableChooser<COREAuton*>();
-    m_autonChooser->AddDefault("Do Nothing", nullptr);
+    m_autonChooser = new frc::SendableChooser<COREAuton*>();
+    m_autonChooser->SetDefaultOption("Do Nothing", nullptr);
     for(auto auton : m_autons) {
         auton->PutToDashboard(m_autonChooser);
     }
-    SmartDashboard::PutData("Autonomous", m_autonChooser);
+    frc::SmartDashboard::PutData("Autonomous", m_autonChooser);
 }
 
 void COREScheduler::Disabled() {

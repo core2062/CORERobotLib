@@ -187,7 +187,7 @@ void COREAuton::AutonInit() {
 /*
  * Put this autonomous routine to Smart Dashboard on a given SendableChooser
  */
-void COREAuton::PutToDashboard(SendableChooser<COREAuton*>* chooser) {
+void COREAuton::PutToDashboard(frc::SendableChooser<COREAuton*>* chooser) {
     CORELog::LogInfo("Adding autonomous: " + m_name + " to dashboard");
     if(m_defaultAuton) {
         chooser->AddDefault(m_name, this);

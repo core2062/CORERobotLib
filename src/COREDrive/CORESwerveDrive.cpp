@@ -2,6 +2,7 @@
 #include "COREControl/COREPID.h"
 #include "COREUtilities/COREMath.h"
 #include "frc/WPILib.h"
+#include "ctre/Phoenix.h"
 
 using namespace CORE;
 
@@ -203,24 +204,24 @@ Position2d CORESwerve::ForwardKinematics() {
 	//Adds the up all of the vector of each of the modules to get a total vector
 
 	COREVector frontLeft = m_frontLeftModule->ForwardKinematics(m_wheelCircumference, m_ticksToRotation);
-    SmartDashboard::PutNumber("Front Left X: ", frontLeft.GetX());
-    SmartDashboard::PutNumber("Front Left Y: ", frontLeft.GetY());
-    SmartDashboard::PutNumber("Front Left Encoder: ", m_frontLeftModule->GetEncoder());
+    frc::SmartDashboard::PutNumber("Front Left X: ", frontLeft.GetX());
+    frc::SmartDashboard::PutNumber("Front Left Y: ", frontLeft.GetY());
+    frc::SmartDashboard::PutNumber("Front Left Encoder: ", m_frontLeftModule->GetEncoder());
 
 	COREVector frontRight = m_frontRightModule->ForwardKinematics(m_wheelCircumference, m_ticksToRotation);
-    SmartDashboard::PutNumber("Front Right X: ", frontRight.GetX());
-    SmartDashboard::PutNumber("Front Right Y: ", frontRight.GetY());
-    SmartDashboard::PutNumber("Front Right Encoder: ", m_frontRightModule->GetEncoder());
+    frc::SmartDashboard::PutNumber("Front Right X: ", frontRight.GetX());
+    frc::SmartDashboard::PutNumber("Front Right Y: ", frontRight.GetY());
+    frc::SmartDashboard::PutNumber("Front Right Encoder: ", m_frontRightModule->GetEncoder());
 
 	COREVector backLeft = m_backLeftModule->ForwardKinematics(m_wheelCircumference, m_ticksToRotation);
-    SmartDashboard::PutNumber("Back Left X: ", backLeft.GetX());
-    SmartDashboard::PutNumber("Back Left Y: ", backLeft.GetY());
-    SmartDashboard::PutNumber("Back Left Encoder: ", m_backLeftModule->GetEncoder());
+    frc::SmartDashboard::PutNumber("Back Left X: ", backLeft.GetX());
+    frc::SmartDashboard::PutNumber("Back Left Y: ", backLeft.GetY());
+    frc::SmartDashboard::PutNumber("Back Left Encoder: ", m_backLeftModule->GetEncoder());
 
 	COREVector backRight = m_backRightModule->ForwardKinematics(m_wheelCircumference, m_ticksToRotation);
-    SmartDashboard::PutNumber("Back Right X: ", backRight.GetX());
-    SmartDashboard::PutNumber("Back Right Y: ", backRight.GetY());
-    SmartDashboard::PutNumber("Back Right Encoder: ", m_backRightModule->GetEncoder());
+    frc::SmartDashboard::PutNumber("Back Right X: ", backRight.GetX());
+    frc::SmartDashboard::PutNumber("Back Right Y: ", backRight.GetY());
+    frc::SmartDashboard::PutNumber("Back Right Encoder: ", m_backRightModule->GetEncoder());
 
     double backX = (backLeft.GetX() + backRight.GetX()) / 2.0;
     double frontX = (frontLeft.GetX() + frontRight.GetX()) / 2.0;
@@ -236,23 +237,6 @@ Position2d CORESwerve::ForwardKinematics() {
 
     return Position2d({sumX, sumY}, Rotation2d::FromRadians(omega));
 }
-
-/*string CORESwerve::print() {
-    string text = "Swerve Drive Status:";
-    text += "\nFront Right Module\n\tRequested Angle: " + to_string(rightFrontModuleAngle) + "\tActual: "
-            + to_string(m_rightFrontModule->getAngle()) + "\n\tRequested Speed: " + to_string(rightFrontModuleSpeed);
-    text += m_rightFrontModule->print();
-    text += "\nFront Left Module\n\tRequested Angle: " + to_string(leftFrontModuleAngle) + "\tActual: "
-            + to_string(m_frontLeftModule->getAngle()) + "\n\tRequested Speed: " + to_string(leftFrontModuleSpeed);
-    text += m_frontLeftModule->print();
-    text += "\nBack Right Module\n\tRequested Angle: " + to_string(rightBackModuleAngle) + "\tActual: "
-            + to_string(m_backRightModule->getAngle()) + "\n\tRequested Speed: " + to_string(rightBackModuleSpeed);
-    text += m_backRightModule->print();
-    text += "\nBack Left Module\n\tRequested Angle: " + to_string(leftBackModuleAngle) + "\tActual: "
-            + to_string(m_backLeftModule->getAngle()) + "\n\tRequested Speed: " + to_string(leftBackModuleSpeed);
-    text += m_backLeftModule->print();
-    return text;
-}*/
 
 void CORESwerve::SetSteerPID(double kp, double ki, double kd) {
     m_frontLeftModule->SetAnglePID(kp, ki, kd);
