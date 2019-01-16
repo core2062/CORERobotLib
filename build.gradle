@@ -7,12 +7,12 @@ plugins {
 model {
     repositories {
         libs(PrebuiltLibraries) {
-            seasocks {
-                headers.srcDir "3rdparty/seasocks/src/main/c"
-                binaries.withType(StaticLibraryBinary) {
-                    staticLibraryFile = file("3rdparty/seasocks/Linux/arm/libseasocks.a")
-                }
-            }
+            // seasocks {
+            //     headers.srcDir "3rdparty/seasocks/src/main/c"
+            //     binaries.withType(StaticLibraryBinary) {
+            //         staticLibraryFile = file("3rdparty/seasocks/Linux/arm/libseasocks.a")
+            //     }
+            // }
             googleTest {
                 headers.srcDir "3rdparty/googletest/googletest/include"
                 binaries.withType(StaticLibraryBinary) {
@@ -43,20 +43,58 @@ model {
         }
     }
     components {
+        // zlib(NativeLibrarySpec) {
+        //     targetPlatform wpi.platforms.roborio
+        //     sources.cpp {
+        //         source {
+        //             srcDir "3rdparty/zlib"
+        //             include "**/*.cpp"
+        //         }
+        //         exportedHeaders {
+        //             srcDir "3rdparty/zlib"
+        //         }
+        //     }
+        // }
+        // seasocks(NativeLibrarySpec) {
+        //     targetPlatform wpi.platforms.roborio
+        //     sources.cpp {
+        //         source {
+        //             srcDirs "3rdparty/seasocks/src/main/c","3rdparty/seasocks"
+        //             include "**/*.cpp"
+        //         }
+        //         exportedHeaders {
+        //             srcDirs "3rdparty/seasocks/src/main/c","3rdparty/seasocks"
+        //         }
+        //     }
+        //     binaries.withType(StaticLibraryBinary) {
+        //         staticLibraryFile = file("3rdparty/seasocks/Linux/arm/libseasocks.a")
+        //     }
+        //     binaries.all {
+        //         lib library : 'zlib', linkage : 'static'
+        //     }
+        //     binaries.withType(SharedLibraryBinarySpec) {
+        //         buildable = false
+        //     }
+        //     wpi.deps.vendor.cpp(it)
+        // }   
         CORERobotLib(NativeLibrarySpec) {
             targetPlatform wpi.platforms.roborio
             sources.cpp {
                 source {
                     srcDir "src"
                     include "**/*.cpp"
-                    exclude "CORESimulation"
+                    exclude "CORESimulation", "COREDashboard"
+                    // srcDir "3rdparty/seasocks/src/main/c"
                 }
                 exportedHeaders {
                     srcDir "src"
                     srcDir "3rdparty/json/src/"
-                    srcDir "3rdparty/seasocks/src/main/c"
+                    // srcDir "3rdparty/seasocks/src/main/c"
                 }
             }
+            // binaries.all {
+            //     lib library : 'seasocks', linkage : 'static'
+            // }
             binaries.withType(SharedLibraryBinarySpec) {
                 buildable = false
             }
