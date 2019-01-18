@@ -190,9 +190,9 @@ void COREAuton::AutonInit() {
 void COREAuton::PutToDashboard(frc::SendableChooser<COREAuton*>* chooser) {
     CORELog::LogInfo("Adding autonomous: " + m_name + " to dashboard");
     if(m_defaultAuton) {
-        chooser->AddDefault(m_name, this);
+        chooser->SetDefaultOption(m_name, this);
     } else {
-        chooser->AddObject(m_name, this);
+        chooser->SetDefaultOption(m_name, this);
     }
 }
 

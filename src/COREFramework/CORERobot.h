@@ -16,7 +16,7 @@
 namespace CORE {
     class CORERobot : public CORESubsystem
 #ifndef NOT_REAL
-		      , public TimedRobot
+		      , public frc::TimedRobot
 #endif
 		      {
     public:
