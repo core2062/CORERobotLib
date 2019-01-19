@@ -21,15 +21,15 @@ Position2d::Position2d(const Position2d& other) {
 	m_rotation = other.m_rotation;
 }
 
-Position2d Position2d::fromTranslation(Translation2d tran) {
+Position2d Position2d::FromTranslation(Translation2d tran) {
 	return Position2d(tran, Rotation2d());
 }
 
-Position2d Position2d::fromRotation(Rotation2d rot) {
+Position2d Position2d::FromRotation(Rotation2d rot) {
 	return Position2d(Translation2d(), rot);
 }
 
-Position2d Position2d::fromVelocity(Delta delta) {
+Position2d Position2d::FromVelocity(Delta delta) {
 	double sinT = sin(delta.dtheta);
 	double cosT = cos(delta.dtheta);
 	double s, c;
@@ -44,38 +44,38 @@ Position2d Position2d::fromVelocity(Delta delta) {
 			Rotation2d(cosT, sinT, false));
 }
 
-Translation2d Position2d::getTranslation() {
+Translation2d Position2d::GetTranslation() {
 	return m_translation;
 }
 
-void Position2d::setTranslation(Translation2d tran) {
+void Position2d::SetTranslation(Translation2d tran) {
 	m_translation = tran;
 }
 
-Rotation2d Position2d::getRotation() {
+Rotation2d Position2d::GetRotation() {
 	return m_rotation;
 }
 
-void Position2d::setRotation(Rotation2d rot) {
+void Position2d::SetRotation(Rotation2d rot) {
 	m_rotation = rot;
 }
 
-Position2d Position2d::transformBy(Position2d other) {
-	return Position2d(m_translation.translateBy(other.m_translation.rotateBy(m_rotation)),
-			m_rotation.rotateBy(other.m_rotation));
+Position2d Position2d::TransformBy(Position2d other) {
+	return Position2d(m_translation.TranslateBy(other.m_translation.RotateBy(m_rotation)),
+			m_rotation.RotateBy(other.m_rotation));
 }
 
-Position2d Position2d::inverse() {
-	Rotation2d invert = m_rotation.inverse();
-	return Position2d(m_translation.inverse().rotateBy(invert), invert);
+Position2d Position2d::Inverse() {
+	Rotation2d invert = m_rotation.Inverse();
+	return Position2d(m_translation.Inverse().RotateBy(invert), invert);
 }
 
-Position2d Position2d::interpolate(Position2d other, double x) {
+Position2d Position2d::Interpolate(Position2d other, double x) {
 	if (x <= 0){
 		return *this;
 	} else if (x >= 1){
 		return other;
 	}
-	return Position2d(m_translation.interpolate(other.m_translation, x),
-			m_rotation.interpolate(other.m_rotation, x));
+	return Position2d(m_translation.Interpolate(other.m_translation, x),
+			m_rotation.Interpolate(other.m_rotation, x));
 }

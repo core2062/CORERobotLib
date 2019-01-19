@@ -14,8 +14,8 @@ namespace CORE {
     class CORENamedObject: public CORETask {
     public:
         CORENamedObject();
-        string getName();
-        void robotInitTask();
+        string GetName();
+        void RobotInitTask();
     private:
         string m_name;
     };

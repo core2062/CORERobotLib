@@ -6,7 +6,7 @@ using namespace std::chrono;
 
 double CORETimer::Get() {
     if(m_started && !m_stopped) {
-        return getTime() - m_startTime;
+        return GetTime() - m_startTime;
     } else if(m_started && m_stopped) {
         return m_stopTime - m_startTime;
     }
@@ -16,7 +16,7 @@ double CORETimer::Get() {
 
 void CORETimer::Reset() {
     m_started = false;
-    m_startTime = getTime();
+    m_startTime = GetTime();
 }
 
 void CORETimer::Stop() {
@@ -24,16 +24,16 @@ void CORETimer::Stop() {
         //TODO: Log -> Error, m_timer m_stopped without starting!
     } else {
         m_stopped = true;
-        m_stopTime = getTime();
+        m_stopTime = GetTime();
     }
 }
 
 void CORETimer::Start() {
     m_started = true;
-    m_startTime = getTime();
+    m_startTime = GetTime();
 }
 
-double CORETimer::getTime() {
+double CORETimer::GetTime() {
 
     return duration_cast<microseconds>(high_resolution_clock::now().time_since_epoch()).count() / 1000000.0;
 

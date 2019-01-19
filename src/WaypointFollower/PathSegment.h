@@ -28,15 +28,15 @@ public:
 
 	PathSegment(Translation2d start, Translation2d end, Rotation2d angle, double speed);
 
-	void updateStart(Translation2d newStart);
+	void UpdateStart(Translation2d newStart);
 
-	double getSpeed();
-	Translation2d getStart();
-	Translation2d getEnd();
-	double getLength();
-	Rotation2d getAngle();
+	double GetSpeed();
+	Translation2d GetStart();
+	Translation2d GetEnd();
+	double GetLength();
+	Rotation2d GetAngle();
 
-	Translation2d interpolate(double index);
-	double dotProduct(Translation2d other);
-	ClosestPointReport getClosestPoint(Translation2d queryPoint);
+	Translation2d Interpolate(double index);
+	double DotProduct(Translation2d other);
+	ClosestPointReport GetClosestPoint(Translation2d queryPoint);
 };

@@ -4,7 +4,7 @@ using namespace CORE;
 
 COREPID::COREPID(double kP, double kI, double kD, double kF) : m_profile(kP, kI, kD, kF) {
     if(kF == 0) {
-        CORELog::logWarning("PID kF set to 0, this disables calculation!");
+        CORELog::LogWarning("PID kF set to 0, this disables calculation!");
     }
     m_mistake = 0;
     m_lastMistake = 0;
@@ -15,40 +15,40 @@ COREPID::COREPID(COREPID::PIDProfile &profile) {
     m_profile = profile;
 }
 
-void COREPID::setProportionalConstant(double kP) {
+void COREPID::SetProportionalConstant(double kP) {
     m_profile.kP = kP;
 }
 
-void COREPID::setIntegralConstant(double kI) {
+void COREPID::SetIntegralConstant(double kI) {
     m_profile.kI = kI;
 }
 
-void COREPID::setDerivativeConstant(double kD) {
+void COREPID::SetDerivativeConstant(double kD) {
     m_profile.kD = kD;
 }
 
-void COREPID::setFeedForwardConstant(double kF) {
+void COREPID::SetFeedForwardConstant(double kF) {
     m_profile.kF = kF;
 }
 
-void COREPID::setPIDProfile(PIDProfile &profile) {
+void COREPID::SetPIDProfile(PIDProfile &profile) {
     m_profile = profile;
 }
 
-double COREPID::calculate(double mistake) {
+double COREPID::Calculate(double mistake) {
     double time = m_timer.Get();
     if(time == 0) {
         m_timer.Reset();
         m_timer.Start();
         return 0;
     }
-    double output = calculate(mistake, time);
+    double output = Calculate(mistake, time);
     m_timer.Reset();
     m_timer.Start();
     return output;
 }
 
-double COREPID::calculate(double mistake, double dt) {
+double COREPID::Calculate(double mistake, double dt) {
     if(dt == 0) {
         return 0;
     }
@@ -61,35 +61,35 @@ double COREPID::calculate(double mistake, double dt) {
     return m_profile.kF * (m_proportional + m_integral + m_derivative);
 }
 
-double COREPID::getProportional() const {
+double COREPID::GetProportional() const {
     return m_proportional;
 }
 
-double COREPID::getIntegral() const {
+double COREPID::GetIntegral() const {
     return m_integral;
 }
 
-double COREPID::getDerivative() const {
+double COREPID::GetDerivative() const {
     return m_derivative;
 }
 
-double COREPID::getMistake() const {
+double COREPID::GetMistake() const {
     return m_mistake;
 }
 
-double COREPID::getProportionalConstant() {
+double COREPID::GetProportionalConstant() {
     return m_profile.kP;
 }
 
-double COREPID::getIntegralConstant() {
+double COREPID::GetIntegralConstant() {
     return m_profile.kI;
 }
 
-double COREPID::getDerivativeConstant() {
+double COREPID::GetDerivativeConstant() {
     return m_profile.kD;
 }
 
-double COREPID::getFeedForwardConstant() {
+double COREPID::GetFeedForwardConstant() {
     return m_profile.kF;
 }
 
@@ -101,12 +101,12 @@ COREPositionPID::COREPositionPID(COREPID::PIDProfile &profile) : COREPID(profile
 
 }
 
-double COREPositionPID::calculate(double actualPosition, double setPointPosition) {
-    return COREPID::calculate(setPointPosition - actualPosition);
+double COREPositionPID::Calculate(double actualPosition, double setPointPosition) {
+    return COREPID::Calculate(setPointPosition - actualPosition);
 }
 
-double COREPositionPID::calculate(double actualPosition, double setPointPosition, double dt) {
-    return COREPID::calculate(setPointPosition - actualPosition, dt);
+double COREPositionPID::Calculate(double actualPosition, double setPointPosition, double dt) {
+    return COREPID::Calculate(setPointPosition - actualPosition, dt);
 }
 
 COREAnglePID::COREAnglePID(double kP, double kI, double kD, double kF) : COREPID(kP, kI, kD, kF) {
@@ -117,10 +117,10 @@ COREAnglePID::COREAnglePID(COREPID::PIDProfile &profile) : COREPID(profile) {
 
 }
 
-double COREAnglePID::calculate(COREVector actualAngle, COREVector setPointAngle) {
-    return COREPID::calculate(actualAngle.ShortestRotationTo(setPointAngle));
+double COREAnglePID::Calculate(COREVector actualAngle, COREVector setPointAngle) {
+    return COREPID::Calculate(actualAngle.ShortestRotationTo(setPointAngle));
 }
 
-double COREAnglePID::calculate(COREVector actualAngle, COREVector setPointAngle, double dt) {
-    return COREPID::calculate(actualAngle.ShortestRotationTo(setPointAngle), dt);
+double COREAnglePID::Calculate(COREVector actualAngle, COREVector setPointAngle, double dt) {
+    return COREPID::Calculate(actualAngle.ShortestRotationTo(setPointAngle), dt);
 }

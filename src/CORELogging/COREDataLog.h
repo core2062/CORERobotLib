@@ -13,7 +13,7 @@ namespace CORE {
 
 	class ICOREDataPoint{
 	public:
-		virtual std::string getValue(){return "?";};
+		virtual std::string GetValue(){return "?";};
 		virtual ~ICOREDataPoint(){};
 	};
 
@@ -25,32 +25,32 @@ namespace CORE {
 		}
 		COREDataPoint(T * var);
 
-		std::string getValue();
-		void setValue(T val);
+		std::string GetValue();
+		void SetValue(T val);
 	private:
 		T * m_value;
 	};
 
 	template<>
-	std::string COREDataPoint<std::string>::getValue();
+	std::string COREDataPoint<std::string>::GetValue();
 
 	template<>
-	std::string COREDataPoint<bool>::getValue();
+	std::string COREDataPoint<bool>::GetValue();
 
 	template<>
-	std::string COREDataPoint<CORETimer>::getValue();
+	std::string COREDataPoint<CORETimer>::GetValue();
 
 	class CORETimeDataPoint : public ICOREDataPoint{
 	public:
-		std::string getValue() override;
+		std::string GetValue() override;
 	};
 
 	class COREDataLogger{
 	public:
 		COREDataLogger(std::initializer_list<std::string> headers);
 
-		void putData(std::initializer_list<ICOREDataPoint*> data);
-		bool save(std::string filename);
+		void PutData(std::initializer_list<ICOREDataPoint*> data);
+		bool Save(std::string filename);
 	protected:
 		std::vector<std::string> m_lines;
 	};
@@ -59,7 +59,7 @@ namespace CORE {
 	public:
 		COREContinuousLogger(std::initializer_list<std::string> headers,
 				std::initializer_list<ICOREDataPoint*> datas, int counts);
-		void postLoopTask();
+		void PostLoopTask();
 	private:
 		std::vector<ICOREDataPoint*> m_datas;
 		int m_counter;
@@ -73,27 +73,27 @@ inline CORE::COREDataPoint<T>::COREDataPoint(T* var) {
 }
 
 template<class T>
-inline std::string CORE::COREDataPoint<T>::getValue() {
+inline std::string CORE::COREDataPoint<T>::GetValue() {
 	return std::to_string(*m_value);
 }
 
 template<class T>
-inline void CORE::COREDataPoint<T>::setValue(T val) {
+inline void CORE::COREDataPoint<T>::SetValue(T val) {
 	delete m_value;
 	m_value = new T(val);
 }
 
 template<>
-inline std::string CORE::COREDataPoint<std::string>::getValue() {
+inline std::string CORE::COREDataPoint<std::string>::GetValue() {
 	return *m_value;
 }
 
 template<>
-inline std::string CORE::COREDataPoint<bool>::getValue() {
+inline std::string CORE::COREDataPoint<bool>::GetValue() {
 	return (*m_value)?"True":"False";
 }
 
 template<>
-inline std::string CORE::COREDataPoint<CORETimer>::getValue() {
+inline std::string CORE::COREDataPoint<CORETimer>::GetValue() {
 	return std::to_string(m_value->Get());
 }

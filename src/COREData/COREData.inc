@@ -13,7 +13,7 @@ namespace CORE {
         m_value = 0;
         m_name = name;
         m_showOnDriverDashboard = showOnDriverDashboard;
-        COREDataManager::addData(this);
+        COREDataManager::AddData(this);
     }
 
     template<class T>
@@ -27,7 +27,7 @@ namespace CORE {
             m_name = name;
         }
         m_showOnDriverDashboard = showOnDriverDashboard;
-        COREDataManager::addData(this);
+        COREDataManager::AddData(this);
     }
 
     template<class T>
@@ -103,12 +103,12 @@ namespace CORE {
     }
 
     template<class T>
-    void COREData<T>::setSource(T *pointerToSource) {
+    void COREData<T>::SetSource(T *pointerToSource) {
         m_pointerToSource = pointerToSource;
     }
 
     template<class T>
-    void COREData<T>::setSource(function<T()> sourceFunction) {
+    void COREData<T>::SetSource(function<T()> sourceFunction) {
         m_sourceFunction = sourceFunction;
     }
 
@@ -118,12 +118,12 @@ namespace CORE {
     }
 
     template<class T>
-    string COREData<T>::getName() {
+    string COREData<T>::GetName() {
         return m_name;
     }
 
     template<class T>
-    string COREData<T>::getJSON(bool onlyIfChanged) {
+    string COREData<T>::GetJSON(bool onlyIfChanged) {
         if(m_pointerToSource) {
             Set(*m_pointerToSource);
         } else if (m_sourceFunction) {
@@ -139,12 +139,12 @@ namespace CORE {
     }
 
     template<class T>
-    void COREData<T>::setDriverValue(bool driverValue) {
+    void COREData<T>::SetDriverValue(bool driverValue) {
         m_showOnDriverDashboard = driverValue;
     }
 
     template<class T>
-    bool COREData<T>::isDriverValue() {
+    bool COREData<T>::IsDriverValue() {
         return m_showOnDriverDashboard;
     }
 }

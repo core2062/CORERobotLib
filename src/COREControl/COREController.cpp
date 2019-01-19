@@ -10,10 +10,10 @@ double COREMotionController::Get() {
     return m_setPoint;
 }
 
-void COREMotionController::setActual(double actualPosition) {
+void COREMotionController::SetActual(double actualPosition) {
     m_actualPosition = actualPosition;
 }
 
-double COREMotionController::getActual() {
+double COREMotionController::GetActual() {
     return m_actualPosition;
 }

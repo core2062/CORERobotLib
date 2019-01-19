@@ -6,7 +6,7 @@
 #include "seasocks/Server.h"
 #include "WaypointFollower/WaypointFollower.h"
 
-using namespace std;
+//using namespace std;
 using namespace seasocks;
 
 namespace CORE {
@@ -16,7 +16,7 @@ namespace CORE {
         void onConnect(WebSocket *connection) override;
         void onData(WebSocket *webSocket, const char *string) override;
         void onDisconnect(WebSocket *connection) override;
-        static void send();
+        static void Send();
         static Path path;
     private:
 //        static set<WebSocket *> m_connections;

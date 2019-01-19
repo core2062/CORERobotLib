@@ -56,19 +56,19 @@ namespace CORE {
         };
 
         COREJoystick(int joystickNumber, JoystickType expectedJoystickType = F310_X_MODE);
-        void registerAxis(JoystickAxis axis);
-        void registerVector(JoystickAxis axisA, JoystickAxis axisB);
-        void registerButton(JoystickButton button);
-        double getAxis(JoystickAxis axis);
-        void setAxis(JoystickAxis axis, int value);
-        Vector getVector(JoystickAxis axisA, JoystickAxis axisB);
-        bool getButton(JoystickButton button);
-        void setButton(JoystickButton button, bool value);
-        bool getRisingEdge(JoystickButton button);
-        bool getFallingEdge(JoystickButton button);
-        ButtonState getButtonState(JoystickButton button);
-        int getPort();
-        void preLoopTask() override;
+        void RegisterAxis(JoystickAxis axis);
+        void RegisterVector(JoystickAxis axisA, JoystickAxis axisB);
+        void RegisterButton(JoystickButton button);
+        double GetAxis(JoystickAxis axis);
+        void SetAxis(JoystickAxis axis, int value);
+        Vector GetVector(JoystickAxis axisA, JoystickAxis axisB);
+        bool GetButton(JoystickButton button);
+        void SetButton(JoystickButton button, bool value);
+        bool GetRisingEdge(JoystickButton button);
+        bool GetFallingEdge(JoystickButton button);
+        ButtonState GetButtonState(JoystickButton button);
+        int GetPort();
+        void PreLoopTask() override;
 		frc::Joystick m_joystick;
 
 	private:
@@ -137,7 +137,7 @@ namespace CORE {
         map<JoystickAxis, double> m_axisCache;
         JoystickType m_expectedJoystickType;
         std::shared_ptr<COREJoystick> m_instance;
-        bool getPOVButton(JoystickButton button);
+        bool GetPOVButton(JoystickButton button);
     };
 
 }

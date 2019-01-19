@@ -17,23 +17,23 @@ AdaptivePursuit::AdaptivePursuit(double fixedLookahead, double maxAccel, double 
     m_gradualStop = gradualStop;
 }
 
-bool AdaptivePursuit::isDone() {
-    double remainingLength = m_path.getRemainingLength();
+bool AdaptivePursuit::IsDone() {
+    double remainingLength = m_path.GetRemainingLength();
     return (remainingLength <= m_pathCompletionTolerance);
 }
 
-Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
+Position2d::Delta AdaptivePursuit::Update(Position2d robotPos, double now) {
     Position2d pos = robotPos;
     if (m_reversed) {
-        pos = Position2d(robotPos.getTranslation(), robotPos.getRotation().rotateBy(Rotation2d::fromRadians(PI)));
+        pos = Position2d(robotPos.GetTranslation(), robotPos.GetRotation().RotateBy(Rotation2d::FromRadians(PI)));
     }
 
-    double distanceFromPath = m_path.update(pos.getTranslation());
-    if (isDone()) {
+    double distanceFromPath = m_path.Update(pos.GetTranslation());
+    if (IsDone()) {
         return {0, 0, 0};
     }
 
-    PathSegment::Sample lookaheadPoint = m_path.getLookaheadPoint(pos.getTranslation(),
+    PathSegment::Sample lookaheadPoint = m_path.GetLookaheadPoint(pos.GetTranslation(),
                                                                   distanceFromPath + m_fixedLookahead);
 
     double speed = lookaheadPoint.speed;
@@ -55,7 +55,7 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
         speed = lastSpeed + m_maxAccel * dt;
     }
 
-    double remainingDistance = m_path.getRemainingLength() - 6;
+    double remainingDistance = m_path.GetRemainingLength() - 6;
     remainingDistance = remainingDistance < 0 ? 0 : remainingDistance;
     double maxAllowedSpeed = sqrt(2 * m_maxAccel * remainingDistance);
     if (fabs(speed) > maxAllowedSpeed) {
@@ -84,9 +84,9 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
 //        double y = sin(circle.second.center.GetRadians() + PI/2) * fabs(speed);
 //        double x = cos(circle.second. center.GetRadians() + PI/2) * fabs(speed);
 
-    Translation2d move = robotPos.getTranslation().inverse().translateBy(lookaheadPoint.translation);
-    double x = move.getCos() * speed * 0.01;
-    double y = move.getSin() * speed * 0.01;
+    Translation2d move = robotPos.GetTranslation().Inverse().TranslateBy(lookaheadPoint.translation);
+    double x = move.GetCos() * speed * 0.01;
+    double y = move.GetSin() * speed * 0.01;
 
     /*double angDelta = robotPos.getRotation().inverse().rotateBy(m_path.getNextRotation()).getRadians();
     //double angSpeed = (angDelta) / dt;
@@ -105,10 +105,10 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
         angSpeed = maxAllowedAngSpeed * (angSpeed / fabs(angSpeed));
     }*/
 
-    Rotation2d setAngle = m_path.getClosestPoint(pos.getTranslation()).getRotation();
+    Rotation2d setAngle = m_path.GetClosestPoint(pos.GetTranslation()).GetRotation();
 
-    double remainingAng = COREVector::FromRadians(robotPos.getRotation().getRadians())
-            .ShortestRotationTo(COREVector::FromRadians(setAngle.getRadians()));
+    double remainingAng = COREVector::FromRadians(robotPos.GetRotation().GetRadians())
+            .ShortestRotationTo(COREVector::FromRadians(setAngle.GetRadians()));
 
     /*double angSpeed = remainingAng < 0 ? -100 : 100;
     double lastAngSpeed = m_lastCommand.dtheta * 100;
@@ -135,8 +135,8 @@ Position2d::Delta AdaptivePursuit::update(Position2d robotPos, double now) {
     return rv;
 }
 
-bool AdaptivePursuit::checkEvent(string event) {
-    return m_path.eventPassed(event);
+bool AdaptivePursuit::CheckEvent(string event) {
+    return m_path.EventPassed(event);
 }
 
 AdaptivePursuit::Circle::Circle(Translation2d cent, double rad, bool turn_right) {
@@ -145,24 +145,24 @@ AdaptivePursuit::Circle::Circle(Translation2d cent, double rad, bool turn_right)
     turnRight = turn_right;
 }
 
-pair<bool, AdaptivePursuit::Circle> AdaptivePursuit::joinPath(Position2d pos, Translation2d lookahead) {
-    double x1 = pos.getTranslation().getX();
-    double y1 = pos.getTranslation().getY();
-    double x2 = lookahead.getX();
-    double y2 = lookahead.getY();
+pair<bool, AdaptivePursuit::Circle> AdaptivePursuit::JoinPath(Position2d pos, Translation2d lookahead) {
+    double x1 = pos.GetTranslation().GetX();
+    double y1 = pos.GetTranslation().GetY();
+    double x2 = lookahead.GetX();
+    double y2 = lookahead.GetY();
 
-    Translation2d posToLookahead = pos.getTranslation().inverse().translateBy(lookahead);
+    Translation2d posToLookahead = pos.GetTranslation().Inverse().TranslateBy(lookahead);
 
-    double crossProduct = lookahead.getX() * pos.getRotation().getSin()
-                          - posToLookahead.getY() * pos.getRotation().getCos();
+    double crossProduct = lookahead.GetX() * pos.GetRotation().GetSin()
+                          - posToLookahead.GetY() * pos.GetRotation().GetCos();
     if (abs(crossProduct) < kE) {
         return {false, Circle(Translation2d(), 0, 0)};
     }
 
     double dx = x1 - x2;
     double dy = y1 - y2;
-    double my = ((crossProduct > 0) ? -1 : 1) * pos.getRotation().getCos();
-    double mx = ((crossProduct > 0) ? 1 : -1) * pos.getRotation().getSin();
+    double my = ((crossProduct > 0) ? -1 : 1) * pos.GetRotation().GetCos();
+    double mx = ((crossProduct > 0) ? 1 : -1) * pos.GetRotation().GetSin();
 
     double crossTerm = mx * dx + my * dy;
 

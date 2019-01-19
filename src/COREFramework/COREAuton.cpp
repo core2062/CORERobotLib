@@ -25,14 +25,14 @@ Node::Node(double timeout, COREAutonAction* action1, COREAutonAction* action2, C
 /*
  * Add a node to this node which will be run sequentially after this node completes all of its actions
  */
-void Node::addNext(Node* childNode) {
+void Node::AddNext(Node* childNode) {
     m_children.push_back(childNode);
 }
 
 /*
  * Add an action to this node which will be run in parallel to other actions in this node
  */
-void Node::addAction(COREAutonAction* leaf) {
+void Node::AddAction(COREAutonAction* leaf) {
     if(leaf != nullptr) {
         m_actions.push_back(leaf);
     }
@@ -50,7 +50,7 @@ void Node::addAction(COREAutonAction* leaf) {
  * This condition will be checked by the previous node while it is not complete.
  * While it is true this action will run its actions.
  */
-void Node::addCondition(function<bool()> startCondition) {
+void Node::AddCondition(function<bool()> startCondition) {
     m_startConditonGiven = true;
     m_startCondition = startCondition;
 }
@@ -58,10 +58,10 @@ void Node::addCondition(function<bool()> startCondition) {
 /*
  * Returns true if all actions are complete and all child nodes are complete or if timeout has been exceeded
  */
-bool Node::complete() {
+bool Node::Complete() {
     if(m_actions.empty()) {
         for(auto child : m_children) {
-            if(!child->complete()) {
+            if(!child->Complete()) {
                 return false;
             }
         }
@@ -74,9 +74,9 @@ bool Node::complete() {
 /*
  * Prepares node to be run
  */
-void Node::reset() {
+void Node::Reset() {
     for(auto child : m_children) {
-        child->reset();
+        child->Reset();
     }
     m_actions.clear();
     m_children.clear();
@@ -86,7 +86,7 @@ void Node::reset() {
 /*
  * Set the timeout for this node to a given duration in seconds
  */
-void Node::setTimeout(double timeout) {
+void Node::SetTimeout(double timeout) {
     m_timeout = timeout;
 }
 
@@ -95,7 +95,7 @@ void Node::setTimeout(double timeout) {
  * child node is run.
  * @param lastNodeDone If previous node is complete.
  */
-void Node::act(bool lastNodeDone) {
+void Node::Act(bool lastNodeDone) {
     bool shouldAct = (m_startConditonGiven && m_startCondition && !lastNodeDone)
                      || (!m_startConditonGiven && lastNodeDone);
     if(!m_actionsInitialized && shouldAct) {
@@ -105,14 +105,14 @@ void Node::act(bool lastNodeDone) {
         std::cout << "Timeout Timer Started" << std::endl;
 
         for(auto action : m_actions) {
-            action->actionInit();
+            action->ActionInit();
         }
         m_actionsInitialized = true;
     }
     if(!m_actions.empty() && (m_timer.Get() > m_timeout)) {
-        CORELog::logInfo("Timeout of: " + to_string(m_timeout) + " exceeded in node!");
+        CORELog::LogInfo("Timeout of: " + to_string(m_timeout) + " exceeded in node!");
         for(auto action : m_actions) {
-            action->actionEnd();
+            action->ActionEnd();
         }
         for (auto i = m_actions.begin(); i != m_actions.end(); i++){
             delete *i;
@@ -122,10 +122,10 @@ void Node::act(bool lastNodeDone) {
     if(!m_actions.empty()) {
         if(shouldAct) {
             for(unsigned int i = 0; i < m_actions.size(); i++) {
-                COREAutonAction::actionStatus status = m_actions[i]->action();
+                COREAutonAction::actionStatus status = m_actions[i]->Action();
                 switch(status) {
                     case COREAutonAction::END:
-                        m_actions[i]->actionEnd();
+                        m_actions[i]->ActionEnd();
                         //TODO: There's a memory leak here, need to fix
                         m_actions.erase(m_actions.begin() + i);
                         i--;
@@ -135,14 +135,14 @@ void Node::act(bool lastNodeDone) {
                 }
             }
             for(auto child : m_children) {
-                child->act(false);
+                child->Act(false);
             }
         } else if(m_startConditonGiven && !m_startCondition) {
             return;
         }
     } else {
     	for(auto child : m_children) {
-    		child->act(true);
+    		child->Act(true);
     	}
     }
 }
@@ -165,31 +165,31 @@ Node::~Node() {
 COREAuton::COREAuton(string name, bool defaultAuton) {
     m_name = name;
     m_defaultAuton = defaultAuton;
-    COREScheduler::addAuton(this);
+    COREScheduler::AddAuton(this);
 }
 
 /*
  * Run autonomous routine. Needs to be called each iteration.
  */
-void COREAuton::auton() {
+void COREAuton::Auton() {
     for(auto node : m_firstNode) {
-        node->act(true);
+        node->Act(true);
     }
 }
 
 /*
  * Initialize autonomous routine by resetting and adding all nodes.
  */
-void COREAuton::autonInit() {
-    reset();
-    addNodes();
+void COREAuton::AutonInit() {
+    Reset();
+    AddNodes();
 }
 
 /*
  * Put this autonomous routine to Smart Dashboard on a given SendableChooser
  */
-void COREAuton::putToDashboard(frc::SendableChooser<COREAuton*>* chooser) {
-    CORELog::logInfo("Adding autonomous: " + m_name + " to dashboard");
+void COREAuton::PutToDashboard(frc::SendableChooser<COREAuton*>* chooser) {
+    CORELog::LogInfo("Adding autonomous: " + m_name + " to dashboard");
     if(m_defaultAuton) {
         chooser->SetDefaultOption(m_name, this);
     } else {
@@ -200,9 +200,9 @@ void COREAuton::putToDashboard(frc::SendableChooser<COREAuton*>* chooser) {
 /*
  * If autonomous routine is complete
  */
-bool COREAuton::complete() {
+bool COREAuton::Complete() {
     for(auto node : m_firstNode) {
-        if(!node->complete()) {
+        if(!node->Complete()) {
             return false;
         }
     }
@@ -212,10 +212,10 @@ bool COREAuton::complete() {
 /*
  * Reset all nodes in autonomous routine
  */
-void COREAuton::reset() {
+void COREAuton::Reset() {
     for(auto node : m_firstNode) {
         if(node != nullptr) {
-            node->reset();
+            node->Reset();
         }
     }
 }
@@ -224,7 +224,7 @@ void COREAuton::reset() {
  * Add another node to be run on start of autonomous routine
  * Nullptrs will not be added as actions, they will be ignored
  */
-void COREAuton::addFirstNode(Node* firstNode) {
+void COREAuton::AddFirstNode(Node* firstNode) {
     if(firstNode != nullptr) {
         m_firstNode.push_back(firstNode);
     }
@@ -233,7 +233,7 @@ void COREAuton::addFirstNode(Node* firstNode) {
 /*
  * Returns human readable name of routine
  */
-string COREAuton::getName() {
+string COREAuton::GetName() {
     return m_name;
 }
 
@@ -254,12 +254,12 @@ WaitAction::WaitAction(double duration) {
 	m_duration = duration;
 }
 
-void WaitAction::actionInit() {
+void WaitAction::ActionInit() {
 	m_timer.Reset();
 	m_timer.Start();
 }
 
-COREAutonAction::actionStatus WaitAction::action() {
+COREAutonAction::actionStatus WaitAction::Action() {
 	if(m_timer.Get() > m_duration) {
 		return COREAutonAction::END;
 	} else {

@@ -11,31 +11,31 @@ public:
 
 	Translation2d(double x, double y);
 
-	double norm();
+	double Norm();
 
-	double getX();
+	double GetX();
 
-	double getY();
+	double GetY();
 
-	void setX(double x);
+	void SetX(double x);
 
-	void setY(double y);
+	void SetY(double y);
 
-	Translation2d translateBy(Translation2d other);
+	Translation2d TranslateBy(Translation2d other);
 
-	Translation2d rotateBy(Rotation2d rotation);
+	Translation2d RotateBy(Rotation2d rotation);
 
-	Translation2d inverse();
+	Translation2d Inverse();
 
-	Translation2d interpolate(Translation2d other, double x);
+	Translation2d Interpolate(Translation2d other, double x);
 
-	Translation2d extrapolate(Translation2d other, double x);
+	Translation2d Extrapolate(Translation2d other, double x);
 
-	Translation2d flipX();
-	Translation2d flipY();
+	Translation2d FlipX();
+	Translation2d FlipY();
 
-	double getSin();
-	double getCos();
+	double GetSin();
+	double GetCos();
 
 
 };

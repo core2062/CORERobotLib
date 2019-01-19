@@ -39,8 +39,8 @@ using namespace CORE;
 //	m_value = new T(val);
 //}
 //
-std::string CORETimeDataPoint::getValue() {
-	return std::to_string(CORETimer::getTime());
+std::string CORETimeDataPoint::GetValue() {
+	return std::to_string(CORETimer::GetTime());
 }
 
 COREDataLogger::COREDataLogger(
@@ -54,17 +54,17 @@ COREDataLogger::COREDataLogger(
 	m_lines.push_back(firstLine);
 }
 
-void COREDataLogger::putData(std::initializer_list<ICOREDataPoint*> data) {
+void COREDataLogger::PutData(std::initializer_list<ICOREDataPoint*> data) {
 	std::string newLine;
 	for (auto i : data){
-		newLine += i->getValue();
+		newLine += i->GetValue();
 		newLine += ',';
 	}
 	newLine.erase(newLine.end() - 1);
 	m_lines.push_back(newLine);
 }
 
-bool COREDataLogger::save(std::string filename) {
+bool COREDataLogger::Save(std::string filename) {
 	if(m_lines.empty()){
 		return false;
 	}
@@ -95,11 +95,11 @@ COREContinuousLogger::COREContinuousLogger(
 	m_counter = m_counterStart;
 }
 
-void COREContinuousLogger::postLoopTask() {
+void COREContinuousLogger::PostLoopTask() {
 	if(m_counter <= 0){
 		std::string newLine;
 		for (auto i : m_datas){
-			newLine += i->getValue();
+			newLine += i->GetValue();
 			newLine += ',';
 		}
 		newLine.erase(newLine.end() - 1);

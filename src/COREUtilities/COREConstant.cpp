@@ -4,17 +4,17 @@ using namespace CORE;
 
 vector<ICOREConstant*> COREConstantsManager::m_constants;
 
-void COREConstantsManager::updateConstants() {
+void COREConstantsManager::UpdateConstants() {
     for(auto constant : m_constants) {
-        constant->updateConstant();
+        constant->UpdateConstant();
     }
 }
 
-void COREConstantsManager::addConstant(ICOREConstant* instance) {
+void COREConstantsManager::AddConstant(ICOREConstant* instance) {
     m_constants.push_back(instance);
 }
 
-void COREConstantsManager::cleanUp() {
+void COREConstantsManager::CleanUp() {
 	for (auto &constant : m_constants) {
 		delete constant;
 	}

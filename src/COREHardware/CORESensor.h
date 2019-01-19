@@ -13,8 +13,8 @@ namespace CORE {
         double m_minVal = 0;
         double m_maxVal = 360;
     public:
-        void setMin(double min);
-        void setMax(double max);
-        double clamp(double input);
+        void SetMin(double min);
+        void SetMax(double max);
+        double Clamp(double input);
     };
 }

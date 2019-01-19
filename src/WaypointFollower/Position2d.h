@@ -19,20 +19,20 @@ public:
 	Position2d(Translation2d tran, Rotation2d rot);
 	Position2d(const Position2d& other);
 
-	static Position2d fromTranslation(Translation2d tran);
-	static Position2d fromRotation(Rotation2d rot);
-	static Position2d fromVelocity(Delta delta);
+	static Position2d FromTranslation(Translation2d tran);
+	static Position2d FromRotation(Rotation2d rot);
+	static Position2d FromVelocity(Delta delta);
 
-	Translation2d getTranslation();
-	void setTranslation(Translation2d tran);
-	Rotation2d getRotation();
-	void setRotation(Rotation2d rot);
+	Translation2d GetTranslation();
+	void SetTranslation(Translation2d tran);
+	Rotation2d GetRotation();
+	void SetRotation(Rotation2d rot);
 
-	Position2d transformBy(Position2d other);
+	Position2d TransformBy(Position2d other);
 
-	Position2d inverse();
+	Position2d Inverse();
 
-	Position2d interpolate(Position2d other, double x);
+	Position2d Interpolate(Position2d other, double x);
 
 
 };

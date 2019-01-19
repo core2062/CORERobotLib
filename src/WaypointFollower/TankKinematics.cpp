@@ -8,7 +8,7 @@ VelocityPair::VelocityPair(double l, double r) {
 	right = r;
 }
 
-Position2d::Delta TankKinematics::forwardKinematics(double leftDelta,
+Position2d::Delta TankKinematics::ForwardKinematics(double leftDelta,
 		double rightDelta) {
 	double linearVel = (leftDelta + rightDelta) / 2.0;
 	double deltaV = (rightDelta - leftDelta) / 2.0;
@@ -16,19 +16,19 @@ Position2d::Delta TankKinematics::forwardKinematics(double leftDelta,
 	return Position2d::Delta(linearVel, 0, deltaRot);
 }
 
-Position2d::Delta TankKinematics::forwardKinematics(double leftDelta,
+Position2d::Delta TankKinematics::ForwardKinematics(double leftDelta,
 		double rightDelta, double deltaRads) {
 	return Position2d::Delta((leftDelta + rightDelta) / 2.0, 0, deltaRads);
 }
 
-Position2d TankKinematics::integrateForwardKinematics(Position2d pos,
+Position2d TankKinematics::IntegrateForwardKinematics(Position2d pos,
 		double leftDelta, double rightDelta, Rotation2d heading) {
-	Position2d::Delta withGyro = forwardKinematics(leftDelta, rightDelta,
-			pos.getRotation().inverse().rotateBy(heading).getRadians());
-	return pos.transformBy(Position2d::fromVelocity(withGyro));
+	Position2d::Delta withGyro = ForwardKinematics(leftDelta, rightDelta,
+			pos.GetRotation().Inverse().RotateBy(heading).GetRadians());
+	return pos.TransformBy(Position2d::FromVelocity(withGyro));
 }
 
-VelocityPair TankKinematics::inverseKinematics(Position2d::Delta vel) {
+VelocityPair TankKinematics::InverseKinematics(Position2d::Delta vel) {
 	if(fabs(vel.dtheta) < kE){
 		return VelocityPair(vel.dx, vel.dx);
 	}

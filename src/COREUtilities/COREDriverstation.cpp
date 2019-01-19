@@ -7,7 +7,7 @@ COREDriverstation::gameAlliance COREDriverstation::m_alliance = COREDriverstatio
 int COREDriverstation::m_station = 0;
 bool COREDriverstation::m_isCompetition = false;
 
-void COREDriverstation::updateRobotState() {
+void COREDriverstation::UpdateRobotState() {
 #ifdef NOT_REAL
     //TODO: Get robot state from webdashboard
     m_station = -1;
@@ -37,24 +37,24 @@ void COREDriverstation::updateRobotState() {
 #endif
 }
 
-COREDriverstation::gameMode COREDriverstation::getMode(){
+COREDriverstation::gameMode COREDriverstation::GetMode(){
     return m_mode;
 }
 
-COREDriverstation::gameAlliance COREDriverstation::getAlliance() {
+COREDriverstation::gameAlliance COREDriverstation::GetAlliance() {
     return m_alliance;
 }
 
-int COREDriverstation::getStation() {
+int COREDriverstation::GetStation() {
     return m_station;
 }
 
-bool COREDriverstation::isCompetition() {
+bool COREDriverstation::IsCompetition() {
     return m_isCompetition;
 }
 
 #ifdef NOT_REAL
-void COREDriverstation::overrideRobotMode(COREDriverstation::gameMode newMode) {
+void COREDriverstation::overrideRobotMode(COREDriverstation::GameMode newMode) {
     CORELog::logWarning("Overriding game mode!");
     m_mode = newMode;
 }
@@ -65,16 +65,16 @@ void COREDriverstation::overrideAlliance(COREDriverstation::gameAlliance newAlli
 }
 #endif
 
-bool COREDriverstation::isEnabled() {
-    updateRobotState();
+bool COREDriverstation::IsEnabled() {
+    UpdateRobotState();
     return m_mode != DISABLE;
 }
 
-bool COREDriverstation::isOperatorControl() {
-    updateRobotState();
+bool COREDriverstation::IsOperatorControl() {
+    UpdateRobotState();
     return m_mode == TELEOP;
 }
 
-bool COREDriverstation::isAutonomous() {
+bool COREDriverstation::IsAutonomous() {
     return m_mode == AUTON;
 }

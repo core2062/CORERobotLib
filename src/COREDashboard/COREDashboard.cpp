@@ -2,15 +2,15 @@
 
 using namespace CORE;
 
-shared_ptr<thread> COREDashboard::m_serveThread;
+std::shared_ptr<thread> COREDashboard::m_serveThread;
 Server * COREDashboard::m_server;
 
 void COREDashboard::robotInit() {
-    m_server = new Server(make_shared<m_logger>());
+    m_server = new Server(std::make_shared<m_logger>());
 //    m_server->addWebSocketHandler("/data", make_shared<COREDataConnectionHandler>());
-    m_server->addWebSocketHandler("/path", make_shared<COREPathConnectionHandler>());
+    m_server->addWebSocketHandler("/path", std::make_shared<COREPathConnectionHandler>());
 
-    m_serveThread = make_shared<thread>([&]{m_server->serve("/home/lvuser/COREWebDashboard/www", 5810);});
+    m_serveThread = std::make_shared<thread>([&]{m_server->serve("/home/lvuser/COREWebDashboard/www", 5810);});
 }
 
 COREDashboard::~COREDashboard() {
@@ -21,14 +21,14 @@ COREDashboard::~COREDashboard() {
 
 void COREDashboard::m_logger::log(Logger::Level level, const char *message) {
     if(level == Level::SEVERE || level == Level::ERROR) {
-        CORELog::logError("COREDashboard: " + string(message));
+        CORELog::LogError("COREDashboard: " + std::string(message));
     } else if(level == Level::WARNING) {
-        CORELog::logWarning("COREDashboard: " + string(message));
+        CORELog::LogWarning("COREDashboard: " + std::string(message));
     } else if(level == Level::INFO /*|| level == Level::ACCESS || level == Level::DEBUG*/) {
-        CORELog::logInfo("COREDashboard: " + string(message));
+        CORELog::LogInfo("COREDashboard: " + std::string(message));
     }
 }
 
-void COREDashboard::postLoopTask() {
+void COREDashboard::PostLoopTask() {
 //    m_server->execute(COREDataConnectionHandler::send);
 }

@@ -20,21 +20,21 @@ namespace CORE {
         };
         explicit COREPID(double kP, double kI = 0, double kD = 0, double kF = 1);
         explicit COREPID(PIDProfile &profile);
-        void setProportionalConstant(double kP);
-        void setIntegralConstant(double kI);
-        void setDerivativeConstant(double kD);
-        void setFeedForwardConstant(double kF);
-        double getProportionalConstant();
-        double getIntegralConstant();
-        double getDerivativeConstant();
-        double getFeedForwardConstant();
-        void setPIDProfile(PIDProfile &profile);
-        virtual double calculate(double mistake);
-        virtual double calculate(double mistake, double dt);
-        double getProportional() const;
-        double getIntegral() const;
-        double getDerivative() const;
-        double getMistake() const;
+        void SetProportionalConstant(double kP);
+        void SetIntegralConstant(double kI);
+        void SetDerivativeConstant(double kD);
+        void SetFeedForwardConstant(double kF);
+        double GetProportionalConstant();
+        double GetIntegralConstant();
+        double GetDerivativeConstant();
+        double GetFeedForwardConstant();
+        void SetPIDProfile(PIDProfile &profile);
+        virtual double Calculate(double mistake);
+        virtual double Calculate(double mistake, double dt);
+        double GetProportional() const;
+        double GetIntegral() const;
+        double GetDerivative() const;
+        double GetMistake() const;
     private:
         PIDProfile m_profile;
         CORETimer m_timer;
@@ -46,15 +46,15 @@ namespace CORE {
     public:
         explicit COREPositionPID(double kP, double kI, double kD, double kF = 1);
         explicit COREPositionPID(PIDProfile &profile);
-        double calculate(double actualPosition, double setPointPosition) override;
-        double calculate(double actualPosition, double setPointPosition, double dt);
+        double Calculate(double actualPosition, double setPointPosition) override;
+        double Calculate(double actualPosition, double setPointPosition, double dt);
     };
 
     class COREAnglePID : public COREPID {
     public:
         explicit COREAnglePID(double kP, double kI, double kD, double kF = 1);
         explicit COREAnglePID(PIDProfile &profile);
-        double calculate(COREVector actualAngle, COREVector setPointAngle);
-        double calculate(COREVector actualAngle, COREVector setPointAngle, double dt);
+        double Calculate(COREVector actualAngle, COREVector setPointAngle);
+        double Calculate(COREVector actualAngle, COREVector setPointAngle, double dt);
     };
 }

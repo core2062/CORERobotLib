@@ -4,13 +4,13 @@
 using namespace CORE;
 
 CORETask::CORETask() : m_disabled(false) {
-	COREScheduler::addTask(this);
+	COREScheduler::AddTask(this);
 }
 
-void CORETask::disableTasks(bool disable) {
+void CORETask::DisableTasks(bool disable) {
 	m_disabled = disable;
 }
 
-bool CORETask::isDisabled() {
+bool CORETask::IsDisabled() {
 	return m_disabled;
 }

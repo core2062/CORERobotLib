@@ -2,15 +2,15 @@
 
 using namespace CORE;
 
-void COREContinuous::setMin(double min) {
+void COREContinuous::SetMin(double min) {
     m_minVal = min;
 }
 
-void COREContinuous::setMax(double max) {
+void COREContinuous::SetMax(double max) {
     m_maxVal = max;
 }
 
-double COREContinuous::clamp(double input) {
+double COREContinuous::Clamp(double input) {
     double output = input;
     while(output > m_maxVal) {
         output -= m_maxVal - m_minVal;

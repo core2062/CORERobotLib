@@ -4,17 +4,9 @@ plugins {
     id "edu.wpi.first.GradleRIO" version "2019.1.1"
 }
 
-apply plugin: "cpp"
-
 model {
     repositories {
         libs(PrebuiltLibraries) {
-            seasocks {
-                headers.srcDir "3rdparty/seasocks/src/main/c"
-                binaries.withType(StaticLibraryBinary) {
-                    staticLibraryFile = file("3rdparty/seasocks/Linux/arm/libseasocks.a")
-                }
-            }
             googleTest {
                 headers.srcDir "3rdparty/googletest/googletest/include"
                 binaries.withType(StaticLibraryBinary) {
@@ -44,7 +36,7 @@ model {
             }
         }
     }
-    components {
+    components { 
         CORERobotLib(NativeLibrarySpec) {
             targetPlatform wpi.platforms.roborio
             sources.cpp {

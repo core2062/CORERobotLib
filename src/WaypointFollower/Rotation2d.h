@@ -11,20 +11,20 @@ public:
 	Rotation2d(double x, double y, bool doNormalize);
 	Rotation2d(const Rotation2d& other);
 
-	static Rotation2d fromRadians(double radians);
-	static Rotation2d fromDegrees(double degrees);
+	static Rotation2d FromRadians(double radians);
+	static Rotation2d FromDegrees(double degrees);
 
-	void normalize();
+	void Normalize();
 
-	double getCos();
-	double getSin();
+	double GetCos();
+	double GetSin();
 
-	double getRadians();
-	double getDegrees();
+	double GetRadians();
+	double GetDegrees();
 
-	Rotation2d rotateBy(Rotation2d other);
-	Rotation2d inverse();
-	Rotation2d opposite();
+	Rotation2d RotateBy(Rotation2d other);
+	Rotation2d Inverse();
+	Rotation2d Opposite();
 
-	Rotation2d interpolate(Rotation2d other, double x);
+	Rotation2d Interpolate(Rotation2d other, double x);
 };

@@ -6,7 +6,7 @@
 
 #include "CORELogging/CORELog.h"
 #ifndef NOT_REAL
-#include <frc/WPILib.h>
+#include <frc/Preferences.h>
 #endif
 
 using namespace std;
@@ -17,15 +17,15 @@ namespace CORE {
     public:
         virtual ~ICOREConstant() {}
     private:
-        virtual string getName() = 0;
-        virtual void updateConstant() = 0;
+        virtual string GetName() = 0;
+        virtual void UpdateConstant() = 0;
     };
 
     class COREConstantsManager {
     public:
-        static void updateConstants();
-        static void addConstant(ICOREConstant* instance);
-        static void cleanUp();
+        static void UpdateConstants();
+        static void AddConstant(ICOREConstant* instance);
+        static void CleanUp();
     private:
         static vector<ICOREConstant*> m_constants;
         static string m_defaultConstantsFile; //TODO: Put constants to CSV file
@@ -39,8 +39,8 @@ namespace CORE {
             if(!frc::Preferences::GetInstance()->ContainsKey(m_name)) {
                 frc::Preferences::GetInstance()->PutString(m_name, "INVALID TYPE SPECIFIED FOR: " + name);
             }
-            updateConstant();
-            COREConstantsManager::addConstant(this);
+            UpdateConstant();
+            COREConstantsManager::AddConstant(this);
         }
 
         COREConstant(string name, T defaultValue) : m_value(defaultValue) {
@@ -49,7 +49,7 @@ namespace CORE {
             frc::Preferences::GetInstance()->PutString(m_name, "INVALID TYPE SPECIFIED FOR: " + name);
             m_value = defaultValue;
 #endif
-            CORELog::logError("Invalid COREConstant type specified with name: " + name);
+            CORELog::LogError("Invalid COREConstant type specified with name: " + name);
         }
 
         T Get() {
@@ -62,11 +62,11 @@ namespace CORE {
         }
 
     private:
-        string getName() {
+        string GetName() {
             return m_name;
         }
 
-        void updateConstant() {
+        void UpdateConstant() {
             m_value = "INVALID TYPE SPECIFIED";
         }
 
@@ -82,8 +82,8 @@ namespace CORE {
             if(!frc::Preferences::GetInstance()->ContainsKey(m_name)) {
                 frc::Preferences::GetInstance()->PutDouble(m_name, 0);
             }
-            updateConstant();
-            COREConstantsManager::addConstant(this);
+            UpdateConstant();
+            COREConstantsManager::AddConstant(this);
         }
 
         COREConstant(string name, double defaultValue) {
@@ -92,7 +92,7 @@ namespace CORE {
             frc::Preferences::GetInstance()->PutDouble(m_name, defaultValue);
             m_value = defaultValue;
 #endif
-            COREConstantsManager::addConstant(this);
+            COREConstantsManager::AddConstant(this);
         }
 
         double Get() {
@@ -105,11 +105,11 @@ namespace CORE {
         }
 
     private:
-        string getName() {
+        string GetName() {
             return m_name;
         }
 
-        void updateConstant() {
+        void UpdateConstant() {
 #ifndef NOT_REAL
             m_value = frc::Preferences::GetInstance()->GetDouble(m_name);
 #endif
@@ -127,8 +127,8 @@ namespace CORE {
             if(!frc::Preferences::GetInstance()->ContainsKey(m_name)) {
                 frc::Preferences::GetInstance()->PutString(m_name, "null");
             }
-            updateConstant();
-            COREConstantsManager::addConstant(this);
+            UpdateConstant();
+            COREConstantsManager::AddConstant(this);
         }
 
         COREConstant(string name, string defaultValue) {
@@ -137,7 +137,7 @@ namespace CORE {
             frc::Preferences::GetInstance()->PutString(m_name, defaultValue);
             m_value = defaultValue;
 #endif
-            COREConstantsManager::addConstant(this);
+            COREConstantsManager::AddConstant(this);
         }
 
         string Get() {
@@ -150,11 +150,11 @@ namespace CORE {
         }
 
     private:
-        string getName() {
+        string GetName() {
             return m_name;
         }
 
-        void updateConstant() {
+        void UpdateConstant() {
 #ifndef NOT_REAL
             m_value = frc::Preferences::GetInstance()->GetString(m_name);
 #endif
@@ -172,8 +172,8 @@ namespace CORE {
             if(!frc::Preferences::GetInstance()->ContainsKey(m_name)) {
                 frc::Preferences::GetInstance()->PutBoolean(m_name, false);
             }
-            updateConstant();
-            COREConstantsManager::addConstant(this);
+            UpdateConstant();
+            COREConstantsManager::AddConstant(this);
         }
 
         COREConstant(string name, bool defaultValue) {
@@ -182,7 +182,7 @@ namespace CORE {
             frc::Preferences::GetInstance()->PutBoolean(m_name, defaultValue);
             m_value = defaultValue;
 #endif
-            COREConstantsManager::addConstant(this);
+            COREConstantsManager::AddConstant(this);
         }
 
         bool Get() {
@@ -195,11 +195,11 @@ namespace CORE {
         }
 
     private:
-        string getName() {
+        string GetName() {
             return m_name;
         }
 
-        void updateConstant() {
+        void UpdateConstant() {
 #ifndef NOT_REAL
             m_value = frc::Preferences::GetInstance()->GetBoolean(m_name);
 #endif
@@ -217,8 +217,8 @@ namespace CORE {
             if(!frc::Preferences::GetInstance()->ContainsKey(m_name)) {
                 frc::Preferences::GetInstance()->PutInt(m_name, 0);
             }
-            updateConstant();
-            COREConstantsManager::addConstant(this);
+            UpdateConstant();
+            COREConstantsManager::AddConstant(this);
         }
 
         COREConstant(string name, int defaultValue) {
@@ -227,7 +227,7 @@ namespace CORE {
             frc::Preferences::GetInstance()->PutInt(m_name, defaultValue);
             m_value = defaultValue;
 #endif
-            COREConstantsManager::addConstant(this);
+            COREConstantsManager::AddConstant(this);
         }
 
         int Get() {
@@ -240,11 +240,11 @@ namespace CORE {
         }
 
     private:
-        string getName() {
+        string GetName() {
             return m_name;
         }
 
-        void updateConstant() {
+        void UpdateConstant() {
 #ifndef NOT_REAL
             m_value = frc::Preferences::GetInstance()->GetInt(m_name);
 #endif

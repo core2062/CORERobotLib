@@ -5,13 +5,13 @@ using namespace seasocks;
 
 void COREConnectionHandler::onConnect(WebSocket *connection) {
     m_connections.insert(connection);
-    CORELog::logInfo("Adding Connection");
+    CORELog::LogInfo("Adding Connection");
 }
 
 void COREConnectionHandler::onData(WebSocket *webSocket, const char *data) {
-    if(string(data) == "debug") {
+    if(std::string(data) == "debug") {
         webSocket->send("This is debug data!");
-    } else if(string(data) == "driver") {
+    } else if(std::string(data) == "driver") {
         webSocket->send("This is driver data!");
     }
 }

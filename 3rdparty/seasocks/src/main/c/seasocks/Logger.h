@@ -24,7 +24,7 @@
 // POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
-
+#undef DEBUG
 namespace seasocks {
 #undef DEBUG
 /**

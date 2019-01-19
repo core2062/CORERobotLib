@@ -7,7 +7,7 @@ using namespace CORE;
  * Get a human readable version of the name of this object. Needs to be set in update name first
  * @return Human readable object name
  */
-string CORE::CORENamedObject::getName() {
+string CORE::CORENamedObject::GetName() {
     return m_name;
 }
 
@@ -22,7 +22,7 @@ CORENamedObject::CORENamedObject() {
  * More info: https://stackoverflow.com/a/10896310
  */
 
-void CORE::CORENamedObject::robotInitTask() {
+void CORE::CORENamedObject::RobotInitTask() {
     m_name = typeid(*this).name();
 #ifdef __GNUG__
         int status;

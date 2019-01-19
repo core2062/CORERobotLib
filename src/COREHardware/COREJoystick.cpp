@@ -1,9 +1,9 @@
 #include "COREJoystick.h"
-//#include "COREFramework/CORERobot.h"
+#include "COREFramework/CORERobot.h"
 
 using namespace CORE;
 
-bool COREJoystick::getPOVButton(JoystickButton button) {
+bool COREJoystick::GetPOVButton(JoystickButton button) {
 	switch(m_joystick.GetPOV()) {
 	case 0:
 		return button == DPAD_N;
@@ -59,22 +59,22 @@ COREJoystick::COREJoystick(int port, JoystickType expectedJoystickType) :
 /*
  * Register a joystick axis to be used. Must be called before a joystick axis can be used.
  */
-void COREJoystick::registerAxis(JoystickAxis axis) {
+void COREJoystick::RegisterAxis(JoystickAxis axis) {
     m_axisCache[axis] = m_joystick.GetRawAxis(axis);
 }
 
 /*
  * Register a joystick axis to be used. Must be called before a joystick vector can be used.
  */
-void COREJoystick::registerVector(JoystickAxis axisA, JoystickAxis axisB) {
-    registerAxis(axisA);
-    registerAxis(axisB);
+void COREJoystick::RegisterVector(JoystickAxis axisA, JoystickAxis axisB) {
+    RegisterAxis(axisA);
+    RegisterAxis(axisB);
 }
 
 /*
  * Register a joystick button to be used. Must be called before a joystick button can be used.
  */
-void COREJoystick::registerButton(JoystickButton button) {
+void COREJoystick::RegisterButton(JoystickButton button) {
     if (button == JoystickButton::RIGHT_TRIGGER) {
         m_buttonCache[button] = abs(m_joystick.GetRawAxis(JoystickAxis::RIGHT_TRIGGER_AXIS)) > 0 ? ON : OFF;
     } else if (button == JoystickButton::LEFT_TRIGGER) {
@@ -82,16 +82,16 @@ void COREJoystick::registerButton(JoystickButton button) {
     } else if(button > -1){
 		m_buttonCache[button] = (m_joystick.GetRawButton(button)) ? ON : OFF;
 	} else {
-		m_buttonCache[button] = (getPOVButton(button)) ? ON : OFF;
+		m_buttonCache[button] = (GetPOVButton(button)) ? ON : OFF;
 	}
 }
 
 /*
  * Get an axis from the cache
  */
-double COREJoystick::getAxis(JoystickAxis axis) {
+double COREJoystick::GetAxis(JoystickAxis axis) {
     if(m_axisCache.find(axis) == m_axisCache.end()) {
-        registerAxis(axis);
+        RegisterAxis(axis);
         return m_joystick.GetRawAxis(axis);
     } else {
         return m_axisCache[axis];
@@ -101,27 +101,27 @@ double COREJoystick::getAxis(JoystickAxis axis) {
 /*
  * Set an axis manually to a given value, from -1 to 1
  */
-void COREJoystick::setAxis(JoystickAxis axis, int value) {
+void COREJoystick::SetAxis(JoystickAxis axis, int value) {
     m_axisCache[axis] = value;
 }
 
 /*
  * Get a vector of two axises from the cache
  */
-Vector COREJoystick::getVector(JoystickAxis axisA, JoystickAxis axisB) {
+Vector COREJoystick::GetVector(JoystickAxis axisA, JoystickAxis axisB) {
     Vector output;
-    output.x = getAxis(axisA);
-    output.y = -getAxis(axisB);
+    output.x = GetAxis(axisA);
+    output.y = -GetAxis(axisB);
     return output;
 }
 
 /*
  * Get if a given button is pressed
  */
-bool COREJoystick::getButton(JoystickButton button) {
+bool COREJoystick::GetButton(JoystickButton button) {
     if(m_buttonCache.find(button) == m_buttonCache.end()) {
-        registerButton(button);
-        return getButton(button);
+        RegisterButton(button);
+        return GetButton(button);
     } else {
         return (m_buttonCache[button] == RISING_EDGE || m_buttonCache[button] == ON);
     }
@@ -130,7 +130,7 @@ bool COREJoystick::getButton(JoystickButton button) {
 /*
  * Set an button manually to a given value
  */
-void COREJoystick::setButton(JoystickButton button, bool value) {
+void COREJoystick::SetButton(JoystickButton button, bool value) {
     m_buttonCache[button] = (value ? ON : OFF);
 }
 
@@ -138,7 +138,7 @@ void COREJoystick::setButton(JoystickButton button, bool value) {
  * Get if a given button is on its rising edge.
  * Rising edge means that last time the button was checked it was not pressed but now it is pressed
  */
-bool COREJoystick::getRisingEdge(JoystickButton button) {
+bool COREJoystick::GetRisingEdge(JoystickButton button) {
     return m_buttonCache[button] == RISING_EDGE;
 }
 
@@ -146,18 +146,18 @@ bool COREJoystick::getRisingEdge(JoystickButton button) {
  * Get if a given button is on its falling edge.
  * Falling edge means that last time the button was checked it was pressed but now it is not pressed
  */
-bool COREJoystick::getFallingEdge(JoystickButton button) {
+bool COREJoystick::GetFallingEdge(JoystickButton button) {
     return m_buttonCache[button] == FALLING_EDGE;
 }
 
 /*
  * Get a given button's state
  */
-COREJoystick::ButtonState COREJoystick::getButtonState(JoystickButton button) {
+COREJoystick::ButtonState COREJoystick::GetButtonState(JoystickButton button) {
     if(m_buttonCache.find(button) == m_buttonCache.end()) {
-        CORELog::logWarning("Joystick " + to_string(getPort()) + " button " + to_string(button)
+        CORELog::LogWarning("Joystick " + to_string(GetPort()) + " button " + to_string(button)
                             + " not registered, registering and returning current state");
-        registerButton(button);
+        RegisterButton(button);
         return m_joystick.GetRawButton(button) ? ON : OFF;
     } else {
         return m_buttonCache[button];
@@ -167,14 +167,14 @@ COREJoystick::ButtonState COREJoystick::getButtonState(JoystickButton button) {
 /*
  * Get this joystick's port
  */
-int COREJoystick::getPort() {
+int COREJoystick::GetPort() {
     return m_joystickPort;
 }
 
 /*
  * Update button cache before user code is run
  */
-void COREJoystick::preLoopTask() {
+void COREJoystick::PreLoopTask() {
     m_lastButtonCache = m_buttonCache;
     for(auto button : m_buttonCache) {
         bool isActive;
@@ -190,7 +190,7 @@ void COREJoystick::preLoopTask() {
         } else if (button.first > -1) {
             isActive = m_joystick.GetRawButton(button.first);
         } else {
-    		isActive = getPOVButton(button.first);
+    		isActive = GetPOVButton(button.first);
     	}
     	if(m_lastButtonCache[button.first] == FALLING_EDGE || m_lastButtonCache[button.first] == OFF) {
 			if(isActive) {

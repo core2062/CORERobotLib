@@ -13,7 +13,7 @@
 #include <string>
 
 using namespace seasocks;
-using namespace std;
+//using namespace std;
 
 namespace CORE {
     class COREDashboard : public CORETask {
@@ -22,11 +22,11 @@ namespace CORE {
         public:
             void log(Level level, const char *message) override;
         };
-        static shared_ptr<thread> m_serveThread;
+        static std::shared_ptr<thread> m_serveThread;
         static Server * m_server;
     public:
         static void robotInit();
-        void postLoopTask() override;
+        void PostLoopTask() override;
         ~COREDashboard();
     };
 }
