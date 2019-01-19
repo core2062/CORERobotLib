@@ -48,11 +48,6 @@ double CORESwerve::SwerveModule::GetAngle(bool raw) {
     if(!raw) {
         angle -= m_angleOffset;
     }
-//    if(angle < 0) {
-//        angle += 360;
-//    } else if (angle > 360) {
-//        angle -= 360;
-//    }
     return angle;
 }
 
@@ -91,7 +86,6 @@ void CORESwerve::SwerveModule::Drive(COREVector vector, double dt) {
     } else {
         steerMotorOutput = m_anglePIDController.Calculate(COREVector::FromCompassDegrees(GetAngle()), vector, dt);
     }
-    //TODO check percent output
     m_steerMotor->Set(ControlMode::PercentOutput, steerMotorOutput);
     m_driveMotor->Set(ControlMode::PercentOutput, vector.GetMagnitude());
 }

@@ -1,5 +1,5 @@
 #include "COREJoystick.h"
-//#include "COREFramework/CORERobot.h"
+#include "COREFramework/CORERobot.h"
 
 using namespace CORE;
 

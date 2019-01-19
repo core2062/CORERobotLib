@@ -3,7 +3,7 @@
 #include "COREUtilities/CORETimer.h"
 #include <memory>
 
-using namespace std;
+//using namespace std;
 
 /*#include "COREControl/COREPID.h"
 #include "COREControl/COREPositionPID.h"
@@ -61,8 +61,8 @@ namespace CORE {
         virtual double GetActual();
         virtual ~COREMotionController() {}
     protected:
-        shared_ptr<ControllerInput> m_inputDevice;
-        shared_ptr<ControllerOutput> m_outputDevice;
+        std::shared_ptr<ControllerInput> m_inputDevice;
+        std::shared_ptr<ControllerOutput> m_outputDevice;
         double m_actualPosition = 0;
         double m_setPoint = 0;
     };

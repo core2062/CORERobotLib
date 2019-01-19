@@ -4,7 +4,7 @@
 
 #include "COREFramework/COREScheduler.h"
 #include "COREUtilities/CORETimer.h"
-//#include "COREDashboard/COREDriverstation.h"
+#include "COREDashboard/COREDriverstation.h"
 #include "CORELogging/CORELog.h"
 #include "COREFramework/COREHardwareManager.h"
 

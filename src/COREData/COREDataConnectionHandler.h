@@ -6,7 +6,7 @@
 #include "json.hpp"
 #include "seasocks/Server.h"
 
-using namespace std;
+//using namespace std;
 using namespace seasocks;
 
 namespace CORE {

@@ -13,7 +13,7 @@
 #include "CORELogging/CORELog.h"
 #include "COREUtilities/CORENamedObject.h"
 #include "COREHardware/COREJoystick.h"
-// #include "COREDashboard/COREDashboard.h"
+#include "COREDashboard/COREDashboard.h"
 
 using namespace std;
 using namespace std::placeholders;

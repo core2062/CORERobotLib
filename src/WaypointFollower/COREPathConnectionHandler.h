@@ -6,7 +6,7 @@
 #include "seasocks/Server.h"
 #include "WaypointFollower/WaypointFollower.h"
 
-using namespace std;
+//using namespace std;
 using namespace seasocks;
 
 namespace CORE {

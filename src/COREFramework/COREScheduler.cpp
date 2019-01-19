@@ -1,5 +1,5 @@
 #include "COREScheduler.h"
-//#include "COREAuton.h"
+#include "COREAuton.h"
 
 using namespace CORE;
 using namespace std;

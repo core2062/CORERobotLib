@@ -1,6 +1,8 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
     "files.associations": {
-        "*.inc": "cpp"
+        "*.inc": "cpp",
+        "thread": "cpp",
+        "bitset": "cpp"
     }
 }
