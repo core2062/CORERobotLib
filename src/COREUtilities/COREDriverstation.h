@@ -3,7 +3,7 @@
 #include "CORELogging/CORELog.h"
 
 #ifndef NOT_REAL
-#include "WPILib.h"
+#include "frc/WPILib.h"
 #endif
 
 namespace CORE {

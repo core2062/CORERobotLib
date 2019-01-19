@@ -1,4 +1,5 @@
 #include "COREAuton.h"
+#include "frc/WPILib.h"
 
 using namespace CORE;
 using namespace std;
@@ -187,12 +188,12 @@ void COREAuton::autonInit() {
 /*
  * Put this autonomous routine to Smart Dashboard on a given SendableChooser
  */
-void COREAuton::putToDashboard(SendableChooser<COREAuton*>* chooser) {
+void COREAuton::putToDashboard(frc::SendableChooser<COREAuton*>* chooser) {
     CORELog::logInfo("Adding autonomous: " + m_name + " to dashboard");
     if(m_defaultAuton) {
-        chooser->AddDefault(m_name, this);
+        chooser->SetDefaultOption(m_name, this);
     } else {
-        chooser->AddObject(m_name, this);
+        chooser->SetDefaultOption(m_name, this);
     }
 }
 

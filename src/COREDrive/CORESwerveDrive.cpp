@@ -1,7 +1,7 @@
 #include "CORESwerveDrive.h"
 #include "COREControl/COREPID.h"
 #include "COREUtilities/COREMath.h"
-#include "WPILib.h"
+#include "frc/WPILib.h"
 #include "ctre/Phoenix.h"
 
 using namespace CORE;
@@ -204,24 +204,24 @@ Position2d CORESwerve::forwardKinematics() {
 	//Adds the up all of the vector of each of the modules to get a total vector
 
 	COREVector frontLeft = m_frontLeftModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
-    SmartDashboard::PutNumber("Front Left X: ", frontLeft.GetX());
-    SmartDashboard::PutNumber("Front Left Y: ", frontLeft.GetY());
-    SmartDashboard::PutNumber("Front Left Encoder: ", m_frontLeftModule->getEncoder());
+    frc::SmartDashboard::PutNumber("Front Left X: ", frontLeft.GetX());
+    frc::SmartDashboard::PutNumber("Front Left Y: ", frontLeft.GetY());
+    frc::SmartDashboard::PutNumber("Front Left Encoder: ", m_frontLeftModule->getEncoder());
 
 	COREVector frontRight = m_frontRightModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
-    SmartDashboard::PutNumber("Front Right X: ", frontRight.GetX());
-    SmartDashboard::PutNumber("Front Right Y: ", frontRight.GetY());
-    SmartDashboard::PutNumber("Front Right Encoder: ", m_frontRightModule->getEncoder());
+    frc::SmartDashboard::PutNumber("Front Right X: ", frontRight.GetX());
+    frc::SmartDashboard::PutNumber("Front Right Y: ", frontRight.GetY());
+    frc::SmartDashboard::PutNumber("Front Right Encoder: ", m_frontRightModule->getEncoder());
 
 	COREVector backLeft = m_backLeftModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
-    SmartDashboard::PutNumber("Back Left X: ", backLeft.GetX());
-    SmartDashboard::PutNumber("Back Left Y: ", backLeft.GetY());
-    SmartDashboard::PutNumber("Back Left Encoder: ", m_backLeftModule->getEncoder());
+    frc::SmartDashboard::PutNumber("Back Left X: ", backLeft.GetX());
+    frc::SmartDashboard::PutNumber("Back Left Y: ", backLeft.GetY());
+    frc::SmartDashboard::PutNumber("Back Left Encoder: ", m_backLeftModule->getEncoder());
 
 	COREVector backRight = m_backRightModule->forwardKinematics(m_wheelCircumference, m_ticksToRotation);
-    SmartDashboard::PutNumber("Back Right X: ", backRight.GetX());
-    SmartDashboard::PutNumber("Back Right Y: ", backRight.GetY());
-    SmartDashboard::PutNumber("Back Right Encoder: ", m_backRightModule->getEncoder());
+    frc::SmartDashboard::PutNumber("Back Right X: ", backRight.GetX());
+    frc::SmartDashboard::PutNumber("Back Right Y: ", backRight.GetY());
+    frc::SmartDashboard::PutNumber("Back Right Encoder: ", m_backRightModule->getEncoder());
 
     double backX = (backLeft.GetX() + backRight.GetX()) / 2.0;
     double frontX = (frontLeft.GetX() + frontRight.GetX()) / 2.0;

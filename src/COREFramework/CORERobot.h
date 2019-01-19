@@ -9,14 +9,14 @@
 #include "COREFramework/COREHardwareManager.h"
 
 #ifndef NOT_REAL
-#include <WPILib.h>
+#include <frc/WPILib.h>
 #endif
 
 
 namespace CORE {
     class CORERobot : public CORESubsystem
 #ifndef NOT_REAL
-		      , public TimedRobot
+		      , public frc::TimedRobot
 #endif
 		      {
     public:

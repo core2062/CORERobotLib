@@ -81,7 +81,7 @@ namespace CORE {
 	private:
 		static vector<COREAuton*> m_autons;
 		static vector<CORETask*> m_tasks;
-		static SendableChooser<COREAuton*>* m_autonChooser;
+		static frc::SendableChooser<COREAuton*>* m_autonChooser;
 		static vector<CORESubsystem*> m_subsystems;
 		static COREAuton* m_selectedAuton;
 		static CORETimer m_autonTimer;

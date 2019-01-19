@@ -26,7 +26,7 @@
 #pragma once
 
 namespace seasocks {
-
+#undef DEBUG
 /**
  * Class to send debug logging information to.
  */

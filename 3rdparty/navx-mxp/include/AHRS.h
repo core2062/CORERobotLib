@@ -8,7 +8,7 @@
 #ifndef SRC_AHRS_H_
 #define SRC_AHRS_H_
 
-#include "WPILib.h"
+#include "frc/WPILib.h"
 #include "ITimestampedDataSubscriber.h"
 #include "networktables/NetworkTableEntry.h"
 #include <thread>

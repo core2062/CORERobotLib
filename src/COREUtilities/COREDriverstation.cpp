@@ -13,27 +13,27 @@ void COREDriverstation::updateRobotState() {
     m_station = -1;
     m_isCompetition = false;
 #else
-    if(DriverStation::GetInstance().IsDisabled()) {
+    if(frc::DriverStation::GetInstance().IsDisabled()) {
         m_mode = DISABLE;
-    } else if(DriverStation::GetInstance().IsAutonomous()) {
+    } else if(frc::DriverStation::GetInstance().IsAutonomous()) {
         m_mode = AUTON;
-    } else if(DriverStation::GetInstance().IsOperatorControl()) {
+    } else if(frc::DriverStation::GetInstance().IsOperatorControl()) {
         m_mode = TELEOP;
-    } else if(DriverStation::GetInstance().IsTest()) {
+    } else if(frc::DriverStation::GetInstance().IsTest()) {
         m_mode = TEST;
     } else {
         m_mode = DISABLE;
     }
 
-    if(DriverStation::GetInstance().GetAlliance() == DriverStation::kRed) {
+    if(frc::DriverStation::GetInstance().GetAlliance() == frc::DriverStation::kRed) {
         m_alliance = RED;
-    } else if(DriverStation::GetInstance().GetAlliance() == DriverStation::kBlue) {
+    } else if(frc::DriverStation::GetInstance().GetAlliance() == frc::DriverStation::kBlue) {
         m_alliance = BLUE;
-    } else if(DriverStation::GetInstance().GetAlliance() == DriverStation::kInvalid) {
+    } else if(frc::DriverStation::GetInstance().GetAlliance() == frc::DriverStation::kInvalid) {
         m_alliance = INVALID;
     }
-    m_station = DriverStation::GetInstance().GetLocation();
-    m_isCompetition = DriverStation::GetInstance().IsFMSAttached();
+    m_station = frc::DriverStation::GetInstance().GetLocation();
+    m_isCompetition = frc::DriverStation::GetInstance().IsFMSAttached();
 #endif
 }
 

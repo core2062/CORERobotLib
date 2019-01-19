@@ -2,7 +2,7 @@
 #include "gmock/gmock.h"
 
 #include "COREDrive/CORESwerveDrive.h"
-#include "wpilib.h"
+#include "frc/wpilib.h"
 #include "ctre/Phoenix.h"
 
 using namespace testing;
