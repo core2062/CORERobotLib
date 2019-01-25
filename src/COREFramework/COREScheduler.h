@@ -28,9 +28,9 @@ namespace CORE {
 		CORESubsystem();
 		virtual ~CORESubsystem() {}
 
-		virtual void RobotInit() = 0;
-		virtual void TeleopInit() = 0;
-		virtual void TestInit() {}
+		virtual void robotInit() = 0;
+		virtual void teleopInit() = 0;
+		virtual void testInit() {}
 		virtual void Teleop() = 0;
 		virtual void TeleopEnd() {}
 		virtual void Test() {}
@@ -66,8 +66,8 @@ namespace CORE {
 		COREVariableControlledSubsystem();
 		virtual ~COREVariableControlledSubsystem() {}
 
-		virtual void RobotInit() = 0;
-		virtual void TeleopInit() = 0;
+		virtual void robotInit() = 0;
+		virtual void teleopInit() = 0;
 		virtual void Teleop() override;
 		virtual void TeleopEnd() {}
 		virtual void Test() {}
@@ -94,13 +94,13 @@ namespace CORE {
 		static void AddAuton(COREAuton * auton);
 		static void AddTask(CORETask* task);
 
-		static void RobotInit();
+		static void robotInit();
 		static void Disabled();
 		static void AutonInit();
 		static bool Auton();
-		static void TeleopInit();
+		static void teleopInit();
 		static void Teleop();
-		static void TestInit();
+		static void testInit();
 		static void Test();
 		static void Log();
 		static void CleanUp();

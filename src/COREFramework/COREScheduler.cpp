@@ -59,8 +59,8 @@ void COREScheduler::AddTask(CORETask* task) {
 	m_tasks.push_back(task);
 }
 
-void COREScheduler::RobotInit() {
-	CORELog::RobotInit();
+void COREScheduler::robotInit() {
+	CORELog::robotInit();
 	COREConstantsManager::UpdateConstants();
 	// COREDashboard::robotInit();
 	m_driverJoystick = new COREJoystick(0);
@@ -74,7 +74,7 @@ void COREScheduler::RobotInit() {
 	for (auto subsystem : m_subsystems) {
 		subsystem->driverJoystick = m_driverJoystick;
 		subsystem->operatorJoystick = m_operatorJoystick;
-		subsystem->RobotInit();
+		subsystem->robotInit();
 	}
 	for (auto task : m_tasks) {
 		if (!task->IsDisabled()) {
@@ -147,11 +147,11 @@ bool COREScheduler::Auton() {
 	}
 }
 
-void COREScheduler::TeleopInit() {
-	CORELog::TeleopInit();
+void COREScheduler::teleopInit() {
+	CORELog::teleopInit();
 	COREConstantsManager::UpdateConstants();
 	for (auto subsystem : m_subsystems) {
-		subsystem->TeleopInit();
+		subsystem->teleopInit();
 	}
 	for (auto task : m_tasks) {
 		if (!task->IsDisabled()) {
@@ -176,11 +176,11 @@ void COREScheduler::Teleop() {
 	}
 }
 
-void COREScheduler::TestInit() {
-	CORELog::TestInit();
+void COREScheduler::testInit() {
+	CORELog::testInit();
 	COREConstantsManager::UpdateConstants();
 	for (auto subsystem : m_subsystems) {
-		subsystem->TestInit();
+		subsystem->testInit();
 	}
 	for (auto task : m_tasks) {
 		if (!task->IsDisabled()) {

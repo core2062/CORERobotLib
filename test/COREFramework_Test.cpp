@@ -29,5 +29,5 @@ TEST(COREFramework, GameStateCorrectlyTransitions) {
     };
     Robot testRobot;
     CORELog::logInfo("Robot Finished Init");
-    testRobot.RobotInit();
+    testRobot.robotInit();
 }

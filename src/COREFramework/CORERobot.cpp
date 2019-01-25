@@ -13,7 +13,7 @@ CORERobot::~CORERobot() {
 
 void CORERobot::RobotInit() {
 	COREDriverstation::UpdateRobotState();
-	COREScheduler::RobotInit();
+	COREScheduler::robotInit();
 }
 
 void CORERobot::RobotPeriodic() {
@@ -42,7 +42,7 @@ void CORERobot::AutonomousPeriodic() {
 
 void CORERobot::TeleopInit() {
 	COREDriverstation::UpdateRobotState();
-	COREScheduler::TeleopInit();
+	COREScheduler::teleopInit();
 }
 
 void CORERobot::TeleopPeriodic() {
@@ -51,7 +51,7 @@ void CORERobot::TeleopPeriodic() {
 
 void CORERobot::TestInit() {
 	COREDriverstation::UpdateRobotState();
-	COREScheduler::TestInit();
+	COREScheduler::testInit();
 }
 
 void CORERobot::TestPeriodic() {
