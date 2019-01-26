@@ -170,7 +170,7 @@ void CORELog::testInit() {
     m_matchTimer.Start();
 }
 
-void CORELog::Disabled() {
+void CORELog::disabled() {
     WriteLastDuration();
     m_matchTimer.Reset();
     m_matchTimer.Start();

@@ -14,7 +14,7 @@ COREController::COREController() : CORETask() {
 COREVariableControlledSubsystem::COREVariableControlledSubsystem() {
 }
 
-void COREVariableControlledSubsystem::Teleop() {
+void COREVariableControlledSubsystem::teleop() {
 	if (m_currentController != nullptr) {
 		//if(m_currentController->isEnabled()){
 			m_currentController->EnabledLoop();
@@ -89,13 +89,13 @@ void COREScheduler::robotInit() {
     frc::SmartDashboard::PutData("Autonomous", m_autonChooser);
 }
 
-void COREScheduler::Disabled() {
-	CORELog::Disabled();
+void COREScheduler::disabled() {
+	CORELog::disabled();
 	for (auto task : m_tasks) {
 		task->DisabledTask();
 	}
 	for (auto subsystem : m_subsystems) {
-		subsystem->Disabled();
+		subsystem->disabled();
 	}
 	COREHardwareManager::ZeroMotors();
 }
@@ -160,14 +160,14 @@ void COREScheduler::teleopInit() {
 	}
 }
 
-void COREScheduler::Teleop() {
+void COREScheduler::teleop() {
 	for (auto task : m_tasks) {
 		if (!task->IsDisabled()) {
 			task->PreLoopTask();
 		}
 	}
 	for (auto subsystem : m_subsystems) {
-		subsystem->Teleop();
+		subsystem->teleop();
 	}
 	for (auto task : m_tasks) {
 		if (!task->IsDisabled()) {
@@ -189,14 +189,14 @@ void COREScheduler::testInit() {
 	}
 }
 
-void COREScheduler::Test() {
+void COREScheduler::test() {
 	for (auto task : m_tasks) {
 		if (!task->IsDisabled()) {
 			task->TestTask();
 		}
 	}
 	for (auto subsystem : m_subsystems) {
-		subsystem->Test();
+		subsystem->test();
 	}
 }
 
@@ -217,8 +217,8 @@ void COREScheduler::CleanUp() {
 	m_subsystems.clear();
 	COREConstantsManager::CleanUp();
 }
-void COREScheduler::Log() {
+void COREScheduler::log() {
 	for (auto subsystem : m_subsystems) {
-		subsystem->Log();
+		subsystem->log();
 	}
 }

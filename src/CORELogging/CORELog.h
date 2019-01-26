@@ -41,7 +41,7 @@ namespace CORE {
         static void teleopInit();
         static void testInit();
 
-        static void Disabled();
+        static void disabled();
         static void SetConsoleLoggingLevel(loggingLevel level);
             private:
         static void WriteLastDuration();

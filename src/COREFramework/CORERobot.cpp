@@ -17,12 +17,12 @@ void CORERobot::RobotInit() {
 }
 
 void CORERobot::RobotPeriodic() {
-	COREScheduler::Log();
+	COREScheduler::log();
 }
 
 void CORERobot::DisabledInit() {
 	COREDriverstation::UpdateRobotState();
-	COREScheduler::Disabled();
+	COREScheduler::disabled();
 }
 
 void CORERobot::DisabledPeriodic() {
@@ -46,7 +46,7 @@ void CORERobot::TeleopInit() {
 }
 
 void CORERobot::TeleopPeriodic() {
-	COREScheduler::Teleop();
+	COREScheduler::teleop();
 }
 
 void CORERobot::TestInit() {
@@ -55,5 +55,5 @@ void CORERobot::TestInit() {
 }
 
 void CORERobot::TestPeriodic() {
-	COREScheduler::Test();
+	COREScheduler::test();
 }
