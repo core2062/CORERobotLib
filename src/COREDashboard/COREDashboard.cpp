@@ -20,11 +20,11 @@ COREDashboard::~COREDashboard() {
 }
 
 void COREDashboard::m_logger::log(Logger::Level level, const char *message) {
-    if(level == Level::SEVERE || level == Level::ERROR) {
+    if(level == Level::Severe || level == Level::Error) {
         CORELog::LogError("COREDashboard: " + std::string(message));
-    } else if(level == Level::WARNING) {
+    } else if(level == Level::Warning) {
         CORELog::LogWarning("COREDashboard: " + std::string(message));
-    } else if(level == Level::INFO /*|| level == Level::ACCESS || level == Level::DEBUG*/) {
+    } else if(level == Level::Info /*|| level == Level::ACCESS || level == Level::DEBUG*/) {
         CORELog::LogInfo("COREDashboard: " + std::string(message));
     }
 }

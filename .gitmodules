@@ -1,0 +1,3 @@
+[submodule "3rdparty/seasocks"]
+	path = 3rdparty/seasocks
+	url = https://github.com/mattgodbolt/seasocks
