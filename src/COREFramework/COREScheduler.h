@@ -31,11 +31,11 @@ namespace CORE {
 		virtual void robotInit() = 0;
 		virtual void teleopInit() = 0;
 		virtual void testInit() {}
-		virtual void Teleop() = 0;
-		virtual void TeleopEnd() {}
-		virtual void Test() {}
-		virtual void Disabled() {}
-		virtual void Log() {}
+		virtual void teleop() = 0;
+		virtual void teleopEnd() {}
+		virtual void test() {}
+		virtual void disabled() {}
+		virtual void log() {}
 
 		COREJoystick* driverJoystick;
 		COREJoystick* operatorJoystick;
@@ -68,10 +68,10 @@ namespace CORE {
 
 		virtual void robotInit() = 0;
 		virtual void teleopInit() = 0;
-		virtual void Teleop() override;
-		virtual void TeleopEnd() {}
-		virtual void Test() {}
-		virtual void Disabled() {}
+		virtual void teleop() override;
+		virtual void teleopEnd() {}
+		virtual void test() {}
+		virtual void disabled() {}
 		bool SetController(COREController * controller);
 
 	protected:
@@ -95,14 +95,14 @@ namespace CORE {
 		static void AddTask(CORETask* task);
 
 		static void robotInit();
-		static void Disabled();
+		static void disabled();
 		static void AutonInit();
 		static bool Auton();
 		static void teleopInit();
-		static void Teleop();
+		static void teleop();
 		static void testInit();
-		static void Test();
-		static void Log();
+		static void test();
+		static void log();
 		static void CleanUp();
 	};
 }
