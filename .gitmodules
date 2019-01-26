@@ -7,3 +7,6 @@
 [submodule "3rdparty/navxmxp"]
 	path = 3rdparty/navxmxp
 	url = https://github.com/kauailabs/navxmxp
+[submodule "3rdparty/googletest"]
+	path = 3rdparty/googletest
+	url = https://github.com/google/googletest
