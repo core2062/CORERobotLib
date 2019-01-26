@@ -4,3 +4,6 @@
 [submodule "3rdparty/zlib"]
 	path = 3rdparty/zlib
 	url = https://github.com/madler/zlib
+[submodule "3rdparty/navxmxp"]
+	path = 3rdparty/navxmxp
+	url = https://github.com/kauailabs/navxmxp
