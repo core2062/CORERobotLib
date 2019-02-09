@@ -32,7 +32,8 @@
 #include "COREUtilities/COREMath.h"
 #include "COREUtilities/CORENamedObject.h"
 #include "COREUtilities/CORETimer.h"
-#include "WaypointFollower/WaypointFollower.h"
+#include "WaypointFollower/SwerveWaypointFollower.h"
+#include "WaypointFollower/TankWaypointFollower.h"
 
 //#include "COREUtilities/Position2d.h"
 #include "COREUtilities/COREVector.h"

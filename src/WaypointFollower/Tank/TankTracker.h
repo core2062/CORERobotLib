@@ -5,7 +5,7 @@
 #include "InterpolatingMap.h"
 #include <ctre/phoenix.h>
 #include "AHRS.h"
-#include "../COREUtilities/CORETimer.h"
+#include "../src/COREUtilities/CORETimer.h"
 #include "CORELogging/CORELog.h"
 #include "COREFramework/CORETask.h"
 #include <frc/WPILib.h>

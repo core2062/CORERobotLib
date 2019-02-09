@@ -4,7 +4,7 @@
 #include "COREFramework/COREScheduler.h"
 #include "json.hpp"
 #include "seasocks/Server.h"
-#include "WaypointFollower/WaypointFollower.h"
+#include "WaypointFollower/SwerveWaypointFollower.h"
 
 //using namespace std;
 using namespace seasocks;
