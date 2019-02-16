@@ -15,7 +15,7 @@ namespace CORE {
 				double quickTurn);
 		static void SetAB(double a, double b);
 		static void SetQuickturn(double q);
-		static VelocityPair Calculate(double mag, double rot, double deadband = .1);
+		static TankVelocityPair Calculate(double mag, double rot, double deadband = .1);
 	protected:
 		void Update() override;
 	private:

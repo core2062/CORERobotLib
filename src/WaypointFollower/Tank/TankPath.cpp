@@ -1,0 +1,165 @@
+#include "TankPath.h"
+
+TankWaypoint::TankWaypoint(TankTranslation2d pos, double spd, std::string completeEvent) {
+	position = pos;
+	speed = spd;
+	event = completeEvent;
+}
+
+TankPath::TankPath(std::vector<TankWaypoint> waypoints, bool flipY, bool flipX) {
+	m_waypoints = waypoints;
+	for (unsigned int i = 0; i < m_waypoints.size() - 1; ++i){
+		if (flipX && flipY) {
+			m_segments.push_back(
+					TankPathSegment(m_waypoints[i].position.Inverse(), m_waypoints[i+1].position.Inverse(), m_waypoints[i].speed));
+		} else if(flipX) {
+			std::cout << "Flipped X" << std::endl;
+			m_segments.push_back(
+					TankPathSegment(m_waypoints[i].position.FlipX(), m_waypoints[i+1].position.FlipX(), m_waypoints[i].speed));
+		} else if(flipY) {
+			std::cout << "Flipped Y" << std::endl;
+			m_segments.push_back(
+					TankPathSegment(m_waypoints[i].position.FlipY(), m_waypoints[i+1].position.FlipY(), m_waypoints[i].speed));
+		} else {
+			m_segments.push_back(
+					TankPathSegment(m_waypoints[i].position, m_waypoints[i+1].position, m_waypoints[i].speed));
+		}
+	}
+
+	if(m_waypoints.size() > 0){
+		if(m_waypoints[0].event != ""){
+			m_events.push_back(m_waypoints[0].event);
+		}
+		m_waypoints.erase(m_waypoints.begin());
+	}
+}
+
+double TankPath::Update(TankTranslation2d pos) {
+	double rv = 0.0;
+	for(unsigned int i = 0; i < m_segments.size(); i++){
+		TankPathSegment::TankClosestPointReport closestPointReport = m_segments[i].GetClosestPoint(pos);
+		if (closestPointReport.index >= .99){
+			m_segments.erase(m_segments.begin() + i);
+			if(m_waypoints.size() > 0){
+				if(m_waypoints[0].event != ""){
+					m_events.push_back(m_waypoints[0].event);
+				}
+				m_waypoints.erase(m_waypoints.begin());
+			}
+			return Update(pos);
+		} else {
+			if(closestPointReport.index > 0.0){
+				m_segments[i].UpdateStart(closestPointReport.closestPoint);
+			}
+
+			rv = closestPointReport.distance;
+
+			if(m_segments.size() > i + 1){
+				TankPathSegment::TankClosestPointReport nextClosestPointReport = m_segments[i+1].GetClosestPoint(pos);
+				if(nextClosestPointReport.index > 0
+						&& nextClosestPointReport.index < .99
+						&& nextClosestPointReport.distance < rv){
+					m_segments[i+1].UpdateStart(nextClosestPointReport.closestPoint);
+					rv = nextClosestPointReport.distance;
+					m_segments.erase(m_segments.begin() + i);
+					if(m_waypoints.size() > 0){
+						if(m_waypoints[0].event != ""){
+							m_events.push_back(m_waypoints[0].event);
+						}
+						m_waypoints.erase(m_waypoints.begin());
+					}
+				}
+			}
+			break;
+		}
+	}
+	return rv;
+}
+
+bool TankPath::EventPassed(std::string event) {
+	return (find(m_events.begin(), m_events.end(), event) != m_events.end());
+}
+
+double TankPath::GetRemainingLength() {
+	double length = 0.0;
+	for (auto i: m_segments){
+		length += i.GetLength();
+	}
+	return length;
+}
+
+TankPathSegment::TankSample TankPath::GetLookaheadPoint(TankTranslation2d pos,
+		double lookahead) {
+	if(m_segments.size() == 0){
+		return TankPathSegment::TankSample(TankTranslation2d(), 0);
+	}
+
+	TankTranslation2d posInverse = pos.Inverse();
+	if(posInverse.TranslateBy(m_segments[0].GetStart()).Norm() >= lookahead){
+		return TankPathSegment::TankSample(m_segments[0].GetStart(), m_segments[0].GetSpeed());
+	}
+	for (unsigned int i = 0; i < m_segments.size(); ++i){
+		TankPathSegment segment = m_segments[i];
+		double distance = posInverse.TranslateBy(segment.GetEnd()).Norm();
+		if(distance >= lookahead){
+			std::pair<bool, TankTranslation2d> intersectionPoint = GetFirstCircleSegmentIntersection(segment,
+					pos, lookahead);
+			if(intersectionPoint.first){
+				return TankPathSegment::TankSample(intersectionPoint.second, segment.GetSpeed());
+			} else {
+				std::cout << "Error? Bad things happened" << std::endl;
+			}
+		}
+	}
+
+	TankPathSegment lastSegment = m_segments[m_segments.size() - 1];
+	TankPathSegment newLastSegment = TankPathSegment(lastSegment.GetStart(), lastSegment.Interpolate(10000),
+			lastSegment.GetSpeed());
+	std::pair<bool, TankTranslation2d> intersectionPoint = GetFirstCircleSegmentIntersection(newLastSegment, pos,
+			lookahead);
+	if(intersectionPoint.first){
+		return TankPathSegment::TankSample(intersectionPoint.second, lastSegment.GetSpeed());
+	} else {
+		std::cout << "Error? REALLY Bad things happened" << std::endl;
+		return TankPathSegment::TankSample(lastSegment.GetEnd(), lastSegment.GetSpeed());
+	}
+}
+
+std::pair<bool, TankTranslation2d> TankPath::GetFirstCircleSegmentIntersection(
+		TankPathSegment segment, TankTranslation2d center, double radius) {
+	double x1 = segment.GetStart().GetX() - center.GetX();
+	double y1 = segment.GetStart().GetY() - center.GetY();
+	double x2 = segment.GetEnd().GetX() - center.GetX();
+	double y2 = segment.GetEnd().GetY() - center.GetY();
+	double dx = x2 - x1;
+	double dy = y2 - y1;
+	double drSquared = dx * dx + dy * dy;
+	double det = x1 * y2 - x2 * y1;
+
+	double discriminant = drSquared *radius * radius - det * det;
+	if (discriminant < 0){
+		return {false, TankTranslation2d()};
+	}
+
+	double sqrtDiscriminant = sqrt(discriminant);
+	TankTranslation2d posSolution = TankTranslation2d(
+			(det * dy + ((dy < 0) ? -1 : 1) * dx * sqrtDiscriminant) / drSquared + center.GetX(),
+			(-det * dx + abs(dy) * sqrtDiscriminant) / drSquared + center.GetY());
+	TankTranslation2d negSolution = TankTranslation2d(
+			(det * dy - ((dy < 0) ? -1 : 1) * dx * sqrtDiscriminant) / drSquared + center.GetX(),
+			(-det * dx - abs(dy) * sqrtDiscriminant) / drSquared + center.GetY());
+
+	double posDot = segment.DotProduct(posSolution);
+	double negDot = segment.DotProduct(negSolution);
+	if (posDot < 0 && negDot >= 0){
+		return {true, negSolution};
+	} else if (posDot >= 0 && negDot < 0){
+		return {true, posSolution};
+	} else {
+		if (abs(posDot) <= abs(negDot)){
+			return {true, posSolution};
+		} else {
+			return {true, negSolution};
+		}
+	}
+}

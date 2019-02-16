@@ -1,8 +1,8 @@
 #pragma once
 
-#include "TankPosition2d.h"
-#include "TankKinematics.h"
-#include "TankInterpolatingMap.h"
+#include "SwervePosition2d.h"
+#include "SwerveKinematics.h"
+#include "SwerveInterpolatingMap.h"
 #include <ctre/phoenix.h>
 #include "AHRS.h"
 #include "../src/COREUtilities/CORETimer.h"
@@ -14,10 +14,10 @@
 
 using namespace CORE;
 
-class TankTracker : public CORETask {
+class SwerveTracker : public CORETask {
 protected:
-	TankInterpolatingTreeMap m_data;
-	TankPosition2d::TankDelta m_velocity = {0,0,0};
+	SwerveInterpolatingTreeMap m_data;
+	SwervePosition2d::SwerveDelta m_velocity = {0,0,0};
 
 private:
     const double m_targetLoopHz = 200; //If this is changed, be sure to adjust NavX constructor accordingly
@@ -33,26 +33,26 @@ private:
 	TalonSRX * m_right = nullptr;
 	AHRS * m_gyro = nullptr;
 	thread * m_mainLoop = nullptr;
-	static TankTracker * m_instance;
-	TankTracker();
+	static SwerveTracker * m_instance;
+	SwerveTracker();
 	void Start();
     void Stop();
-	void AddData(double time, TankPosition2d data, TankPosition2d::TankDelta vel);
+	void AddData(double time, SwervePosition2d data, SwervePosition2d::SwerveDelta vel);
 	COREDataLogger log;
 
 public:
 	bool doLog = false;
-	static TankTracker* GetInstance();
+	static SwerveTracker* GetInstance();
 	void Init(TalonSRX * left, TalonSRX * right, AHRS * gyro);
-	~TankTracker();
-	void Reset(double time, TankPosition2d initial);
+	~SwerveTracker();
+	void Reset(double time, SwervePosition2d initial);
 	void Loop();
-	TankPosition2d GetFieldToVehicle(double time);
-	TankPosition2d GetLatestFieldToVehicle();
-	TankPosition2d GenerateOdometry(double leftDelta, double rightDelta, TankRotation2d heading);
+	SwervePosition2d GetFieldToVehicle(double time);
+	SwervePosition2d GetLatestFieldToVehicle();
+	SwervePosition2d GenerateOdometry(double leftDelta, double rightDelta, SwerveRotation2d heading);
 	std::pair<double, double> GetEncoderInches();
 	std::pair<double, double> GetEncoderSpeed();
-	TankRotation2d GetGyroAngle();
+	SwerveRotation2d GetGyroAngle();
 	void AutonInitTask() override;
 	void AutonEndTask() override;
 	void TeleopInitTask() override;

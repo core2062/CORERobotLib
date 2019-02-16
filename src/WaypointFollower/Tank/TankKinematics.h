@@ -1,23 +1,23 @@
 #pragma once
 
-#include "Position2d.h"
+#include "TankPosition2d.h"
 #include "COREUtilities/COREConstant.h"
 
-struct VelocityPair{
+struct TankVelocityPair{
 	double left;
 	double right;
-	VelocityPair(double l, double r);
+	TankVelocityPair(double l, double r);
 };
 
 class TankKinematics{
 public:
-	static Position2d::Delta ForwardKinematics(double leftDelta, double rightDelta);
+	static TankPosition2d::TankDelta ForwardKinematics(double leftDelta, double rightDelta);
 
-	static Position2d::Delta ForwardKinematics(double leftDelta, double rightDelta, double deltaRads);
+	static TankPosition2d::TankDelta ForwardKinematics(double leftDelta, double rightDelta, double deltaRads);
 
-	static Position2d IntegrateForwardKinematics(Position2d pos, double leftDelta, double rightDelta, Rotation2d heading);
+	static TankPosition2d IntegrateForwardKinematics(TankPosition2d pos, double leftDelta, double rightDelta, TankRotation2d heading);
 
-	static VelocityPair InverseKinematics(Position2d::Delta vel);
+	static TankVelocityPair InverseKinematics(TankPosition2d::TankDelta vel);
 
 	static CORE::COREConstant<double> wheelDiameter;
 	static CORE::COREConstant<double> scrubFactor;

@@ -27,7 +27,7 @@ void COREEtherDrive::SetQuickturn(double q) {
 	m_quickTurn = q;
 }
 
-VelocityPair COREEtherDrive::Calculate(double mag, double rot,
+TankVelocityPair COREEtherDrive::Calculate(double mag, double rot,
 		double deadband) {
 	if (abs(mag) < deadband) {
 		mag = 0;
