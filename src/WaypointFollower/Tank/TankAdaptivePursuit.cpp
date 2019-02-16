@@ -31,12 +31,18 @@ TankPosition2d::TankDelta TankAdaptivePursuit::Update(TankPosition2d robotPos, d
 	if(IsDone()){
 		return TankPosition2d::TankDelta(0,0,0);
 	}
+
+//	std::cout << "Dist From Path" << distanceFromPath << std::endl;
+
 	TankPathSegment::TankSample lookaheadPoint = m_path.GetLookaheadPoint(robotPos.GetTranslation(),
 			distanceFromPath + m_fixedLookahead);
 	std::pair<bool, Circle> circle = JoinPath(pos, lookaheadPoint.translation);
+//	std::cout << "Look X: " << lookaheadPoint.translation.getX() << "  Look Y: " << lookaheadPoint.translation.getY() << std::endl;
+
 
 	double speed = lookaheadPoint.speed;
 	if(m_reversed){
+//		std::cout << "Reversed: " << speed << std::endl;
 		speed *= -1;
 	}
 
@@ -54,6 +60,7 @@ TankPosition2d::TankDelta TankAdaptivePursuit::Update(TankPosition2d robotPos, d
 	}
 
 	double remainingDistance = m_path.GetRemainingLength();
+//	std::cout << "Remain: " << remainingDistance << std::endl;
 	if(m_gradualStop){
 		double maxAllowedSpeed = sqrt(2 * m_maxAccel * remainingDistance);
 		if (fabs(speed) > maxAllowedSpeed){

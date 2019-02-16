@@ -6,21 +6,26 @@ TankWaypoint::TankWaypoint(TankTranslation2d pos, double spd, std::string comple
 	event = completeEvent;
 }
 
+/*
+Path::Path(){
+}
+*/
+
 TankPath::TankPath(std::vector<TankWaypoint> waypoints, bool flipY, bool flipX) {
 	m_waypoints = waypoints;
 	for (unsigned int i = 0; i < m_waypoints.size() - 1; ++i){
-		if (flipX && flipY) {
+		if(flipX && flipY){
 			m_segments.push_back(
 					TankPathSegment(m_waypoints[i].position.Inverse(), m_waypoints[i+1].position.Inverse(), m_waypoints[i].speed));
-		} else if(flipX) {
+		}else if(flipX){
 			std::cout << "Flipped X" << std::endl;
 			m_segments.push_back(
 					TankPathSegment(m_waypoints[i].position.FlipX(), m_waypoints[i+1].position.FlipX(), m_waypoints[i].speed));
-		} else if(flipY) {
+		}else if(flipY){
 			std::cout << "Flipped Y" << std::endl;
 			m_segments.push_back(
 					TankPathSegment(m_waypoints[i].position.FlipY(), m_waypoints[i+1].position.FlipY(), m_waypoints[i].speed));
-		} else {
+		}else{
 			m_segments.push_back(
 					TankPathSegment(m_waypoints[i].position, m_waypoints[i+1].position, m_waypoints[i].speed));
 		}
@@ -37,7 +42,9 @@ TankPath::TankPath(std::vector<TankWaypoint> waypoints, bool flipY, bool flipX) 
 double TankPath::Update(TankTranslation2d pos) {
 	double rv = 0.0;
 	for(unsigned int i = 0; i < m_segments.size(); i++){
+//		PathSegment segment = m_segments[i];
 		TankPathSegment::TankClosestPointReport closestPointReport = m_segments[i].GetClosestPoint(pos);
+//		std::cout << "Index " << closestPointReport.index << std::endl;
 		if (closestPointReport.index >= .99){
 			m_segments.erase(m_segments.begin() + i);
 			if(m_waypoints.size() > 0){

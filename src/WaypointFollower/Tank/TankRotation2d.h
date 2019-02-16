@@ -13,7 +13,6 @@ public:
 
 	static TankRotation2d FromRadians(double radians);
 	static TankRotation2d FromDegrees(double degrees);
-	static TankRotation2d FromCompassDegrees(double compassDegrees);
 
 	void Normalize();
 
@@ -22,7 +21,6 @@ public:
 
 	double GetRadians();
 	double GetDegrees();
-	double GetCompassDegrees();
 
 	TankRotation2d RotateBy(TankRotation2d other);
 	TankRotation2d Inverse();

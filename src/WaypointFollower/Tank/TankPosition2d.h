@@ -34,5 +34,4 @@ public:
 
 	TankPosition2d Interpolate(TankPosition2d other, double x);
 
-
 };

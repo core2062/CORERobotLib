@@ -34,5 +34,4 @@ public:
 	TankTranslation2d FlipX();
 	TankTranslation2d FlipY();
 
-
 };

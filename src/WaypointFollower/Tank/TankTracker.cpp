@@ -11,7 +11,7 @@ TankTracker::~TankTracker() {
 	m_left = nullptr;
 	m_right = nullptr;
 	m_gyro = nullptr;
-	Stop();
+	stop();
 	delete m_mainLoop;
 }
 
@@ -28,10 +28,10 @@ void TankTracker::Init(TalonSRX * left, TalonSRX * right, AHRS * gyro) {
 	m_right = right;
 	m_gyro = gyro;
 	m_targetLoopTime = 1.0/m_targetLoopHz;
-    m_left->SetStatusFramePeriod(StatusFrameEnhanced::Status_1_General, floor(1000*m_targetLoopTime), 0);
-    m_left->SetStatusFramePeriod(StatusFrameEnhanced::Status_3_Quadrature, floor(1000*m_targetLoopTime), 0);
-	m_right->SetStatusFramePeriod(StatusFrameEnhanced::Status_1_General, floor(1000*m_targetLoopTime), 0);
-	m_right->SetStatusFramePeriod(StatusFrameEnhanced::Status_3_Quadrature, floor(1000*m_targetLoopTime), 0);
+	m_left->SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_1_General_, floor(1000*m_targetLoopTime));
+	m_left->SetStatusFrameRateMs(CANTalon::StatusFrameRateQuadEncoder, floor(1000*m_targetLoopTime));
+	m_right->SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_1_General_, floor(1000*m_targetLoopTime));
+	m_right->SetStatusFrameRateMs(CANTalon::StatusFrameRateQuadEncoder, floor(1000*m_targetLoopTime));
 	m_loopEnabled = false;
 	std::cout << "Tracker Contruct End" << std::endl;
 }
@@ -39,8 +39,8 @@ void TankTracker::Init(TalonSRX * left, TalonSRX * right, AHRS * gyro) {
 void TankTracker::Reset(double time, TankPosition2d initial) {
 	m_dataLock.lock();
 	m_data = TankInterpolatingTreeMap(100);
-	m_data.Put(TankInterpolatingDouble(Timer::GetFPGATimestamp()), initial);
-	m_data.Put(TankInterpolatingDouble(Timer::GetFPGATimestamp()+.00001), initial);
+	m_data.put(TankInterpolatingDouble(Timer::GetFPGATimestamp()), initial);
+	m_data.put(TankInterpolatingDouble(Timer::GetFPGATimestamp()+.00001), initial);
 	m_velocity = TankPosition2d::TankDelta(0,0,0);
 	m_dataLock.unlock();
 }
@@ -48,7 +48,7 @@ void TankTracker::Reset(double time, TankPosition2d initial) {
 void TankTracker::Start() {
 	cout << "Starting tank tracker!" << endl;
     m_loopLock.lock();
-	std::pair<double, double> inches = GetEncoderInches();
+	std::pair<double, double> inches = getEncoderInches();
 	m_leftPrev = inches.first;
 	m_rightPrev = inches.second;
     m_loopLock.unlock();
@@ -59,8 +59,8 @@ void TankTracker::Start() {
     m_timerLock.unlock();
 
     m_loopEnabled = true;
-    m_mainLoop = new thread(&TankTracker::Loop, TankTracker::GetInstance());
-    frc::SetCurrentThreadPriority(false, 3);
+    m_mainLoop = new thread(&TankTracker::loop, TankTracker::GetInstance());
+    SetThreadPriority(*m_mainLoop, false, 3);
 	cout << "Started tank tracker!" << endl;
 }
 
@@ -116,7 +116,7 @@ TankPosition2d TankTracker::GetLatestFieldToVehicle() {
 
 void TankTracker::AddData(double time, TankPosition2d data, TankPosition2d::TankDelta vel) {
 	m_dataLock.lock();
-	m_data.Put(TankInterpolatingDouble(time), data);
+	m_data.put(TankInterpolatingDouble(time), data);
 	m_velocity = vel;
 	if(doLog){
 		log.PutData({new COREDataPoint<double>(data.GetTranslation().GetX()),
@@ -134,12 +134,12 @@ TankPosition2d TankTracker::GenerateOdometry(double leftDelta, double rightDelta
 
 std::pair<double, double> TankTracker::GetEncoderInches() {
 	double factor = 4.0 * PI;
-	return {m_left->GetSelectedSensorPosition() * factor, m_right->GetSelectedSensorPosition() * factor};
+	return {m_left->GetPosition() * factor, m_right->GetPosition() * factor};
 }
 
 std::pair<double, double> TankTracker::GetEncoderSpeed() {
 	double factor = 4.0 * PI * .0166666666;
-	return {m_left->GetSelectedSensorVelocity() * factor, m_right->GetSelectedSensorVelocity() * factor};
+	return {m_left->GetSpeed() * factor, m_right->GetSpeed() * factor};
 }
 
 TankRotation2d TankTracker::GetGyroAngle() {
@@ -147,16 +147,16 @@ TankRotation2d TankTracker::GetGyroAngle() {
 	return TankRotation2d::FromDegrees(degrees);
 }
 
-void TankTracker::AutonInitTask() {
+void TankTracker::autonInitTask() {
 	doLog = true;
 	Start();
 }
 
-void TankTracker::AutonEndTask() {
+void TankTracker::autonEndTask() {
 	Stop();
 }
 
-void TankTracker::TeleopInitTask() {
+void TankTracker::teleopInitTask() {
 	Stop();
 	doLog = false;
     time_t currentTime = time(0);
@@ -164,15 +164,18 @@ void TankTracker::TeleopInitTask() {
     std::string name = "AutonLog";
     name += to_string(now->tm_mon) + "-" + to_string(now->tm_mday) + "--" + to_string(now->tm_hour)
                   + "-" + to_string(now->tm_min) + ".csv";
-	log.Save(name);
+//	m_dataLock.lock();
+	log.save(name);
+//	m_dataLock.unlock();
 }
 
-void TankTracker::PostLoopTask() {
+void TankTracker::postLoopTask() {
+	//Position2d current = getLatestFieldToVehicle();
 	auto current = GetLatestFieldToVehicle();
 	SmartDashboard::PutNumber("Robot X" , current.GetTranslation().GetX());
 	SmartDashboard::PutNumber("Robot Y" , current.GetTranslation().GetY());
 }
 
-void TankTracker::TeleopEndTask() {
+void TankTracker::teleopEndTask() {
 	Stop();
 }

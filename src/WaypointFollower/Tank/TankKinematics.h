@@ -3,10 +3,10 @@
 #include "TankPosition2d.h"
 #include "COREUtilities/COREConstant.h"
 
-struct TankVelocityPair{
+struct VelocityPair{
 	double left;
 	double right;
-	TankVelocityPair(double l, double r);
+	VelocityPair(double l, double r);
 };
 
 class TankKinematics{
@@ -17,7 +17,7 @@ public:
 
 	static TankPosition2d IntegrateForwardKinematics(TankPosition2d pos, double leftDelta, double rightDelta, TankRotation2d heading);
 
-	static TankVelocityPair InverseKinematics(TankPosition2d::TankDelta vel);
+	static VelocityPair InverseKinematics(TankPosition2d::TankDelta vel);
 
 	static CORE::COREConstant<double> wheelDiameter;
 	static CORE::COREConstant<double> scrubFactor;

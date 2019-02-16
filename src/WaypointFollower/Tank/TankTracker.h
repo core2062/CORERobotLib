@@ -5,12 +5,12 @@
 #include "TankInterpolatingMap.h"
 #include <ctre/phoenix.h>
 #include "AHRS.h"
-#include "../src/COREUtilities/CORETimer.h"
+#include "COREUtilities/CORETimer.h"
 #include "CORELogging/CORELog.h"
 #include "COREFramework/CORETask.h"
 #include <frc/WPILib.h>
 #include <thread>
-#include "CORELogging/COREDataLog.h"
+// #include "COREDataLog.h"
 
 using namespace CORE;
 
@@ -23,9 +23,9 @@ private:
     const double m_targetLoopHz = 200; //If this is changed, be sure to adjust NavX constructor accordingly
     double m_targetLoopTime = 0.01;
     atomic<bool> m_loopEnabled;
-    std::mutex m_loopLock;
-    std::mutex m_dataLock;
-	std::mutex m_timerLock;
+    mutex m_loopLock;
+    mutex m_dataLock;
+	mutex m_timerLock;
 	double m_leftPrev = 0;
 	double m_rightPrev = 0;
     CORETimer m_loopTimer;
@@ -38,7 +38,7 @@ private:
 	void Start();
     void Stop();
 	void AddData(double time, TankPosition2d data, TankPosition2d::TankDelta vel);
-	COREDataLogger log;
+	CORELog log;
 
 public:
 	bool doLog = false;
@@ -52,10 +52,10 @@ public:
 	TankPosition2d GenerateOdometry(double leftDelta, double rightDelta, TankRotation2d heading);
 	std::pair<double, double> GetEncoderInches();
 	std::pair<double, double> GetEncoderSpeed();
-	TankRotation2d GetGyroAngle();
-	void AutonInitTask() override;
-	void AutonEndTask() override;
-	void TeleopInitTask() override;
-	void PostLoopTask() override;
-	void TeleopEndTask() override;
+	TankRotation2d getGyroAngle();
+	void autonInitTask() override;
+	void autonEndTask() override;
+	void teleopInitTask() override;
+	void postLoopTask() override;
+	void teleopEndTask() override;
 };

@@ -1,7 +1,5 @@
 #include "TankRotation2d.h"
 
-using namespace CORE;
-
 TankRotation2d::TankRotation2d() {
 	m_cos = 1;
 	m_sin = 0;
@@ -25,17 +23,11 @@ TankRotation2d TankRotation2d::FromRadians(double radians) {
 }
 
 TankRotation2d TankRotation2d::FromDegrees(double degrees) {
-	return FromRadians(ToRadians(degrees));
-}
-
-TankRotation2d TankRotation2d::FromCompassDegrees(double compassDegrees) {
-	double degrees = 90 - compassDegrees;
-	degrees = degrees < 0 ? 360 + degrees : degrees;
-	return FromRadians(ToRadians(degrees));
+	return FromRadians(CORE::ToRadians(degrees));
 }
 
 void TankRotation2d::Normalize() {
-	double mag = Pathogram(m_cos, m_sin);
+	double mag = CORE::hypot(m_cos, m_sin);
 	if (mag > kE){
 		m_sin /= mag;
 		m_cos /= mag;
@@ -59,11 +51,6 @@ double TankRotation2d::GetRadians() {
 
 double TankRotation2d::GetDegrees() {
 	return CORE::ToDegrees(GetRadians());
-}
-
-double TankRotation2d::GetCompassDegrees() {
-    double degrees = 450 - GetDegrees();
-    return degrees >= 360 ? degrees - 360 : degrees;
 }
 
 TankRotation2d TankRotation2d::RotateBy(TankRotation2d other) {

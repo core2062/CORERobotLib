@@ -1,6 +1,5 @@
 #pragma once
 
-#include "TankTranslation2d.h"
 #include "TankPathSegment.h"
 #include <vector>
 #include <algorithm>

@@ -19,5 +19,6 @@ struct TankDataPoint {
 
 class TankPathLoader{
 public:
-	static TankPath * LoadPath(std::string fileName, double speedScale = 1.0, bool flipY = false, bool flipX = false, bool reversePath = false);
+	static TankPath * LoadPath(std::string fileName, double speedScale = 1.0, bool flipY = false, 
+		bool flipX = false, bool reversePath = false);
 };

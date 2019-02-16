@@ -3,7 +3,7 @@
 CORE::COREConstant<double> TankKinematics::wheelDiameter("Wheel Diameter", 3.949);
 CORE::COREConstant<double> TankKinematics::scrubFactor("Scrub Factor", .04);
 
-TankVelocityPair::TankVelocityPair(double l, double r) {
+VelocityPair::VelocityPair(double l, double r) {
 	left = l;
 	right = r;
 }
@@ -28,10 +28,10 @@ TankPosition2d TankKinematics::IntegrateForwardKinematics(TankPosition2d pos,
 	return pos.TransformBy(TankPosition2d::FromVelocity(withGyro));
 }
 
-TankVelocityPair TankKinematics::InverseKinematics(TankPosition2d::TankDelta vel) {
+VelocityPair TankKinematics::InverseKinematics(TankPosition2d::TankDelta vel) {
 	if(fabs(vel.dtheta) < kE){
-		return TankVelocityPair(vel.dx, vel.dx);
+		return VelocityPair(vel.dx, vel.dx);
 	}
 	double deltaV = wheelDiameter.Get() * vel.dtheta / (2 * scrubFactor.Get());
-	return TankVelocityPair(vel.dx + deltaV, vel.dx - deltaV);
+	return VelocityPair(vel.dx + deltaV, vel.dx - deltaV);
 }
