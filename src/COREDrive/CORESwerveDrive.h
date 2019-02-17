@@ -7,8 +7,8 @@
 #include "COREDrive.h"
 #include "COREHardware/CORESensor.h"
 #include "COREControl/COREPID.h"
+#include <WaypointFollower/Swerve/SwervePosition2d.h>
 #include "COREUtilities/COREVector.h"
-#include "COREDrive/COREEtherDrive.h"
 #include "ctre/Phoenix.h"
 
 namespace CORE {
@@ -42,7 +42,7 @@ namespace CORE {
                    SwerveModule *rightBackModule,
                    SwerveModule *rightFrontModule);
         void InverseKinematics(double x, double y, double theta);
-        Position2d ForwardKinematics();
+        SwervePosition2d ForwardKinematics();
         void Brake();
         void SetSteerPID(double kp, double ki, double kd);
         void ZeroOffsets();

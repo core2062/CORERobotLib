@@ -3,6 +3,8 @@
     "files.associations": {
         "*.inc": "cpp",
         "thread": "cpp",
-        "bitset": "cpp"
+        "bitset": "cpp",
+        "cmath": "cpp",
+        "complex": "cpp"
     }
 }

@@ -193,7 +193,7 @@ void CORESwerve::InverseKinematics(double x, double y, double theta) {
     m_backLeftModule->Drive(m_backLeft, -1);
 }
 
-Position2d CORESwerve::ForwardKinematics() {
+SwervePosition2d CORESwerve::ForwardKinematics() {
     
 	//Adds the up all of the vector of each of the modules to get a total vector
 
@@ -229,7 +229,7 @@ Position2d CORESwerve::ForwardKinematics() {
     double sumX = ((frontLeft.GetX() + frontRight.GetX() + backLeft.GetX() + backRight.GetX()) / 4.0);
     double sumY = ((frontLeft.GetY() + frontRight.GetY() + backLeft.GetY() + backRight.GetY()) / 4.0);
 
-    return Position2d({sumX, sumY}, Rotation2d::FromRadians(omega));
+    return SwervePosition2d({sumX, sumY}, SwerveRotation2d::FromRadians(omega));
 }
 
 void CORESwerve::SetSteerPID(double kp, double ki, double kd) {
