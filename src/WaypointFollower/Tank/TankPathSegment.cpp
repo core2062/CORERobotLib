@@ -39,22 +39,22 @@ TankTranslation2d TankPathSegment::Interpolate(double index) {
 }
 
 double TankPathSegment::DotProduct(TankTranslation2d other) {
-	TankTranslation2d startToOther = m_start.inverse().translateBy(other);
-	return m_startToEnd.getX() * startToOther.getX() + m_startToEnd.getY() * startToOther.getY();
+	TankTranslation2d startToOther = m_start.Inverse().TranslateBy(other);
+	return m_startToEnd.GetX() * startToOther.GetX() + m_startToEnd.GetY() * startToOther.GetY();
 }
 
 TankPathSegment::TankClosestPointReport TankPathSegment::GetClosestPoint(TankTranslation2d queryPoint) {
 	TankClosestPointReport rv;
 	if (m_length > kE){
-		double dot = dotProduct(queryPoint);
+		double dot = DotProduct(queryPoint);
 		rv.index = dot / (m_length * m_length);
 		rv.clampedIndex = min(1.0, max(0.0, rv.index));
-		rv.closestPoint = interpolate(rv.index);
+		rv.closestPoint = Interpolate(rv.index);
 	} else {
 		rv.index = 0.0;
 		rv.clampedIndex = 0.0;
-		rv.closestPoint = Translation2d(m_start);
+		rv.closestPoint = TankTranslation2d(m_start);
 	}
-	rv.distance = rv.closestPoint.inverse().translateBy(queryPoint).norm();
+	rv.distance = rv.closestPoint.Inverse().TranslateBy(queryPoint).Norm();
 	return rv;
 }

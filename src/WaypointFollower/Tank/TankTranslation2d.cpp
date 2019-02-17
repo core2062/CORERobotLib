@@ -1,4 +1,5 @@
 #include "TankTranslation2d.h"
+#include <COREUtilities/COREMath.h>
 
 TankTranslation2d::TankTranslation2d() {
 	m_x = 0;
@@ -11,7 +12,7 @@ TankTranslation2d::TankTranslation2d(double x, double y) {
 }
 
 double TankTranslation2d::Norm() {
-	return CORE::hypot(m_x, m_y);
+	return CORE::Pathogram(m_x, m_y);
 }
 
 double TankTranslation2d::GetX() {
@@ -39,7 +40,7 @@ TankTranslation2d TankTranslation2d::RotateBy(TankRotation2d rotation) {
 			m_x * rotation.GetSin() + m_y * rotation.GetCos());
 }
 
-TankTranslation2d Translation2d::Inverse() {
+TankTranslation2d TankTranslation2d::Inverse() {
 	return TankTranslation2d(-m_x, -m_y);
 }
 

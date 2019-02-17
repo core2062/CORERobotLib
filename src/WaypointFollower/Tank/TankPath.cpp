@@ -1,4 +1,5 @@
 #include "TankPath.h"
+#include "CORELogging/CORELog.h"
 
 TankWaypoint::TankWaypoint(TankTranslation2d pos, double spd, std::string completeEvent) {
 	position = pos;
@@ -169,4 +170,54 @@ std::pair<bool, TankTranslation2d> TankPath::GetFirstCircleSegmentIntersection(
 			return {true, negSolution};
 		}
 	}
+}
+
+TankPath TankPath::FromFile(string fileName, bool flip) {
+    CORELog::LogInfo("Loading File: " + fileName);
+    string fileStarter = "/home/lvuser/Paths/";
+    ifstream inFile(fileStarter + fileName);
+    if (inFile.is_open()) {
+        string text((istreambuf_iterator<char>(inFile)), istreambuf_iterator<char>());
+        return FromText(text, flip);
+    }
+    cout << "Failed to open: " << fileName << endl;
+    return TankPath();
+}
+
+TankPath TankPath::FromText(string text, bool flip) {
+    vector<TankWaypoint> points;
+    json json;
+    try {
+        json = json::parse(text);
+    } catch (const exception& e) {
+        CORELog::LogError("Error parsing json path! " + string(e.what()));
+        return TankPath();
+    }
+
+    //CORELog::logInfo("Json text contents:\n" + json.dump(4));
+    try {
+        for (auto point : json) {
+			//This may be wrong, because swerve code needs to be changed to tank code
+            TankWaypoint waypoint({point["x"].get<double>(), point["y"].get<double>()}, 100);
+            // if(flip) {
+            //     waypoint.position = waypoint.position.FlipX();
+            //     waypoint.rotation = waypoint.rotation.Inverse();
+            // }
+            if(point["name"].get<string>() != "point") {
+                waypoint.event = point["name"].get<string>();
+            }
+            points.push_back(waypoint);
+        }
+    } catch (const exception& e) {
+        CORELog::LogError("Error reading json path! " + string(e.what()));
+        return TankPath();
+    }
+
+    if(!points.empty()){
+        CORELog::LogInfo("Path with " + to_string(points.size()) + " points was loaded successfully.");
+        return TankPath(points);
+    } else{
+        CORELog::LogError("Loaded path text was empty!");
+        return TankPath();
+    }
 }

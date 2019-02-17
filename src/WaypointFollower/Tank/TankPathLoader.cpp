@@ -4,15 +4,15 @@ TankInterpolatingDouble::TankInterpolatingDouble(double val) {
 	value = val;
 }
 
-TankInterpolatingDouble InterpolatingDouble::Interpolate(TankInterpolatingDouble other,
+TankInterpolatingDouble TankInterpolatingDouble::Interpolate(TankInterpolatingDouble other,
 		double x) {
 	double dydx = other.value - value;
 	double searchY = dydx * x + value;
 	return TankInterpolatingDouble(searchY);
 }
 
-double InterpolatingDouble::InverseInterpolate(InterpolatingDouble upper,
-		InterpolatingDouble query) {
+double TankInterpolatingDouble::InverseInterpolate(TankInterpolatingDouble upper,
+		TankInterpolatingDouble query) {
 	double upperToLower = upper.value - value;
 	if (upperToLower <= 0){
 		return 0;
@@ -24,17 +24,17 @@ double InterpolatingDouble::InverseInterpolate(InterpolatingDouble upper,
 	return queryToLower / upperToLower;
 }
 
-bool InterpolatingDouble::operator<(const InterpolatingDouble& other) const {
+bool TankInterpolatingDouble::operator<(const TankInterpolatingDouble& other) const {
 	return (value < other.value);
 }
 
-InterpolatingTreeMap::InterpolatingTreeMap(int maxSize) {
+TankInterpolatingTreeMap::TankInterpolatingTreeMap(int maxSize) {
 	m_max = maxSize;
-	put(InterpolatingDouble(0.0), Position2d());
+	Put(TankInterpolatingDouble(0.0), TankPosition2d());
 }
 
-Position2d InterpolatingTreeMap::put(InterpolatingDouble key,
-		Position2d value) {
+TankPosition2d TankInterpolatingTreeMap::Put(TankInterpolatingDouble key,
+		TankPosition2d value) {
 	if (m_max > 0 && m_max <= m_values.size()){
 		m_values.erase(m_values.begin());
 	}

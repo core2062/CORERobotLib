@@ -27,7 +27,7 @@ TankRotation2d TankRotation2d::FromDegrees(double degrees) {
 }
 
 void TankRotation2d::Normalize() {
-	double mag = CORE::hypot(m_cos, m_sin);
+	double mag = CORE::Pathogram(m_cos, m_sin);
 	if (mag > kE){
 		m_sin /= mag;
 		m_cos /= mag;

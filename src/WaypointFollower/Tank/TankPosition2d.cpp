@@ -7,8 +7,8 @@ TankPosition2d::TankDelta::TankDelta(double x, double y, double t) {
 }
 
 TankPosition2d::TankPosition2d() {
-	m_translation = Translation2d();
-	m_rotation = Rotation2d();
+	m_translation = TankTranslation2d();
+	m_rotation = TankRotation2d();
 }
 
 TankPosition2d::TankPosition2d(TankTranslation2d tran, TankRotation2d rot) {
@@ -21,15 +21,15 @@ TankPosition2d::TankPosition2d(const TankPosition2d& other) {
 	m_rotation = other.m_rotation;
 }
 
-TankPosition2d TankPosition2d::fromTranslation(TankTranslation2d tran) {
+TankPosition2d TankPosition2d::FromTranslation(TankTranslation2d tran) {
 	return TankPosition2d(tran, TankRotation2d());
 }
 
-TankPosition2d TankPosition2d::fromRotation(TankRotation2d rot) {
+TankPosition2d TankPosition2d::FromRotation(TankRotation2d rot) {
 	return TankPosition2d(TankTranslation2d(), rot);
 }
 
-TankPosition2d TankPosition2d::fromVelocity(TankDelta delta) {
+TankPosition2d TankPosition2d::FromVelocity(TankDelta delta) {
 	double sinT = sin(delta.dtheta);
 	double cosT = cos(delta.dtheta);
 	double s, c;
@@ -44,38 +44,38 @@ TankPosition2d TankPosition2d::fromVelocity(TankDelta delta) {
 			TankRotation2d(cosT, sinT, false));
 }
 
-TankTranslation2d TankPosition2d::getTranslation() {
+TankTranslation2d TankPosition2d::GetTranslation() {
 	return m_translation;
 }
 
-void TankPosition2d::setTranslation(TankTranslation2d tran) {
+void TankPosition2d::SetTranslation(TankTranslation2d tran) {
 	m_translation = tran;
 }
 
-TankRotation2d TankPosition2d::getRotation() {
+TankRotation2d TankPosition2d::GetRotation() {
 	return m_rotation;
 }
 
-void TankPosition2d::setRotation(TankRotation2d rot) {
+void TankPosition2d::SetRotation(TankRotation2d rot) {
 	m_rotation = rot;
 }
 
-TankPosition2d TankPosition2d::transformBy(TankPosition2d other) {
-	return TankPosition2d(m_translation.translateBy(other.m_translation.rotateBy(m_rotation)),
-			m_rotation.rotateBy(other.m_rotation));
+TankPosition2d TankPosition2d::TransformBy(TankPosition2d other) {
+	return TankPosition2d(m_translation.TranslateBy(other.m_translation.RotateBy(m_rotation)),
+			m_rotation.RotateBy(other.m_rotation));
 }
 
-TankPosition2d TankPosition2d::inverse() {
-	TankRotation2d invert = m_rotation.inverse();
-	return TankPosition2d(m_translation.inverse().rotateBy(invert), invert);
+TankPosition2d TankPosition2d::Inverse() {
+	TankRotation2d invert = m_rotation.Inverse();
+	return TankPosition2d(m_translation.Inverse().RotateBy(invert), invert);
 }
 
-TankPosition2d TankPosition2d::interpolate(TankPosition2d other, double x) {
+TankPosition2d TankPosition2d::Interpolate(TankPosition2d other, double x) {
 	if (x <= 0){
 		return *this;
 	} else if (x >= 1){
 		return other;
 	}
-	return TankPosition2d(m_translation.interpolate(other.m_translation, x),
-			m_rotation.interpolate(other.m_rotation, x));
+	return TankPosition2d(m_translation.Interpolate(other.m_translation, x),
+			m_rotation.Interpolate(other.m_rotation, x));
 }
