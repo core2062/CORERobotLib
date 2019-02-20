@@ -7,7 +7,8 @@
  * Contributors:
  *
  */
-
+#include "COREDashboard/CORESwerveDashboard.h"
+#include "COREDashboard/CORETankDashboard.h"
 #include "COREControl/COREController.h"
 #include "COREControl/COREMotionProfile.h"
 #include "COREControl/COREPID.h"

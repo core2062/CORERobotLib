@@ -47,6 +47,8 @@ model {
                 }
                 exportedHeaders {
                     srcDir "src"
+                    srcDir "src/WaypointFollower/Swerve"
+                    srcDir "src/WaypointFollower/Tank"
                     srcDir "3rdparty/json/src/"
                     srcDir "3rdparty/seasocks/src/main/c"
                 }
