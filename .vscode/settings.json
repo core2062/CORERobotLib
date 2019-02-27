@@ -5,6 +5,8 @@
         "thread": "cpp",
         "bitset": "cpp",
         "cmath": "cpp",
-        "complex": "cpp"
-    }
+        "complex": "cpp",
+        "mutex": "cpp",
+    },
+    "C_Cpp.intelliSenseEngine": "Tag Parser"
 }

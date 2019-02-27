@@ -1,4 +1,9 @@
 #include "TankTracker.h"
+#include <hal/HAL.h>
+#include <hal/Threads.h>
+#include <thread>
+
+#include "frc/ErrorBase.h"
 
 TankTracker* TankTracker::m_instance = nullptr;
 
@@ -13,6 +18,40 @@ TankTracker::~TankTracker() {
 	m_gyro = nullptr;
 	Stop();
 	delete m_mainLoop;
+}
+
+int GetThreadPriority1(std::thread& thread, bool* isRealTime) {
+  int32_t status = 0;
+  HAL_Bool rt = false;
+  auto native = thread.native_handle();
+  auto ret = HAL_GetThreadPriority(&native, &rt, &status);
+  wpi_setGlobalErrorWithContext(status, HAL_GetErrorMessage(status));
+  *isRealTime = rt;
+  return ret;
+}
+
+int GetCurrentThreadPriority1(bool* isRealTime) {
+  int32_t status = 0;
+  HAL_Bool rt = false;
+  auto ret = HAL_GetCurrentThreadPriority(&rt, &status);
+  wpi_setGlobalErrorWithContext(status, HAL_GetErrorMessage(status));
+  *isRealTime = rt;
+  return ret;
+}
+
+bool SetThreadPriority1(std::thread& thread, bool realTime, int priority) {
+  int32_t status = 0;
+  auto native = thread.native_handle();
+  auto ret = HAL_SetThreadPriority(&native, realTime, priority, &status);
+  wpi_setGlobalErrorWithContext(status, HAL_GetErrorMessage(status));
+  return ret;
+}
+
+bool SetCurrentThreadPriority1(bool realTime, int priority) {
+  int32_t status = 0;
+  auto ret = HAL_SetCurrentThreadPriority(realTime, priority, &status);
+  wpi_setGlobalErrorWithContext(status, HAL_GetErrorMessage(status));
+  return ret;
 }
 
 TankTracker * TankTracker::GetInstance() {
@@ -60,7 +99,8 @@ void TankTracker::Start() {
 
     m_loopEnabled = true;
     m_mainLoop = new std::thread(&TankTracker::Loop, TankTracker::GetInstance());
-    SetThreadPriority(*m_mainLoop, false, 3);
+    SetThreadPriority1(*m_mainLoop, false, 3);
+	SetCurrentThreadPriority1(false, 3);
 	cout << "Started tank tracker!" << endl;
 }
 

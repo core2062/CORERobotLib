@@ -11,6 +11,7 @@
 #include "CORELogging/COREDataLog.h"
 #include <frc/WPILib.h>
 #include <thread>
+#include <mutex>
 // #include "COREDataLog.h"
 
 using namespace CORE;
