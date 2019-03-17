@@ -174,12 +174,12 @@ TankPosition2d TankTracker::GenerateOdometry(double leftDelta, double rightDelta
 
 std::pair<double, double> TankTracker::GetEncoderInches() {
 	double factor = 4.0 * PI;
-	return {m_left->GetSelectedSensorPosition() * factor, m_right->GetSelectedSensorPosition() * factor};
+	return {m_left->GetSelectedSensorPosition(0) * factor, m_right->GetSelectedSensorPosition(0) * factor};
 }
 
 std::pair<double, double> TankTracker::GetEncoderSpeed() {
 	double factor = 4.0 * PI * .0166666666;
-	return {m_left->GetSelectedSensorVelocity() * factor, m_right->GetSelectedSensorVelocity() * factor};
+	return {m_left->GetSelectedSensorVelocity(0) * factor, m_right->GetSelectedSensorVelocity(0) * factor};
 }
 
 TankRotation2d TankTracker::GetGyroAngle() {
