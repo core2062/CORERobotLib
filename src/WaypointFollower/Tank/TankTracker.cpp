@@ -66,6 +66,9 @@ void TankTracker::Init(TalonSRX * left, TalonSRX * right, AHRS * gyro) {
 	m_left = left;
 	m_right = right;
 	m_gyro = gyro;
+	if (m_left == nullptr || m_right == nullptr) {
+		std::cout << "Motors are returning a nullptr" << endl;
+	}
 	m_targetLoopTime = 1.0/m_targetLoopHz;
 	m_left->SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_1_General_, floor(1000*m_targetLoopTime));
 	m_left->SetStatusFramePeriod(ctre::phoenix::motorcontrol::Status_3_Quadrature, floor(1000*m_targetLoopTime));
@@ -174,6 +177,9 @@ TankPosition2d TankTracker::GenerateOdometry(double leftDelta, double rightDelta
 
 std::pair<double, double> TankTracker::GetEncoderInches() {
 	double factor = 4.0 * PI;
+	if (m_right == nullptr || m_left == nullptr) {
+		std::cout << "Motors are nullptrs!" << endl;
+	}
 	return {m_left->GetSelectedSensorPosition(0) * factor, m_right->GetSelectedSensorPosition(0) * factor};
 }
 
