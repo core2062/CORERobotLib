@@ -9,50 +9,51 @@ TankTracker* TankTracker::m_instance = nullptr;
 
 TankTracker::TankTracker():
 	log({"X","Y","T"}){
-
+		cout<<"Tank Tracker Constructor"<<endl;
 }
 
 TankTracker::~TankTracker() {
+	cout<<"Tank Tracker Destructor"<<endl;
 	m_left = nullptr;
 	m_right = nullptr;
 	m_gyro = nullptr;
 	Stop();
-	delete m_mainLoop;
+	//delete m_mainLoop;
 }
 
-int GetThreadPriority1(std::thread& thread, bool* isRealTime) {
-  int32_t status = 0;
-  HAL_Bool rt = false;
-  auto native = thread.native_handle();
-  auto ret = HAL_GetThreadPriority(&native, &rt, &status);
-  wpi_setGlobalErrorWithContext(status, HAL_GetErrorMessage(status));
-  *isRealTime = rt;
-  return ret;
-}
+// int GetThreadPriority1(std::thread& thread, bool* isRealTime) {
+//   int32_t status = 0;
+//   HAL_Bool rt = false;
+//   auto native = thread.native_handle();
+//   auto ret = HAL_GetThreadPriority(&native, &rt, &status);
+//   wpi_setGlobalErrorWithContext(status, HAL_GetErrorMessage(status));
+//   *isRealTime = rt;
+//   return ret;
+// }
 
-int GetCurrentThreadPriority1(bool* isRealTime) {
-  int32_t status = 0;
-  HAL_Bool rt = false;
-  auto ret = HAL_GetCurrentThreadPriority(&rt, &status);
-  wpi_setGlobalErrorWithContext(status, HAL_GetErrorMessage(status));
-  *isRealTime = rt;
-  return ret;
-}
+// int GetCurrentThreadPriority1(bool* isRealTime) {
+//   int32_t status = 0;
+//   HAL_Bool rt = false;
+//   auto ret = HAL_GetCurrentThreadPriority(&rt, &status);
+//   wpi_setGlobalErrorWithContext(status, HAL_GetErrorMessage(status));
+//   *isRealTime = rt;
+//   return ret;
+// }
 
-bool SetThreadPriority1(std::thread& thread, bool realTime, int priority) {
-  int32_t status = 0;
-  auto native = thread.native_handle();
-  auto ret = HAL_SetThreadPriority(&native, realTime, priority, &status);
-  wpi_setGlobalErrorWithContext(status, HAL_GetErrorMessage(status));
-  return ret;
-}
+// bool SetThreadPriority1(std::thread& thread, bool realTime, int priority) {
+//   int32_t status = 0;
+//   auto native = thread.native_handle();
+//   auto ret = HAL_SetThreadPriority(&native, realTime, priority, &status);
+//   wpi_setGlobalErrorWithContext(status, HAL_GetErrorMessage(status));
+//   return ret;
+// }
 
-bool SetCurrentThreadPriority1(bool realTime, int priority) {
-  int32_t status = 0;
-  auto ret = HAL_SetCurrentThreadPriority(realTime, priority, &status);
-  wpi_setGlobalErrorWithContext(status, HAL_GetErrorMessage(status));
-  return ret;
-}
+// bool SetCurrentThreadPriority1(bool realTime, int priority) {
+//   int32_t status = 0;
+//   //auto ret = HAL_SetCurrentThreadPriority(realTime, priority, &status);
+//   wpi_setGlobalErrorWithContext(status, HAL_GetErrorMessage(status));
+//   return ret;
+//}
 
 TankTracker * TankTracker::GetInstance() {
     if(!m_instance) {
@@ -69,96 +70,97 @@ void TankTracker::Init(TalonSRX * left, TalonSRX * right, AHRS * gyro) {
 	if (m_left == nullptr || m_right == nullptr) {
 		std::cout << "Motors are returning a nullptr" << endl;
 	}
-	m_targetLoopTime = 1.0/m_targetLoopHz;
-	m_left->SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_1_General_, floor(1000*m_targetLoopTime));
-	m_left->SetStatusFramePeriod(ctre::phoenix::motorcontrol::Status_3_Quadrature, floor(1000*m_targetLoopTime));
-	m_right->SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_1_General_, floor(1000*m_targetLoopTime));
-	m_right->SetStatusFramePeriod(ctre::phoenix::motorcontrol::Status_3_Quadrature, floor(1000*m_targetLoopTime));
+	// m_targetLoopTime = 1.0/m_targetLoopHz;
+	int defaultLoopTime = 20; // In milliseconds
+	m_left->SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_1_General_, defaultLoopTime);
+	m_left->SetStatusFramePeriod(ctre::phoenix::motorcontrol::Status_3_Quadrature, defaultLoopTime);
+	m_right->SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_1_General_, defaultLoopTime);
+	m_right->SetStatusFramePeriod(ctre::phoenix::motorcontrol::Status_3_Quadrature, defaultLoopTime);
 	m_loopEnabled = false;
 	std::cout << "Tracker Contruct End" << std::endl;
 }
 
 void TankTracker::Reset(double time, TankPosition2d initial) {
-	m_dataLock.lock();
+	//m_dataLock.lock();
 	m_data = TankInterpolatingTreeMap(100);
 	m_data.Put(TankInterpolatingDouble(Timer::GetFPGATimestamp()), initial);
 	m_data.Put(TankInterpolatingDouble(Timer::GetFPGATimestamp()+.00001), initial);
 	m_velocity = TankPosition2d::TankDelta(0,0,0);
-	m_dataLock.unlock();
+	//m_dataLock.unlock();
 }
 
 void TankTracker::Start() {
 	cout << "Starting tank tracker!" << endl;
-    m_loopLock.lock();
+    //m_loopLock.lock();
 	std::pair<double, double> inches = GetEncoderInches();
 	m_leftPrev = inches.first;
 	m_rightPrev = inches.second;
-    m_loopLock.unlock();
+    //m_loopLock.unlock();
 
-    m_timerLock.lock();
-    m_loopTimer.Reset();
-    m_loopTimer.Start();
-    m_timerLock.unlock();
+    //m_timerLock.lock();
+    //m_loopTimer.Reset();
+    //m_loopTimer.Start();
+    //m_timerLock.unlock();
 
     m_loopEnabled = true;
-    m_mainLoop = new std::thread(&TankTracker::Loop, TankTracker::GetInstance());
-    SetThreadPriority1(*m_mainLoop, false, 3);
-	SetCurrentThreadPriority1(false, 3);
+    //m_mainLoop = new std::thread(&TankTracker::Loop, TankTracker::GetInstance());
+    //SetThreadPriority1(*m_mainLoop, false, 3);
+	//SetCurrentThreadPriority1(false, 3);
 	cout << "Started tank tracker!" << endl;
 }
 
 void TankTracker::Stop() {
-	if(m_loopEnabled && m_mainLoop){
+	if(m_loopEnabled /*&& m_mainLoop*/){
 		m_loopEnabled = false;
-		m_mainLoop->join();
+		//m_mainLoop->join();
 	}
 }
 
 void TankTracker::Loop() {
-	while(m_loopEnabled) {
+	if(m_loopEnabled) {
 		double time = Timer::GetFPGATimestamp();
 		std::pair<double, double> inches = GetEncoderInches();
 		double left = inches.first;
 		double right = inches.second;
 		TankRotation2d gyroAngle = GetGyroAngle();
 
-		m_loopLock.lock();
+		//m_loopLock.lock();
 		TankPosition2d odometry = GenerateOdometry(left - m_leftPrev, right - m_rightPrev, gyroAngle);
 		m_leftPrev = left;
 		m_rightPrev = right;
-		m_loopLock.unlock();
+		//m_loopLock.unlock();
 		std::pair<double, double> inPerSec = GetEncoderSpeed();
 		TankPosition2d::TankDelta velocity = TankKinematics::ForwardKinematics(inPerSec.first, inPerSec.second);
 		AddData(time, odometry, velocity);
 
-		m_timerLock.lock();
-		double loopTime = m_loopTimer.Get() < m_targetLoopTime ? m_targetLoopTime - m_loopTimer.Get() : 0.0;
-		if(m_loopTimer.Get() >= m_targetLoopTime * 1.2) {
-			CORELog::LogWarning("Tracker loop timer high at " + to_string(m_loopTimer.Get()) + " seconds!");
-		}
-		Wait(loopTime);
-		m_loopTimer.Reset();
-		m_loopTimer.Start();
-		m_timerLock.unlock();
+		//m_timerLock.lock();
+		//double loopTime = m_loopTimer.Get() < m_targetLoopTime ? m_targetLoopTime - m_loopTimer.Get() : 0.0;
+		// if(m_loopTimer.Get() >= m_targetLoopTime * 1.2) {
+		// 	CORELog::LogWarning("Tracker loop timer high at " + to_string(m_loopTimer.Get()) + " seconds!");
+		// }
+		//Wait(loopTime);
+		//m_loopTimer.Reset();
+		//m_loopTimer.Start();
+		//m_timerLock.unlock();
 	}
 }
 
 TankPosition2d TankTracker::GetFieldToVehicle(double time) {
-	m_dataLock.lock();
+	//m_dataLock.lock();
     auto cache = m_data.GetInterpolated(TankInterpolatingDouble(time));
-    m_dataLock.unlock();
+    //m_dataLock.unlock();
 	return cache;
 }
 
 TankPosition2d TankTracker::GetLatestFieldToVehicle() {
-	m_dataLock.lock();
+	//m_dataLock.lock();
     auto cache = m_data.GetLatest();
-    m_dataLock.unlock();
+    //m_dataLock.unlock();
 	return cache;
 }
 
 void TankTracker::AddData(double time, TankPosition2d data, TankPosition2d::TankDelta vel) {
-	m_dataLock.lock();
+	//m_dataLock.lock();
 	m_data.Put(TankInterpolatingDouble(time), data);
 	m_velocity = vel;
 	if(doLog){
@@ -166,7 +168,7 @@ void TankTracker::AddData(double time, TankPosition2d data, TankPosition2d::Tank
 			new COREDataPoint<double>(data.GetTranslation().GetY()),
 			new COREDataPoint<double>(data.GetRotation().GetDegrees())});
 	}
-	m_dataLock.unlock();
+	//m_dataLock.unlock();
 }
 
 TankPosition2d TankTracker::GenerateOdometry(double leftDelta, double rightDelta,
@@ -178,7 +180,7 @@ TankPosition2d TankTracker::GenerateOdometry(double leftDelta, double rightDelta
 std::pair<double, double> TankTracker::GetEncoderInches() {
 	double factor = 4.0 * PI;
 	if (m_right == nullptr || m_left == nullptr) {
-		std::cout << "Motors are nullptrs!" << endl;
+		std::cout << "Motors are nullptrs! Get encoder inches." << endl;
 	}
 	return {m_left->GetSelectedSensorPosition(0) * factor, m_right->GetSelectedSensorPosition(0) * factor};
 }

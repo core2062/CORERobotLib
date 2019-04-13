@@ -22,19 +22,19 @@ protected:
 	TankPosition2d::TankDelta m_velocity = {0,0,0};
 
 private:
-    const double m_targetLoopHz = 200; //If this is changed, be sure to adjust NavX constructor accordingly
-    double m_targetLoopTime = 0.01;
-    atomic<bool> m_loopEnabled;
-    std::mutex m_loopLock;
-    std::mutex m_dataLock;
-	std::mutex m_timerLock;
+    //const double m_targetLoopHz = 200; //If this is changed, be sure to adjust NavX constructor accordingly
+    //double m_targetLoopTime = 0.01;
+    bool m_loopEnabled;
+    //std::mutex m_loopLock;
+    //std::mutex m_dataLock;
+	//std::mutex m_timerLock;
 	double m_leftPrev = 0;
 	double m_rightPrev = 0;
-    CORETimer m_loopTimer;
+    //CORETimer m_loopTimer;
 	TalonSRX * m_left = nullptr;
 	TalonSRX * m_right = nullptr;
 	AHRS * m_gyro = nullptr;
-	std::thread * m_mainLoop = nullptr;
+	//std::thread * m_mainLoop = nullptr;
 	static TankTracker * m_instance;
 	TankTracker();
 	void Start();
