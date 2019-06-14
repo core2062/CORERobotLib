@@ -2,8 +2,7 @@
 
 TankTracker* TankTracker::m_instance = nullptr;
 
-TankTracker::TankTracker():
-	log({"X","Y","T"}){
+TankTracker::TankTracker(){
 
 }
 

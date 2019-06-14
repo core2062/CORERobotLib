@@ -3,8 +3,6 @@
 using namespace CORE::SIM;
 
 CORESimRobot::CORESimRobot() {
-    COREDriverstation::updateRobotState();
-    COREScheduler::robotInit();
 }
 
 void CORESimRobot::OperatorControl() {

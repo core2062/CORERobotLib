@@ -165,7 +165,6 @@ Node::~Node() {
 COREAuton::COREAuton(string name, bool defaultAuton) {
     m_name = name;
     m_defaultAuton = defaultAuton;
-    COREScheduler::AddAuton(this);
 }
 
 /*

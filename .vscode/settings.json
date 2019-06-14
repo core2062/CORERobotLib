@@ -5,6 +5,7 @@
         "thread": "cpp",
         "bitset": "cpp",
         "cmath": "cpp",
-        "complex": "cpp"
+        "complex": "cpp",
+        "typeinfo": "cpp"
     }
 }
