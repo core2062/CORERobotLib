@@ -4,6 +4,7 @@
 using namespace CORE;
 
 CORETask::CORETask() : m_disabled(false) {
+		COREScheduler::AddTask(this);
 }
 
 void CORETask::DisableTasks(bool disable) {
