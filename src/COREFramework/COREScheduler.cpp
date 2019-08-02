@@ -5,6 +5,7 @@ using namespace CORE;
 using namespace std;
 
 CORESubsystem::CORESubsystem() {
+	//COREScheduler::AddSubsystem(this);
 }
 
 COREController::COREController() : CORETask() {
