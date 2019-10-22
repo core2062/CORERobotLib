@@ -8,10 +8,10 @@ TankTracker::TankTracker():
 }
 
 TankTracker::~TankTracker() {
+	Stop();
 	m_left = nullptr;
 	m_right = nullptr;
 	m_gyro = nullptr;
-	Stop();
 	delete m_mainLoop;
 }
 
