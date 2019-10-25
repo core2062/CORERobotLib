@@ -1,4 +1,5 @@
 #include "TankTracker.h"
+#include "frc/Threads.h"
 
 TankTracker* TankTracker::m_instance = nullptr;
 
@@ -60,7 +61,7 @@ void TankTracker::Start() {
 
     m_loopEnabled = true;
     m_mainLoop = new std::thread(&TankTracker::Loop, TankTracker::GetInstance());
-    SetThreadPriority(*m_mainLoop, false, 3);
+    // SetThreadPriority(*m_mainLoop, false, 3);
 	cout << "Started tank tracker!" << endl;
 }
 
@@ -149,7 +150,7 @@ TankRotation2d TankTracker::GetGyroAngle() {
 
 void TankTracker::AutonInitTask() {
 	doLog = true;
-	Start();
+	//Start();
 }
 
 void TankTracker::AutonEndTask() {
