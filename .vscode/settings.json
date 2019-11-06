@@ -5,6 +5,8 @@
         "thread": "cpp",
         "bitset": "cpp",
         "cmath": "cpp",
-        "complex": "cpp"
+        "complex": "cpp",
+        "iosfwd": "cpp",
+        "fstream": "cpp"
     }
 }
