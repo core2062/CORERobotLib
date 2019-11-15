@@ -1,7 +1,7 @@
 #include "TankAdaptivePursuit.h"
 
 TankAdaptivePursuit::TankAdaptivePursuit(double fixedLookahead, double maxAccel,
-		double nominalDt, TankPath path, bool reversed,
+		double nominalDt, TankPath * path, bool reversed,
 		double pathCompletionTolerance, bool gradualStop):
 		m_lastCommand(0,0,0){
 	m_fixedLookahead = fixedLookahead;
@@ -16,7 +16,7 @@ TankAdaptivePursuit::TankAdaptivePursuit(double fixedLookahead, double maxAccel,
 }
 
 bool TankAdaptivePursuit::IsDone() {
-	double remainingLength = m_path.GetRemainingLength();
+	double remainingLength = m_path->GetRemainingLength();
 	return (remainingLength <= m_pathCompletionTolerance);
 }
 
@@ -27,14 +27,14 @@ TankPosition2d::TankDelta TankAdaptivePursuit::Update(TankPosition2d robotPos, d
 				robotPos.GetRotation().RotateBy(TankRotation2d::FromRadians(PI)));
 	}
 
-	double distanceFromPath = m_path.Update(robotPos.GetTranslation());
+	double distanceFromPath = m_path->Update(robotPos.GetTranslation());
 	if(IsDone()){
 		return TankPosition2d::TankDelta(0,0,0);
 	}
 
 //	std::cout << "Dist From Path" << distanceFromPath << std::endl;
 
-	TankPathSegment::TankSample lookaheadPoint = m_path.GetLookaheadPoint(robotPos.GetTranslation(),
+	TankPathSegment::TankSample lookaheadPoint = m_path->GetLookaheadPoint(robotPos.GetTranslation(),
 			distanceFromPath + m_fixedLookahead);
 	std::pair<bool, Circle> circle = JoinPath(pos, lookaheadPoint.translation);
 //	std::cout << "Look X: " << lookaheadPoint.translation.getX() << "  Look Y: " << lookaheadPoint.translation.getY() << std::endl;
@@ -59,7 +59,7 @@ TankPosition2d::TankDelta TankAdaptivePursuit::Update(TankPosition2d robotPos, d
 		speed = m_lastCommand.dx + m_maxAccel * dt;
 	}
 
-	double remainingDistance = m_path.GetRemainingLength();
+	double remainingDistance = m_path->GetRemainingLength();
 //	std::cout << "Remain: " << remainingDistance << std::endl;
 	if(m_gradualStop){
 		double maxAllowedSpeed = sqrt(2 * m_maxAccel * remainingDistance);
@@ -86,7 +86,7 @@ TankPosition2d::TankDelta TankAdaptivePursuit::Update(TankPosition2d robotPos, d
 }
 
 bool TankAdaptivePursuit::CheckEvent(std::string event) {
-	return m_path.EventPassed(event);
+	return m_path->EventPassed(event);
 }
 
 TankAdaptivePursuit::Circle::Circle(TankTranslation2d cent, double rad,

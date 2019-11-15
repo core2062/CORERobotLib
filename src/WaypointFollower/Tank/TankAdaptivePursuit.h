@@ -6,7 +6,7 @@
 class TankAdaptivePursuit{
 private:
 	double m_fixedLookahead;
-	TankPath m_path;
+	TankPath * m_path;
 	TankPosition2d::TankDelta m_lastCommand;
 	double m_lastTime;
 	double m_maxAccel;
@@ -17,7 +17,7 @@ private:
 	bool m_gradualStop = true;
 
 public:
-	TankAdaptivePursuit(double fixedLookahead, double maxAccel, double nominalDt, TankPath path,
+	TankAdaptivePursuit(double fixedLookahead, double maxAccel, double nominalDt, TankPath * path,
 			bool reversed, double pathCompletionTolerance, bool gradualStop = true);
 
 	bool IsDone();

@@ -189,6 +189,7 @@ void COREAuton::AutonInit() {
  * Put this autonomous routine to Smart Dashboard on a given SendableChooser
  */
 void COREAuton::PutToDashboard(frc::SendableChooser<COREAuton*>* chooser) {
+    cout << "Running" << endl;
     CORELog::LogInfo("Adding autonomous: " + m_name + " to dashboard");
     if(m_defaultAuton) {
         chooser->SetDefaultOption(m_name, this);

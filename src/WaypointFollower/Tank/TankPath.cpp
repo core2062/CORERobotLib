@@ -31,6 +31,7 @@ TankPath::TankPath(std::vector<TankWaypoint> waypoints, bool flipY, bool flipX) 
 					TankPathSegment(m_waypoints[i].position, m_waypoints[i+1].position, m_waypoints[i].speed));
 		}
 	}
+	
 
 	if(m_waypoints.size() > 0){
 		if(m_waypoints[0].event != ""){
@@ -197,12 +198,13 @@ TankPath TankPath::FromText(string text, bool flip) {
     //CORELog::logInfo("Json text contents:\n" + json.dump(4));
     try {
         for (auto point : json) {
-			//This may be wrong, because swerve code needs to be changed to tank code
+			// This may be wrong, because swerve code needs to be changed to tank code
             TankWaypoint waypoint({point["x"].get<double>(), point["y"].get<double>()}, 100);
             // if(flip) {
             //     waypoint.position = waypoint.position.FlipX();
             //     waypoint.rotation = waypoint.rotation.Inverse();
             // }
+			cout<< "Waypoint loop" << point["x"].get<double>();
             if(point["name"].get<string>() != "point") {
                 waypoint.event = point["name"].get<string>();
             }

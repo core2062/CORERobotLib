@@ -30,9 +30,9 @@ void TankTracker::Init(TalonSRX * left, TalonSRX * right, AHRS * gyro) {
 	m_gyro = gyro;
 	m_targetLoopTime = 1.0/m_targetLoopHz;
 	m_left->SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_1_General_, floor(1000*m_targetLoopTime));
-	m_left->SetStatusFramePeriod(ctre::phoenix::motorcontrol::Status_3_Quadrature, floor(1000*m_targetLoopTime));
+	//m_left->SetStatusFramePeriod(ctre::phoenix::motorcontrol::Status_1_General, floor(1000*m_targetLoopTime));
 	m_right->SetStatusFramePeriod(ctre::phoenix::motorcontrol::StatusFrame::Status_1_General_, floor(1000*m_targetLoopTime));
-	m_right->SetStatusFramePeriod(ctre::phoenix::motorcontrol::Status_3_Quadrature, floor(1000*m_targetLoopTime));
+	//m_right->SetStatusFramePeriod(ctre::phoenix::motorcontrol::Status_1_General, floor(1000*m_targetLoopTime));
 	m_loopEnabled = false;
 	std::cout << "Tracker Contruct End" << std::endl;
 }

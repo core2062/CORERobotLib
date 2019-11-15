@@ -47,7 +47,7 @@ void COREScheduler::AddSubsystem(CORESubsystem* subsystem) {
 	} else {
 		m_subsystems.push_back(subsystem);
 	}
-}
+}	
 
 void COREScheduler::AddAuton(COREAuton* auton) {
 	m_autons.push_back(auton);
