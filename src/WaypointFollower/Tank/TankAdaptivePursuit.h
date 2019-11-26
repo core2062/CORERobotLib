@@ -20,7 +20,7 @@ public:
 	TankAdaptivePursuit(double fixedLookahead, double maxAccel, double nominalDt, TankPath * path,
 			bool reversed, double pathCompletionTolerance, bool gradualStop = true);
 
-	bool IsDone();
+	bool IsDone(TankPath * m_path);
 
 	TankPosition2d::TankDelta Update(TankPosition2d robotPos, double now);
 
