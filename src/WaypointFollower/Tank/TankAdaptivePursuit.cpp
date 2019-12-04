@@ -12,10 +12,12 @@ TankAdaptivePursuit::TankAdaptivePursuit(double fixedLookahead, double maxAccel,
 	m_pathCompletionTolerance = pathCompletionTolerance;
 	m_lastTime = 0.0;
 	m_gradualStop = gradualStop;
+	cout<<m_path<<" Tank Adaptive Pursuit"<<endl;
 
 }
 
-bool TankAdaptivePursuit::IsDone(TankPath * m_path) {
+bool TankAdaptivePursuit::IsDone() {
+	cout<<m_path<<" Is Done"<<endl;
 	double remainingLength = m_path->GetRemainingLength();
 	return (remainingLength <= m_pathCompletionTolerance);
 }
@@ -28,7 +30,7 @@ TankPosition2d::TankDelta TankAdaptivePursuit::Update(TankPosition2d robotPos, d
 	}
 
 	double distanceFromPath = m_path->Update(robotPos.GetTranslation());
-	if(IsDone(m_path)){
+	if(IsDone()){
 		return TankPosition2d::TankDelta(0,0,0);
 	}
 

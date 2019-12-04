@@ -30,6 +30,10 @@ TankPath::TankPath(std::vector<TankWaypoint> waypoints, bool flipY, bool flipX) 
 			m_segments.push_back(
 					TankPathSegment(m_waypoints[i].position, m_waypoints[i+1].position, m_waypoints[i].speed));
 		}
+		for (unsigned int i = 0; i < m_waypoints.size() - 1; ++i) {
+			cout << m_waypoints[i].position.GetX() << endl;
+			cout << m_waypoints[i].position.GetY() << endl;
+		}
 	}
 	
 
@@ -116,7 +120,7 @@ TankPathSegment::TankSample TankPath::GetLookaheadPoint(TankTranslation2d pos,
 			if(intersectionPoint.first){
 				return TankPathSegment::TankSample(intersectionPoint.second, segment.GetSpeed());
 			} else {
-				std::cout << "Error? Bad things happened" << std::endl;
+				std::cout << "Error. Bad things happened" << std::endl;
 			}
 		}
 	}
