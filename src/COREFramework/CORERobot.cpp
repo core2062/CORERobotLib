@@ -4,6 +4,7 @@
 using namespace CORE;
 
 CORERobot::CORERobot() {
+	std::cout<<"CORERobot Constructor"<<endl;
 }
 
 CORERobot::~CORERobot() {
