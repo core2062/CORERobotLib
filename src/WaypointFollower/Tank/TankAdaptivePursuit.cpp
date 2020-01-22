@@ -12,25 +12,27 @@ TankAdaptivePursuit::TankAdaptivePursuit(double fixedLookahead, double maxAccel,
 	m_pathCompletionTolerance = pathCompletionTolerance;
 	m_lastTime = 0.0;
 	m_gradualStop = gradualStop;
-	cout<<m_path<<" Tank Adaptive Pursuit"<<endl;
+	cout<<m_path<<"TankAdaptivePursuit"<<endl;
 
 }
 
-bool TankAdaptivePursuit::IsDone() {
-	cout<<m_path<<" Is Done"<<endl;
+bool TankAdaptivePursuit::IsDone(TankPath * m_path) {
+	cout<<"TankAdaptivePursuit::IsDone"<<endl;
 	double remainingLength = m_path->GetRemainingLength();
 	return (remainingLength <= m_pathCompletionTolerance);
 }
 
 TankPosition2d::TankDelta TankAdaptivePursuit::Update(TankPosition2d robotPos, double now) {
+	cout<<"TankPosition2d::TankDelta"<<endl;
 	TankPosition2d pos = robotPos;
 	if (m_reversed){
 		pos = TankPosition2d(robotPos.GetTranslation(),
 				robotPos.GetRotation().RotateBy(TankRotation2d::FromRadians(PI)));
+	
 	}
 
 	double distanceFromPath = m_path->Update(robotPos.GetTranslation());
-	if(IsDone()){
+	if(IsDone(m_path)){
 		return TankPosition2d::TankDelta(0,0,0);
 	}
 
@@ -85,6 +87,7 @@ TankPosition2d::TankDelta TankAdaptivePursuit::Update(TankPosition2d robotPos, d
 	m_lastCommand = rv;
 	return rv;
 
+cout<<"TankAdaptivePursuit Position Updated"<<endl;
 }
 
 bool TankAdaptivePursuit::CheckEvent(std::string event) {
@@ -100,6 +103,7 @@ TankAdaptivePursuit::Circle::Circle(TankTranslation2d cent, double rad,
 
 std::pair<bool, TankAdaptivePursuit::Circle> TankAdaptivePursuit::JoinPath(TankPosition2d pos,
 		TankTranslation2d lookahead) {
+	cout<<"TankAdaptivePursuit::Circle"<<endl;
 	double x1 = pos.GetTranslation().GetX();
 	double y1 = pos.GetTranslation().GetY();
 	double x2 = lookahead.GetX();

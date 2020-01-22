@@ -12,10 +12,10 @@ TankPathSegment::TankPathSegment(TankTranslation2d start, TankTranslation2d end,
 }
 
 void TankPathSegment::UpdateStart(TankTranslation2d newStart) {
+	std::cout << "TankPathSegment::UpdateStart" << m_length << std::endl;
 	m_start = newStart;
 	m_startToEnd = m_start.Inverse().TranslateBy(m_end);
 	m_length = m_startToEnd.Norm();
-//	std::cout << "New Length: " << m_length << std::endl;
 }
 
 double TankPathSegment::GetSpeed() {

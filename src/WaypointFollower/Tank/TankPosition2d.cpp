@@ -30,6 +30,7 @@ TankPosition2d TankPosition2d::FromRotation(TankRotation2d rot) {
 }
 
 TankPosition2d TankPosition2d::FromVelocity(TankDelta delta) {
+	cout<<"TankPosition2d::FromVelocity"<<endl;
 	double sinT = sin(delta.dtheta);
 	double cosT = cos(delta.dtheta);
 	double s, c;

@@ -15,6 +15,7 @@
         "list": "cpp",
         "unordered_map": "cpp",
         "initializer_list": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "iostream": "cpp"
     }
 }

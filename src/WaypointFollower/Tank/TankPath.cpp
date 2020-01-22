@@ -2,6 +2,7 @@
 #include "CORELogging/CORELog.h"
 
 TankWaypoint::TankWaypoint(TankTranslation2d pos, double spd, std::string completeEvent) {
+	cout<<"TankWaypoint::TankWaypoint"<<endl;
 	position = pos;
 	speed = spd;
 	event = completeEvent;
@@ -13,6 +14,7 @@ Path::Path(){
 */
 
 TankPath::TankPath(std::vector<TankWaypoint> waypoints, bool flipY, bool flipX) {
+	cout<<"TankPath::TankPath"<<endl;
 	m_waypoints = waypoints;
 	for (unsigned int i = 0; i < m_waypoints.size() - 1; ++i){
 		if(flipX && flipY){
@@ -46,6 +48,7 @@ TankPath::TankPath(std::vector<TankWaypoint> waypoints, bool flipY, bool flipX) 
 }
 
 double TankPath::Update(TankTranslation2d pos) {
+	cout<<"TankPath::Update"<<endl;
 	double rv = 0.0;
 	for(unsigned int i = 0; i < m_segments.size(); i++){
 //		PathSegment segment = m_segments[i];
@@ -90,10 +93,12 @@ double TankPath::Update(TankTranslation2d pos) {
 }
 
 bool TankPath::EventPassed(std::string event) {
+	cout<<"TankPath::EventPassed"<<endl;
 	return (find(m_events.begin(), m_events.end(), event) != m_events.end());
 }
 
 double TankPath::GetRemainingLength() {
+	cout<<"TankPath::GetRemainingLength"<<endl;
 	double length = 0.0;
 	for (auto i: m_segments){
 		length += i.GetLength();
@@ -103,6 +108,7 @@ double TankPath::GetRemainingLength() {
 
 TankPathSegment::TankSample TankPath::GetLookaheadPoint(TankTranslation2d pos,
 		double lookahead) {
+		cout<<"TankPath::GetLookaheadPoint"<<endl;
 	if(m_segments.size() == 0){
 		return TankPathSegment::TankSample(TankTranslation2d(), 0);
 	}
@@ -178,6 +184,7 @@ std::pair<bool, TankTranslation2d> TankPath::GetFirstCircleSegmentIntersection(
 }
 
 TankPath TankPath::FromFile(string fileName, bool flip) {
+	cout<<"TankPath::FromFile"<<endl;
     CORELog::LogInfo("Loading File: " + fileName);
     string fileStarter = "/home/lvuser/Paths/";
     ifstream inFile(fileStarter + fileName);

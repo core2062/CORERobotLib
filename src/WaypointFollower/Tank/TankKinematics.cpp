@@ -10,6 +10,7 @@ VelocityPair::VelocityPair(double l, double r) {
 
 TankPosition2d::TankDelta TankKinematics::ForwardKinematics(double leftDelta,
 		double rightDelta) {
+		cout<<"TankKinematics::ForwardKinematics One"<<endl;	
 	double linearVel = (leftDelta + rightDelta) / 2.0;
 	double deltaV = (rightDelta - leftDelta) / 2.0;
 	double deltaRot = deltaV * 2 * scrubFactor.Get() / wheelDiameter.Get();
@@ -18,6 +19,7 @@ TankPosition2d::TankDelta TankKinematics::ForwardKinematics(double leftDelta,
 
 TankPosition2d::TankDelta TankKinematics::ForwardKinematics(double leftDelta,
 		double rightDelta, double deltaRads) {
+	cout<<"TankKinematics::ForwardKinematics Two"<<endl;	
 	return TankPosition2d::TankDelta((leftDelta + rightDelta) / 2.0, 0, deltaRads);
 }
 
@@ -26,10 +28,12 @@ TankPosition2d TankKinematics::IntegrateForwardKinematics(TankPosition2d pos,
 	TankPosition2d::TankDelta withGyro = ForwardKinematics(leftDelta, rightDelta,
 			pos.GetRotation().Inverse().RotateBy(heading).GetRadians());
 	return pos.TransformBy(TankPosition2d::FromVelocity(withGyro));
+	cout<<"TankPosition2d TankKinematics::IntegrateForwardKinematics"<<endl;
 }
 
 VelocityPair TankKinematics::InverseKinematics(TankPosition2d::TankDelta vel) {
 	if(fabs(vel.dtheta) < kE){
+	cout<<"VelocityPair TankKinematics::InverseKinematics"<<endl;
 		return VelocityPair(vel.dx, vel.dx);
 	}
 	double deltaV = wheelDiameter.Get() * vel.dtheta / (2 * scrubFactor.Get());

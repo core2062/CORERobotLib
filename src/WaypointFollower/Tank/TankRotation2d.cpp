@@ -1,11 +1,13 @@
 #include "TankRotation2d.h"
 
 TankRotation2d::TankRotation2d() {
+	cout<<"TankRotation2d::TankRotation2d"<<endl;
 	m_cos = 1;
 	m_sin = 0;
 }
 
 TankRotation2d::TankRotation2d(double x, double y, bool doNormalize) {
+	cout<<"TankRotation2d::TankRotation2d"<<endl;
 	m_cos = x;
 	m_sin = y;
 	if(doNormalize){
@@ -14,11 +16,13 @@ TankRotation2d::TankRotation2d(double x, double y, bool doNormalize) {
 }
 
 TankRotation2d::TankRotation2d(const TankRotation2d& other) {
+	cout<<"TankRotation2d::TankRotation2d 2"<<endl;
 	m_cos = other.m_cos;
 	m_sin = other.m_sin;
 }
 
 TankRotation2d TankRotation2d::FromRadians(double radians) {
+	cout<<"TankRotation2d::FromRadians"<<endl;
 	return TankRotation2d(cos(radians), sin(radians), false);
 }
 

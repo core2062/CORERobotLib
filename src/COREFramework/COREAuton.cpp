@@ -132,6 +132,10 @@ void Node::Act(bool lastNodeDone) {
                         break;
                     case COREAutonAction::CONTINUE:
                         break;
+
+                    default:
+                        cout<<"switch(status) defaulted."<<endl;
+                        break;
                 }
             }
             for(auto child : m_children) {
