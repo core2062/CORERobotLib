@@ -1,38 +1,16 @@
 plugins {
     id "cpp"
     id "google-test-test-suite"
-    id "edu.wpi.first.GradleRIO" version "2019.4.1"
+    id "edu.wpi.first.GradleRIO" version "2020.2.2"
 }
 
 model {
     repositories {
         libs(PrebuiltLibraries) {
-            googleTest {
-                headers.srcDir "3rdparty/googletest/googletest/include"
-                binaries.withType(StaticLibraryBinary) {
-                    staticLibraryFile = file("3rdparty/googletest/googletest/" + getPlatformPath(targetPlatform) + "/libgtest.a")
+            zlib {
+                binaries.withType(SharedLibraryBinarySpec) {
+                    linker.args ("-L/Users/Public/robotlib2020",'-lz')
                 }
-            }
-            googleTestMain {
-                headers.srcDir "3rdparty/googletest/googletest/include"
-                binaries.withType(StaticLibraryBinary) {
-                    staticLibraryFile = file("3rdparty/googletest/googletest/" + getPlatformPath(targetPlatform) + "/libgtest_main.a")
-                }
-            }
-            googleMock {
-                headers.srcDir "3rdparty/googletest/googlemock/include"
-                binaries.withType(StaticLibraryBinary) {
-                    staticLibraryFile = file("3rdparty/googletest/googlemock/" + getPlatformPath(targetPlatform) + "/libgmock.a")
-                }
-            }
-            googleMockMain {
-                headers.srcDir "3rdparty/googletest/googlemock/include"
-                binaries.withType(StaticLibraryBinary) {
-                    staticLibraryFile = file("3rdparty/googletest/googlemock/" + getPlatformPath(targetPlatform) + "/libgmock_main.a")
-                }
-            }
-            json {
-                headers.srcDir "3rdparty/json/src"
             }
         }
     }
@@ -42,21 +20,22 @@ model {
             sources.cpp {
                 source {
                     srcDir "src"
+                    srcDir "3rdparty/seasocks/src/main/c"
+                    srcDir "3rdparty/seasocks/src/main/web"
                     include "**/*.cpp"
                     exclude "CORESimulation"
                 }
                 exportedHeaders {
                     srcDir "src"
-                    srcDir "src/WaypointFollower/Swerve"
-                    srcDir "src/WaypointFollower/Tank"
                     srcDir "3rdparty/json/src/"
+                    srcDir "3rdparty/zlib"
                     srcDir "3rdparty/seasocks/src/main/c"
                 }
             }
             binaries.withType(SharedLibraryBinarySpec) {
                 buildable = false
             }
-            useLibrary(it, "wpilib")
+            wpi.deps.wpilib(it)
             wpi.deps.vendor.cpp(it)
         }
     }

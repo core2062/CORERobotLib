@@ -3,19 +3,17 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/../CORERobotLib/src",
-                "${workspaceFolder}/src/main/include/**",
-                "C:/frc/arm-frc-linux-gnueabi/include/c++/5.5.0",
-                "C:/frc/arm-frc-linux-gnueabi/include/c++/5.5.0/arm-frc-linux-gnueabi"
+                "${workspaceFolder}/**"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
             ],
-            "intelliSenseMode": "msvc-x64",
-            "configurationProvider": "vscode-wpilib"
+            "compilerPath": "C:\\MinGW\\bin\\gcc.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x86"
         }
     ],
     "version": 4
