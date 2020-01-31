@@ -3,13 +3,6 @@
 #include "COREUtilities/CORETimer.h"
 #include <memory>
 
-//using namespace std;
-
-/*#include "COREControl/COREPID.h"
-#include "COREControl/COREPositionPID.h"
-#include "COREControl/COREVelPID.h"
-#include "COREControl/COREAngPID.h"*/
-
 namespace CORE {
     class ControllerInput {
     private:

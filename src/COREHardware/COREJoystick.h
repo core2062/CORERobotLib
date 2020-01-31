@@ -129,9 +129,6 @@ namespace CORE {
 				0, //LEFT_TRIGGER
 				0  //RIGHT_TRIGGER
 		};
-#ifdef NOT_REAL
-		test::
-#endif
         int m_joystickPort;
         map<JoystickButton, ButtonState> m_lastButtonCache, m_buttonCache;
         map<JoystickAxis, double> m_axisCache;

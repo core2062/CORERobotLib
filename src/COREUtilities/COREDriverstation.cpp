@@ -8,11 +8,6 @@ int COREDriverstation::m_station = 0;
 bool COREDriverstation::m_isCompetition = false;
 
 void COREDriverstation::UpdateRobotState() {
-#ifdef NOT_REAL
-    //TODO: Get robot state from webdashboard
-    m_station = -1;
-    m_isCompetition = false;
-#else
     if(frc::DriverStation::GetInstance().IsDisabled()) {
         m_mode = DISABLE;
     } else if(frc::DriverStation::GetInstance().IsAutonomous()) {
@@ -34,7 +29,6 @@ void COREDriverstation::UpdateRobotState() {
     }
     m_station = frc::DriverStation::GetInstance().GetLocation();
     m_isCompetition = frc::DriverStation::GetInstance().IsFMSAttached();
-#endif
 }
 
 COREDriverstation::gameMode COREDriverstation::GetMode(){
@@ -52,18 +46,6 @@ int COREDriverstation::GetStation() {
 bool COREDriverstation::IsCompetition() {
     return m_isCompetition;
 }
-
-#ifdef NOT_REAL
-void COREDriverstation::overrideRobotMode(COREDriverstation::GameMode newMode) {
-    CORELog::logWarning("Overriding game mode!");
-    m_mode = newMode;
-}
-
-void COREDriverstation::overrideAlliance(COREDriverstation::gameAlliance newAlliance) {
-    CORELog::logWarning("Overriding alliance!");
-    m_alliance = newAlliance;
-}
-#endif
 
 bool COREDriverstation::IsEnabled() {
     UpdateRobotState();

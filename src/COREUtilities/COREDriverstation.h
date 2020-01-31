@@ -1,10 +1,7 @@
 #pragma once
 
 #include "CORELogging/CORELog.h"
-
-#ifndef NOT_REAL
 #include "frc/WPILib.h"
-#endif
 
 namespace CORE {
     class COREDriverstation {
@@ -30,10 +27,7 @@ namespace CORE {
         static bool IsAutonomous();
         static bool IsCompetition();
         static void UpdateRobotState();
-#ifdef NOT_REAL
-        static void overrideRobotMode(gameMode newMode);
-        static void overrideAlliance(gameAlliance newAlliance);
-#endif
+
     private:
         static gameMode m_mode;
         static gameAlliance m_alliance;

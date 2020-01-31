@@ -62,7 +62,6 @@ void COREScheduler::AddTask(CORETask* task) {
 void COREScheduler::robotInit() {
 	CORELog::robotInit();
 	COREConstantsManager::UpdateConstants();
-	// COREDashboard::robotInit();
 	m_driverJoystick = new COREJoystick(0);
 	m_operatorJoystick = new COREJoystick(1);
 	if (!m_driverJoystick) {

@@ -4,20 +4,14 @@
 
 #include "COREFramework/COREScheduler.h"
 #include "COREUtilities/CORETimer.h"
-// #include "COREDashboard/COREDriverstation.h"
 #include "CORELogging/CORELog.h"
 #include "COREFramework/COREHardwareManager.h"
-
-#ifndef NOT_REAL
 #include <frc/WPILib.h>
-#endif
 
 
 namespace CORE {
     class CORERobot : public CORESubsystem
-#ifndef NOT_REAL
 		      , public frc::TimedRobot
-#endif
 		      {
     public:
         CORERobot();
