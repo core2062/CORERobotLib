@@ -2,6 +2,7 @@
 #include "COREControl/COREMotionProfile.h"
 #include "COREControl/COREPID.h"
 #include "COREDrive/COREDrive.h"
+#include "COREDrive/COREEtherDrive.h"
 #include "COREFramework/COREAuton.h"
 #include "COREFramework/CORERobot.h"
 #include "COREFramework/COREScheduler.h"
@@ -14,3 +15,5 @@
 #include "COREUtilities/CORENamedObject.h"
 #include "COREUtilities/CORETimer.h"
 #include "COREUtilities/COREVector.h"
+#include "COREDrive/VelocityPair.h"
+
