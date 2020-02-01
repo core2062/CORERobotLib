@@ -13,6 +13,7 @@
 #include "CORELogging/CORELog.h"
 #include "COREUtilities/CORENamedObject.h"
 #include "COREHardware/COREJoystick.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
 using namespace std;
 using namespace std::placeholders;

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CORELogging/CORELog.h"
-#include "frc/WPILib.h"
+#include <frc/DriverStation.h>
 
 namespace CORE {
     class COREDriverstation {

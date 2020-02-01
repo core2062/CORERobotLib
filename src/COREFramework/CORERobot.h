@@ -6,7 +6,7 @@
 #include "COREUtilities/CORETimer.h"
 #include "CORELogging/CORELog.h"
 #include "COREFramework/COREHardwareManager.h"
-#include <frc/WPILib.h>
+#include <frc/TimedRobot.h>
 
 
 namespace CORE {

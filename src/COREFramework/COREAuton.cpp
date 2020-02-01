@@ -1,5 +1,4 @@
 #include "COREAuton.h"
-#include "frc/WPILib.h"
 
 using namespace CORE;
 using namespace std;

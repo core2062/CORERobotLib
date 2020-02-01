@@ -7,7 +7,7 @@
 #include <memory>
 #include <iostream>
 
-#include <frc/WPILib.h>
+#include <frc/smartdashboard/SendableChooser.h>
 #include "COREUtilities/CORETimer.h"
 #include "COREScheduler.h"
 #include "CORELogging/CORELog.h"
