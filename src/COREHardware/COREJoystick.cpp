@@ -178,8 +178,8 @@ void COREJoystick::PreLoopTask() {
     m_lastButtonCache = m_buttonCache;
     for(auto button : m_buttonCache) {
         bool isActive;
-        if(COREDriverstation::getMode() == COREDriverstation::AUTON //TODO: REENABLE THIS SAFETY FEATURE LATER
-           || COREDriverstation::getMode() == COREDriverstation::DISABLE) {
+        if(COREDriverstation::GetMode() == COREDriverstation::AUTON 
+           || COREDriverstation::GetMode() == COREDriverstation::DISABLE) {
             m_buttonCache[button.first] = OFF;
             continue;
         }
