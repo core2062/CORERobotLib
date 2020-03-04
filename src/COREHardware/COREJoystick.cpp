@@ -178,11 +178,11 @@ void COREJoystick::PreLoopTask() {
     m_lastButtonCache = m_buttonCache;
     for(auto button : m_buttonCache) {
         bool isActive;
-        /*if(COREDriverstation::getMode() == COREDriverstation::AUTON //TODO: REENABLE THIS SAFETY FEATURE LATER
+        if(COREDriverstation::getMode() == COREDriverstation::AUTON //TODO: REENABLE THIS SAFETY FEATURE LATER
            || COREDriverstation::getMode() == COREDriverstation::DISABLE) {
             m_buttonCache[button.first] = OFF;
             continue;
-        }*/
+        }
         if (button.first == JoystickButton::RIGHT_TRIGGER) {
             isActive = abs(m_joystick.GetRawAxis(JoystickAxis::RIGHT_TRIGGER_AXIS)) > 0;
         } else if (button.first == JoystickButton::LEFT_TRIGGER) {
