@@ -157,7 +157,5 @@ gradle-app.setting
 bin/
 imgui.ini
 
-# End of https://www.gitignore.io/api/c++,java,linux,macos,gradle,windows,visualstudiocode
 
-#java crashes	gradle-app.setting
-java_pid*
+# End of https://www.gitignore.io/api/c++,java,linux,macos,gradle,windows,visualstudiocode
