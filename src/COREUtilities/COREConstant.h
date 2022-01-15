@@ -34,8 +34,8 @@ namespace CORE {
     public:
         COREConstant(string name) {
             m_name = name;
-            if(!frc::Preferences::GetInstance()->ContainsKey(m_name)) {
-                frc::Preferences::GetInstance()->PutString(m_name, "INVALID TYPE SPECIFIED FOR: " + name);
+            if(!frc::Preferences::ContainsKey(m_name)) {
+                frc::Preferences::PutString(m_name, "INVALID TYPE SPECIFIED FOR: " + name);
             }
             UpdateConstant();
             COREConstantsManager::AddConstant(this);
@@ -43,7 +43,7 @@ namespace CORE {
 
         COREConstant(string name, T defaultValue) : m_value(defaultValue) {
             m_name = name;
-            frc::Preferences::GetInstance()->PutString(m_name, "INVALID TYPE SPECIFIED FOR: " + name);
+            frc::Preferences::PutString(m_name, "INVALID TYPE SPECIFIED FOR: " + name);
             m_value = defaultValue;
             CORELog::LogError("Invalid COREConstant type specified with name: " + name);
         }
@@ -54,7 +54,7 @@ namespace CORE {
 
         void Set(T value) {
             m_value = value;
-            frc::Preferences::GetInstance()->PutString(m_name, m_value);
+            frc::Preferences::PutString(m_name, m_value);
         }
 
     private:
@@ -75,8 +75,8 @@ namespace CORE {
     public:
         COREConstant(string name) {
             m_name = name;
-            if(!frc::Preferences::GetInstance()->ContainsKey(m_name)) {
-                frc::Preferences::GetInstance()->PutDouble(m_name, 0);
+            if(!frc::Preferences::ContainsKey(m_name)) {
+                frc::Preferences::PutDouble(m_name, 0);
             }
             UpdateConstant();
             COREConstantsManager::AddConstant(this);
@@ -84,7 +84,7 @@ namespace CORE {
 
         COREConstant(string name, double defaultValue) {
             m_name = name;
-            frc::Preferences::GetInstance()->PutDouble(m_name, defaultValue);
+            frc::Preferences::PutDouble(m_name, defaultValue);
             m_value = defaultValue;
             COREConstantsManager::AddConstant(this);
         }
@@ -95,7 +95,7 @@ namespace CORE {
 
         void Set(double value) {
             m_value = value;
-            frc::Preferences::GetInstance()->PutDouble(m_name, m_value);
+            frc::Preferences::PutDouble(m_name, m_value);
         }
 
     private:
@@ -104,7 +104,7 @@ namespace CORE {
         }
 
         void UpdateConstant() {
-            m_value = frc::Preferences::GetInstance()->GetDouble(m_name);
+            m_value = frc::Preferences::GetDouble(m_name);
         }
 
         string m_name;
@@ -116,8 +116,8 @@ namespace CORE {
     public:
         COREConstant(string name) {
             m_name = name;
-            if(!frc::Preferences::GetInstance()->ContainsKey(m_name)) {
-                frc::Preferences::GetInstance()->PutString(m_name, "null");
+            if(!frc::Preferences::ContainsKey(m_name)) {
+                frc::Preferences::PutString(m_name, "null");
             }
             UpdateConstant();
             COREConstantsManager::AddConstant(this);
@@ -125,7 +125,7 @@ namespace CORE {
 
         COREConstant(string name, string defaultValue) {
             m_name = name;
-            frc::Preferences::GetInstance()->PutString(m_name, defaultValue);
+            frc::Preferences::PutString(m_name, defaultValue);
             m_value = defaultValue;
             COREConstantsManager::AddConstant(this);
         }
@@ -136,7 +136,7 @@ namespace CORE {
 
         void Set(string value) {
             m_value = value;
-            frc::Preferences::GetInstance()->PutString(m_name, m_value);
+            frc::Preferences::PutString(m_name, m_value);
         }
 
     private:
@@ -145,7 +145,7 @@ namespace CORE {
         }
 
         void UpdateConstant() {
-            m_value = frc::Preferences::GetInstance()->GetString(m_name);
+            m_value = frc::Preferences::GetString(m_name);
         }
 
         string m_name;
@@ -157,8 +157,8 @@ namespace CORE {
     public:
         COREConstant(string name) {
             m_name = name;
-            if(!frc::Preferences::GetInstance()->ContainsKey(m_name)) {
-                frc::Preferences::GetInstance()->PutBoolean(m_name, false);
+            if(!frc::Preferences::ContainsKey(m_name)) {
+                frc::Preferences::PutBoolean(m_name, false);
             }
             UpdateConstant();
             COREConstantsManager::AddConstant(this);
@@ -166,7 +166,7 @@ namespace CORE {
 
         COREConstant(string name, bool defaultValue) {
             m_name = name;
-            frc::Preferences::GetInstance()->PutBoolean(m_name, defaultValue);
+            frc::Preferences::PutBoolean(m_name, defaultValue);
             m_value = defaultValue;
             COREConstantsManager::AddConstant(this);
         }
@@ -177,7 +177,7 @@ namespace CORE {
 
         void Set(bool value) {
             m_value = value;
-            frc::Preferences::GetInstance()->PutBoolean(m_name, m_value);
+            frc::Preferences::PutBoolean(m_name, m_value);
         }
 
     private:
@@ -186,7 +186,7 @@ namespace CORE {
         }
 
         void UpdateConstant() {
-            m_value = frc::Preferences::GetInstance()->GetBoolean(m_name);
+            m_value = frc::Preferences::GetBoolean(m_name);
         }
 
         string m_name;
@@ -198,8 +198,8 @@ namespace CORE {
     public:
         COREConstant(string name) {
             m_name = name;
-            if(!frc::Preferences::GetInstance()->ContainsKey(m_name)) {
-                frc::Preferences::GetInstance()->PutInt(m_name, 0);
+            if(!frc::Preferences::ContainsKey(m_name)) {
+                frc::Preferences::PutInt(m_name, 0);
             }
             UpdateConstant();
             COREConstantsManager::AddConstant(this);
@@ -207,7 +207,7 @@ namespace CORE {
 
         COREConstant(string name, int defaultValue) {
             m_name = name;
-            frc::Preferences::GetInstance()->PutInt(m_name, defaultValue);
+            frc::Preferences::PutInt(m_name, defaultValue);
             m_value = defaultValue;
             COREConstantsManager::AddConstant(this);
         }
@@ -218,7 +218,7 @@ namespace CORE {
 
         void Set(int value) {
             m_value = value;
-            frc::Preferences::GetInstance()->PutInt(m_name, m_value);
+            frc::Preferences::PutInt(m_name, m_value);
         }
 
     private:
@@ -227,7 +227,7 @@ namespace CORE {
         }
 
         void UpdateConstant() {
-            m_value = frc::Preferences::GetInstance()->GetInt(m_name);
+            m_value = frc::Preferences::GetInt(m_name);
         }
 
         string m_name;
