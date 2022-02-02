@@ -18,17 +18,30 @@ COREEtherDrive::COREEtherDrive(TalonSRX * leftMotor1, TalonSRX * leftMotor2,
 
 }
 
+/**
+ * Sets variables "a" and "b"
+ * @param a Unsure what "a" is for
+ * @param b Unsure what "b" is for
+ */
 void COREEtherDrive::SetAB(double a, double b) {
 	m_a = a;
 	m_b = b;
 }
 
+
 void COREEtherDrive::SetQuickturn(double q) {
 	m_quickTurn = q;
 }
 
-VelocityPair COREEtherDrive::Calculate(double mag, double rot,
-		double deadband) {
+
+/**
+ * Calculates the left and right drivetrain values using the x and y inputs from the joysticks
+ * @param mag The magnitude of the joystick
+ * @param rot The rotation of the joystick
+ * @param deadband The deadband of the joystick
+ * @return VelocityPair {left,right}; The VelocityPair value returned are left and right sides of the drivetrain
+ */
+VelocityPair COREEtherDrive::Calculate(double mag, double rot, double deadband) {
 	if (abs(mag) < deadband) {
 		mag = 0;
 	}
@@ -61,14 +74,34 @@ VelocityPair COREEtherDrive::Calculate(double mag, double rot,
 	return {left, right};
 }
 
+
+/**
+ * Calculates the Ether Value for the left side of the drivetrain
+ * @param  fwd Magnitude
+ * @param  rcw Rotation
+ * @param  a Unsure
+ * @param  b Unsure
+ * @return Value of EtherDrive Left
+ */
 double COREEtherDrive::EtherL(double fwd, double rcw, double a, double b) {
 	return fwd + b * rcw * (1 - fwd);
 }
 
+/**
+ * Calculates the Ether Value for the right side of the drivetrain
+ * @param  fwd Magnitude
+ * @param  rcw Rotation
+ * @param  a Unsure
+ * @param  b Unsure
+ * @return Value of EtherDrive right
+ */
 double COREEtherDrive::EtherR(double fwd, double rcw, double a, double b) {
 	return fwd - b * rcw + fwd * rcw * (b - a - 1);
 }
 
+/**
+ * Unused
+ */
 void COREEtherDrive::Update() {
 	if (m_y > 0) {
 		if (m_rot >= 0) {
