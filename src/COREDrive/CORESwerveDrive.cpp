@@ -30,7 +30,7 @@ CORESwerve::CORESwerve(double trackWidth, double wheelBase, double wheelDiameter
     m_backRightModule->SetAngleOffset(m_rightBackModuleOffset.Get());
 }
 
-CORESwerve::SwerveModule::SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMotor) :
+CORESwerve::SwerveModule::SwerveModule(TalonFX *driveMotor, TalonFX *steerMotor) :
         m_speedPIDController(0, 0, 0),
         m_anglePIDController(0, 0, 0),
         m_driveMotor(driveMotor),
@@ -40,7 +40,7 @@ CORESwerve::SwerveModule::SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMoto
 double CORESwerve::SwerveModule::GetAngle(bool raw) {
     //Multiplying by 360 degrees and dividing by five volts
 	//GetSensorCollection replaced getAnalogInRaw
-    double angle = m_steerMotor->GetSensorCollection().GetAnalogInRaw() * (360.0 / 1024.0);
+    double angle = m_steerMotor->GetSelectedSensorPosition() * (360.0 / 1024.0);
     if(!raw) {
         angle -= m_angleOffset;
     }
@@ -61,7 +61,7 @@ void CORESwerve::SwerveModule::ZeroAngle() {
 }
 
 void CORESwerve::SwerveModule::ZeroEncoder() {
-    m_driveMotor->SetSelectedSensorPosition(0, 0, 0);
+    m_driveMotor->SetSelectedSensorPosition(0.0, 0, 0);
     m_lastMagnitude = 0;
 }
 
@@ -69,12 +69,14 @@ double CORESwerve::SwerveModule::GetEncoder() {
 	return -m_driveMotor->GetSelectedSensorPosition(0);
 }
 
+// Ew PID Stuff I will never truly understand
 void CORESwerve::SwerveModule::SetAnglePID(double p, double i, double d) {
     m_anglePIDController.SetProportionalConstant(p);
     m_anglePIDController.SetIntegralConstant(i);
     m_anglePIDController.SetDerivativeConstant(d);
 }
 
+// Does PID stuff (aka magic) to turn wheels then moves drive motors (yay)
 void CORESwerve::SwerveModule::Drive(COREVector vector, double dt) {
     double steerMotorOutput;
     if(dt == -1) {
@@ -98,12 +100,14 @@ string CORESwerve::SwerveModule::Print() {
     return text;
 }
 
+
 void CORESwerve::SwerveModule::SetAngleOffset(double angleOffset) {
     m_angleOffset = angleOffset;
 }
 
+// Does stuff
 void CORESwerve::InverseKinematics(double x, double y, double theta) {
-    if(y == 0 && x == 0 && theta == 0) {
+     if(y == 0 && x == 0 && theta == 0) {
         m_frontRight.SetMagnitude(0);
         m_frontLeft.SetMagnitude(0);
         m_backRight.SetMagnitude(0);
@@ -115,21 +119,25 @@ void CORESwerve::InverseKinematics(double x, double y, double theta) {
         return;
     }
 
+// Generic variables for calculation
     double a = x - theta * (m_wheelbase / 2.0);
     double b = x + theta * (m_wheelbase / 2.0);
     double c = y - theta * (m_trackwidth / 2.0);
     double d = y + theta * (m_trackwidth / 2.0);
 
+// Calculates drive speeds
     double frontRightModuleSpeed = sqrt(pow(b, 2) + pow(c, 2));
     double frontLeftModuleSpeed = sqrt(pow(b, 2) + pow(d, 2));
     double backLeftModuleSpeed = sqrt(pow(a, 2) + pow(d, 2));
     double backRightModuleSpeed = sqrt(pow(a, 2) + pow(c, 2));
 
+// Calculates requested angle
     double frontRightModuleAngle = Arctan(b, c);
     double frontLeftModuleAngle = Arctan(b, d);
     double backLeftModuleAngle = Arctan(a, d);
     double backRightModuleAngle = Arctan(a, c);
 
+// Normalization
     double maxSpeed = frontRightModuleSpeed;
 
     if (frontLeftModuleSpeed > maxSpeed) {
@@ -189,6 +197,7 @@ void CORESwerve::InverseKinematics(double x, double y, double theta) {
     m_backLeftModule->Drive(m_backLeft, -1);
 }
 
+// Calculates stuff idk what
 SwervePosition2d CORESwerve::ForwardKinematics() {
     
 	//Adds the up all of the vector of each of the modules to get a total vector

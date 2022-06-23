@@ -17,7 +17,7 @@ namespace CORE {
     public:
         class SwerveModule {
         public:
-            SwerveModule(TalonSRX *driveMotor, TalonSRX *steerMotor);
+            SwerveModule(TalonFX *driveMotor, TalonFX *steerMotor);
             void Drive(COREVector vector, double dt = -1);
             COREVector ForwardKinematics(double wheelCircumference, double ticksToRotation);
             double GetAngle(bool raw = false);
@@ -30,8 +30,8 @@ namespace CORE {
             COREPID m_speedPIDController;
             COREAnglePID m_anglePIDController;
         private:
-            TalonSRX *m_driveMotor;
-            TalonSRX *m_steerMotor;
+            TalonFX *m_driveMotor;
+            TalonFX *m_steerMotor;
             double m_lastMagnitude = 0.0;
             double m_angleOffset = 0.0;
         };
