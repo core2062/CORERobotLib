@@ -12,7 +12,7 @@ void COREDriverstation::UpdateRobotState() {
         m_mode = DISABLE;
     } else if(frc::DriverStation::IsAutonomous()) {
         m_mode = AUTON;
-    } else if(frc::DriverStation::IsOperatorControl()) {
+    } else if(frc::DriverStation::IsTeleop()) {
         m_mode = TELEOP;
     } else if(frc::DriverStation::IsTest()) {
         m_mode = TEST;
