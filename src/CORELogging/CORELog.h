@@ -36,12 +36,12 @@ namespace CORE {
         static void NavXLog(double x, double y, double radians);
         static void UpdateLog();
         static string GetName();
-        static void robotInit();
+        static void RobotInit();
         static void AutonInit();
-        static void teleopInit();
-        static void testInit();
+        static void TeleopInit();
+        static void TestInit();
 
-        static void disabled();
+        static void Disabled();
         static void SetConsoleLoggingLevel(loggingLevel level);
             private:
         static void WriteLastDuration();

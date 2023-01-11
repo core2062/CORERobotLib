@@ -14,7 +14,7 @@ COREController::COREController() : CORETask() {
 COREVariableControlledSubsystem::COREVariableControlledSubsystem() {
 }
 
-void COREVariableControlledSubsystem::teleop() {
+void COREVariableControlledSubsystem::Teleop() {
 	if (m_currentController != nullptr) {
 		//if(m_currentController->isEnabled()){
 			m_currentController->EnabledLoop();
@@ -59,8 +59,8 @@ void COREScheduler::AddTask(CORETask* task) {
 	m_tasks.push_back(task);
 }
 
-void COREScheduler::robotInit() {
-	CORELog::robotInit();
+void COREScheduler::RobotInit() {
+	CORELog::RobotInit();
 	COREConstantsManager::UpdateConstants();
 	m_driverJoystick = new COREJoystick(0);
 	m_operatorJoystick = new COREJoystick(1);
@@ -73,7 +73,7 @@ void COREScheduler::robotInit() {
 	for (auto subsystem : m_subsystems) {
 		subsystem->driverJoystick = m_driverJoystick;
 		subsystem->operatorJoystick = m_operatorJoystick;
-		subsystem->robotInit();
+		subsystem->RobotInit();
 	}
 	for (auto task : m_tasks) {
 		if (!task->IsDisabled()) {
@@ -88,13 +88,13 @@ void COREScheduler::robotInit() {
     frc::SmartDashboard::PutData("Autonomous", m_autonChooser);
 }
 
-void COREScheduler::disabled() {
-	CORELog::disabled();
+void COREScheduler::Disabled() {
+	CORELog::Disabled();
 	for (auto task : m_tasks) {
 		task->DisabledTask();
 	}
 	for (auto subsystem : m_subsystems) {
-		subsystem->disabled();
+		subsystem->Disabled();
 	}
 	COREHardwareManager::ZeroMotors();
 }
@@ -146,11 +146,11 @@ bool COREScheduler::Auton() {
 	}
 }
 
-void COREScheduler::teleopInit() {
-	CORELog::teleopInit();
+void COREScheduler::TeleopInit() {
+	CORELog::TeleopInit();
 	COREConstantsManager::UpdateConstants();
 	for (auto subsystem : m_subsystems) {
-		subsystem->teleopInit();
+		subsystem->TeleopInit();
 	}
 	for (auto task : m_tasks) {
 		if (!task->IsDisabled()) {
@@ -159,14 +159,14 @@ void COREScheduler::teleopInit() {
 	}
 }
 
-void COREScheduler::teleop() {
+void COREScheduler::Teleop() {
 	for (auto task : m_tasks) {
 		if (!task->IsDisabled()) {
 			task->PreLoopTask();
 		}
 	}
 	for (auto subsystem : m_subsystems) {
-		subsystem->teleop();
+		subsystem->Teleop();
 	}
 	for (auto task : m_tasks) {
 		if (!task->IsDisabled()) {
@@ -175,11 +175,11 @@ void COREScheduler::teleop() {
 	}
 }
 
-void COREScheduler::testInit() {
-	CORELog::testInit();
+void COREScheduler::TestInit() {
+	CORELog::TestInit();
 	COREConstantsManager::UpdateConstants();
 	for (auto subsystem : m_subsystems) {
-		subsystem->testInit();
+		subsystem->TestInit();
 	}
 	for (auto task : m_tasks) {
 		if (!task->IsDisabled()) {
@@ -188,14 +188,14 @@ void COREScheduler::testInit() {
 	}
 }
 
-void COREScheduler::test() {
+void COREScheduler::Test() {
 	for (auto task : m_tasks) {
 		if (!task->IsDisabled()) {
 			task->TestTask();
 		}
 	}
 	for (auto subsystem : m_subsystems) {
-		subsystem->test();
+		subsystem->Test();
 	}
 }
 
@@ -216,8 +216,8 @@ void COREScheduler::CleanUp() {
 	m_subsystems.clear();
 	COREConstantsManager::CleanUp();
 }
-void COREScheduler::log() {
+void COREScheduler::Log() {
 	for (auto subsystem : m_subsystems) {
-		subsystem->log();
+		subsystem->Log();
 	}
 }

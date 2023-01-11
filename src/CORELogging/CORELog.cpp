@@ -133,7 +133,7 @@ string CORELog::GetName() {
     return std::string();
 }
 
-void CORELog::robotInit() {
+void CORELog::RobotInit() {
     m_consoleLoggingLevel = INFO;
     m_fileName = "/media/sda1/CORELogs/" + GetFileName();
     m_file.open(m_fileName);
@@ -156,21 +156,21 @@ void CORELog::AutonInit() {
     m_matchTimer.Start();
 }
 
-void CORELog::teleopInit() {
+void CORELog::TeleopInit() {
     m_file.open(m_fileName);
     WriteLastDuration();
     m_matchTimer.Reset();
     m_matchTimer.Start();
 }
 
-void CORELog::testInit() {
+void CORELog::TestInit() {
     m_file.open(m_fileName);
     WriteLastDuration();
     m_matchTimer.Reset();
     m_matchTimer.Start();
 }
 
-void CORELog::disabled() {
+void CORELog::Disabled() {
     WriteLastDuration();
     m_matchTimer.Reset();
     m_matchTimer.Start();
