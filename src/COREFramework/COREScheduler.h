@@ -28,14 +28,14 @@ namespace CORE {
 		CORESubsystem();
 		virtual ~CORESubsystem() {}
 
-		virtual void RobotInit() = 0;
-		virtual void TeleopInit() = 0;
-		virtual void TestInit() {}
-		virtual void Teleop() = 0;
-		virtual void TeleopEnd() {}
-		virtual void Test() {}
-		virtual void Disabled() {}
-		virtual void Log() {}
+		virtual void robotInit() = 0;
+		virtual void teleopInit() = 0;
+		virtual void testInit() {}
+		virtual void teleop() = 0;
+		virtual void teleopEnd() {}
+		virtual void test() {}
+		virtual void disabled() {}
+		virtual void log() {}
 
 		COREJoystick* driverJoystick;
 		COREJoystick* operatorJoystick;
@@ -66,12 +66,12 @@ namespace CORE {
 		COREVariableControlledSubsystem();
 		virtual ~COREVariableControlledSubsystem() {}
 
-		virtual void RobotInit() = 0;
-		virtual void TeleopInit() = 0;
-		virtual void Teleop() override;
-		virtual void TeleopEnd() {}
-		virtual void Test() {}
-		virtual void Disabled() {}
+		virtual void robotInit() = 0;
+		virtual void teleopInit() = 0;
+		virtual void teleop() override;
+		virtual void teleopEnd() {}
+		virtual void test() {}
+		virtual void disabled() {}
 		bool SetController(COREController * controller);
 
 	protected:
@@ -94,15 +94,15 @@ namespace CORE {
 		static void AddAuton(COREAuton * auton);
 		static void AddTask(CORETask* task);
 
-		static void RobotInit();
-		static void Disabled();
+		static void robotInit();
+		static void disabled();
 		static void AutonInit();
 		static bool Auton();
-		static void TeleopInit();
-		static void Teleop();
-		static void TestInit();
-		static void Test();
-		static void Log();
+		static void teleopInit();
+		static void teleop();
+		static void testInit();
+		static void test();
+		static void log();
 		static void CleanUp();
 	};
 }
